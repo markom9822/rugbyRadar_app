@@ -1,6 +1,9 @@
+import { colors } from "@/constants/tokens"
 import { defaultStyles } from "@/styles"
 import { Stack } from "expo-router"
-import { View } from "react-native"
+import { Button, View, ViewStyle, TouchableOpacity, StyleSheet } from "react-native"
+import {FontAwesome6} from '@expo/vector-icons'
+
 
 const FavouritesScreenLayout = () => {
     return <View style={defaultStyles.container}>
@@ -8,8 +11,9 @@ const FavouritesScreenLayout = () => {
             <Stack.Screen name="index" options={{
                 headerTitle: 'Favourites'
                 }} />
-        </Stack>
+        </Stack>		
     </View>
 }
+
 
 export default FavouritesScreenLayout
