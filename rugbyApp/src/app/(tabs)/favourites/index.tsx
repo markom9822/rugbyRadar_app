@@ -2,21 +2,68 @@ import { defaultStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
-import { rugbyTeams, getTeamInfoFromName } from "@/store/rugbyTeamsDatabase"
+import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
 
 
+export type MatchInfo = {
+    homeTeam: string,
+    awayTeam: string,
+    homeScore: string,
+    awayScore: string,
+}
+
 const FavouritesScreen = () => {
 
-    const [matchesArray, setMatchesArray] = useState(null);
+    const [matchesArray, setMatchesArray] = useState<MatchInfo[]>([]);
 
     const selectedDate = '20240713'
 
+    const handlePressFetchData = async () =>{
+        console.info("Pressed Fetch Data")
+
+        const todaysMatches = await fetch(
+            'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=20240713&lang=en&region=gb&tz=Europe/London',
+          ).then((res) => res.json())
+
+        const todaysEvents = todaysMatches.scores[0].events;
+        const matchTitle = todaysMatches.scores[0].events[0].name;
+
+        var newArray = [];
+
+        for (let index = 0; index < todaysEvents.length; index++) {
+            console.info(todaysMatches.scores[0].events[index].name)
+
+            const homeTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[0].team.name;
+            const homeTeamScore = todaysMatches.scores[0].events[index].competitions[0].competitors[0].score;
+            const awayTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[1].team.name;
+            const awayTeamScore = todaysMatches.scores[0].events[index].competitions[0].competitors[1].score;
+
+            let newMatchInfo = {
+                homeTeam: homeTeamName,
+                awayTeam: awayTeamName,
+                homeScore: homeTeamScore,
+                awayScore: awayTeamScore,
+             };
+
+            newArray.push(newMatchInfo)
+            
+        }
+
+        console.info(newArray)
+        setMatchesArray(newArray)
+    }
+
     return <View style={defaultStyles.container}>
         <Text style={defaultStyles.text}>Rugby Matches</Text>
-        <FetchDataButton iconSize={24} style={{
-            backgroundColor: '#4287f5'
-        }}/>
+
+        <FetchDataButton 
+            iconSize={24} 
+            style={{
+             backgroundColor: '#4287f5'
+            }}
+            onPressButton={handlePressFetchData}
+        />
         <Text style={defaultStyles.text}>Date: {selectedDate}</Text>
 
         <FlatList 
@@ -35,6 +82,7 @@ const FavouritesScreen = () => {
 type FetchDataButtonProps = {
 	style?: ViewStyle
 	iconSize?: number
+    onPressButton: () => void
 }
 
 type ScorePanelProps = {
@@ -65,10 +113,6 @@ export const mockMatchData = [
     },
   ];
 
-const createMatchesArray = () => {
-
-}
-
 
 export const ScoreTable = () => {
 
@@ -77,8 +121,8 @@ export const ScoreTable = () => {
 
 export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore}: ScorePanelProps) => {
 
-    const homeTeamInfo = getTeamInfoFromName(homeTeam);
-    const awayTeamInfo = getTeamInfoFromName(awayTeam);
+    const homeTeamInfo = getInternationalTeamInfoFromName(homeTeam);
+    const awayTeamInfo = getInternationalTeamInfoFromName(awayTeam);
 
     if(homeTeamInfo === null) return
     if(awayTeamInfo === null) return
@@ -98,49 +142,23 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore}: ScorePan
 
 }
 
-export const FetchDataButton = ({ style, iconSize = 48 }: FetchDataButtonProps) => {
+export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDataButtonProps) => {
 
-    const handlePressFetchData = async () =>{
-        console.info("Pressed Fetch Data")
-
-        const todaysMatches = await fetch(
-            'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=20240713&lang=en&region=gb&tz=Europe/London',
-          ).then((res) => res.json())
-
-
-        console.info(todaysMatches.scores[0].events.length)
-
-        const todaysEvents = todaysMatches.scores[0].events;
-        const matchTitle = todaysMatches.scores[0].events[0].name;
-
-        const homeTeamName = todaysMatches.scores[0].events[0].competitions[0].competitors[0].team.name;
-        const homeTeamScore = todaysMatches.scores[0].events[0].competitions[0].competitors[0].score;
-
-        const awayTeamName = todaysMatches.scores[0].events[0].competitions[0].competitors[1].team.name;
-        const awayTeamScore = todaysMatches.scores[0].events[0].competitions[0].competitors[1].score;
-
-
-        for (let index = 0; index < todaysEvents.length; index++) {
-            console.info(todaysMatches.scores[0].events[index].name)
-        }
-        
-    }
-
-	return (
-		<View style={[{ height: 50}, style]}>
-			<TouchableOpacity
-				activeOpacity={0.85}
-				onPress={handlePressFetchData}
-			>
-				<MaterialCommunityIcons name="rugby" size={iconSize} color={colors.text} />
-                <Text style={{
-                    fontSize: fontSize.base,
-                    color: colors.text,
-                    backgroundColor: '#4287f5',
-                }}>Fetch Data</Text>
-			</TouchableOpacity>
-		</View>
-	)
+    return (
+    <View style={[{ height: 50}, style]}>
+        <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={onPressButton}
+        >
+            <MaterialCommunityIcons name="rugby" size={iconSize} color={colors.text} />
+            <Text style={{
+                fontSize: fontSize.base,
+                color: colors.text,
+                backgroundColor: '#4287f5',
+            }}>Fetch Data</Text>
+        </TouchableOpacity>
+    </View>
+    )
 }
 
 

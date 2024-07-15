@@ -1,6 +1,6 @@
-export const getTeamInfoFromName = (name: string) => {
+export const getInternationalTeamInfoFromName = (name: string) => {
 
-    const match = rugbyTeams.find((item) => item.displayName === name)
+    const match = InternationalRugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
     {
         return match
@@ -11,7 +11,7 @@ export const getTeamInfoFromName = (name: string) => {
     }
 }
 
-export const rugbyTeams = [
+export const InternationalRugbyTeams = [
   {
     type: 'International',
     displayName: 'Ireland',
