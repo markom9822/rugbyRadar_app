@@ -12,4 +12,24 @@ export const defaultStyles = StyleSheet.create({
     },
 })
 
+export const scorePanelStyles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        padding: 10,
+        backgroundColor: '#828487',
+        margin: 5,
+    },
+    teamName: {
+        fontSize: fontSize.xs,
+        color: colors.text,
+    },
+    teamScore: {
+        fontSize: fontSize.base,
+        color: colors.text,
+        padding: 6,
+    },
+})
+
+
+
 export const utilsStyles = StyleSheet.create({})

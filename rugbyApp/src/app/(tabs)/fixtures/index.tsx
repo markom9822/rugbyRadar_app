@@ -1,9 +1,10 @@
-import { defaultStyles } from "@/styles"
+import { defaultStyles, scorePanelStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
+import { LeinsterLogo } from "@/store/URCTeamLogos/URCTeams"
 
 
 export type MatchInfo = {
@@ -13,7 +14,7 @@ export type MatchInfo = {
     awayScore: string,
 }
 
-const FavouritesScreen = () => {
+const FixturesScreen = () => {
 
     const [matchesArray, setMatchesArray] = useState<MatchInfo[]>([]);
 
@@ -22,9 +23,9 @@ const FavouritesScreen = () => {
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
 
-        const todaysMatches = await fetch(
-            'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=20240713&lang=en&region=gb&tz=Europe/London',
-          ).then((res) => res.json())
+        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + selectedDate + '&lang=en&region=gb&tz=Europe/London'
+
+        const todaysMatches = await fetch( apiString,).then((res) => res.json())
 
         const todaysEvents = todaysMatches.scores[0].events;
         const matchTitle = todaysMatches.scores[0].events[0].name;
@@ -66,8 +67,9 @@ const FavouritesScreen = () => {
         />
         <Text style={defaultStyles.text}>Date: {selectedDate}</Text>
 
+
         <FlatList 
-        data={mockMatchData}
+        data={matchesArray}
         renderItem={({item}) => 
         <ScorePanel 
             homeTeam={item.homeTeam} 
@@ -128,15 +130,17 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore}: ScorePan
     if(awayTeamInfo === null) return
 
     return(
-        <View style={{flexDirection: 'row', padding: 10, backgroundColor: '#272829', margin: 5 }}>
+        <View style={scorePanelStyles.container}>
+            <Text style={scorePanelStyles.teamName}>{homeTeam}</Text>
             <Image
                 style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight:50, minWidth: 50}}
-                source={{uri: homeTeamInfo.logo}} />
-            <Text style={defaultStyles.text}>{homeScore}</Text>
+                source={homeTeamInfo.logo} />
+            <Text style={scorePanelStyles.teamScore}>{homeScore}</Text>
+            <Text style={scorePanelStyles.teamScore}>{awayScore}</Text>
             <Image
                 style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight:50, minWidth: 50}}
-                source={{uri: awayTeamInfo.logo}} />
-            <Text style={defaultStyles.text}>{awayScore}</Text>
+                source={awayTeamInfo.logo} />
+            <Text style={scorePanelStyles.teamName}>{awayTeam}</Text>
         </View>
     )
 
@@ -161,5 +165,4 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
     )
 }
 
-
-export default FavouritesScreen
+export default FixturesScreen

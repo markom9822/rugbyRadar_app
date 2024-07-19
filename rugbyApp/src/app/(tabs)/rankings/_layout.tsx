@@ -6,7 +6,7 @@ const PlaylistsScreenLayout = () => {
     return <View style={defaultStyles.container}>
         <Stack>
             <Stack.Screen name="index" options={{
-                headerTitle: 'Playlists'
+                headerTitle: 'Rankings'
                 }} />
         </Stack>
     </View>

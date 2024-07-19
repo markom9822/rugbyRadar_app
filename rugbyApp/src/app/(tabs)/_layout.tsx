@@ -26,14 +26,14 @@ const TabsNavigation = () => {
 
         }}>
             <Tabs.Screen 
-            name="favourites" 
+            name="fixtures" 
             options={{
-                title: "Favourites",
+                title: "Fixtures",
                 tabBarIcon: ({color}) => <FontAwesome name="heart" size={20} color={color} />
             }} />
-            <Tabs.Screen name="playlists" 
+            <Tabs.Screen name="rankings" 
                 options={{
-                    title: "Playlists",
+                    title: "Rankings",
                     tabBarIcon: ({color}) => <MaterialCommunityIcons name="playlist-play" size={28} color={color} />
                 }} />
             <Tabs.Screen name="(songs)" 
