@@ -28,6 +28,10 @@ export const scorePanelStyles = StyleSheet.create({
         color: colors.text,
         padding: 6,
     },
+    matchTime: {
+        fontSize: fontSize.xs,
+        color: colors.text,
+    },
 })
 
 

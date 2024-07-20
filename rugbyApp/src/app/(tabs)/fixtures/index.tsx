@@ -12,13 +12,14 @@ export type MatchInfo = {
     awayTeam: string,
     homeScore: string,
     awayScore: string,
+    matchDate: Date,
 }
 
 const FixturesScreen = () => {
 
     const [matchesArray, setMatchesArray] = useState<MatchInfo[]>([]);
 
-    const selectedDate = '20240713'
+    const selectedDate = '20240720'
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
@@ -40,19 +41,23 @@ const FixturesScreen = () => {
             const awayTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[1].team.name;
             const awayTeamScore = todaysMatches.scores[0].events[index].competitions[0].competitors[1].score;
 
+            const matchDate = new Date(todaysMatches.scores[0].events[index].date)
+            console.info(todaysMatches.scores[0].events[index].status.type.shortDetail)
+
             let newMatchInfo = {
                 homeTeam: homeTeamName,
                 awayTeam: awayTeamName,
                 homeScore: homeTeamScore,
                 awayScore: awayTeamScore,
+                matchDate: matchDate,
              };
 
             newArray.push(newMatchInfo)
-            
         }
 
-        console.info(newArray)
-        setMatchesArray(newArray)
+        const sortedArray = newArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
+        console.info(sortedArray)
+        setMatchesArray(sortedArray)
     }
 
     return <View style={defaultStyles.container}>
@@ -75,7 +80,8 @@ const FixturesScreen = () => {
             homeTeam={item.homeTeam} 
             awayTeam={item.awayTeam} 
             homeScore={item.homeScore}
-            awayScore={item.awayScore}/>}
+            awayScore={item.awayScore}
+            matchDate={item.matchDate}/>}
         />
 
     </View>
@@ -92,6 +98,7 @@ type ScorePanelProps = {
 	awayTeam: string
     homeScore: string
     awayScore: string
+    matchDate: Date
 }
 
 export const mockMatchData = [
@@ -121,13 +128,15 @@ export const ScoreTable = () => {
 
 }
 
-export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore}: ScorePanelProps) => {
+export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate}: ScorePanelProps) => {
 
     const homeTeamInfo = getInternationalTeamInfoFromName(homeTeam);
     const awayTeamInfo = getInternationalTeamInfoFromName(awayTeam);
 
     if(homeTeamInfo === null) return
     if(awayTeamInfo === null) return
+
+    const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
 
     return(
         <View style={scorePanelStyles.container}>
@@ -136,6 +145,7 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore}: ScorePan
                 style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight:50, minWidth: 50}}
                 source={homeTeamInfo.logo} />
             <Text style={scorePanelStyles.teamScore}>{homeScore}</Text>
+            <Text style={scorePanelStyles.matchTime}>{matchTime}</Text>
             <Text style={scorePanelStyles.teamScore}>{awayScore}</Text>
             <Image
                 style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight:50, minWidth: 50}}
