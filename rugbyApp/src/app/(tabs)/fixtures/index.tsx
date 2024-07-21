@@ -1,10 +1,10 @@
-import { defaultStyles, scorePanelStyles } from "@/styles"
+import { defaultStyles, scorePanelStyles,testingStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
-import { LeinsterLogo } from "@/store/URCTeamLogos/URCTeams"
+import { isEnabled } from "react-native/Libraries/Performance/Systrace"
 
 
 export type MatchInfo = {
@@ -18,6 +18,8 @@ export type MatchInfo = {
 const FixturesScreen = () => {
 
     const [matchesArray, setMatchesArray] = useState<MatchInfo[]>([]);
+    const [currentIndex, setCurrentIndex] = useState<Number | null>(null);
+
 
     const selectedDate = '20240720'
 
@@ -72,17 +74,32 @@ const FixturesScreen = () => {
         />
         <Text style={defaultStyles.text}>Date: {selectedDate}</Text>
 
+        <View style={testingStyles.container}>
+        {matchesArray.map(({homeTeam, awayTeam, homeScore, awayScore, matchDate}, index) => {
+        return (
+          <TouchableOpacity
+            key={homeTeam}
+            onPress={() => {
+              setCurrentIndex(index === currentIndex ? null : index);
+            }}
+            style={testingStyles.cardContainer}
+            activeOpacity={0.9}
+          >
+            <ScorePanel 
+            homeTeam={homeTeam}
+            awayTeam={awayTeam}
+            homeScore={homeScore} 
+            awayScore={awayScore}
+            matchDate={matchDate}
+            index={index}
+            currentIndex={currentIndex}/>
+          </TouchableOpacity>
+        );
+      })}
 
-        <FlatList 
-        data={matchesArray}
-        renderItem={({item}) => 
-        <ScorePanel 
-            homeTeam={item.homeTeam} 
-            awayTeam={item.awayTeam} 
-            homeScore={item.homeScore}
-            awayScore={item.awayScore}
-            matchDate={item.matchDate}/>}
-        />
+
+        </View>
+        
 
     </View>
 }
@@ -94,6 +111,8 @@ type FetchDataButtonProps = {
 }
 
 type ScorePanelProps = {
+    index: number
+    currentIndex: Number | null
 	homeTeam: string
 	awayTeam: string
     homeScore: string
@@ -128,7 +147,9 @@ export const ScoreTable = () => {
 
 }
 
-export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate}: ScorePanelProps) => {
+export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate, index, currentIndex}: ScorePanelProps) => {
+
+    const [expanded, setExpanded] = useState(false); 
 
     const homeTeamInfo = getInternationalTeamInfoFromName(homeTeam);
     const awayTeamInfo = getInternationalTeamInfoFromName(awayTeam);
@@ -136,22 +157,40 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
     if(homeTeamInfo === null) return
     if(awayTeamInfo === null) return
 
+    const handlePressPanel = () => {
+        setExpanded(!expanded); 
+    }
+
     const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
 
     return(
-        <View style={scorePanelStyles.container}>
-            <Text style={scorePanelStyles.teamName}>{homeTeam}</Text>
-            <Image
-                style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight:50, minWidth: 50}}
-                source={homeTeamInfo.logo} />
-            <Text style={scorePanelStyles.teamScore}>{homeScore}</Text>
-            <Text style={scorePanelStyles.matchTime}>{matchTime}</Text>
-            <Text style={scorePanelStyles.teamScore}>{awayScore}</Text>
-            <Image
-                style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight:50, minWidth: 50}}
-                source={awayTeamInfo.logo} />
-            <Text style={scorePanelStyles.teamName}>{awayTeam}</Text>
-        </View>
+        <View style={[testingStyles.card]}>
+              <View style={[testingStyles.cardHeaderInfo]}>
+                <Text style={[testingStyles.teamName]}>{homeTeam}</Text>
+                <Image
+                    style={[testingStyles.teamLogo]}
+                    source={homeTeamInfo.logo} />
+
+                <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={[testingStyles.teamScore]}>{homeScore}</Text>
+                        <Text style={[testingStyles.teamScore]}>{awayScore}</Text>
+                    </View>
+                    <Text>{matchTime}</Text>
+                </View>
+
+                <Image
+                    style={[testingStyles.teamLogo]}
+                    source={awayTeamInfo.logo} />
+                <Text style={[testingStyles.teamName]}>{awayTeam}</Text>
+              </View>
+
+              {index === currentIndex && (
+                <View style={testingStyles.subCategoriesList}>
+                  <Text>This is where match info will be</Text>
+                </View>
+              )}
+            </View>
     )
 
 }
