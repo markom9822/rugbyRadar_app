@@ -1,4 +1,4 @@
-import { defaultStyles, scorePanelStyles,testingStyles } from "@/styles"
+import { defaultStyles, fixtureStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
@@ -74,7 +74,7 @@ const FixturesScreen = () => {
         />
         <Text style={defaultStyles.text}>Date: {selectedDate}</Text>
 
-        <View style={testingStyles.container}>
+        <View style={fixtureStyles.container}>
         {matchesArray.map(({homeTeam, awayTeam, homeScore, awayScore, matchDate}, index) => {
         return (
           <TouchableOpacity
@@ -82,7 +82,7 @@ const FixturesScreen = () => {
             onPress={() => {
               setCurrentIndex(index === currentIndex ? null : index);
             }}
-            style={testingStyles.cardContainer}
+            style={fixtureStyles.cardContainer}
             activeOpacity={0.9}
           >
             <ScorePanel 
@@ -96,11 +96,7 @@ const FixturesScreen = () => {
           </TouchableOpacity>
         );
       })}
-
-
         </View>
-        
-
     </View>
 }
 
@@ -164,29 +160,29 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
     const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
 
     return(
-        <View style={[testingStyles.card]}>
-              <View style={[testingStyles.cardHeaderInfo]}>
-                <Text style={[testingStyles.teamName]}>{homeTeam}</Text>
+        <View style={[fixtureStyles.card]}>
+              <View style={[fixtureStyles.cardHeaderInfo]}>
+                <Text style={[fixtureStyles.teamName]}>{homeTeam}</Text>
                 <Image
-                    style={[testingStyles.teamLogo]}
+                    style={[fixtureStyles.teamLogo]}
                     source={homeTeamInfo.logo} />
 
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={[testingStyles.teamScore]}>{homeScore}</Text>
-                        <Text style={[testingStyles.teamScore]}>{awayScore}</Text>
+                        <Text style={[fixtureStyles.teamScore]}>{homeScore}</Text>
+                        <Text style={[fixtureStyles.teamScore]}>{awayScore}</Text>
                     </View>
                     <Text>{matchTime}</Text>
                 </View>
 
                 <Image
-                    style={[testingStyles.teamLogo]}
+                    style={[fixtureStyles.teamLogo]}
                     source={awayTeamInfo.logo} />
-                <Text style={[testingStyles.teamName]}>{awayTeam}</Text>
+                <Text style={[fixtureStyles.teamName]}>{awayTeam}</Text>
               </View>
 
               {index === currentIndex && (
-                <View style={testingStyles.subCategoriesList}>
+                <View style={fixtureStyles.subCategoriesList}>
                   <Text>This is where match info will be</Text>
                 </View>
               )}

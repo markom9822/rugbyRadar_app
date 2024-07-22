@@ -1,3 +1,18 @@
 export const LeinsterLogo = require('@/store/URCTeamLogos/LeinsterRugby_logo_2019.png')
+export const MunsterLogo = require('@/store/URCTeamLogos/Munster_Rugby_logo.png')
+export const UlsterLogo = require('@/store/URCTeamLogos/Ulster_Rugby_logo.png')
+export const ConnachtLogo = require('@/store/URCTeamLogos/ConnachtRugby_2017logo.png')
+export const CardiffLogo = require('@/store/URCTeamLogos/Cardiff-Rugby_logo.png')
+export const EdinburghLogo = require('@/store/URCTeamLogos/Edinburgh_Rugby_logo_2018.png')
+export const GlasgowLogo = require('@/store/URCTeamLogos/Glasgow_Warriors_Logo.png')
+export const ScarletsLogo = require('@/store/URCTeamLogos/Scarlets_logo.png')
+export const DragonsLogo = require('@/store/URCTeamLogos/Dragons_RFC_logo.png')
+export const OspreysLogo = require('@/store/URCTeamLogos/Ospreys_Rugby_logo.png')
+export const BenettonLogo = require('@/store/URCTeamLogos/Benetton_rugby_logo.png')
+export const ZebreLogo = require('@/store/URCTeamLogos/Zebre_parma_logo.png')
+export const LionsLogo = require('@/store/URCTeamLogos/Lions_rugby_logo.png')
+export const StormersLogo = require('@/store/URCTeamLogos/Logo_Stormers_Rugby_logo.png')
+export const SharksLogo = require('@/store/URCTeamLogos/Sharks_rugby_union_logo.png')
+export const BullsLogo = require('@/store/URCTeamLogos/Vodacom-Bulls-logo.png')
 
 

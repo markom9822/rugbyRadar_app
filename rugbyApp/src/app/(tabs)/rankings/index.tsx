@@ -1,4 +1,4 @@
-import { defaultStyles, rankingPanelStyles, scorePanelStyles } from "@/styles"
+import { defaultStyles, rankingPanelStyles} from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"

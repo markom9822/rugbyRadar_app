@@ -12,38 +12,6 @@ export const defaultStyles = StyleSheet.create({
     },
 })
 
-export const scorePanelStyles = StyleSheet.create({
-    cardContainer: {
-        flexGrow: 1,
-    },
-    card: {
-        flexGrow: 1,
-        flexDirection: 'column',
-    },
-    cardInfo: {
-        flexDirection: 'row',
-        padding: 10,
-        backgroundColor: '#828487',
-        margin: 5,
-    },
-    teamName: {
-        fontSize: fontSize.xs,
-        color: colors.text,
-    },
-    teamScore: {
-        fontSize: fontSize.base,
-        color: colors.text,
-        padding: 6,
-    },
-    matchTime: {
-        fontSize: fontSize.xs,
-        color: colors.text,
-    },
-    dropdown: {
-        backgroundColor: '#be2fd6'
-    }
-})
-
 export const rankingPanelStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -63,7 +31,7 @@ export const rankingPanelStyles = StyleSheet.create({
 })
 
 
-export const testingStyles = StyleSheet.create({
+export const fixtureStyles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
