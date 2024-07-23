@@ -5,6 +5,7 @@ import { colors, fontSize } from "@/constants/tokens"
 import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
 import { isEnabled } from "react-native/Libraries/Performance/Systrace"
+import Entypo from '@expo/vector-icons/Entypo';
 
 
 export type MatchInfo = {
@@ -13,6 +14,9 @@ export type MatchInfo = {
     homeScore: string,
     awayScore: string,
     matchDate: Date,
+    matchTitle: string,
+    matchVenue: string,
+    matchType: string,
 }
 
 const FixturesScreen = () => {
@@ -21,7 +25,7 @@ const FixturesScreen = () => {
     const [currentIndex, setCurrentIndex] = useState<Number | null>(null);
 
 
-    const selectedDate = '20240720'
+    const selectedDate = '20240719'
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
@@ -29,15 +33,16 @@ const FixturesScreen = () => {
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + selectedDate + '&lang=en&region=gb&tz=Europe/London'
 
         const todaysMatches = await fetch( apiString,).then((res) => res.json())
-
         const todaysEvents = todaysMatches.scores[0].events;
-        const matchTitle = todaysMatches.scores[0].events[0].name;
 
         var newArray = [];
 
         for (let index = 0; index < todaysEvents.length; index++) {
             console.info(todaysMatches.scores[0].events[index].name)
 
+            const matchTitle = todaysMatches.scores[0].events[index].name;
+            const matchType = todaysMatches.scores[0].events[index].season.slug;
+            const matchVenue = todaysMatches.scores[0].events[index].competitions[0].venue.fullName;
             const homeTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[0].team.name;
             const homeTeamScore = todaysMatches.scores[0].events[index].competitions[0].competitors[0].score;
             const awayTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[1].team.name;
@@ -52,6 +57,9 @@ const FixturesScreen = () => {
                 homeScore: homeTeamScore,
                 awayScore: awayTeamScore,
                 matchDate: matchDate,
+                matchTitle: matchTitle,
+                matchVenue: matchVenue,
+                matchType: matchType,
              };
 
             newArray.push(newMatchInfo)
@@ -60,6 +68,10 @@ const FixturesScreen = () => {
         const sortedArray = newArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
         console.info(sortedArray)
         setMatchesArray(sortedArray)
+    }
+
+    const handlePressPanel = (index: Number) => {
+        setCurrentIndex(index === currentIndex ? null : index)
     }
 
     return <View style={defaultStyles.container}>
@@ -74,29 +86,22 @@ const FixturesScreen = () => {
         />
         <Text style={defaultStyles.text}>Date: {selectedDate}</Text>
 
-        <View style={fixtureStyles.container}>
-        {matchesArray.map(({homeTeam, awayTeam, homeScore, awayScore, matchDate}, index) => {
-        return (
-          <TouchableOpacity
-            key={homeTeam}
-            onPress={() => {
-              setCurrentIndex(index === currentIndex ? null : index);
-            }}
-            style={fixtureStyles.cardContainer}
-            activeOpacity={0.9}
-          >
-            <ScorePanel 
-            homeTeam={homeTeam}
-            awayTeam={awayTeam}
-            homeScore={homeScore} 
-            awayScore={awayScore}
-            matchDate={matchDate}
-            index={index}
-            currentIndex={currentIndex}/>
-          </TouchableOpacity>
-        );
-      })}
-        </View>
+        <FlatList data={matchesArray}
+        renderItem={({item, index}) =>
+        <ScorePanel
+        homeTeam={item.homeTeam}
+        homeScore={item.homeScore}
+        awayTeam={item.awayTeam}
+        awayScore={item.awayScore}
+        matchDate={item.matchDate}
+        matchTitle={item.matchTitle}
+        matchType={item.matchType}
+        matchVenue={item.matchVenue}
+        currentIndex={currentIndex}
+        index={index}
+        OnPressPanel={handlePressPanel}
+         />}
+        />
     </View>
 }
 
@@ -114,6 +119,10 @@ type ScorePanelProps = {
     homeScore: string
     awayScore: string
     matchDate: Date
+    matchTitle: string
+    matchVenue: string
+    matchType: string
+    OnPressPanel: (index: Number) => void
 }
 
 export const mockMatchData = [
@@ -122,18 +131,25 @@ export const mockMatchData = [
         awayTeam: 'Ireland',
         homeScore: '20',
         awayScore: '18',
+        matchDate: new Date(),
+        matchTitle: 'South Africa v Ireland'
     },
     {
         homeTeam: 'Australia',
         awayTeam: 'Wales',
         homeScore: '36',
         awayScore: '26',
+        matchDate: new Date(),
+        matchTitle: 'Australia v Wales'
     },
     {
         homeTeam: 'New Zealand',
         awayTeam: 'England',
         homeScore: '22',
         awayScore: '9',
+        matchDate: new Date(),
+        matchTitle: 'New Zealand v England'
+
     },
   ];
 
@@ -143,9 +159,10 @@ export const ScoreTable = () => {
 
 }
 
-export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate, index, currentIndex}: ScorePanelProps) => {
+export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate,
+     index, currentIndex, matchTitle, matchVenue, matchType, OnPressPanel}: ScorePanelProps) => {
 
-    const [expanded, setExpanded] = useState(false); 
+    //const [expanded, setExpanded] = useState(false); 
 
     const homeTeamInfo = getInternationalTeamInfoFromName(homeTeam);
     const awayTeamInfo = getInternationalTeamInfoFromName(awayTeam);
@@ -153,39 +170,64 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
     if(homeTeamInfo === null) return
     if(awayTeamInfo === null) return
 
-    const handlePressPanel = () => {
-        setExpanded(!expanded); 
+    const handlePressedPanel = () => {
+        OnPressPanel(index)
     }
 
     const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
 
     return(
         <View style={[fixtureStyles.card]}>
-              <View style={[fixtureStyles.cardHeaderInfo]}>
-                <Text style={[fixtureStyles.teamName]}>{homeTeam}</Text>
-                <Image
-                    style={[fixtureStyles.teamLogo]}
-                    source={homeTeamInfo.logo} />
+              <View style={[fixtureStyles.cardHeaderAllInfo]}>
+                <View style={[fixtureStyles.cardHeaderGameInfo]}>
+                    <Text style={[fixtureStyles.teamName]}>{homeTeamInfo.abbreviation}</Text>
+                    <Image
+                        style={[fixtureStyles.teamLogo]}
+                        source={homeTeamInfo.logo} />
 
-                <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={[fixtureStyles.teamScore]}>{homeScore}</Text>
-                        <Text style={[fixtureStyles.teamScore]}>{awayScore}</Text>
+                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={[fixtureStyles.teamScore]}>{homeScore}</Text>
+                            <Text style={[fixtureStyles.teamScore]}>{awayScore}</Text>
+                        </View>
+                        <Text>{matchTime}</Text>
                     </View>
-                    <Text>{matchTime}</Text>
+
+                    <Image
+                        style={[fixtureStyles.teamLogo]}
+                        source={awayTeamInfo.logo} />
+                    <Text style={[fixtureStyles.teamName]}>{awayTeamInfo.abbreviation}</Text>
                 </View>
 
-                <Image
-                    style={[fixtureStyles.teamLogo]}
-                    source={awayTeamInfo.logo} />
-                <Text style={[fixtureStyles.teamName]}>{awayTeam}</Text>
+                <View style={[fixtureStyles.moreInfoView]}>
+                <TouchableOpacity style={[fixtureStyles.moreInfoButton]}>
+                    <Entypo name="chevron-right" size={24} color="black" />
+                </TouchableOpacity>
+                </View>
+                
               </View>
 
               {index === currentIndex && (
                 <View style={fixtureStyles.subCategoriesList}>
-                  <Text>This is where match info will be</Text>
+                  <Text>{matchTitle}</Text>
+                  <Text>{matchType}</Text>
+
+                  <Text style={{borderBottomColor: 'grey', borderBottomWidth: 2}}>Match Venue:</Text>
+                  <Text>{matchVenue}</Text>
+                  <Text style={{borderBottomColor: 'grey', borderBottomWidth: 2}}>Broadcasters</Text>
+                  <Text>Sky Sports</Text>
+
                 </View>
               )}
+
+              <View style={fixtureStyles.quickViewButton}>
+                <TouchableOpacity key={index} 
+                onPress={handlePressedPanel} 
+                activeOpacity={0.9}
+                style={{width: 100, alignItems: 'center'}}>
+                    <Entypo name="chevron-down" size={18} color="black" />
+                </TouchableOpacity>
+              </View>
             </View>
     )
 

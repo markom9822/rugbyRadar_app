@@ -44,12 +44,27 @@ export const fixtureStyles = StyleSheet.create({
       flexGrow: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      marginVertical: 5
     },
-    cardHeaderInfo: {
+    cardHeaderAllInfo: {
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#f0f2f0',
+      borderBottomColor: 'grey',
+      borderBottomWidth: 2,
+  },
+    cardHeaderGameInfo: {
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f0f2f0',
     },
     teamName: {
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        fontSize: fontSize.sm,
+        fontWeight: 'bold',
     },
     teamScore: {
         fontSize: fontSize.lg,
@@ -62,14 +77,31 @@ export const fixtureStyles = StyleSheet.create({
         minHeight:50,
         minWidth: 50
     },
-    body: {
-      fontSize: 20,
-      lineHeight: 20 * 1.5,
-      textAlign: 'center',
+    quickViewButton: {
+      backgroundColor: '#ffff',
+      width: 100,
+      alignItems: 'center'
+    },
+    moreInfoView: {
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    moreInfoButton: {
+      backgroundColor: '#cfd4cf',
+      alignItems: 'center',
+      height: '100%',
+      justifyContent: 'center'
     },
     subCategoriesList: {
-      marginTop: 20,
-    },
+      backgroundColor: '#e1e3e1',
+      padding: 5,
+      width: '100%',
+      alignItems: 'center'
+      },
   });
 
 
