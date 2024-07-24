@@ -1,11 +1,12 @@
 import { defaultStyles, fixtureStyles } from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, Pressable } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
 import { isEnabled } from "react-native/Libraries/Performance/Systrace"
 import Entypo from '@expo/vector-icons/Entypo';
+import { Link } from "expo-router"
 
 
 export type MatchInfo = {
@@ -162,8 +163,6 @@ export const ScoreTable = () => {
 export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate,
      index, currentIndex, matchTitle, matchVenue, matchType, OnPressPanel}: ScorePanelProps) => {
 
-    //const [expanded, setExpanded] = useState(false); 
-
     const homeTeamInfo = getInternationalTeamInfoFromName(homeTeam);
     const awayTeamInfo = getInternationalTeamInfoFromName(awayTeam);
 
@@ -200,9 +199,11 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
                 </View>
 
                 <View style={[fixtureStyles.moreInfoView]}>
-                <TouchableOpacity style={[fixtureStyles.moreInfoButton]}>
-                    <Entypo name="chevron-right" size={24} color="black" />
-                </TouchableOpacity>
+                    <Link href={"/(tabs)/fixtures/match"} asChild>
+                        <Pressable>
+                            <Entypo name="chevron-right" size={24} color="black" />
+                        </Pressable> 
+                    </Link>
                 </View>
                 
               </View>
