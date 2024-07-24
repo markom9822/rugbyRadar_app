@@ -4,11 +4,11 @@ import { StyleSheet } from "react-native";
 export const defaultStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: 'white',
     },
     text: {
         fontSize: fontSize.base,
-        color: colors.text,
+        color: 'black',
     },
 })
 

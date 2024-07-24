@@ -18,6 +18,7 @@ export type MatchInfo = {
     matchTitle: string,
     matchVenue: string,
     matchType: string,
+    matchID: string,
 }
 
 const FixturesScreen = () => {
@@ -44,6 +45,8 @@ const FixturesScreen = () => {
             const matchTitle = todaysMatches.scores[0].events[index].name;
             const matchType = todaysMatches.scores[0].events[index].season.slug;
             const matchVenue = todaysMatches.scores[0].events[index].competitions[0].venue.fullName;
+            const matchID = todaysMatches.scores[0].events[index].id;
+
             const homeTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[0].team.name;
             const homeTeamScore = todaysMatches.scores[0].events[index].competitions[0].competitors[0].score;
             const awayTeamName = todaysMatches.scores[0].events[index].competitions[0].competitors[1].team.name;
@@ -61,6 +64,7 @@ const FixturesScreen = () => {
                 matchTitle: matchTitle,
                 matchVenue: matchVenue,
                 matchType: matchType,
+                matchID: matchID,
              };
 
             newArray.push(newMatchInfo)
@@ -98,6 +102,7 @@ const FixturesScreen = () => {
         matchTitle={item.matchTitle}
         matchType={item.matchType}
         matchVenue={item.matchVenue}
+        matchID={item.matchID}
         currentIndex={currentIndex}
         index={index}
         OnPressPanel={handlePressPanel}
@@ -123,6 +128,7 @@ type ScorePanelProps = {
     matchTitle: string
     matchVenue: string
     matchType: string
+    matchID: string
     OnPressPanel: (index: Number) => void
 }
 
@@ -161,7 +167,7 @@ export const ScoreTable = () => {
 }
 
 export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate,
-     index, currentIndex, matchTitle, matchVenue, matchType, OnPressPanel}: ScorePanelProps) => {
+     index, currentIndex, matchTitle, matchVenue, matchType, matchID, OnPressPanel}: ScorePanelProps) => {
 
     const homeTeamInfo = getInternationalTeamInfoFromName(homeTeam);
     const awayTeamInfo = getInternationalTeamInfoFromName(awayTeam);
@@ -199,7 +205,7 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
                 </View>
 
                 <View style={[fixtureStyles.moreInfoView]}>
-                    <Link href={"/(tabs)/fixtures/match"} asChild>
+                    <Link href={`/(tabs)/fixtures/match/${matchID}`} asChild>
                         <Pressable>
                             <Entypo name="chevron-right" size={24} color="black" />
                         </Pressable> 
