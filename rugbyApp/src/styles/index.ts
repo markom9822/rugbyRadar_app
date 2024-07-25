@@ -104,6 +104,29 @@ export const fixtureStyles = StyleSheet.create({
       },
   });
 
+export const lineupPanelStyles = StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      justifyContent: 'space-between'
+    },
+    teamName: {
+        fontSize: fontSize.base,
+        color: 'black',
+    },
+    teamLogo: {
+      resizeMode: 'contain',
+      width: 50,
+      height: 50,
+      minHeight:50,
+      minWidth: 50
+    },
+    playerInfo: {
+        fontSize: fontSize.base,
+        color: colors.text,
+        paddingHorizontal: 6,
+    },
+})
+
 
 
 export const utilsStyles = StyleSheet.create({})
