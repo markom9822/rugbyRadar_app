@@ -95,7 +95,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Zebre Parma',
+    displayName: 'Zebre',
     abbreviation: 'ZEB',
     logo: ZebreLogo,
     colour: '#233268',

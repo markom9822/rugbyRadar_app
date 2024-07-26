@@ -1,7 +1,7 @@
 import { defaultStyles, fixtureStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, Pressable } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontSize, fontWeight } from "@/constants/tokens"
 import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
 import { isEnabled } from "react-native/Libraries/Performance/Systrace"
@@ -132,40 +132,6 @@ type ScorePanelProps = {
     OnPressPanel: (index: Number) => void
 }
 
-export const mockMatchData = [
-    {
-        homeTeam: 'South Africa',
-        awayTeam: 'Ireland',
-        homeScore: '20',
-        awayScore: '18',
-        matchDate: new Date(),
-        matchTitle: 'South Africa v Ireland'
-    },
-    {
-        homeTeam: 'Australia',
-        awayTeam: 'Wales',
-        homeScore: '36',
-        awayScore: '26',
-        matchDate: new Date(),
-        matchTitle: 'Australia v Wales'
-    },
-    {
-        homeTeam: 'New Zealand',
-        awayTeam: 'England',
-        homeScore: '22',
-        awayScore: '9',
-        matchDate: new Date(),
-        matchTitle: 'New Zealand v England'
-
-    },
-  ];
-
-
-export const ScoreTable = () => {
-
-
-}
-
 export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate,
      index, currentIndex, matchTitle, matchVenue, matchType, matchID, OnPressPanel}: ScorePanelProps) => {
 
@@ -178,6 +144,9 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
     const handlePressedPanel = () => {
         OnPressPanel(index)
     }
+
+    const homeScoreWeight = (new Number(homeScore) > new Number(awayScore)) ? ('600'):('300');;
+    const awayScoreWeight = (new Number(awayScore) > new Number(homeScore)) ? ('600'):('300');
 
     const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
 
@@ -192,8 +161,8 @@ export const ScorePanel = ({ homeTeam, awayTeam, homeScore, awayScore, matchDate
 
                     <View style={{flexDirection: 'column', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={[fixtureStyles.teamScore]}>{homeScore}</Text>
-                            <Text style={[fixtureStyles.teamScore]}>{awayScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight }]}>{homeScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight}]}>{awayScore}</Text>
                         </View>
                         <Text>{matchTime}</Text>
                     </View>

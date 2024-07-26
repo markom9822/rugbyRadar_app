@@ -15,19 +15,40 @@ export const defaultStyles = StyleSheet.create({
 export const rankingPanelStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        padding: 10,
+        padding: 2,
         backgroundColor: '#828487',
-        margin: 5,
+        margin: 2,
     },
     teamName: {
         fontSize: fontSize.xs,
-        color: colors.text,
+        color: 'black',
     },
     teamPoints: {
         fontSize: fontSize.base,
-        color: colors.text,
-        padding: 6,
+        color: 'black',
+        padding: 5,
     },
+})
+
+export const standingsPanelStyles = StyleSheet.create({
+  container: {
+      flexDirection: 'row',
+      padding: 2,
+      backgroundColor: 'white',
+      borderBottomWidth: 2,
+      borderBottomColor: 'grey',
+      margin: 2,
+  },
+  teamName: {
+      fontSize: fontSize.xs,
+      color: 'black',
+  },
+  teamStat: {
+      fontSize: fontSize.sm,
+      color: 'black',
+      padding: 5,
+      width: "10%"
+  },
 })
 
 
@@ -118,7 +139,7 @@ export const lineupPanelStyles = StyleSheet.create({
       width: 50,
       height: 50,
       minHeight:50,
-      minWidth: 50
+      minWidth: 50,
     },
     playerInfo: {
         fontSize: fontSize.base,

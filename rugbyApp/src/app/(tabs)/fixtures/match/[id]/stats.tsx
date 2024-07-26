@@ -2,14 +2,14 @@ import { View, Text } from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 
 
-const summary = () => {
+const stats = () => {
     const {id} = useGlobalSearchParams();
 
     return(
         <View>
-            <Text>Summary Page: {id}</Text>
+            <Text>Stats Page: {id}</Text>
         </View>
     )
 }
 
-export default summary;
+export default stats;

@@ -1,4 +1,4 @@
-import { defaultStyles, fixtureStyles, rankingPanelStyles } from "@/styles"
+import { defaultStyles, fixtureStyles, rankingPanelStyles, standingsPanelStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
@@ -10,19 +10,19 @@ import { getURCTeamInfoFromName } from "@/store/URCRugbyTeamsDatabase"
 
 export type StandingInfo = {
     teamName: string
-	//teamPoints: string
-    //teamPosition: string
+	teamGP: string
+    teamWins: string
 }
 
 const StandingsScreen = () => {
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
 
+    const standingsSeason = "2024"
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Standings")
 
         const rankListLength = 15;
-        const season = '2024'
 
         const apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/270557/standings?lang=en&region=gb&season=2024&seasontype=1&sort=rank:asc&type=0';
 
@@ -35,11 +35,14 @@ const StandingsScreen = () => {
         for (let index = 0; index < standingsCount; index++) {
 
             const teamName = seasonStandings.children[0].standings.entries[index].team.displayName;
+            const teamGP = seasonStandings.children[0].standings.entries[index].stats[7].value;
+            const teamWins = seasonStandings.children[0].standings.entries[index].stats[18].value;
 
-            //const teamPosition = todaysRankings.entries[index].pos;
 
             let newRankingInfo = {
                 teamName: teamName,
+                teamGP: teamGP,
+                teamWins: teamWins,
              };
 
             newArray.push(newRankingInfo)
@@ -60,14 +63,23 @@ const StandingsScreen = () => {
             }}
             onPressButton={handlePressFetchData}
         />
+
+        <View style={{flexDirection: 'row'}}>
+            <Text style={{width: "40%"}}>{standingsSeason} season</Text>
+            <Text style={{width: "10%"}}>GP</Text>
+            <Text style={{width: "10%"}}>W</Text>
+            <Text style={{width: "10%"}}>D</Text>
+            <Text style={{width: "10%"}}>L</Text>
+        </View>
+        
         
         <FlatList 
         data={standingsArray}
         renderItem={({item}) => 
         <StandingPanel 
             teamName={item.teamName}
-            teamPoints='10'
-            teamPosition='0' />}
+            teamGP={item.teamGP}
+            teamWins={item.teamWins} />}
         />
 
     </View>
@@ -100,23 +112,26 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
 
 type StandingPanelProps = {
 	teamName: string
-	teamPoints: string
-    teamPosition: string
+	teamGP: string
+    teamWins: string
 }
 
-export const StandingPanel = ({ teamName, teamPoints, teamPosition}: StandingPanelProps) => {
+export const StandingPanel = ({ teamName, teamGP, teamWins}: StandingPanelProps) => {
 
     const teamInfo = getURCTeamInfoFromName(teamName)
 
     if(teamInfo === null) return
 
     return(
-        <View style={rankingPanelStyles.container}>
-            <Image
-                style={{flex:1, resizeMode: 'contain', width: 50, height: 50, minHeight: 50, minWidth: 50}}
+        <View style={standingsPanelStyles.container}>
+            <View style={{width: "40%", backgroundColor: 'yellow', flexDirection: 'row'}}>
+                <Image
+                style={{flex:1, resizeMode: 'contain', width: 30, height: 30, minHeight: 30, minWidth: 30}}
                 source={teamInfo.logo} />
-            <Text style={rankingPanelStyles.teamName}>{teamName}</Text>
-            <Text style={rankingPanelStyles.teamPoints}>{teamPoints}</Text>
+                <Text style={standingsPanelStyles.teamName}>{teamName}</Text>
+            </View>
+            <Text style={standingsPanelStyles.teamStat}>{teamGP}</Text>
+            <Text style={standingsPanelStyles.teamStat}>{teamWins}</Text>
         </View>
     )
 

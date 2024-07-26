@@ -15,6 +15,13 @@ export const fontSize = {
 	lg: 24,
 }
 
+export const fontWeight = {
+	light: '100',
+	medium: '400',
+	heavy: '800',
+}
+
+
 export const screenPadding = {
 	horizontal: 24,
 }

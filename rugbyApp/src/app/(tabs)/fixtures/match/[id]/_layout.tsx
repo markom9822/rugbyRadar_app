@@ -21,7 +21,7 @@ export default function MatchLayout() {
             }
         }}>
 
-        <TopTabs.Screen name="index" options={{title: 'Details'}}/>
+        <TopTabs.Screen name="index" options={{title: 'Summary'}}/>
 
         </TopTabs>
         </> 

@@ -103,9 +103,6 @@ const Lineups = () => {
             combinedArray.push(newCombinedInfo)
         }
 
-        //console.info(homeLineup)
-        //console.info(awayLineup)
-
         setHomeTeamName(homeTeam)
         setAwayTeamName(awayTeam)
 
@@ -119,25 +116,27 @@ const Lineups = () => {
     return(
         <View style={defaultStyles.container}>
             <Text>Lineups Page: {id}</Text>
+
             <FetchDataButton 
             iconSize={24} 
             style={{
-             backgroundColor: '#4287f5'
+             backgroundColor: '#4287f5',
+             height: 60
             }}
             onPressButton={handlePressFetchData}
             />
 
             <View style={lineupPanelStyles.container}>
-                <View style={{width: "50%", backgroundColor: 'red', flexDirection: 'row'}}>
+                <View style={{width: "50%", flexDirection: 'row', alignItems: 'center', borderRightWidth: 2, borderRightColor: 'grey'}}>
                     <Image source={homeTeamInfo.logo} 
                     style={lineupPanelStyles.teamLogo}/>
-                    <Text style={lineupPanelStyles.teamName}>{homeTeamName}</Text>
+                    <Text style={lineupPanelStyles.teamName}>{homeTeamInfo.abbreviation}</Text>
                 </View>
 
-                <View style={{width: "50%", backgroundColor: 'yellow', flexDirection: 'row'}}>
+                <View style={{width: "50%", flexDirection: 'row', alignItems: 'center'}}>
                     <Image source={awayTeamInfo.logo} 
                     style={lineupPanelStyles.teamLogo}/>
-                    <Text style={lineupPanelStyles.teamName}>{awayTeamName}</Text>
+                    <Text style={lineupPanelStyles.teamName}>{awayTeamInfo.abbreviation}</Text>
                 </View>
             </View>
             
