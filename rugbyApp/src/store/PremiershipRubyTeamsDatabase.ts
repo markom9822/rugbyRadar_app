@@ -24,8 +24,8 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Bristol Bears',
-    abbreviation: 'BRISB',
+    displayName: 'Bristol Rugby',
+    abbreviation: 'BRIST',
     logo: BristolLogo,
     colour: '#121254',
   },

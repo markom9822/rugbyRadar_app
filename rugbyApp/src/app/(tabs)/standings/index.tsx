@@ -7,6 +7,12 @@ import { useState } from "react"
 import { isEnabled } from "react-native/Libraries/Performance/Systrace"
 import Entypo from '@expo/vector-icons/Entypo';
 import { getURCTeamInfoFromName } from "@/store/URCRugbyTeamsDatabase"
+import { getTop14TeamInfoFromName } from "@/store/Top14RugbyTeamsDatabase"
+import { getPremTeamInfoFromName } from "@/store/PremiershipRubyTeamsDatabase"
+import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown"
+import { enableScreens } from "react-native-screens"
+import { getLeagueCode } from "@/store/utils/helpers"
+
 
 export type StandingInfo = {
     teamName: string
@@ -16,18 +22,23 @@ export type StandingInfo = {
 
 const StandingsScreen = () => {
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
+    const [leagueName, setLeagueName] = useState<string>('');
+    const [seasonName, setSeasonName] = useState<string>('');
 
-    const standingsSeason = "2024"
+    const URCLeagueCode = "270557";
+    const PremLeagueCode = "267979";
+    const SixNationsLeagueCode = "180659";
+    const RugbyChampionshipLeagueCode = "244293";
+    const WorldCupLeagueCode = "164205";
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Standings")
 
-        const rankListLength = 15;
+        const currentLeagueCode = getLeagueCode(leagueName)
 
-        const apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/270557/standings?lang=en&region=gb&season=2024&seasontype=1&sort=rank:asc&type=0';
+        const apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season=' + seasonName + '&seasontype=1&sort=rank:asc&type=0';
 
         const seasonStandings = await fetch( apiString,).then((res) => res.json())
-        console.info(seasonStandings.children[0].standings.entries[0].team.displayName)
         const standingsCount = seasonStandings.children[0].standings.entries.length;
 
         var newArray = [];
@@ -37,7 +48,6 @@ const StandingsScreen = () => {
             const teamName = seasonStandings.children[0].standings.entries[index].team.displayName;
             const teamGP = seasonStandings.children[0].standings.entries[index].stats[7].value;
             const teamWins = seasonStandings.children[0].standings.entries[index].stats[18].value;
-
 
             let newRankingInfo = {
                 teamName: teamName,
@@ -52,9 +62,39 @@ const StandingsScreen = () => {
         setStandingsArray(newArray)
     }
 
+    const handleOnChangeLeague = (item: DropdownData) => {
+        setLeagueName(item.value)
+    }
+
+    const handleOnChangeSeason = (item: DropdownData) => {
+        setSeasonName(item.value)
+    }
+
+    const leagueData = [
+        { label: 'URC', value: 'urc' },
+        { label: 'Premiership', value: 'prem' },
+        { label: 'Six Nations', value: 'sixNations' },
+    ];
+
+    const seasonData = [
+        { label: '2023/24', value: '2024' },
+        { label: '2022/23', value: '2023' },
+        { label: '2021/22', value: '2022' },
+    ];
+
 
     return <View style={defaultStyles.container}>
         <Text style={defaultStyles.text}>Rugby Standings</Text>
+
+        <CustomSelectDropdown
+        placeholder="Select League" 
+        data={leagueData}
+        onChangeSelection={handleOnChangeLeague}/>
+
+        <CustomSelectDropdown
+        placeholder="Select Season" 
+        data={seasonData}
+        onChangeSelection={handleOnChangeSeason}/>
 
         <FetchDataButton 
             iconSize={24} 
@@ -65,7 +105,7 @@ const StandingsScreen = () => {
         />
 
         <View style={{flexDirection: 'row'}}>
-            <Text style={{width: "40%"}}>{standingsSeason} season</Text>
+            <Text style={{width: "50%"}}>{seasonName} season</Text>
             <Text style={{width: "10%"}}>GP</Text>
             <Text style={{width: "10%"}}>W</Text>
             <Text style={{width: "10%"}}>D</Text>
@@ -77,6 +117,7 @@ const StandingsScreen = () => {
         data={standingsArray}
         renderItem={({item}) => 
         <StandingPanel 
+            league={leagueName}
             teamName={item.teamName}
             teamGP={item.teamGP}
             teamWins={item.teamWins} />}
@@ -111,20 +152,42 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
 }
 
 type StandingPanelProps = {
+    league: string
 	teamName: string
 	teamGP: string
     teamWins: string
 }
 
-export const StandingPanel = ({ teamName, teamGP, teamWins}: StandingPanelProps) => {
+export const StandingPanel = ({league, teamName, teamGP, teamWins}: StandingPanelProps) => {
 
-    const teamInfo = getURCTeamInfoFromName(teamName)
-
+    var teamInfo;
+    if(league === "urc")
+    {
+        teamInfo = getURCTeamInfoFromName(teamName)
+    }
+    else if(league === "sixNations")
+    {
+        teamInfo = getInternationalTeamInfoFromName(teamName)
+    }
+    else if(league === "prem") 
+    {
+        teamInfo = getPremTeamInfoFromName(teamName)
+    }
+    else if(league === "top14")
+    {
+        teamInfo = getTop14TeamInfoFromName(teamName)
+    }
+    else
+    {
+        return
+    }
+    
     if(teamInfo === null) return
+    if(teamInfo === undefined) return
 
     return(
         <View style={standingsPanelStyles.container}>
-            <View style={{width: "40%", backgroundColor: 'yellow', flexDirection: 'row'}}>
+            <View style={{width: "50%", backgroundColor: 'yellow', flexDirection: 'row'}}>
                 <Image
                 style={{flex:1, resizeMode: 'contain', width: 30, height: 30, minHeight: 30, minWidth: 30}}
                 source={teamInfo.logo} />
