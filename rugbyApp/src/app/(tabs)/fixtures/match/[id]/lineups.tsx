@@ -5,6 +5,8 @@ import { colors, fontSize } from "@/constants/tokens";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
 import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase";
+import { getLeagueName } from "@/store/utils/helpers";
+import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 
 
 export type LineUpInfo = {
@@ -62,7 +64,8 @@ const Lineups = () => {
 
     const {id} = useGlobalSearchParams();
     const eventID = new String(id).substring(0,6);
-    const leagueID = new String(id).slice(6)
+    const leagueID = new String(id).slice(6);
+    const leagueName = getLeagueName(leagueID);
 
     const unique = <T extends { [key: string]: unknown }>(arr: T[], key: string): T[] => [   ...new Map(arr.map((item: T) => [item[key], item])).values() ];
 
@@ -116,9 +119,14 @@ const Lineups = () => {
         setAllLineupsArray(combinedArray)
     }
 
-    const homeTeamInfo = getInternationalTeamInfoFromName(homeTeamName);
-    const awayTeamInfo = getInternationalTeamInfoFromName(awayTeamName);
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeamName, awayTeamName);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
 
+    if(homeTeamInfo === null) return
+    if(awayTeamInfo === null) return
+    if(homeTeamInfo === undefined) return
+    if(awayTeamInfo === undefined) return
 
     return(
         <View style={defaultStyles.container}>

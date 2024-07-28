@@ -1,18 +1,12 @@
-import { defaultStyles, fixtureStyles, rankingPanelStyles, standingsPanelStyles } from "@/styles"
+import { defaultStyles} from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
-import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
-import { isEnabled } from "react-native/Libraries/Performance/Systrace"
-import Entypo from '@expo/vector-icons/Entypo';
-import { getURCTeamInfoFromName } from "@/store/URCRugbyTeamsDatabase"
-import { getTop14TeamInfoFromName } from "@/store/Top14RugbyTeamsDatabase"
-import { getPremTeamInfoFromName } from "@/store/PremiershipRubyTeamsDatabase"
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown"
-import { enableScreens } from "react-native-screens"
 import { getLeagueCode } from "@/store/utils/helpers"
 import { getAllStandingsData } from "@/store/utils/standingsGetter"
+import { StandingPanel } from "@/store/components/StandingPanel"
 
 
 export type StandingInfo = {
@@ -61,12 +55,31 @@ const StandingsScreen = () => {
         { label: '2023/24', value: '2024' },
         { label: '2022/23', value: '2023' },
         { label: '2021/22', value: '2022' },
+        { label: '2020/21', value: '2021' },
+        { label: '2019/20', value: '2020' },
+        { label: '2018/19', value: '2019' },
+        { label: '2017/18', value: '2018' },
+        { label: '2016/17', value: '2017' },
+        { label: '2015/16', value: '2016' },
+        { label: '2014/15', value: '2015' },
+        { label: '2013/14', value: '2014' },
+        { label: '2012/13', value: '2013' },
+        { label: '2011/12', value: '2012' },
+        { label: '2010/11', value: '2011' },
+        { label: '2009/10', value: '2010' },
     ];
 
     const seasonWorldCupData = [
         { label: '2023', value: '2023' },
         { label: '2019', value: '2019' },
         { label: '2015', value: '2015' },
+        { label: '2011', value: '2011' },
+        { label: '2007', value: '2007' },
+        { label: '2003', value: '2003' },
+        { label: '1999', value: '1999' },
+        { label: '1995', value: '1995' },
+        { label: '1991', value: '1991' },
+        { label: '1987', value: '1987' },
     ];
 
     var currentSeasonData;
@@ -128,7 +141,7 @@ const StandingsScreen = () => {
         <FlatList 
         data={standingsArray}
         renderItem={({item}) => 
-        <StandingPanel 
+        <StandingPanel
             league={leagueName}
             isHeader={item.isHeader}
             teamPool={item.teamPool}
@@ -163,85 +176,6 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
         </TouchableOpacity>
     </View>
     )
-}
-
-type StandingPanelProps = {
-    league: string
-    isHeader: boolean
-    teamPool: string
-	teamName: string
-	teamGP: string
-    teamWins: string
-}
-
-export const StandingPanel = ({league,isHeader, teamPool, teamName, teamGP, teamWins}: StandingPanelProps) => {
-
-    var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; colour: string } | null | undefined;
-    if(league === "urc")
-    {
-        teamInfo = getURCTeamInfoFromName(teamName)
-    }
-    else if(league === "sixNations")
-    {
-        teamInfo = getInternationalTeamInfoFromName(teamName)
-    }
-    else if(league === "prem") 
-    {
-        teamInfo = getPremTeamInfoFromName(teamName)
-    }
-    else if(league === "top14")
-    {
-        teamInfo = getTop14TeamInfoFromName(teamName)
-    }
-    else if(league === "rugbyWorldCup")
-    {
-        teamInfo = getInternationalTeamInfoFromName(teamName)
-    }
-    else
-    {
-        return
-    }
-    
-    if(teamInfo === null) return
-    if(teamInfo === undefined) return
-
-    const standingsRender = (isHeader: boolean) => {
-
-        if(teamInfo === null) return
-        if(teamInfo === undefined) return
-
-        if(isHeader)
-        {
-            return (
-                <View style={{width: "50%", flexDirection: 'row'}}>
-                    <Text style={standingsPanelStyles.teamName}>{teamPool}</Text>
-                </View>
-            )
-        }
-        else
-        {
-            return (
-                <>
-                    <View style={{ width: "50%", backgroundColor: 'yellow', flexDirection: 'row' }}>
-                        <Image
-                            style={{ flex: 1, resizeMode: 'contain', width: 30, height: 30, minHeight: 30, minWidth: 30 }}
-                            source={teamInfo.logo} />
-                        <Text style={standingsPanelStyles.teamName}>{teamName}</Text>
-                    </View>
-                    <Text style={standingsPanelStyles.teamStat}>{teamGP}</Text>
-                    <Text style={standingsPanelStyles.teamStat}>{teamWins}</Text>
-                </>
-            )
-        }
-    }
-
-
-    return(
-        <View style={standingsPanelStyles.container}>
-            {standingsRender(isHeader)}
-        </View>
-    )
-
 }
 
 export default StandingsScreen

@@ -86,13 +86,10 @@ const MatchSummary = () => {
         setMatchInfoArray(matchInfo)
     }
 
-    
-
     return(
         <View>
             <Text>Event ID: {eventID}</Text>
             <Text>League ID: {leagueID}</Text>
-
 
             <FetchDataButton 
             iconSize={24} 
@@ -135,8 +132,7 @@ export const GameInfoPanel = ({ matchInfoArray}: GameInfoPanelProps) => {
             <Text>{matchInfoArray[0].homeTeamMetres} Metres Run {matchInfoArray[0].awayTeamMetres}</Text>
 
             <Text>FULL MATCH STATS</Text>
-
-
+            
         </View>
     )
 

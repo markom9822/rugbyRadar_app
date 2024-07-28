@@ -1,12 +1,13 @@
 import { fixtureStyles } from "@/styles"
 import { View, Text, TouchableOpacity, Image, FlatList, Pressable, Modal } from "react-native"
-import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from "expo-router"
+import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
 import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
 import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
+import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 
 
 type ScorePanelProps = {
@@ -28,51 +29,14 @@ type ScorePanelProps = {
 export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, matchDate,
      index, currentIndex, matchTitle, matchVenue, matchType, matchID, OnPressPanel}: ScorePanelProps) => {
 
-    var homeInfo;
-    var awayInfo;
-
-    if(league === "urc")
-    {
-        homeInfo = getURCTeamInfoFromName(homeTeam)
-        awayInfo = getURCTeamInfoFromName(awayTeam)
-    }
-    else if(league === "inter")
-    {
-        homeInfo = getInternationalTeamInfoFromName(homeTeam)
-        awayInfo = getInternationalTeamInfoFromName(awayTeam)
-    }
-    else if(league === "rugbyChamp")
-    {
-        homeInfo = getInternationalTeamInfoFromName(homeTeam)
-        awayInfo = getInternationalTeamInfoFromName(awayTeam)
-    }
-    else if(league === "sixNations")
-    {
-        homeInfo = getInternationalTeamInfoFromName(homeTeam)
-        awayInfo = getInternationalTeamInfoFromName(awayTeam)
-    }
-    else if(league === "prem") 
-    {
-        homeInfo = getPremTeamInfoFromName(homeTeam)
-        awayInfo = getPremTeamInfoFromName(awayTeam)
-    }
-    else if(league === "top14")
-    {
-        homeInfo = getTop14TeamInfoFromName(homeTeam)
-        awayInfo = getTop14TeamInfoFromName(awayTeam)
-    }
-    else if(league === "menSevens")
-    {
-        homeInfo = getWorldFlagTeamInfoFromName(homeTeam)
-        awayInfo = getWorldFlagTeamInfoFromName(awayTeam)
-    }
-    else
-    {
-        return
-    }
-
-    if(homeInfo === null) return
-    if(awayInfo === null) return
+    const homeAwayInfo = getHomeAwayTeamInfo(league, homeTeam, awayTeam);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
+    
+    if(homeTeamInfo === null) return
+    if(awayTeamInfo === null) return
+    if(homeTeamInfo === undefined) return
+    if(awayTeamInfo === undefined) return
 
     const handlePressedPanel = () => {
         OnPressPanel(index)
@@ -87,10 +51,10 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
         <View style={[fixtureStyles.card]}>
               <View style={[fixtureStyles.cardHeaderAllInfo]}>
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
-                    <Text style={[fixtureStyles.teamName]}>{homeInfo.abbreviation}</Text>
+                    <Text style={[fixtureStyles.teamName]}>{homeTeamInfo.abbreviation}</Text>
                     <Image
                         style={[fixtureStyles.teamLogo]}
-                        source={homeInfo.logo} />
+                        source={homeTeamInfo.logo} />
 
                     <View style={{flexDirection: 'column', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
@@ -102,8 +66,8 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
 
                     <Image
                         style={[fixtureStyles.teamLogo]}
-                        source={awayInfo.logo} />
-                    <Text style={[fixtureStyles.teamName]}>{awayInfo.abbreviation}</Text>
+                        source={awayTeamInfo.logo} />
+                    <Text style={[fixtureStyles.teamName]}>{awayTeamInfo.abbreviation}</Text>
                 </View>
 
                 <View style={[fixtureStyles.moreInfoView]}>
