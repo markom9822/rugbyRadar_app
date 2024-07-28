@@ -12,9 +12,12 @@ import { getPremTeamInfoFromName } from "@/store/PremiershipRubyTeamsDatabase"
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown"
 import { enableScreens } from "react-native-screens"
 import { getLeagueCode } from "@/store/utils/helpers"
+import { getAllStandingsData } from "@/store/utils/standingsGetter"
 
 
 export type StandingInfo = {
+    isHeader: boolean
+    teamPool: string
     teamName: string
 	teamGP: string
     teamWins: string
@@ -25,12 +28,6 @@ const StandingsScreen = () => {
     const [leagueName, setLeagueName] = useState<string>('');
     const [seasonName, setSeasonName] = useState<string>('');
 
-    const URCLeagueCode = "270557";
-    const PremLeagueCode = "267979";
-    const SixNationsLeagueCode = "180659";
-    const RugbyChampionshipLeagueCode = "244293";
-    const WorldCupLeagueCode = "164205";
-
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Standings")
 
@@ -39,24 +36,7 @@ const StandingsScreen = () => {
         const apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season=' + seasonName + '&seasontype=1&sort=rank:asc&type=0';
 
         const seasonStandings = await fetch( apiString,).then((res) => res.json())
-        const standingsCount = seasonStandings.children[0].standings.entries.length;
-
-        var newArray = [];
-
-        for (let index = 0; index < standingsCount; index++) {
-
-            const teamName = seasonStandings.children[0].standings.entries[index].team.displayName;
-            const teamGP = seasonStandings.children[0].standings.entries[index].stats[7].value;
-            const teamWins = seasonStandings.children[0].standings.entries[index].stats[18].value;
-
-            let newRankingInfo = {
-                teamName: teamName,
-                teamGP: teamGP,
-                teamWins: teamWins,
-             };
-
-            newArray.push(newRankingInfo)
-        }
+        const newArray = getAllStandingsData(seasonStandings)
 
         console.info(newArray)
         setStandingsArray(newArray)
@@ -150,6 +130,8 @@ const StandingsScreen = () => {
         renderItem={({item}) => 
         <StandingPanel 
             league={leagueName}
+            isHeader={item.isHeader}
+            teamPool={item.teamPool}
             teamName={item.teamName}
             teamGP={item.teamGP}
             teamWins={item.teamWins} />}
@@ -185,14 +167,16 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
 
 type StandingPanelProps = {
     league: string
+    isHeader: boolean
+    teamPool: string
 	teamName: string
 	teamGP: string
     teamWins: string
 }
 
-export const StandingPanel = ({league, teamName, teamGP, teamWins}: StandingPanelProps) => {
+export const StandingPanel = ({league,isHeader, teamPool, teamName, teamGP, teamWins}: StandingPanelProps) => {
 
-    var teamInfo;
+    var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; colour: string } | null | undefined;
     if(league === "urc")
     {
         teamInfo = getURCTeamInfoFromName(teamName)
@@ -209,6 +193,10 @@ export const StandingPanel = ({league, teamName, teamGP, teamWins}: StandingPane
     {
         teamInfo = getTop14TeamInfoFromName(teamName)
     }
+    else if(league === "rugbyWorldCup")
+    {
+        teamInfo = getInternationalTeamInfoFromName(teamName)
+    }
     else
     {
         return
@@ -217,16 +205,40 @@ export const StandingPanel = ({league, teamName, teamGP, teamWins}: StandingPane
     if(teamInfo === null) return
     if(teamInfo === undefined) return
 
+    const standingsRender = (isHeader: boolean) => {
+
+        if(teamInfo === null) return
+        if(teamInfo === undefined) return
+
+        if(isHeader)
+        {
+            return (
+                <View style={{width: "50%", flexDirection: 'row'}}>
+                    <Text style={standingsPanelStyles.teamName}>{teamPool}</Text>
+                </View>
+            )
+        }
+        else
+        {
+            return (
+                <>
+                    <View style={{ width: "50%", backgroundColor: 'yellow', flexDirection: 'row' }}>
+                        <Image
+                            style={{ flex: 1, resizeMode: 'contain', width: 30, height: 30, minHeight: 30, minWidth: 30 }}
+                            source={teamInfo.logo} />
+                        <Text style={standingsPanelStyles.teamName}>{teamName}</Text>
+                    </View>
+                    <Text style={standingsPanelStyles.teamStat}>{teamGP}</Text>
+                    <Text style={standingsPanelStyles.teamStat}>{teamWins}</Text>
+                </>
+            )
+        }
+    }
+
+
     return(
         <View style={standingsPanelStyles.container}>
-            <View style={{width: "50%", backgroundColor: 'yellow', flexDirection: 'row'}}>
-                <Image
-                style={{flex:1, resizeMode: 'contain', width: 30, height: 30, minHeight: 30, minWidth: 30}}
-                source={teamInfo.logo} />
-                <Text style={standingsPanelStyles.teamName}>{teamName}</Text>
-            </View>
-            <Text style={standingsPanelStyles.teamStat}>{teamGP}</Text>
-            <Text style={standingsPanelStyles.teamStat}>{teamWins}</Text>
+            {standingsRender(isHeader)}
         </View>
     )
 
