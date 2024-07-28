@@ -1,4 +1,4 @@
-import { ArgentinaLogo, AustraliaLogo, CanadaLogo, ChileLogo, DefaultLogo, EnglandLogo, FijiLogo, FranceLogo, GeorgiaLogo, IrelandLogo, ItalyLogo, JapanLogo, NamibiaLogo, NewZealandLogo, PortugalLogo, RomaniaLogo, SamoaLogo, ScotlandLogo, SouthAfricaLogo, SpainLogo, TongaLogo, UruguayLogo, USALogo, WalesLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { ArgentinaLogo, AustraliaLogo, BALionsLogo, CanadaLogo, ChileLogo, DefaultLogo, EnglandLogo, FijiLogo, FranceLogo, GeorgiaLogo, IrelandLogo, ItalyLogo, JapanLogo, NamibiaLogo, NewZealandLogo, PortugalLogo, RomaniaLogo, SamoaLogo, ScotlandLogo, SouthAfricaLogo, SpainLogo, TongaLogo, UruguayLogo, USALogo, WalesLogo } from "./InternationalTeamLogos/InternationalTeams";
 
 export const getInternationalTeamInfoFromName = (name: string) => {
 
@@ -181,6 +181,13 @@ export const InternationalRugbyTeams = [
     displayName: 'Uruguay',
     abbreviation: 'URUG',
     logo: UruguayLogo,
+    colour: '#0032a0',
+  },
+  {
+    type: 'International',
+    displayName: 'British and Irish Lions',
+    abbreviation: 'LIONS',
+    logo: BALionsLogo,
     colour: '#0032a0',
   },
 ];

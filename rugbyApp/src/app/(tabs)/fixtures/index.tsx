@@ -107,6 +107,12 @@ const FixturesScreen = () => {
         { label: 'International Test Match', value: 'inter' },
         { label: 'Premiership', value: 'prem' },
         { label: 'URC', value: 'urc' },
+        { label: 'Top 14', value: 'top14' },
+        { label: 'Rugby Championship', value: 'rugbyChamp' },
+
+
+        { label: 'Olympics Mens Sevens', value: 'menSevens' },
+
     ];
 
     return <View style={defaultStyles.container}>
