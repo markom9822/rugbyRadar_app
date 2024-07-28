@@ -6,6 +6,7 @@ import { Link } from "expo-router"
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
 import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
+import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
 
 
 type ScorePanelProps = {
@@ -40,6 +41,16 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
         homeInfo = getInternationalTeamInfoFromName(homeTeam)
         awayInfo = getInternationalTeamInfoFromName(awayTeam)
     }
+    else if(league === "rugbyChamp")
+    {
+        homeInfo = getInternationalTeamInfoFromName(homeTeam)
+        awayInfo = getInternationalTeamInfoFromName(awayTeam)
+    }
+    else if(league === "sixNations")
+    {
+        homeInfo = getInternationalTeamInfoFromName(homeTeam)
+        awayInfo = getInternationalTeamInfoFromName(awayTeam)
+    }
     else if(league === "prem") 
     {
         homeInfo = getPremTeamInfoFromName(homeTeam)
@@ -49,6 +60,11 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
     {
         homeInfo = getTop14TeamInfoFromName(homeTeam)
         awayInfo = getTop14TeamInfoFromName(awayTeam)
+    }
+    else if(league === "menSevens")
+    {
+        homeInfo = getWorldFlagTeamInfoFromName(homeTeam)
+        awayInfo = getWorldFlagTeamInfoFromName(awayTeam)
     }
     else
     {

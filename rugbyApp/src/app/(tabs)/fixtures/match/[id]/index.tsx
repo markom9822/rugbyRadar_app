@@ -70,15 +70,17 @@ const MatchSummary = () => {
 
 
     const {id} = useLocalSearchParams();
+    const eventID = new String(id).substring(0,6);
+    const leagueID = new String(id).slice(6)
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
 
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/289234/summary?contentorigin=espn&event=' + id + '&lang=en&region=gb';
+        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
 
         const matchDetails = await fetch( apiString,).then((res) => res.json())
 
-        console.info(matchDetails.boxscore.teams[0].statistics[0].stats[20])
+        console.info(matchDetails.boxscore.teams[0].team.displayName)
 
         const matchInfo = getMatchInfo(matchDetails)
         setMatchInfoArray(matchInfo)
@@ -88,7 +90,9 @@ const MatchSummary = () => {
 
     return(
         <View>
-            <Text>Match Details: {id}</Text>
+            <Text>Event ID: {eventID}</Text>
+            <Text>League ID: {leagueID}</Text>
+
 
             <FetchDataButton 
             iconSize={24} 

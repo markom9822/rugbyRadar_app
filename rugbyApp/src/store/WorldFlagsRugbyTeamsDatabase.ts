@@ -2,7 +2,7 @@ import { ArgentinaFlag, AustraliaFlag, BelgiumFlag, BrazilFlag, CanadaFlag, Chil
 
 export const getWorldFlagTeamInfoFromName = (name: string) => {
   
-      const match = WorldFlagRugbyTeams.find((item) => item.displayName === name)
+      const match = WorldFlagRugbyTeams.find((item) => item.displayName === name.replace(' 7s', ''))
       if(match !== undefined)
       {
           return match

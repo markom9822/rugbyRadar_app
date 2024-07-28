@@ -6,6 +6,10 @@ export const getLeagueCode = (name: string) => {
         { value: 'prem', code: "267979" },
         { value: 'top14', code: "270559" },
         { value: 'rugbyChamp', code: "244293" },
+        { value: 'rugbyWorldCup', code: "164205" },
+        { value: 'championsCup', code: "271937" },
+        { value: 'challengeCup', code: "272073" },
+
 
         { value: 'sixNations', code: "180659" },
         { value: 'inter', code: "289234" },

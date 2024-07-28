@@ -56,7 +56,9 @@ const FixturesScreen = () => {
             const matchTitle = todaysMatches.events[index].name;
             const matchType = todaysMatches.events[index].season.slug;
             const matchVenue = todaysMatches.events[index].competitions[0].venue.fullName;
-            const matchID = todaysMatches.events[index].id;
+            const eventID = todaysMatches.events[index].id;
+            const matchID = eventID + currentLeagueCode;
+
 
             const homeTeamName = todaysMatches.events[index].competitions[0].competitors[0].team.name;
             const homeTeamScore = todaysMatches.events[index].competitions[0].competitors[0].score;
@@ -105,12 +107,11 @@ const FixturesScreen = () => {
 
     const leagueData = [
         { label: 'International Test Match', value: 'inter' },
+        { label: 'Six Nations', value: 'sixNations' },
         { label: 'Premiership', value: 'prem' },
         { label: 'URC', value: 'urc' },
         { label: 'Top 14', value: 'top14' },
         { label: 'Rugby Championship', value: 'rugbyChamp' },
-
-
         { label: 'Olympics Mens Sevens', value: 'menSevens' },
 
     ];

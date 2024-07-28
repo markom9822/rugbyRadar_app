@@ -181,13 +181,13 @@ export const InternationalRugbyTeams = [
     displayName: 'Uruguay',
     abbreviation: 'URUG',
     logo: UruguayLogo,
-    colour: '#0032a0',
+    colour: '#0038a8',
   },
   {
     type: 'International',
     displayName: 'British and Irish Lions',
     abbreviation: 'LIONS',
     logo: BALionsLogo,
-    colour: '#0032a0',
+    colour: '#d21034',
   },
 ];

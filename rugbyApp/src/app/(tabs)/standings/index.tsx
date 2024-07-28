@@ -74,13 +74,45 @@ const StandingsScreen = () => {
         { label: 'URC', value: 'urc' },
         { label: 'Premiership', value: 'prem' },
         { label: 'Six Nations', value: 'sixNations' },
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup' },
     ];
 
-    const seasonData = [
+    const seasonRegData = [
         { label: '2023/24', value: '2024' },
         { label: '2022/23', value: '2023' },
         { label: '2021/22', value: '2022' },
     ];
+
+    const seasonWorldCupData = [
+        { label: '2023', value: '2023' },
+        { label: '2019', value: '2019' },
+        { label: '2015', value: '2015' },
+    ];
+
+    var currentSeasonData;
+
+    switch(leagueName) { 
+        case "urc": { 
+           currentSeasonData = seasonRegData; 
+           break; 
+        } 
+        case "prem": { 
+            currentSeasonData = seasonRegData; 
+            break; 
+        } 
+        case "sixNations": { 
+            currentSeasonData = seasonRegData; 
+            break; 
+        } 
+        case "rugbyWorldCup": { 
+            currentSeasonData = seasonWorldCupData; 
+           break; 
+        } 
+        default: { 
+            currentSeasonData = seasonRegData; 
+           break; 
+        }
+    } 
 
 
     return <View style={defaultStyles.container}>
@@ -93,7 +125,7 @@ const StandingsScreen = () => {
 
         <CustomSelectDropdown
         placeholder="Select Season" 
-        data={seasonData}
+        data={currentSeasonData}
         onChangeSelection={handleOnChangeSeason}/>
 
         <FetchDataButton 

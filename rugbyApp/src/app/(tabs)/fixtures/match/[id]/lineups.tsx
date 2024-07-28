@@ -44,6 +44,8 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
         newArray.push(newLineupInfo)
     }
 
+    console.info(newArray)
+
     return(
         newArray
     )
@@ -59,13 +61,15 @@ const Lineups = () => {
 
 
     const {id} = useGlobalSearchParams();
+    const eventID = new String(id).substring(0,6);
+    const leagueID = new String(id).slice(6)
 
     const unique = <T extends { [key: string]: unknown }>(arr: T[], key: string): T[] => [   ...new Map(arr.map((item: T) => [item[key], item])).values() ];
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
 
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/289234/summary?contentorigin=espn&event=' + id + '&lang=en&region=gb';
+        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
 
         const matchDetails = await fetch( apiString,).then((res) => res.json())
 
@@ -85,9 +89,12 @@ const Lineups = () => {
         // sort in jersey number order
         const awaySortedArray = awayUniqueArray.sort((a,b) => a.teamPlayerNum - b.teamPlayerNum);
 
+        const playerCount = Math.floor((homeSortedArray.length + awaySortedArray.length)/2)
+        console.info(playerCount)
+
         var combinedArray = [];
 
-        for (let index = 0; index < 23; index++) {
+        for (let index = 0; index < playerCount; index++) {
     
             let newCombinedInfo = {
                 hometeamPlayer: homeSortedArray[index].teamPlayer,
@@ -115,7 +122,9 @@ const Lineups = () => {
 
     return(
         <View style={defaultStyles.container}>
-            <Text>Lineups Page: {id}</Text>
+            <Text>Event ID: {eventID}</Text>
+            <Text>League ID: {leagueID}</Text>
+
 
             <FetchDataButton 
             iconSize={24} 
