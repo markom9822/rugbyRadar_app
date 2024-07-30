@@ -141,11 +141,50 @@ export const lineupPanelStyles = StyleSheet.create({
       minHeight:50,
       minWidth: 50,
     },
-    playerInfo: {
-        fontSize: fontSize.base,
-        color: colors.text,
-        paddingHorizontal: 6,
+    teamHeader: {
+      width: "50%",
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderBottomColor: 'grey',
+      borderBottomWidth: 2,
     },
+    playerInfo: {
+      width: "50%",
+      paddingLeft: 5
+    },
+    substitutesHeader: {
+      width: "50%",
+      borderBottomWidth: 2, 
+      borderBottomColor: 'grey',
+      paddingLeft: 5,
+      paddingTop: 10,
+      fontWeight: 500,
+      color: 'grey',
+    },
+})
+
+export const summaryPanelStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  matchName: {
+      fontSize: fontSize.lg,
+      color: 'black',
+      fontWeight: 600,
+  },
+  teamLogo: {
+    resizeMode: 'contain',
+    width: 50,
+    height: 50,
+    minHeight:50,
+    minWidth: 50,
+  },
+  statsLink: {
+    fontWeight: 400,
+    color: 'blue'
+  }
 })
 
 export const datePickerStyles = StyleSheet.create({

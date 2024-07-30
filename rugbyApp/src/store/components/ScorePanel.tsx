@@ -42,7 +42,7 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
         OnPressPanel(index)
     }
 
-    const homeScoreWeight = (new Number(homeScore) > new Number(awayScore)) ? ('600'):('300');;
+    const homeScoreWeight = (new Number(homeScore) > new Number(awayScore)) ? ('600'):('300');
     const awayScoreWeight = (new Number(awayScore) > new Number(homeScore)) ? ('600'):('300');
 
     const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})

@@ -19,9 +19,12 @@ export type AllLineUpsInfo = {
     hometeamPlayer: string,
     hometeamPlayerPosition: string,
     hometeamPlayerNum: string,
+    isHomePlayerCaptain: boolean,
+
     awayteamPlayer: string,
     awayteamPlayerPosition: string,
     awayteamPlayerNum: string,
+    isAwayPlayerCaptain: boolean,
 }
 
 export const getLineup = (matchDetails: any, rosterIndex: number) => {
@@ -36,11 +39,13 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
         const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");;
 
         const playerPosition = matchDetails.rosters[rosterIndex].roster[index].position.displayName;
+        const isPlayerCaptain = matchDetails.rosters[rosterIndex].roster[index].captain;
 
         let newLineupInfo = {
             teamPlayer: playerName,
             teamPlayerPosition: playerPosition,
             teamPlayerNum: playerNumber,
+            isPlayerCaptain: isPlayerCaptain,
             };
 
         newArray.push(newLineupInfo)
@@ -103,11 +108,12 @@ const Lineups = () => {
                 hometeamPlayer: homeSortedArray[index].teamPlayer,
                 hometeamPlayerPosition: homeSortedArray[index].teamPlayerPosition,
                 hometeamPlayerNum: homeSortedArray[index].teamPlayerNum,
+                isHomePlayerCaptain: homeSortedArray[index].isPlayerCaptain,
 
                 awayteamPlayer: awaySortedArray[index].teamPlayer,
                 awayteamPlayerPosition: awaySortedArray[index].teamPlayerPosition,
                 awayteamPlayerNum: awaySortedArray[index].teamPlayerNum,
-
+                isAwayPlayerCaptain: awaySortedArray[index].isPlayerCaptain,
             };
     
             combinedArray.push(newCombinedInfo)
@@ -115,6 +121,24 @@ const Lineups = () => {
 
         setHomeTeamName(homeTeam)
         setAwayTeamName(awayTeam)
+
+        // add subs header
+        const subsHeadingInfo = {
+            hometeamPlayer: 'Substitutes',
+            hometeamPlayerPosition: '',
+            hometeamPlayerNum: '',
+            isHomePlayerCaptain: false,
+
+            awayteamPlayer: 'Substitutes',
+            awayteamPlayerPosition: '',
+            awayteamPlayerNum: '',
+            isAwayPlayerCaptain: false,
+        };
+
+        // adding subs heading
+        combinedArray.splice(15, 0, subsHeadingInfo)
+
+        console.info(combinedArray)
 
         setAllLineupsArray(combinedArray)
     }
@@ -144,13 +168,13 @@ const Lineups = () => {
             />
 
             <View style={lineupPanelStyles.container}>
-                <View style={{width: "50%", flexDirection: 'row', alignItems: 'center', borderRightWidth: 2, borderRightColor: 'grey'}}>
+                <View style={ [lineupPanelStyles.teamHeader, {borderRightWidth: 2, borderRightColor: 'grey'}]}>
                     <Image source={homeTeamInfo.logo} 
                     style={lineupPanelStyles.teamLogo}/>
                     <Text style={lineupPanelStyles.teamName}>{homeTeamInfo.abbreviation}</Text>
                 </View>
 
-                <View style={{width: "50%", flexDirection: 'row', alignItems: 'center'}}>
+                <View style={[lineupPanelStyles.teamHeader]}>
                     <Image source={awayTeamInfo.logo} 
                     style={lineupPanelStyles.teamLogo}/>
                     <Text style={lineupPanelStyles.teamName}>{awayTeamInfo.abbreviation}</Text>
@@ -164,9 +188,11 @@ const Lineups = () => {
             hometeamPlayer={item.hometeamPlayer}
             hometeamPlayerPosition={item.hometeamPlayerPosition}
             hometeamPlayerNum={item.hometeamPlayerNum}
+            isHomePlayerCaptain={item.isHomePlayerCaptain}
             awayteamPlayer={item.awayteamPlayer}
             awayteamPlayerPosition={item.awayteamPlayerPosition}
-            awayteamPlayerNum={item.awayteamPlayerNum}/>}
+            awayteamPlayerNum={item.awayteamPlayerNum}
+            isAwayPlayerCaptain={item.isAwayPlayerCaptain}/>}
             />
 
         </View>
@@ -177,21 +203,40 @@ type LineupPlayerPanelProps = {
     hometeamPlayer: string,
     hometeamPlayerPosition: string,
     hometeamPlayerNum: string,
+    isHomePlayerCaptain: boolean,
     awayteamPlayer: string,
     awayteamPlayerPosition: string,
     awayteamPlayerNum: string,
+    isAwayPlayerCaptain: boolean,
 }
 
 
-export const LineupPlayerPanel = ({ hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum,
-     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum }: LineupPlayerPanelProps) => {
+export const LineupPlayerPanel = ({ hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum, isHomePlayerCaptain,
+     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain }: LineupPlayerPanelProps) => {
 
-    return(
-        <View style={lineupPanelStyles.container}>
-            <Text style={{width: "50%", backgroundColor: 'red'}}>{hometeamPlayerNum} : {hometeamPlayer}</Text>
-            <Text style={{width: "50%", backgroundColor: 'yellow'}}>{awayteamPlayerNum} : {awayteamPlayer}</Text>
-        </View>
-    )
+    const homePlayerWeight = (isHomePlayerCaptain) ? ('600'):('300');
+    const awayPlayerWeight = (isAwayPlayerCaptain) ? ('600'):('300');
+
+    const homeCaptainText = (isHomePlayerCaptain) ? ('(c)'):('');
+    const awayCaptainText = (isAwayPlayerCaptain) ? ('(c)'):('');
+
+
+    if (hometeamPlayer === "Substitutes") {
+        return (
+            <View style={lineupPanelStyles.container}>
+                <Text style={[lineupPanelStyles.substitutesHeader, {borderRightColor: 'grey', borderRightWidth: 2}]}>{hometeamPlayer}</Text>
+                <Text style={[lineupPanelStyles.substitutesHeader]}>{awayteamPlayer}</Text>
+            </View>
+        )
+    }
+    else {
+        return (
+            <View style={lineupPanelStyles.container}>
+                <Text style={[lineupPanelStyles.playerInfo, {fontWeight: homePlayerWeight, borderRightColor: 'grey', borderRightWidth: 2}]}>{hometeamPlayerNum} : {hometeamPlayer} {homeCaptainText}</Text>
+                <Text style={[lineupPanelStyles.playerInfo, {fontWeight: awayPlayerWeight}]}>{awayteamPlayerNum} : {awayteamPlayer} {awayCaptainText}</Text>
+            </View>
+        )
+    }
 }
 
 type FetchDataButtonProps = {

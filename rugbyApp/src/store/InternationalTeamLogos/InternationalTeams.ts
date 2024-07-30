@@ -21,6 +21,8 @@ export const SamoaLogo = require('@/store/InternationalTeamLogos/Logo_Samoa_Rugb
 export const RomaniaLogo = require('@/store/InternationalTeamLogos/Romania_national_rugby_union_team_logo.png')
 export const SpainLogo = require('@/store/InternationalTeamLogos/Spain_Rugby_logo.png')
 export const UruguayLogo = require('@/store/InternationalTeamLogos/Uruguay_Los_teros_logo.png')
+export const RussiaLogo = require('@/store/InternationalTeamLogos/Russia_Rugby_Logo.png')
+
 export const BALionsLogo = require('@/store/InternationalTeamLogos/British_&_Irish_Lions_logo.png')
 
 export const DefaultLogo = require('@/store/InternationalTeamLogos/Default_Team_Logo.png')

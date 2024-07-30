@@ -1,8 +1,9 @@
 import { colors, fontSize } from "@/constants/tokens";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
+import { summaryPanelStyles } from "@/styles";
 
 export type MatchInfo = {
     homeTeamName: string,
@@ -99,23 +100,28 @@ const MatchSummary = () => {
             onPressButton={handlePressFetchData}
             />
 
-            <GameInfoPanel matchInfoArray={matchInfoArray} />
+            <GameInfoPanel 
+            matchInfoArray={matchInfoArray}
+            matchID={id} />
 
         </View>
     )
 }
 
 type GameInfoPanelProps = {
-	matchInfoArray: MatchInfo[] | undefined
+	matchInfoArray: MatchInfo[] | undefined,
+    matchID: string | string[] | undefined,
 }
 
-export const GameInfoPanel = ({ matchInfoArray}: GameInfoPanelProps) => {
+export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) => {
 
     if(matchInfoArray == undefined) return
 
     return (
-        <View>
-            <Text>{matchInfoArray[0].homeTeamName} v {matchInfoArray[0].awayTeamName}</Text>
+        <View style={[summaryPanelStyles.container]}>
+            <Text style={[summaryPanelStyles.matchName]}>
+                {matchInfoArray[0].homeTeamName} v {matchInfoArray[0].awayTeamName}
+            </Text>
 
             <Text>Game Info</Text>
             <Text>Venue: {matchInfoArray[0].matchVenue}</Text>
@@ -131,7 +137,7 @@ export const GameInfoPanel = ({ matchInfoArray}: GameInfoPanelProps) => {
             <Text>{matchInfoArray[0].homeTeamTackles} Tackles {matchInfoArray[0].awayTeamTackles}</Text>
             <Text>{matchInfoArray[0].homeTeamMetres} Metres Run {matchInfoArray[0].awayTeamMetres}</Text>
 
-            <Text>FULL MATCH STATS</Text>
+            <Link style={[summaryPanelStyles.statsLink]} href={`/(tabs)/fixtures/match/${matchID}/stats`}>Full Match Stats</Link>
             
         </View>
     )

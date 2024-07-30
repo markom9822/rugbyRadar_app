@@ -131,10 +131,12 @@ const StandingsScreen = () => {
 
         <View style={{flexDirection: 'row'}}>
             <Text style={{width: "50%"}}>{seasonName} season</Text>
-            <Text style={{width: "10%"}}>GP</Text>
-            <Text style={{width: "10%"}}>W</Text>
-            <Text style={{width: "10%"}}>D</Text>
-            <Text style={{width: "10%"}}>L</Text>
+            <Text style={{width: "8%"}}>GP</Text>
+            <Text style={{width: "8%"}}>W</Text>
+            <Text style={{width: "8%"}}>D</Text>
+            <Text style={{width: "8%"}}>L</Text>
+            <Text style={{width: "8%"}}>PD</Text>
+            <Text style={{width: "10%"}}>P</Text>
         </View>
         
         
