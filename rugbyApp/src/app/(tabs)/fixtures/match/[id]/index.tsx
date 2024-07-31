@@ -1,9 +1,10 @@
 import { colors, fontSize } from "@/constants/tokens";
 import { Link, useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
-import { summaryPanelStyles } from "@/styles";
+import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { getLeagueName } from "@/store/utils/helpers";
 
 export type MatchInfo = {
     homeTeamName: string,
@@ -73,6 +74,8 @@ const MatchSummary = () => {
     const {id} = useLocalSearchParams();
     const eventID = new String(id).substring(0,6);
     const leagueID = new String(id).slice(6)
+    const leagueName = getLeagueName(leagueID);
+
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
@@ -102,7 +105,8 @@ const MatchSummary = () => {
 
             <GameInfoPanel 
             matchInfoArray={matchInfoArray}
-            matchID={id} />
+            matchID={id}
+            leagueName={leagueName} />
 
         </View>
     )
@@ -111,11 +115,22 @@ const MatchSummary = () => {
 type GameInfoPanelProps = {
 	matchInfoArray: MatchInfo[] | undefined,
     matchID: string | string[] | undefined,
+    leagueName: string | undefined,
 }
 
-export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) => {
+export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPanelProps) => {
 
     if(matchInfoArray == undefined) return
+
+
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
+
+    const homePossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamPossession) * 100)).toString() + ' %';
+    const awayPossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamPossession) * 100)).toString() + ' %';
+
+    const matchAttendance = new Number(matchInfoArray[0].matchAttendance).toLocaleString();
 
     return (
         <View style={[summaryPanelStyles.container]}>
@@ -123,25 +138,77 @@ export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) =>
                 {matchInfoArray[0].homeTeamName} v {matchInfoArray[0].awayTeamName}
             </Text>
 
-            <Text>Game Info</Text>
-            <Text>Venue: {matchInfoArray[0].matchVenue}</Text>
-            <Text>Attendance: {matchInfoArray[0].matchAttendance}</Text>
+            <Text style={{fontWeight: 500}}>Game Info</Text>
+                <View style={{ backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5, marginBottom: 15 }}>
+                    <View style={{alignItems: 'center', flexDirection: 'column'}}>
+                        <Text style={{fontWeight: 500}}>Venue</Text>
+                        <Text style={{marginBottom: 10}}>{matchInfoArray[0].matchVenue}</Text>
+                        <Text>Attendance: {matchAttendance}</Text>
+                    </View>
+                </View>
+            <Text style={{fontWeight: 500}}>Match Stats</Text>
+            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
 
-            <Text>Match Stats</Text>
+                <View style={{ alignItems: 'center' }}>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2 }}>
+                        <View style={[summaryPanelStyles.teamInfoContainer]}>
+                            <Image style={[summaryPanelStyles.teamLogo]} 
+                            source={homeTeamInfo?.logo}/>
+                            <Text style={[summaryPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
+                        </View>
+                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "50%"}}></Text>
+                        <View style={[summaryPanelStyles.teamInfoContainer]}>
+                            <Text style={[summaryPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
+                            <Image style={[summaryPanelStyles.teamLogo]} 
+                            source={awayTeamInfo?.logo}/>
+                        </View>
+                    </View>
+                </View>
 
-            <Text>Possession:</Text>
-            <Text>{matchInfoArray[0].homeTeamName}: {matchInfoArray[0].homeTeamPossession} </Text>
-            <Text>{matchInfoArray[0].awayTeamName}: {matchInfoArray[0].awayTeamPossession} </Text>
+                <SummaryStatsPanel 
+                homeStat={homePossessionPercent}
+                awayStat={awayPossessionPercent}
+                statTitle="Possession"/>
 
-            <Text>{matchInfoArray[0].homeTeamTries} Tries {matchInfoArray[0].awayTeamTries}</Text>
-            <Text>{matchInfoArray[0].homeTeamTackles} Tackles {matchInfoArray[0].awayTeamTackles}</Text>
-            <Text>{matchInfoArray[0].homeTeamMetres} Metres Run {matchInfoArray[0].awayTeamMetres}</Text>
+                <SummaryStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamTries}
+                awayStat={matchInfoArray[0].awayTeamTries}
+                statTitle="Tries"/>
+
+                <SummaryStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamTackles}
+                awayStat={matchInfoArray[0].awayTeamTackles}
+                statTitle="Tackles"/>
+
+                <SummaryStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamMetres}
+                awayStat={matchInfoArray[0].awayTeamMetres}
+                statTitle="Metres Run"/>
+            </View>
 
             <Link style={[summaryPanelStyles.statsLink]} href={`/(tabs)/fixtures/match/${matchID}/stats`}>Full Match Stats</Link>
             
         </View>
     )
+}
 
+type SummaryStatsPanelProps = {
+	homeStat: string,
+    statTitle: string,
+    awayStat: string,
+}
+
+export const SummaryStatsPanel = ({homeStat, statTitle, awayStat}: SummaryStatsPanelProps ) => {
+
+    return (
+        <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
+                <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: '#d4d1cf'}]}>{statTitle}</Text>
+                <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
+            </View>
+        </View>
+    )
 }
 
 
@@ -169,5 +236,48 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
     </View>
     )
 }
+
+export const summaryPanelStyles = StyleSheet.create({
+    container: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    matchName: {
+        fontSize: fontSize.lg,
+        color: 'black',
+        fontWeight: 600,
+        marginBottom: 15,
+        marginTop: 10
+    },
+    teamLogo: {
+      resizeMode: 'contain',
+      width: 25,
+      height: 25,
+      minHeight: 25,
+      minWidth: 25,
+    },
+    statsPanelRow: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        textAlign: 'center',
+    },
+    teamName: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        textAlign: 'center',
+        fontWeight: 500,
+    },
+    teamInfoContainer:{
+        width: "20%",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    statsLink: {
+      fontWeight: 600,
+      color: 'blue'
+    }
+  })
 
 export default MatchSummary;

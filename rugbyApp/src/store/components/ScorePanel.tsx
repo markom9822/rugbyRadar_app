@@ -2,11 +2,6 @@ import { fixtureStyles } from "@/styles"
 import { View, Text, TouchableOpacity, Image, FlatList, Pressable, Modal } from "react-native"
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from "expo-router"
-import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
-import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
-import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
-import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
-import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 
 

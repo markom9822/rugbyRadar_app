@@ -163,29 +163,6 @@ export const lineupPanelStyles = StyleSheet.create({
     },
 })
 
-export const summaryPanelStyles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  matchName: {
-      fontSize: fontSize.lg,
-      color: 'black',
-      fontWeight: 600,
-  },
-  teamLogo: {
-    resizeMode: 'contain',
-    width: 50,
-    height: 50,
-    minHeight:50,
-    minWidth: 50,
-  },
-  statsLink: {
-    fontWeight: 400,
-    color: 'blue'
-  }
-})
 
 export const datePickerStyles = StyleSheet.create({
   centeredView: {
