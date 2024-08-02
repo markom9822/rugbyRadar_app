@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image } from "react-native"
+import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image, ScrollView, FlatList } from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
@@ -30,6 +30,8 @@ export type StatsInfo = {
     awayTeamMetres: string,
     homeTeamPasses: string,
     awayTeamPasses: string,
+    homeTeamDefendersBeaten: string,
+    awayTeamDefendersBeaten: string,
 
     homeTeamScrumsWon: string,
     awayTeamScrumsWon: string,
@@ -39,6 +41,13 @@ export type StatsInfo = {
     awayTeamLineoutsWon: string,
     homeTeamLineoutsTotal: string,
     awayTeamLineoutsTotal: string,
+
+    homeTeamPensConceded: string,
+    awayTeamPensConceded: string,
+    homeTeamYellowCards: string,
+    awayTeamYellowCards: string,
+    homeTeamRedCards: string,
+    awayTeamRedCards: string,
 
 }
 
@@ -71,6 +80,8 @@ export const getMatchStats = (matchStats: any) => {
     const awayTeamMetres = matchStats.boxscore.teams[1].statistics[0].stats[10].value
     const homeTeamPasses = matchStats.boxscore.teams[0].statistics[0].stats[13].value
     const awayTeamPasses = matchStats.boxscore.teams[1].statistics[0].stats[13].value
+    const homeTeamDefendersBeaten = matchStats.boxscore.teams[0].statistics[0].stats[2].value
+    const awayTeamDefendersBeaten = matchStats.boxscore.teams[1].statistics[0].stats[2].value
 
     const homeTeamScrumsWon = matchStats.boxscore.teams[0].statistics[0].stats[26].value
     const awayTeamScrumsWon = matchStats.boxscore.teams[1].statistics[0].stats[26].value
@@ -80,6 +91,13 @@ export const getMatchStats = (matchStats: any) => {
     const awayTeamLineoutsWon = matchStats.boxscore.teams[1].statistics[0].stats[6].value
     const homeTeamLineoutsTotal = matchStats.boxscore.teams[0].statistics[0].stats[30].value
     const awayTeamLineoutsTotal = matchStats.boxscore.teams[1].statistics[0].stats[30].value
+
+    const homeTeamPensConceded = matchStats.boxscore.teams[0].statistics[0].stats[18].value
+    const awayTeamPensConceded = matchStats.boxscore.teams[1].statistics[0].stats[18].value
+    const homeTeamYellowCards = matchStats.boxscore.teams[0].statistics[0].stats[34].value
+    const awayTeamYellowCards = matchStats.boxscore.teams[1].statistics[0].stats[34].value
+    const homeTeamRedCards = matchStats.boxscore.teams[0].statistics[0].stats[21].value
+    const awayTeamRedCards = matchStats.boxscore.teams[1].statistics[0].stats[21].value
 
     const newArray = [
         {
@@ -105,6 +123,8 @@ export const getMatchStats = (matchStats: any) => {
             awayTeamMetres: awayTeamMetres,
             homeTeamPasses: homeTeamPasses,
             awayTeamPasses: awayTeamPasses,
+            homeTeamDefendersBeaten: homeTeamDefendersBeaten,
+            awayTeamDefendersBeaten: awayTeamDefendersBeaten,
 
             homeTeamScrumsWon: homeTeamScrumsWon,
             awayTeamScrumsWon: awayTeamScrumsWon,
@@ -114,6 +134,13 @@ export const getMatchStats = (matchStats: any) => {
             awayTeamLineoutsWon: awayTeamLineoutsWon,
             homeTeamLineoutsTotal: homeTeamLineoutsTotal,
             awayTeamLineoutsTotal: awayTeamLineoutsTotal,
+
+            homeTeamPensConceded: homeTeamPensConceded,
+            awayTeamPensConceded: awayTeamPensConceded,
+            homeTeamYellowCards: homeTeamYellowCards,
+            awayTeamYellowCards: awayTeamYellowCards,
+            homeTeamRedCards: homeTeamRedCards,
+            awayTeamRedCards: awayTeamRedCards,  
         }
     ];
 
@@ -122,8 +149,71 @@ export const getMatchStats = (matchStats: any) => {
     )
 }
 
+export type HeadToHeadStatsInfo = {
+    homeTeamName: string,
+    awayTeamName: string,
+    homeTeamScore: string,
+    awayTeamScore: string,
+}
+
+export const getHeadToHeadStats = (matchStats: any) => {
+
+    var headToHeadArray = [];
+
+    const gamesLength = matchStats.headToHeadGames[0].events.length;
+
+    for (let index = 0; index < gamesLength; index++) {
+
+        const eventScore = matchStats.headToHeadGames[0].events[index].score;
+        const mainTeam = matchStats.headToHeadGames[0].team.displayName;
+        const mainTeamID = matchStats.headToHeadGames[0].team.id;
+
+        const opponentTeam = matchStats.headToHeadGames[0].events[index].opponent.displayName;
+        const opponentID = matchStats.headToHeadGames[0].events[index].opponent.id;
+
+        const homeTeamID = matchStats.headToHeadGames[0].events[index].homeTeamId;
+        const homeTeamScore = matchStats.headToHeadGames[0].events[index].homeTeamScore;
+        const awayTeamScore = matchStats.headToHeadGames[0].events[index].awayTeamScore;
+
+        var homeTeam;
+        var awayTeam;
+
+        if(homeTeamID === mainTeamID)
+        {
+            homeTeam = mainTeam;
+            awayTeam = opponentTeam;
+        }
+        else
+        {
+            homeTeam = opponentTeam;
+            awayTeam = mainTeam;
+        }
+
+
+        console.info(eventScore)
+
+        const newArray = {
+                homeTeamName: homeTeam,
+                awayTeamName: awayTeam,
+                homeTeamScore: homeTeamScore,
+                awayTeamScore: awayTeamScore,
+        };
+    
+
+        headToHeadArray.push(newArray)
+    }
+
+    return(
+        headToHeadArray
+    )
+
+
+}
+
 const MatchSummary = () => {
     const [matchStatsArray, setMatchStatsArray] = useState<StatsInfo[] | undefined>();
+    const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<HeadToHeadStatsInfo[] | undefined>();
+
 
     const {id} = useGlobalSearchParams();
 
@@ -141,11 +231,14 @@ const MatchSummary = () => {
         console.info(statsDetails.boxscore.teams[0].team.displayName)
 
         const matchStats = getMatchStats(statsDetails)
+        const headToHeadStats = getHeadToHeadStats(statsDetails)
+
         setMatchStatsArray(matchStats)
+        setHeadToHeadStatsArray(headToHeadStats)
     }
 
     return(
-        <View>
+        <View style={{flex: 1}}>
             <Text>Event ID: {eventID}</Text>
             <Text>League ID: {leagueID}</Text>
 
@@ -156,12 +249,21 @@ const MatchSummary = () => {
             }}
             onPressButton={handlePressFetchData}
             />
-            
-            <StatsPanel
-            matchInfoArray={matchStatsArray}
-            matchID={id}
-            leagueName={leagueName} />
 
+ 
+            <ScrollView >
+                <StatsPanel
+                matchInfoArray={matchStatsArray}
+                matchID={id}
+                leagueName={leagueName} />
+
+                <HeadToHeadPanel 
+                headToHeadArray={headToHeadStatsArray}
+                matchID={id}
+                leagueName={leagueName}
+                />
+            </ScrollView>
+            
         </View>
     )
 }
@@ -190,8 +292,6 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     return (
         <View style={[statsPanelStyles.container]}>
 
-            <Text style={{fontWeight: 500, marginTop: 10}}>Match Stats</Text>
-
             <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
 
                 <View style={{ alignItems: 'center' }}>
@@ -209,6 +309,9 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                         </View>
                     </View>
                 </View>
+
+                <GameStatsTitlePanel 
+                statTitle="Match Events"/>
 
                 <GameStatsPanel 
                 homeStat={homePossessionPercent}
@@ -228,12 +331,15 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                 <GameStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamConversions}
                 awayStat={matchInfoArray[0].awayTeamConversions}
-                statTitle="Conversions"/>
+                statTitle="Conversion Goals"/>
 
                 <GameStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamPenalties}
                 awayStat={matchInfoArray[0].awayTeamPenalties}
-                statTitle="Penalties"/>
+                statTitle="Penalty Goals"/>
+
+                <GameStatsTitlePanel 
+                statTitle="Defence"/>
 
                 <GameStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamTackles}
@@ -244,6 +350,9 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                 homeStat={matchInfoArray[0].homeTeamMissedTackles}
                 awayStat={matchInfoArray[0].awayTeamMissedTackles}
                 statTitle="Missed Tackles"/>
+
+                <GameStatsTitlePanel 
+                statTitle="Attack"/>
 
                 <GameStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamMetres}
@@ -256,6 +365,14 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                 statTitle="Passes"/>
 
                 <GameStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamDefendersBeaten}
+                awayStat={matchInfoArray[0].awayTeamDefendersBeaten}
+                statTitle="Defenders Beaten"/>
+
+                <GameStatsTitlePanel 
+                statTitle="Set Piece"/>
+
+                <GameStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamScrumsWon + '/' + matchInfoArray[0].homeTeamScrumsTotal}
                 awayStat={matchInfoArray[0].awayTeamScrumsWon + '/' + matchInfoArray[0].awayTeamScrumsTotal}
                 statTitle="Scrums Won"/>
@@ -264,6 +381,25 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                 homeStat={matchInfoArray[0].homeTeamLineoutsWon + '/' + matchInfoArray[0].homeTeamLineoutsTotal}
                 awayStat={matchInfoArray[0].awayTeamLineoutsWon + '/' + matchInfoArray[0].awayTeamLineoutsTotal}
                 statTitle="Lineouts Won"/>
+
+                <GameStatsTitlePanel 
+                statTitle="Discipline"/>
+
+                <GameStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamPensConceded}
+                awayStat={matchInfoArray[0].awayTeamPensConceded}
+                statTitle="Pen's Conceded"/>
+
+                <GameStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamYellowCards}
+                awayStat={matchInfoArray[0].awayTeamYellowCards}
+                statTitle="Yellow Cards"/>
+
+                <GameStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamRedCards}
+                awayStat={matchInfoArray[0].awayTeamRedCards}
+                statTitle="Red Cards"/>
+
             </View>
             
         </View>
@@ -288,6 +424,84 @@ export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelPr
         </View>
     )
 }
+
+type GameStatsTitleProps = {
+    statTitle: string,
+}
+
+export const GameStatsTitlePanel = ({statTitle}: GameStatsTitleProps ) => {
+
+    return (
+        <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                <Text style={[statsPanelStyles.statsTitle]}>{statTitle}</Text>
+            </View>
+        </View>
+    )
+}
+
+type HeadToHeadPanelProps = {
+	headToHeadArray: HeadToHeadStatsInfo[] | undefined,
+    matchID: string | string[] | undefined,
+    leagueName: string | undefined,
+}
+
+export const HeadToHeadPanel = ({ headToHeadArray, matchID, leagueName}: HeadToHeadPanelProps) => {
+
+    if(headToHeadArray === undefined) return
+
+    return (
+        <View style={[statsPanelStyles.container]}>
+            <Text>Head to Head Matches</Text>
+
+            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+
+            {headToHeadArray.map((match, index) => {
+                return (
+                    <HeadToHeadItem
+                    key={index}
+                    leagueName={leagueName}
+                    homeTeam={match.homeTeamName}
+                    awayTeam={match.awayTeamName}
+                    homeTeamScore={match.homeTeamScore}
+                    awayTeamScore={match.awayTeamScore}
+                     />
+                );
+            })}
+
+            </View>
+        </View>
+    )
+}
+
+type HeadToHeadItemProps = {
+    leagueName: string | undefined,
+	homeTeam: string,
+    awayTeam: string,
+    homeTeamScore: string,
+    awayTeamScore: string,
+
+}
+
+export const HeadToHeadItem = ({leagueName, homeTeam, awayTeam, homeTeamScore, awayTeamScore}: HeadToHeadItemProps) => {
+
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
+
+    return (
+        <View style={{flexDirection: 'row'}}>
+            <Text>{homeTeamInfo?.abbreviation}</Text>
+
+            <Text>{homeTeamScore}</Text>
+            <Text>{awayTeamScore}</Text>
+
+            <Text>{awayTeamInfo?.abbreviation}</Text>
+        </View>
+    )
+
+}
+
 
 type FetchDataButtonProps = {
 	style?: ViewStyle
@@ -320,30 +534,33 @@ export const statsPanelStyles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center'
     },
-    matchName: {
-        fontSize: fontSize.lg,
-        color: 'black',
-        fontWeight: 600,
-        marginBottom: 15,
-        marginTop: 10
-    },
     teamLogo: {
       resizeMode: 'contain',
-      width: 25,
-      height: 25,
-      minHeight: 25,
-      minWidth: 25,
+      width: 30,
+      height: 30,
+      minHeight: 30,
+      minWidth: 30,
     },
     statsPanelRow: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
     },
+    statsTitle: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        textAlign: 'center',
+        fontWeight: 500, 
+        borderBottomColor: 'grey',
+        borderBottomWidth: 2,
+        width : "90%",
+    },
     teamName: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
+        fontSize: fontSize.base
     },
     teamInfoContainer:{
         width: "20%",
