@@ -5,155 +5,15 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { useState } from "react";
+import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
+import { getFullMatchStats } from "@/store/utils/getFullMatchStats";
 
-
-export type StatsInfo = {
-    homeTeamName: string,
-    awayTeamName: string,
-    homeTeamPossession: string,
-    awayTeamPossession: string,
-    homeTeamTerritory: string,
-    awayTeamTerritory: string,
-    homeTeamTries: string,
-    awayTeamTries: string,
-    homeTeamConversions: string,
-    awayTeamConversions: string,
-    homeTeamPenalties: string,
-    awayTeamPenalties: string,
-
-    homeTeamTackles: string,
-    awayTeamTackles: string,
-    homeTeamMissedTackles: string,
-    awayTeamMissedTackles: string,
-
-    homeTeamMetres: string,
-    awayTeamMetres: string,
-    homeTeamPasses: string,
-    awayTeamPasses: string,
-    homeTeamDefendersBeaten: string,
-    awayTeamDefendersBeaten: string,
-
-    homeTeamScrumsWon: string,
-    awayTeamScrumsWon: string,
-    homeTeamScrumsTotal: string,
-    awayTeamScrumsTotal: string,
-    homeTeamLineoutsWon: string,
-    awayTeamLineoutsWon: string,
-    homeTeamLineoutsTotal: string,
-    awayTeamLineoutsTotal: string,
-
-    homeTeamPensConceded: string,
-    awayTeamPensConceded: string,
-    homeTeamYellowCards: string,
-    awayTeamYellowCards: string,
-    homeTeamRedCards: string,
-    awayTeamRedCards: string,
-
-}
-
-export const getMatchStats = (matchStats: any) => {
-
-    const homeTeamName = matchStats.boxscore.teams[0].team.displayName;
-    const awayTeamName = matchStats.boxscore.teams[1].team.displayName;
-
-    const homeTeamPossession = matchStats.boxscore.teams[0].statistics[0].stats[20].value;
-    const awayTeamPossession = matchStats.boxscore.teams[1].statistics[0].stats[20].value;
-
-    const homeTeamTerritory = matchStats.boxscore.teams[0].statistics[0].stats[28].value;
-    const awayTeamTerritory = matchStats.boxscore.teams[1].statistics[0].stats[28].value;
-
-    const homeTeamTries = matchStats.boxscore.teams[0].statistics[0].stats[31].value
-    const awayTeamTries = matchStats.boxscore.teams[1].statistics[0].stats[31].value
-
-    const homeTeamConversions = matchStats.boxscore.teams[0].statistics[0].stats[1].value
-    const awayTeamConversions = matchStats.boxscore.teams[1].statistics[0].stats[1].value
-
-    const homeTeamPenalties = matchStats.boxscore.teams[0].statistics[0].stats[19].value
-    const awayTeamPenalties = matchStats.boxscore.teams[1].statistics[0].stats[19].value
-
-    const homeTeamTackles = matchStats.boxscore.teams[0].statistics[0].stats[27].value
-    const awayTeamTackles = matchStats.boxscore.teams[1].statistics[0].stats[27].value
-    const homeTeamMissedTackles = matchStats.boxscore.teams[0].statistics[0].stats[11].value
-    const awayTeamMissedTackles = matchStats.boxscore.teams[1].statistics[0].stats[11].value
-
-    const homeTeamMetres = matchStats.boxscore.teams[0].statistics[0].stats[10].value
-    const awayTeamMetres = matchStats.boxscore.teams[1].statistics[0].stats[10].value
-    const homeTeamPasses = matchStats.boxscore.teams[0].statistics[0].stats[13].value
-    const awayTeamPasses = matchStats.boxscore.teams[1].statistics[0].stats[13].value
-    const homeTeamDefendersBeaten = matchStats.boxscore.teams[0].statistics[0].stats[2].value
-    const awayTeamDefendersBeaten = matchStats.boxscore.teams[1].statistics[0].stats[2].value
-
-    const homeTeamScrumsWon = matchStats.boxscore.teams[0].statistics[0].stats[26].value
-    const awayTeamScrumsWon = matchStats.boxscore.teams[1].statistics[0].stats[26].value
-    const homeTeamScrumsTotal = matchStats.boxscore.teams[0].statistics[0].stats[25].value
-    const awayTeamScrumsTotal = matchStats.boxscore.teams[1].statistics[0].stats[25].value
-    const homeTeamLineoutsWon = matchStats.boxscore.teams[0].statistics[0].stats[6].value
-    const awayTeamLineoutsWon = matchStats.boxscore.teams[1].statistics[0].stats[6].value
-    const homeTeamLineoutsTotal = matchStats.boxscore.teams[0].statistics[0].stats[30].value
-    const awayTeamLineoutsTotal = matchStats.boxscore.teams[1].statistics[0].stats[30].value
-
-    const homeTeamPensConceded = matchStats.boxscore.teams[0].statistics[0].stats[18].value
-    const awayTeamPensConceded = matchStats.boxscore.teams[1].statistics[0].stats[18].value
-    const homeTeamYellowCards = matchStats.boxscore.teams[0].statistics[0].stats[34].value
-    const awayTeamYellowCards = matchStats.boxscore.teams[1].statistics[0].stats[34].value
-    const homeTeamRedCards = matchStats.boxscore.teams[0].statistics[0].stats[21].value
-    const awayTeamRedCards = matchStats.boxscore.teams[1].statistics[0].stats[21].value
-
-    const newArray = [
-        {
-            homeTeamName: homeTeamName,
-            awayTeamName: awayTeamName,
-            homeTeamPossession: homeTeamPossession,
-            awayTeamPossession: awayTeamPossession,
-            homeTeamTerritory: homeTeamTerritory,
-            awayTeamTerritory: awayTeamTerritory,
-            homeTeamTries: homeTeamTries,
-            awayTeamTries: awayTeamTries,
-            homeTeamConversions: homeTeamConversions,
-            awayTeamConversions: awayTeamConversions,
-            homeTeamPenalties: homeTeamPenalties,
-            awayTeamPenalties: awayTeamPenalties,
-
-            homeTeamTackles: homeTeamTackles,
-            awayTeamTackles: awayTeamTackles,
-            homeTeamMissedTackles: homeTeamMissedTackles,
-            awayTeamMissedTackles: awayTeamMissedTackles,
-
-            homeTeamMetres: homeTeamMetres,
-            awayTeamMetres: awayTeamMetres,
-            homeTeamPasses: homeTeamPasses,
-            awayTeamPasses: awayTeamPasses,
-            homeTeamDefendersBeaten: homeTeamDefendersBeaten,
-            awayTeamDefendersBeaten: awayTeamDefendersBeaten,
-
-            homeTeamScrumsWon: homeTeamScrumsWon,
-            awayTeamScrumsWon: awayTeamScrumsWon,
-            homeTeamScrumsTotal: homeTeamScrumsTotal,
-            awayTeamScrumsTotal: awayTeamScrumsTotal,
-            homeTeamLineoutsWon: homeTeamLineoutsWon,
-            awayTeamLineoutsWon: awayTeamLineoutsWon,
-            homeTeamLineoutsTotal: homeTeamLineoutsTotal,
-            awayTeamLineoutsTotal: awayTeamLineoutsTotal,
-
-            homeTeamPensConceded: homeTeamPensConceded,
-            awayTeamPensConceded: awayTeamPensConceded,
-            homeTeamYellowCards: homeTeamYellowCards,
-            awayTeamYellowCards: awayTeamYellowCards,
-            homeTeamRedCards: homeTeamRedCards,
-            awayTeamRedCards: awayTeamRedCards,  
-        }
-    ];
-
-    return(
-        newArray
-    )
-}
-
-export type HeadToHeadStatsInfo = {
+export type TeamEventStatsInfo = {
     homeTeamName: string,
     awayTeamName: string,
     homeTeamScore: string,
     awayTeamScore: string,
+    matchDate: string,
 }
 
 export const getHeadToHeadStats = (matchStats: any) => {
@@ -165,6 +25,8 @@ export const getHeadToHeadStats = (matchStats: any) => {
     for (let index = 0; index < gamesLength; index++) {
 
         const eventScore = matchStats.headToHeadGames[0].events[index].score;
+        const matchDate = matchStats.headToHeadGames[0].events[index].gameDate;
+
         const mainTeam = matchStats.headToHeadGames[0].team.displayName;
         const mainTeamID = matchStats.headToHeadGames[0].team.id;
 
@@ -197,6 +59,7 @@ export const getHeadToHeadStats = (matchStats: any) => {
                 awayTeamName: awayTeam,
                 homeTeamScore: homeTeamScore,
                 awayTeamScore: awayTeamScore,
+                matchDate: matchDate,
         };
     
 
@@ -206,13 +69,71 @@ export const getHeadToHeadStats = (matchStats: any) => {
     return(
         headToHeadArray
     )
+}
+
+export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
+
+    var teamFormArray = [];
+
+    const gamesLength = matchStats.lastFiveGames[teamIndex].events.length;
+
+    for (let index = 0; index < gamesLength; index++) {
+
+        const eventScore = matchStats.lastFiveGames[teamIndex].events[index].score;
+        const matchDate = matchStats.lastFiveGames[teamIndex].events[index].gameDate;
+
+        const mainTeam = matchStats.lastFiveGames[teamIndex].team.displayName;
+        const mainTeamID = matchStats.lastFiveGames[teamIndex].team.id;
+
+        const opponentTeam = matchStats.lastFiveGames[teamIndex].events[index].opponent.displayName;
+        const opponentID = matchStats.lastFiveGames[teamIndex].events[index].opponent.id;
+
+        const homeTeamID = matchStats.lastFiveGames[teamIndex].events[index].homeTeamId;
+        const homeTeamScore = matchStats.lastFiveGames[teamIndex].events[index].homeTeamScore;
+        const awayTeamScore = matchStats.lastFiveGames[teamIndex].events[index].awayTeamScore;
+
+        var homeTeam;
+        var awayTeam;
+
+        if(homeTeamID === mainTeamID)
+        {
+            homeTeam = mainTeam;
+            awayTeam = opponentTeam;
+        }
+        else
+        {
+            homeTeam = opponentTeam;
+            awayTeam = mainTeam;
+        }
 
 
+        console.info(eventScore)
+
+        const newArray = {
+                homeTeamName: homeTeam,
+                awayTeamName: awayTeam,
+                homeTeamScore: homeTeamScore,
+                awayTeamScore: awayTeamScore,
+                matchDate: matchDate,
+        };
+    
+
+        teamFormArray.push(newArray)
+    }
+
+    return(
+        teamFormArray
+    )
 }
 
 const MatchSummary = () => {
     const [matchStatsArray, setMatchStatsArray] = useState<StatsInfo[] | undefined>();
-    const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<HeadToHeadStatsInfo[] | undefined>();
+    const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+    const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+    const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+
+    const [mainTeamName, setMainTeamName] = useState<string | undefined>();
+    const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
 
 
     const {id} = useGlobalSearchParams();
@@ -230,11 +151,18 @@ const MatchSummary = () => {
 
         console.info(statsDetails.boxscore.teams[0].team.displayName)
 
-        const matchStats = getMatchStats(statsDetails)
+        const matchStats = getFullMatchStats(statsDetails)
         const headToHeadStats = getHeadToHeadStats(statsDetails)
+        const mainTeamFormStats = getTeamFormStats(statsDetails, 0)
+        const opponentTeamFormStats = getTeamFormStats(statsDetails, 1)
 
         setMatchStatsArray(matchStats)
         setHeadToHeadStatsArray(headToHeadStats)
+        setMainTeamFormStatsArray(mainTeamFormStats)
+        setOpponentTeamFormStatsArray(opponentTeamFormStats)
+
+        setMainTeamName(statsDetails.boxscore.teams[0].team.displayName)
+        setOpponentTeamName(statsDetails.boxscore.teams[1].team.displayName)
     }
 
     return(
@@ -250,213 +178,58 @@ const MatchSummary = () => {
             onPressButton={handlePressFetchData}
             />
 
- 
             <ScrollView >
                 <StatsPanel
                 matchInfoArray={matchStatsArray}
                 matchID={id}
                 leagueName={leagueName} />
 
-                <HeadToHeadPanel 
-                headToHeadArray={headToHeadStatsArray}
+                <TeamEventsPanel 
+                teamEventArray={headToHeadStatsArray}
                 matchID={id}
                 leagueName={leagueName}
+                panelTitle="Head to Head Matches"
                 />
+
+                <TeamEventsPanel 
+                teamEventArray={mainTeamFormStatsArray}
+                matchID={id}
+                leagueName={leagueName}
+                panelTitle={`${mainTeamName} Form`}
+                />
+
+                <TeamEventsPanel 
+                teamEventArray={opponentTeamFormStatsArray}
+                matchID={id}
+                leagueName={leagueName}
+                panelTitle={`${opponentTeamName} Form`}
+                />
+
             </ScrollView>
             
         </View>
     )
 }
 
-type StatsPanelProps = {
-	matchInfoArray: StatsInfo[] | undefined,
+
+type TeamEventPanelProps = {
+	teamEventArray: TeamEventStatsInfo[] | undefined,
     matchID: string | string[] | undefined,
     leagueName: string | undefined,
+    panelTitle: string,
 }
 
-export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelProps) => {
+export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle}: TeamEventPanelProps) => {
 
-    if(matchInfoArray == undefined) return
-
-    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
-    const homeTeamInfo = homeAwayInfo?.homeInfo;
-    const awayTeamInfo = homeAwayInfo?.awayInfo;
-
-    const homePossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamPossession) * 100)).toString() + ' %';
-    const awayPossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamPossession) * 100)).toString() + ' %';
-
-    const homeTerritoryPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
-    const awayTerritoryPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
-
+    if(teamEventArray === undefined) return
 
     return (
-        <View style={[statsPanelStyles.container]}>
+        <View style={[headToHeadPanelStyles.container]}>
+            <Text>{panelTitle}</Text>
 
             <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
 
-                <View style={{ alignItems: 'center' }}>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2 }}>
-                        <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Image style={[statsPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.logo}/>
-                            <Text style={[statsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
-                        </View>
-                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "50%"}}></Text>
-                        <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Text style={[statsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
-                            <Image style={[statsPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.logo}/>
-                        </View>
-                    </View>
-                </View>
-
-                <GameStatsTitlePanel 
-                statTitle="Match Events"/>
-
-                <GameStatsPanel 
-                homeStat={homePossessionPercent}
-                awayStat={awayPossessionPercent}
-                statTitle="Possession"/>
-                
-                <GameStatsPanel 
-                homeStat={homeTerritoryPercent}
-                awayStat={awayTerritoryPercent}
-                statTitle="Territory"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTries}
-                awayStat={matchInfoArray[0].awayTeamTries}
-                statTitle="Tries"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamConversions}
-                awayStat={matchInfoArray[0].awayTeamConversions}
-                statTitle="Conversion Goals"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamPenalties}
-                awayStat={matchInfoArray[0].awayTeamPenalties}
-                statTitle="Penalty Goals"/>
-
-                <GameStatsTitlePanel 
-                statTitle="Defence"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTackles}
-                awayStat={matchInfoArray[0].awayTeamTackles}
-                statTitle="Tackles"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamMissedTackles}
-                awayStat={matchInfoArray[0].awayTeamMissedTackles}
-                statTitle="Missed Tackles"/>
-
-                <GameStatsTitlePanel 
-                statTitle="Attack"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamMetres}
-                awayStat={matchInfoArray[0].awayTeamMetres}
-                statTitle="Metres Run"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamPasses}
-                awayStat={matchInfoArray[0].awayTeamPasses}
-                statTitle="Passes"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamDefendersBeaten}
-                awayStat={matchInfoArray[0].awayTeamDefendersBeaten}
-                statTitle="Defenders Beaten"/>
-
-                <GameStatsTitlePanel 
-                statTitle="Set Piece"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamScrumsWon + '/' + matchInfoArray[0].homeTeamScrumsTotal}
-                awayStat={matchInfoArray[0].awayTeamScrumsWon + '/' + matchInfoArray[0].awayTeamScrumsTotal}
-                statTitle="Scrums Won"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamLineoutsWon + '/' + matchInfoArray[0].homeTeamLineoutsTotal}
-                awayStat={matchInfoArray[0].awayTeamLineoutsWon + '/' + matchInfoArray[0].awayTeamLineoutsTotal}
-                statTitle="Lineouts Won"/>
-
-                <GameStatsTitlePanel 
-                statTitle="Discipline"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamPensConceded}
-                awayStat={matchInfoArray[0].awayTeamPensConceded}
-                statTitle="Pen's Conceded"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamYellowCards}
-                awayStat={matchInfoArray[0].awayTeamYellowCards}
-                statTitle="Yellow Cards"/>
-
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamRedCards}
-                awayStat={matchInfoArray[0].awayTeamRedCards}
-                statTitle="Red Cards"/>
-
-            </View>
-            
-        </View>
-    )
-}
-
-type GameStatsPanelProps = {
-	homeStat: string,
-    statTitle: string,
-    awayStat: string,
-}
-
-export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelProps ) => {
-
-    return (
-        <View style={{alignItems: 'center'}}>
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: '#d4d1cf'}]}>{statTitle}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
-            </View>
-        </View>
-    )
-}
-
-type GameStatsTitleProps = {
-    statTitle: string,
-}
-
-export const GameStatsTitlePanel = ({statTitle}: GameStatsTitleProps ) => {
-
-    return (
-        <View style={{alignItems: 'center'}}>
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={[statsPanelStyles.statsTitle]}>{statTitle}</Text>
-            </View>
-        </View>
-    )
-}
-
-type HeadToHeadPanelProps = {
-	headToHeadArray: HeadToHeadStatsInfo[] | undefined,
-    matchID: string | string[] | undefined,
-    leagueName: string | undefined,
-}
-
-export const HeadToHeadPanel = ({ headToHeadArray, matchID, leagueName}: HeadToHeadPanelProps) => {
-
-    if(headToHeadArray === undefined) return
-
-    return (
-        <View style={[statsPanelStyles.container]}>
-            <Text>Head to Head Matches</Text>
-
-            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
-
-            {headToHeadArray.map((match, index) => {
+            {teamEventArray.map((match, index) => {
                 return (
                     <HeadToHeadItem
                     key={index}
@@ -465,6 +238,7 @@ export const HeadToHeadPanel = ({ headToHeadArray, matchID, leagueName}: HeadToH
                     awayTeam={match.awayTeamName}
                     homeTeamScore={match.homeTeamScore}
                     awayTeamScore={match.awayTeamScore}
+                    matchDate={match.matchDate}
                      />
                 );
             })}
@@ -474,34 +248,46 @@ export const HeadToHeadPanel = ({ headToHeadArray, matchID, leagueName}: HeadToH
     )
 }
 
+
 type HeadToHeadItemProps = {
     leagueName: string | undefined,
 	homeTeam: string,
     awayTeam: string,
     homeTeamScore: string,
     awayTeamScore: string,
+    matchDate: string,
 
 }
 
-export const HeadToHeadItem = ({leagueName, homeTeam, awayTeam, homeTeamScore, awayTeamScore}: HeadToHeadItemProps) => {
+export const HeadToHeadItem = ({leagueName, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate}: HeadToHeadItemProps) => {
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
+    const formattedDate = new Date(matchDate).toLocaleDateString('en-GB')
+
+
+    if(homeTeamInfo == undefined) return
+    if(awayTeamInfo == undefined) return
+
     return (
         <View style={{flexDirection: 'row'}}>
-            <Text>{homeTeamInfo?.abbreviation}</Text>
+            <Image
+            style={[headToHeadPanelStyles.teamLogo]}
+            source={homeTeamInfo.logo} />
+            <Text style={[headToHeadPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
 
-            <Text>{homeTeamScore}</Text>
-            <Text>{awayTeamScore}</Text>
+            <Text style={[headToHeadPanelStyles.matchScore]}>{homeTeamScore} - {awayTeamScore}</Text>
 
-            <Text>{awayTeamInfo?.abbreviation}</Text>
+            <Text style={[headToHeadPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
+            <Image
+            style={[headToHeadPanelStyles.teamLogo]}
+            source={awayTeamInfo.logo} />
+            <Text style={[headToHeadPanelStyles.matchDate]}>{formattedDate}</Text>
         </View>
     )
-
 }
-
 
 type FetchDataButtonProps = {
 	style?: ViewStyle
@@ -528,7 +314,7 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
     )
 }
 
-export const statsPanelStyles = StyleSheet.create({
+export const headToHeadPanelStyles = StyleSheet.create({
     container: {
       flexDirection: 'column',
       justifyContent: 'center',
@@ -536,31 +322,28 @@ export const statsPanelStyles = StyleSheet.create({
     },
     teamLogo: {
       resizeMode: 'contain',
-      width: 30,
-      height: 30,
-      minHeight: 30,
-      minWidth: 30,
+      width: 25,
+      height: 25,
+      minHeight: 25,
+      minWidth: 25,
     },
-    statsPanelRow: {
+    matchScore: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
     },
-    statsTitle: {
+    matchDate: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
-        fontWeight: 500, 
-        borderBottomColor: 'grey',
-        borderBottomWidth: 2,
-        width : "90%",
+        fontSize: fontSize.xs,
     },
     teamName: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
-        fontSize: fontSize.base
+        fontSize: fontSize.xs
     },
     teamInfoContainer:{
         width: "20%",
