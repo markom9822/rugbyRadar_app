@@ -7,130 +7,59 @@ import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
 import { getFullMatchStats } from "@/store/utils/getFullMatchStats";
+import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
+import { getHeadToHeadStats } from "@/store/utils/getHeadToHeadStats";
+import { getTeamFormStats } from "@/store/utils/getTeamFormStats";
+import { RugbyPostsIcon } from "@/store/Icons/Icons";
 
-export type TeamEventStatsInfo = {
-    homeTeamName: string,
-    awayTeamName: string,
-    homeTeamScore: string,
-    awayTeamScore: string,
-    matchDate: string,
-}
 
-export const getHeadToHeadStats = (matchStats: any) => {
+export const getKeyEvents = (matchStats: any) => {
 
-    var headToHeadArray = [];
+    var keyEventsArray = [];
 
-    const gamesLength = matchStats.headToHeadGames[0].events.length;
+    const keyEventsLength = matchStats.header.competitions[0].details.length;
 
-    for (let index = 0; index < gamesLength; index++) {
+    for (let index = 0; index < keyEventsLength; index++) {
 
-        const eventScore = matchStats.headToHeadGames[0].events[index].score;
-        const matchDate = matchStats.headToHeadGames[0].events[index].gameDate;
+        const eventTime = matchStats.header.competitions[0].details[index].clock.displayValue;
+        const eventType = matchStats.header.competitions[0].details[index].type.text;
+        const eventPlayer = matchStats.header.competitions[0].details[index].participants[0].athlete.displayName;
 
-        const mainTeam = matchStats.headToHeadGames[0].team.displayName;
-        const mainTeamID = matchStats.headToHeadGames[0].team.id;
+        const eventIcon = RugbyPostsIcon;
 
-        const opponentTeam = matchStats.headToHeadGames[0].events[index].opponent.displayName;
-        const opponentID = matchStats.headToHeadGames[0].events[index].opponent.id;
+        const typeCheck = eventType === "try" || eventType === "conversion"
+         || eventType === "penalty goal" || eventType === "drop goal" || 
+         eventType === "yellow card" || eventType === "red card"
 
-        const homeTeamID = matchStats.headToHeadGames[0].events[index].homeTeamId;
-        const homeTeamScore = matchStats.headToHeadGames[0].events[index].homeTeamScore;
-        const awayTeamScore = matchStats.headToHeadGames[0].events[index].awayTeamScore;
+        if (typeCheck) {
 
-        var homeTeam;
-        var awayTeam;
+            const newArray = {
+                eventTime: eventTime,
+                eventType: eventType,
+                eventPlayer: eventPlayer,
+                eventIcon: eventIcon,
+            };
 
-        if(homeTeamID === mainTeamID)
-        {
-            homeTeam = mainTeam;
-            awayTeam = opponentTeam;
-        }
-        else
-        {
-            homeTeam = opponentTeam;
-            awayTeam = mainTeam;
+            keyEventsArray.push(newArray)
         }
 
-
-        console.info(eventScore)
-
-        const newArray = {
-                homeTeamName: homeTeam,
-                awayTeamName: awayTeam,
-                homeTeamScore: homeTeamScore,
-                awayTeamScore: awayTeamScore,
-                matchDate: matchDate,
-        };
-    
-
-        headToHeadArray.push(newArray)
     }
 
-    return(
-        headToHeadArray
-    )
-}
-
-export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
-
-    var teamFormArray = [];
-
-    const gamesLength = matchStats.lastFiveGames[teamIndex].events.length;
-
-    for (let index = 0; index < gamesLength; index++) {
-
-        const eventScore = matchStats.lastFiveGames[teamIndex].events[index].score;
-        const matchDate = matchStats.lastFiveGames[teamIndex].events[index].gameDate;
-
-        const mainTeam = matchStats.lastFiveGames[teamIndex].team.displayName;
-        const mainTeamID = matchStats.lastFiveGames[teamIndex].team.id;
-
-        const opponentTeam = matchStats.lastFiveGames[teamIndex].events[index].opponent.displayName;
-        const opponentID = matchStats.lastFiveGames[teamIndex].events[index].opponent.id;
-
-        const homeTeamID = matchStats.lastFiveGames[teamIndex].events[index].homeTeamId;
-        const homeTeamScore = matchStats.lastFiveGames[teamIndex].events[index].homeTeamScore;
-        const awayTeamScore = matchStats.lastFiveGames[teamIndex].events[index].awayTeamScore;
-
-        var homeTeam;
-        var awayTeam;
-
-        if(homeTeamID === mainTeamID)
-        {
-            homeTeam = mainTeam;
-            awayTeam = opponentTeam;
-        }
-        else
-        {
-            homeTeam = opponentTeam;
-            awayTeam = mainTeam;
-        }
-
-
-        console.info(eventScore)
-
-        const newArray = {
-                homeTeamName: homeTeam,
-                awayTeamName: awayTeam,
-                homeTeamScore: homeTeamScore,
-                awayTeamScore: awayTeamScore,
-                matchDate: matchDate,
-        };
-    
-
-        teamFormArray.push(newArray)
-    }
 
     return(
-        teamFormArray
+        keyEventsArray
     )
+
 }
+
 
 const MatchSummary = () => {
     const [matchStatsArray, setMatchStatsArray] = useState<StatsInfo[] | undefined>();
     const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
     const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
     const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+
+    const [keyEventsArray, setKeyEventsArray] = useState<KeyEventsInfo[] | undefined>();
 
     const [mainTeamName, setMainTeamName] = useState<string | undefined>();
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
@@ -153,13 +82,17 @@ const MatchSummary = () => {
 
         const matchStats = getFullMatchStats(statsDetails)
         const headToHeadStats = getHeadToHeadStats(statsDetails)
+
         const mainTeamFormStats = getTeamFormStats(statsDetails, 0)
         const opponentTeamFormStats = getTeamFormStats(statsDetails, 1)
+
+        const keyEvents = getKeyEvents(statsDetails)
 
         setMatchStatsArray(matchStats)
         setHeadToHeadStatsArray(headToHeadStats)
         setMainTeamFormStatsArray(mainTeamFormStats)
         setOpponentTeamFormStatsArray(opponentTeamFormStats)
+        setKeyEventsArray(keyEvents)
 
         setMainTeamName(statsDetails.boxscore.teams[0].team.displayName)
         setOpponentTeamName(statsDetails.boxscore.teams[1].team.displayName)
@@ -184,7 +117,13 @@ const MatchSummary = () => {
                 matchID={id}
                 leagueName={leagueName} />
 
-                <TeamEventsPanel 
+                <KeyEventsPanel
+                keyEventArray={keyEventsArray}
+                matchID={id} 
+                leagueName={leagueName}
+                />
+
+                <TeamEventsPanel
                 teamEventArray={headToHeadStatsArray}
                 matchID={id}
                 leagueName={leagueName}
@@ -211,34 +150,38 @@ const MatchSummary = () => {
     )
 }
 
-
-type TeamEventPanelProps = {
-	teamEventArray: TeamEventStatsInfo[] | undefined,
-    matchID: string | string[] | undefined,
-    leagueName: string | undefined,
-    panelTitle: string,
+export type KeyEventsInfo = {
+    eventTime: string,
+    eventType: string,
+    eventPlayer: string,
+    eventIcon: any,
 }
 
-export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle}: TeamEventPanelProps) => {
+type KeyEventsPanelProps = {
+	keyEventArray: KeyEventsInfo[] | undefined,
+    matchID: string | string[] | undefined,
+    leagueName: string | undefined,
+}
 
-    if(teamEventArray === undefined) return
+export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsPanelProps) => {
+
+    if(keyEventArray === undefined) return
 
     return (
-        <View style={[headToHeadPanelStyles.container]}>
-            <Text>{panelTitle}</Text>
+        <View style={[keyEventsPanelStyles.container]}>
+            <Text>Key Events</Text>
 
             <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
 
-            {teamEventArray.map((match, index) => {
+            {keyEventArray.map((match, index) => {
                 return (
-                    <HeadToHeadItem
+                    <KeyEventItem
                     key={index}
                     leagueName={leagueName}
-                    homeTeam={match.homeTeamName}
-                    awayTeam={match.awayTeamName}
-                    homeTeamScore={match.homeTeamScore}
-                    awayTeamScore={match.awayTeamScore}
-                    matchDate={match.matchDate}
+                    eventTime={match.eventTime}
+                    eventType={match.eventType}
+                    eventPlayer={match.eventPlayer}
+                    eventIcon={match.eventIcon}
                      />
                 );
             })}
@@ -248,45 +191,30 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
     )
 }
 
-
-type HeadToHeadItemProps = {
+type KeyEventItemProps = {
     leagueName: string | undefined,
-	homeTeam: string,
-    awayTeam: string,
-    homeTeamScore: string,
-    awayTeamScore: string,
-    matchDate: string,
-
+	eventTime: string,
+    eventType: string,
+    eventPlayer: string,
+    eventIcon: any,
 }
 
-export const HeadToHeadItem = ({leagueName, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate}: HeadToHeadItemProps) => {
+export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventIcon}: KeyEventItemProps) => {
 
-    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
-    const homeTeamInfo = homeAwayInfo?.homeInfo;
-    const awayTeamInfo = homeAwayInfo?.awayInfo;
-
-    const formattedDate = new Date(matchDate).toLocaleDateString('en-GB')
-
-
-    if(homeTeamInfo == undefined) return
-    if(awayTeamInfo == undefined) return
 
     return (
         <View style={{flexDirection: 'row'}}>
+            <Text>{eventTime}</Text>
             <Image
-            style={[headToHeadPanelStyles.teamLogo]}
-            source={homeTeamInfo.logo} />
-            <Text style={[headToHeadPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
+            style={[keyEventsPanelStyles.eventIcon, {backgroundColor: 'green'}]}
+            source={eventIcon} />
 
-            <Text style={[headToHeadPanelStyles.matchScore]}>{homeTeamScore} - {awayTeamScore}</Text>
-
-            <Text style={[headToHeadPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
-            <Image
-            style={[headToHeadPanelStyles.teamLogo]}
-            source={awayTeamInfo.logo} />
-            <Text style={[headToHeadPanelStyles.matchDate]}>{formattedDate}</Text>
+            <Text>{eventType}</Text>
+            <Text>{eventPlayer}</Text>
+            
         </View>
     )
+
 }
 
 type FetchDataButtonProps = {
@@ -314,7 +242,7 @@ export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDat
     )
 }
 
-export const headToHeadPanelStyles = StyleSheet.create({
+export const keyEventsPanelStyles = StyleSheet.create({
     container: {
       flexDirection: 'column',
       justifyContent: 'center',
@@ -326,6 +254,13 @@ export const headToHeadPanelStyles = StyleSheet.create({
       height: 25,
       minHeight: 25,
       minWidth: 25,
+    },
+    eventIcon: {
+        resizeMode: 'contain',
+        width: 25,
+        height: 25,
+        minHeight: 25,
+        minWidth: 25,
     },
     matchScore: {
         paddingHorizontal: 10,
@@ -356,5 +291,7 @@ export const headToHeadPanelStyles = StyleSheet.create({
       color: 'blue'
     }
   })
+
+
 
 export default MatchSummary;
