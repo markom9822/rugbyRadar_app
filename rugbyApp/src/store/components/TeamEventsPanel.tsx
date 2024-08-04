@@ -77,33 +77,14 @@ export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, hom
 
     if(homeCurrentTeam)
     {
-        if(homeWinner)
-        {
-            // winner
-            winOrLoseText = 'W';
-        }
-        else
-        {
-            // loser
-            winOrLoseText = 'L';
-        }
-
+        winOrLoseText = (homeWinner) ? ('W'):('L');
     }
     else
     {
-        if(!homeWinner)
-        {
-            // winner
-            winOrLoseText = 'W';
-        }
-        else
-        {
-            // loser
-            winOrLoseText = 'L';
-        }
-
+        winOrLoseText = (!homeWinner) ? ('W'):('L');
     }
 
+    const winLossColour = (winOrLoseText === 'W') ? ('green'):('red');
 
     if(homeTeamInfo == undefined) return
     if(awayTeamInfo == undefined) return
@@ -112,8 +93,7 @@ export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, hom
         <View style={{flexDirection: 'row'}}>
             
             {(showWinLoss)  && 
-
-            <Text>{winOrLoseText}</Text>
+                <Text style={{color: winLossColour}}>{winOrLoseText}</Text>
             }
 
             <Image
