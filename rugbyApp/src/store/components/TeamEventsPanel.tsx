@@ -3,6 +3,7 @@ import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { fontSize } from "@/constants/tokens"
 
 export type TeamEventStatsInfo = {
+    currentTeam: string,
     homeTeamName: string,
     awayTeamName: string,
     homeTeamScore: string,
@@ -15,9 +16,10 @@ export type TeamEventPanelProps = {
     matchID: string | string[] | undefined,
     leagueName: string | undefined,
     panelTitle: string,
+    showWinLoss: boolean,
 }
 
-export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle}: TeamEventPanelProps) => {
+export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle, showWinLoss}: TeamEventPanelProps) => {
 
     if(teamEventArray === undefined) return
 
@@ -32,11 +34,13 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                     <TeamEventsItem
                     key={index}
                     leagueName={leagueName}
+                    currentTeam={match.currentTeam}
                     homeTeam={match.homeTeamName}
                     awayTeam={match.awayTeamName}
                     homeTeamScore={match.homeTeamScore}
                     awayTeamScore={match.awayTeamScore}
                     matchDate={match.matchDate}
+                    showWinLoss={showWinLoss}
                      />
                 );
             })}
@@ -49,21 +53,56 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
 type TeamEventsItemProps = {
     leagueName: string | undefined,
+    currentTeam: string,
 	homeTeam: string,
     awayTeam: string,
     homeTeamScore: string,
     awayTeamScore: string,
     matchDate: string,
+    showWinLoss: boolean,
 
 }
 
-export const TeamEventsItem = ({leagueName, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate}: TeamEventsItemProps) => {
+export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate, showWinLoss}: TeamEventsItemProps) => {
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
     const formattedDate = new Date(matchDate).toLocaleDateString('en-GB')
+    const homeWinner = new Number(homeTeamScore) > new Number(awayTeamScore);
+    const homeCurrentTeam = currentTeam === homeTeam;
+
+    var winOrLoseText = '';
+
+    if(homeCurrentTeam)
+    {
+        if(homeWinner)
+        {
+            // winner
+            winOrLoseText = 'W';
+        }
+        else
+        {
+            // loser
+            winOrLoseText = 'L';
+        }
+
+    }
+    else
+    {
+        if(!homeWinner)
+        {
+            // winner
+            winOrLoseText = 'W';
+        }
+        else
+        {
+            // loser
+            winOrLoseText = 'L';
+        }
+
+    }
 
 
     if(homeTeamInfo == undefined) return
@@ -71,6 +110,12 @@ export const TeamEventsItem = ({leagueName, homeTeam, awayTeam, homeTeamScore, a
 
     return (
         <View style={{flexDirection: 'row'}}>
+            
+            {(showWinLoss)  && 
+
+            <Text>{winOrLoseText}</Text>
+            }
+
             <Image
             style={[teamEventsPanelStyles.teamLogo]}
             source={homeTeamInfo.logo} />

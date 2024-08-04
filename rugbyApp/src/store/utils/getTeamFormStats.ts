@@ -4,6 +4,8 @@ export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
     var teamFormArray = [];
 
     const gamesLength = matchStats.lastFiveGames[teamIndex].events.length;
+    const currentTeam = matchStats.lastFiveGames[teamIndex].team.displayName;
+
 
     for (let index = 0; index < gamesLength; index++) {
 
@@ -38,6 +40,7 @@ export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
         console.info(eventScore)
 
         const newArray = {
+                currentTeam: currentTeam,
                 homeTeamName: homeTeam,
                 awayTeamName: awayTeam,
                 homeTeamScore: homeTeamScore,

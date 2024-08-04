@@ -56,3 +56,46 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     }
 
 }
+
+export const getTeamInfo = (league: string | undefined, teamName: string) => {
+
+    var teamInfo;
+
+    if(league === "urc")
+    {
+        teamInfo = getURCTeamInfoFromName(teamName)
+    }
+    else if(league === "inter")
+    {
+        teamInfo = getInternationalTeamInfoFromName(teamName)
+    }
+    else if(league === "rugbyChamp")
+    {
+        teamInfo = getInternationalTeamInfoFromName(teamName)
+    }
+    else if(league === "sixNations")
+    {
+        teamInfo = getInternationalTeamInfoFromName(teamName)
+    }
+    else if(league === "prem") 
+    {
+        teamInfo = getPremTeamInfoFromName(teamName)
+    }
+    else if(league === "top14")
+    {
+        teamInfo = getTop14TeamInfoFromName(teamName)
+    }
+    else if(league === "menSevens")
+    {
+        teamInfo = getWorldFlagTeamInfoFromName(teamName)
+    }
+    else
+    {
+        return null
+    }
+
+    return {
+        teamInfo,
+    }
+
+}

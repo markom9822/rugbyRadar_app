@@ -3,15 +3,31 @@ import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens";
-import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
 import { useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
 import { getFullMatchStats } from "@/store/utils/getFullMatchStats";
 import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStats } from "@/store/utils/getHeadToHeadStats";
 import { getTeamFormStats } from "@/store/utils/getTeamFormStats";
-import { RugbyPostsIcon } from "@/store/Icons/Icons";
+import { DropGoalIcon, RedCardIcon, RugbyPostsIcon, RugbyTryIcon, YellowCardIcon } from "@/store/Icons/Icons";
 
+
+export const getKeyEventIcon = (eventType: string) => {
+    switch(eventType) { 
+        case 'conversion': return RugbyPostsIcon
+        case 'penalty goal': return RugbyPostsIcon
+        case 'try': return RugbyTryIcon
+        case 'yellow card': return YellowCardIcon
+        case 'red card': return RedCardIcon
+        case 'drop goal': return DropGoalIcon
+
+
+        default: { 
+           break; 
+        } 
+     } 
+}
 
 export const getKeyEvents = (matchStats: any) => {
 
@@ -24,8 +40,11 @@ export const getKeyEvents = (matchStats: any) => {
         const eventTime = matchStats.header.competitions[0].details[index].clock.displayValue;
         const eventType = matchStats.header.competitions[0].details[index].type.text;
         const eventPlayer = matchStats.header.competitions[0].details[index].participants[0].athlete.displayName;
+        const homeScore = matchStats.header.competitions[0].details[index].homeScore;
+        const awayScore = matchStats.header.competitions[0].details[index].awayScore;
+        const eventTeam = matchStats.header.competitions[0].details[index].team.displayName;
 
-        const eventIcon = RugbyPostsIcon;
+        const eventIcon = getKeyEventIcon(eventType);
 
         const typeCheck = eventType === "try" || eventType === "conversion"
          || eventType === "penalty goal" || eventType === "drop goal" || 
@@ -37,6 +56,8 @@ export const getKeyEvents = (matchStats: any) => {
                 eventTime: eventTime,
                 eventType: eventType,
                 eventPlayer: eventPlayer,
+                eventScore: `${homeScore} - ${awayScore}`,
+                eventTeam: eventTeam,
                 eventIcon: eventIcon,
             };
 
@@ -128,6 +149,7 @@ const MatchSummary = () => {
                 matchID={id}
                 leagueName={leagueName}
                 panelTitle="Head to Head Matches"
+                showWinLoss={false}
                 />
 
                 <TeamEventsPanel 
@@ -135,6 +157,7 @@ const MatchSummary = () => {
                 matchID={id}
                 leagueName={leagueName}
                 panelTitle={`${mainTeamName} Form`}
+                showWinLoss={true}
                 />
 
                 <TeamEventsPanel 
@@ -142,6 +165,7 @@ const MatchSummary = () => {
                 matchID={id}
                 leagueName={leagueName}
                 panelTitle={`${opponentTeamName} Form`}
+                showWinLoss={true}
                 />
 
             </ScrollView>
@@ -154,6 +178,8 @@ export type KeyEventsInfo = {
     eventTime: string,
     eventType: string,
     eventPlayer: string,
+    eventScore: string,
+    eventTeam: string,
     eventIcon: any,
 }
 
@@ -181,6 +207,8 @@ export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsP
                     eventTime={match.eventTime}
                     eventType={match.eventType}
                     eventPlayer={match.eventPlayer}
+                    eventScore={match.eventScore}
+                    eventTeam={match.eventTeam}
                     eventIcon={match.eventIcon}
                      />
                 );
@@ -196,21 +224,33 @@ type KeyEventItemProps = {
 	eventTime: string,
     eventType: string,
     eventPlayer: string,
+    eventScore: string,
+    eventTeam: string,
     eventIcon: any,
 }
 
-export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventIcon}: KeyEventItemProps) => {
+export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventScore, eventTeam, eventIcon}: KeyEventItemProps) => {
 
+
+    const eventTeamInfo = getTeamInfo(leagueName, eventTeam);
 
     return (
-        <View style={{flexDirection: 'row'}}>
-            <Text>{eventTime}</Text>
-            <Image
-            style={[keyEventsPanelStyles.eventIcon, {backgroundColor: 'green'}]}
-            source={eventIcon} />
-
-            <Text>{eventType}</Text>
-            <Text>{eventPlayer}</Text>
+        <View style={{flexDirection: 'row', marginVertical: 5, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontWeight: 600, color: eventTeamInfo?.teamInfo?.colour}}>{eventTeamInfo?.teamInfo?.abbreviation}</Text>
+           
+            <View style={{padding: 5, borderWidth: 2, borderColor: eventTeamInfo?.teamInfo?.colour, borderRadius: 20, marginHorizontal: 5}}>
+                <Image
+                style={[keyEventsPanelStyles.eventIcon]}
+                source={eventIcon} />
+            </View>
+            
+            <View style={{flexDirection: 'column'}}>
+                <Text>{eventPlayer}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{fontWeight: 500}}>{eventTime}</Text>
+                    <Text style={{marginHorizontal: 10}}>{eventScore}</Text>
+                </View>
+            </View>
             
         </View>
     )
@@ -256,7 +296,7 @@ export const keyEventsPanelStyles = StyleSheet.create({
       minWidth: 25,
     },
     eventIcon: {
-        resizeMode: 'contain',
+        resizeMode: 'center',
         width: 25,
         height: 25,
         minHeight: 25,

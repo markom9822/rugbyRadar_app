@@ -38,6 +38,7 @@ export const getHeadToHeadStats = (matchStats: any) => {
         console.info(eventScore)
 
         const newArray = {
+                currentTeam: mainTeam,
                 homeTeamName: homeTeam,
                 awayTeamName: awayTeam,
                 homeTeamScore: homeTeamScore,

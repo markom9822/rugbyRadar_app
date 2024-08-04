@@ -1,1 +1,5 @@
 export const RugbyPostsIcon = require('@/store/Icons/Rugby_Posts.png')
+export const RugbyTryIcon = require('@/store/Icons/Rugby_Try.png')
+export const YellowCardIcon = require('@/store/Icons/Yellow_card.png')
+export const RedCardIcon = require('@/store/Icons/Red_card.png')
+export const DropGoalIcon = require('@/store/Icons/Drop_Goal.png')
