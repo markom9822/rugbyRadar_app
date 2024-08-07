@@ -44,10 +44,10 @@ export const standingsPanelStyles = StyleSheet.create({
       color: 'black',
   },
   teamStat: {
-      fontSize: fontSize.sm,
+      fontSize: fontSize.xs,
       color: 'black',
       padding: 5,
-      width: "10%"
+      textAlign: 'center'
   },
 })
 

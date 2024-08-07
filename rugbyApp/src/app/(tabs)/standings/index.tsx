@@ -15,6 +15,10 @@ export type StandingInfo = {
     teamName: string
 	teamGP: string
     teamWins: string
+    teamDraws: string
+    teamLosses: string
+    teamPD: string
+    teamPoints: string
 }
 
 const StandingsScreen = () => {
@@ -30,7 +34,7 @@ const StandingsScreen = () => {
         const apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season=' + seasonName + '&seasontype=1&sort=rank:asc&type=0';
 
         const seasonStandings = await fetch( apiString,).then((res) => res.json())
-        const newArray = getAllStandingsData(seasonStandings)
+        const newArray = getAllStandingsData(seasonStandings, false)
 
         console.info(newArray)
         setStandingsArray(newArray)
@@ -109,7 +113,6 @@ const StandingsScreen = () => {
 
 
     return <View style={defaultStyles.container}>
-        <Text style={defaultStyles.text}>Rugby Standings</Text>
 
         <CustomSelectDropdown
         placeholder="Select League" 
@@ -130,13 +133,13 @@ const StandingsScreen = () => {
         />
 
         <View style={{flexDirection: 'row'}}>
-            <Text style={{width: "50%"}}>{seasonName} season</Text>
-            <Text style={{width: "8%"}}>GP</Text>
-            <Text style={{width: "8%"}}>W</Text>
-            <Text style={{width: "8%"}}>D</Text>
-            <Text style={{width: "8%"}}>L</Text>
-            <Text style={{width: "8%"}}>PD</Text>
-            <Text style={{width: "10%"}}>P</Text>
+            <Text style={{width: "40%", textAlign: 'left'}}>{seasonName} season</Text>
+            <Text style={{width: "9%", textAlign: 'center'}}>GP</Text>
+            <Text style={{width: "9%", textAlign: 'center'}}>W</Text>
+            <Text style={{width: "9%", textAlign: 'center'}}>D</Text>
+            <Text style={{width: "9%", textAlign: 'center'}}>L</Text>
+            <Text style={{width: "15%", textAlign: 'center'}}>PD</Text>
+            <Text style={{width: "9%", textAlign: 'center'}}>P</Text>
         </View>
         
         
@@ -149,7 +152,11 @@ const StandingsScreen = () => {
             teamPool={item.teamPool}
             teamName={item.teamName}
             teamGP={item.teamGP}
-            teamWins={item.teamWins} />}
+            teamWins={item.teamWins}
+            teamDraws={item.teamDraws}
+            teamLosses={item.teamLosses}
+            teamPD={item.teamPD}
+            teamPoints={item.teamPoints} />}
         />
 
     </View>

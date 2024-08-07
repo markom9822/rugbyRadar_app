@@ -116,7 +116,8 @@ export const teamEventsPanelStyles = StyleSheet.create({
     container: {
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginVertical: 10,
     },
     teamLogo: {
       resizeMode: 'contain',

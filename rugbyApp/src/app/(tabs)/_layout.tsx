@@ -35,7 +35,7 @@ const TabsNavigation = () => {
                     title: "Rankings",
                     tabBarIcon: ({color}) => <MaterialCommunityIcons name="playlist-play" size={28} color={color} />
                 }} />
-            <Tabs.Screen name="teams" 
+            <Tabs.Screen name="(teams)" 
                 options={{
                     title: "Teams",
                     tabBarIcon: ({color}) => <Ionicons name="musical-notes-sharp" size={24} color={color} />

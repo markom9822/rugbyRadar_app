@@ -191,7 +191,20 @@ type KeyEventsPanelProps = {
 
 export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsPanelProps) => {
 
-    if(keyEventArray === undefined) return
+    if(keyEventArray === undefined) return 
+
+    if(keyEventArray.length == 0)
+    {
+        return(
+            <View style={[keyEventsPanelStyles.container]}>
+            <Text>Key Events</Text>
+
+            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+                <Text style={{color:'grey'}}>Currently no key events</Text>
+            </View>
+        </View>
+        )
+    }
 
     return (
         <View style={[keyEventsPanelStyles.container]}>
@@ -257,6 +270,8 @@ export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eve
 
 }
 
+
+
 type FetchDataButtonProps = {
 	style?: ViewStyle
 	iconSize?: number
@@ -286,7 +301,8 @@ export const keyEventsPanelStyles = StyleSheet.create({
     container: {
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginVertical: 10
     },
     teamLogo: {
       resizeMode: 'contain',

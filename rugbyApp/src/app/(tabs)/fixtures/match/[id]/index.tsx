@@ -26,6 +26,33 @@ export const getMatchInfo = (matchDetails: any) => {
 
     const homeTeamName = matchDetails.boxscore.teams[0].team.displayName;
     const awayTeamName = matchDetails.boxscore.teams[1].team.displayName;
+    const matchVenue = matchDetails.gameInfo.venue.fullName;
+    const matchAttendance = matchDetails.gameInfo.attendance;
+
+    if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statitics.length == 0 )
+    {
+        const blankArray = [
+            {
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamPossession: '0',
+                awayTeamPossession: '0',
+                homeTeamTries: '-',
+                awayTeamTries: '-',
+                homeTeamTackles: '-',
+                awayTeamTackles: '-',
+                homeTeamMetres: '-',
+                awayTeamMetres: '-',
+    
+                matchVenue: matchVenue,
+                matchAttendance: matchAttendance,
+            
+            }
+        ];
+
+        return blankArray
+
+    }
 
     const homeTeamPossession = matchDetails.boxscore.teams[0].statistics[0].stats[20].value;
     const awayTeamPossession = matchDetails.boxscore.teams[1].statistics[0].stats[20].value;
@@ -39,8 +66,6 @@ export const getMatchInfo = (matchDetails: any) => {
     const homeTeamMetres = matchDetails.boxscore.teams[0].statistics[0].stats[10].value
     const awayTeamMetres = matchDetails.boxscore.teams[1].statistics[0].stats[10].value
 
-    const matchVenue = matchDetails.gameInfo.venue.fullName;
-    const matchAttendance = matchDetails.gameInfo.attendance;
 
     const newArray = [
         {

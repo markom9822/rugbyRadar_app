@@ -29,6 +29,26 @@ export type AllLineUpsInfo = {
 
 export const getLineup = (matchDetails: any, rosterIndex: number) => {
 
+    if(matchDetails.rosters[rosterIndex].roster === undefined)
+    {
+        var blankArray = [];
+
+        for (let index = 0; index < 23; index++) {
+            let blankLineupInfo = {
+                teamPlayer: '-',
+                teamPlayerPosition: '-',
+                teamPlayerNum: index + 1,
+                isPlayerCaptain: false,
+                };
+    
+            blankArray.push(blankLineupInfo)
+        }
+
+        return(
+            blankArray
+        )
+    } 
+
     const rosterLength = matchDetails.rosters[rosterIndex].roster.length;
 
     var newArray = [];
@@ -83,6 +103,9 @@ const Lineups = () => {
 
         const homeLineup = getLineup(matchDetails, 0)
         const awayLineup = getLineup(matchDetails, 1)
+
+        console.info('Home Team Lineup')
+        console.info(homeLineup)
 
         const homeTeam = matchDetails.rosters[0].team.displayName;
         const awayTeam = matchDetails.rosters[1].team.displayName;

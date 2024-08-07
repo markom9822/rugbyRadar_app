@@ -4,6 +4,58 @@ export const getFullMatchStats = (matchStats: any) => {
     const homeTeamName = matchStats.boxscore.teams[0].team.displayName;
     const awayTeamName = matchStats.boxscore.teams[1].team.displayName;
 
+    if (matchStats.boxscore.teams[0].statistics.length == 0 || matchStats.boxscore.teams[1].statitics.length == 0) {
+        const blankArray = [
+            {
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamPossession: '0',
+                awayTeamPossession: '0',
+                homeTeamTerritory: '0',
+                awayTeamTerritory: '0',
+                homeTeamTries: '-',
+                awayTeamTries: '-',
+                homeTeamConversions: '-',
+                awayTeamConversions: '-',
+                homeTeamPenalties: '-',
+                awayTeamPenalties: '-',
+
+                homeTeamTackles: '-',
+                awayTeamTackles: '-',
+                homeTeamMissedTackles: '-',
+                awayTeamMissedTackles: '-',
+
+                homeTeamMetres: '-',
+                awayTeamMetres: '-',
+                homeTeamPasses: '-',
+                awayTeamPasses: '-',
+                homeTeamDefendersBeaten: '-',
+                awayTeamDefendersBeaten: '-',
+
+                homeTeamScrumsWon: '-',
+                awayTeamScrumsWon: '-',
+                homeTeamScrumsTotal: '-',
+                awayTeamScrumsTotal: '-',
+                homeTeamLineoutsWon: '-',
+                awayTeamLineoutsWon: '-',
+                homeTeamLineoutsTotal: '-',
+                awayTeamLineoutsTotal: '-',
+
+                homeTeamPensConceded: '-',
+                awayTeamPensConceded: '-',
+                homeTeamYellowCards: '-',
+                awayTeamYellowCards: '-',
+                homeTeamRedCards: '-',
+                awayTeamRedCards: '-',
+
+            }
+        ];
+    
+            return blankArray
+    
+        }
+    
+
     const homeTeamPossession = matchStats.boxscore.teams[0].statistics[0].stats[20].value;
     const awayTeamPossession = matchStats.boxscore.teams[1].statistics[0].stats[20].value;
 
