@@ -13,23 +13,31 @@ export type CustomSelectDropdownProps = {
     data: DropdownData[];
     onChangeSelection: (item: DropdownData) => void;
     placeholder: string
+    isDisabled: boolean
+    value: string
 }
 
 export const CustomSelectDropdown = ({
     data,
     onChangeSelection,
     placeholder,
+    isDisabled,
+    value,
 }: CustomSelectDropdownProps) => {
 
-    const [value, setValue] = useState('');
+    const textColour = (isDisabled) ? ('grey'):('black');
+    const textOpacity = (isDisabled) ? (0.5):(1);
+
+    const iconColour = (isDisabled) ? ('grey'):('black');
+    const iconOpacity = (isDisabled) ? (0.5):(1);
 
     return(
         <Dropdown
         style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        placeholderStyle={[styles.placeholderStyle, {color: textColour, opacity: textOpacity}]}
+        selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity}]}
         inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
+        iconStyle={[styles.iconStyle]}
         data={data}
         search
         maxHeight={300}
@@ -38,12 +46,12 @@ export const CustomSelectDropdown = ({
         placeholder={placeholder}
         searchPlaceholder="Search..."
         value={value}
+        disable={isDisabled}
         onChange={item => {
           onChangeSelection(item)
-          setValue(item.value);
         }}
         renderLeftIcon={() => (
-            <MaterialCommunityIcons name="rugby" style={styles.icon} color="black" size={20} />
+            <MaterialCommunityIcons name="rugby" style={[styles.icon, {opacity: iconOpacity}]} color={iconColour} size={20} />
         )}
       />
     )

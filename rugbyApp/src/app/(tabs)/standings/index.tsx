@@ -1,5 +1,5 @@
 import { defaultStyles} from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, StyleSheet } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { useState } from "react"
@@ -21,6 +21,40 @@ export type StandingInfo = {
     teamPoints: string
 }
 
+const getWorldRankingsData = (todaysRankings: any) => {
+
+    const rankListLength = 15;
+
+    var newArray = [];
+
+    for (let index = 0; index < rankListLength; index++) {
+
+        const teamName = todaysRankings.entries[index].team.name;
+        const rawPoints = todaysRankings.entries[index].pts;
+        const teamPoints = parseFloat(rawPoints).toFixed(2);
+
+        const teamPosition = todaysRankings.entries[index].pos;
+
+        let newRankingInfo = {
+            isHeader: false,
+            teamPool: '',
+            teamName: teamName,
+            teamGP: '-',
+            teamWins: '-',
+            teamDraws: '-',
+            teamLosses: '-',
+            teamPD: '-',
+            teamPoints: teamPoints,
+    };
+
+        newArray.push(newRankingInfo)
+    }
+
+    return (
+        newArray
+    )
+}
+
 const StandingsScreen = () => {
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
     const [leagueName, setLeagueName] = useState<string>('');
@@ -31,21 +65,40 @@ const StandingsScreen = () => {
 
         const currentLeagueCode = getLeagueCode(leagueName)
 
-        const apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season=' + seasonName + '&seasontype=1&sort=rank:asc&type=0';
+        var apiString = '';
 
-        const seasonStandings = await fetch( apiString,).then((res) => res.json())
-        const newArray = getAllStandingsData(seasonStandings, false)
+        if(leagueName == "worldRankings")
+        {
+            apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/rankings/mru?language=en';
 
-        console.info(newArray)
-        setStandingsArray(newArray)
+            const worldRankings = await fetch( apiString,).then((res) => res.json())
+            const newArray = getWorldRankingsData(worldRankings)
+
+            console.info(newArray)
+            setStandingsArray(newArray)
+        }
+        else
+        {
+            apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season='
+             + seasonName + '&seasontype=1&sort=rank:asc&type=0';
+            
+            const seasonStandings = await fetch( apiString,).then((res) => res.json())
+            const newArray = getAllStandingsData(seasonStandings, false)
+
+            console.info(newArray)
+            setStandingsArray(newArray)
+        }
     }
 
     const handleOnChangeLeague = (item: DropdownData) => {
         setLeagueName(item.value)
+        setSeasonName('')
+        setStandingsArray([])
     }
 
     const handleOnChangeSeason = (item: DropdownData) => {
         setSeasonName(item.value)
+        setStandingsArray([])
     }
 
     const leagueData = [
@@ -53,6 +106,7 @@ const StandingsScreen = () => {
         { label: 'Premiership', value: 'prem' },
         { label: 'Six Nations', value: 'sixNations' },
         { label: 'Rugby World Cup', value: 'rugbyWorldCup' },
+        { label: 'World Rankings', value: 'worldRankings'}
     ];
 
     const seasonRegData = [
@@ -104,25 +158,58 @@ const StandingsScreen = () => {
         case "rugbyWorldCup": { 
             currentSeasonData = seasonWorldCupData; 
            break; 
-        } 
+        }
         default: { 
             currentSeasonData = seasonRegData; 
            break; 
         }
     } 
 
+    const isSeasonDropdownDisabled = leagueName == "worldRankings"
+
+    const headerRender = (isWorldRanking: boolean) => {
+
+        if (isWorldRanking) {
+            return (
+                <View style={{ flexDirection: 'row' }}>
+                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "60%", textAlign: 'center' }]}>Teams</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "40%" }]}>Points</Text>
+                </View>
+            )
+        }
+        else {
+            return (
+                <>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "40%", textAlign: 'left' }]}>{seasonName} season</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>GP</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>W</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>D</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>L</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "15%" }]}>PD</Text>
+                        <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>P</Text>
+                    </View>
+
+                </>
+            )
+        }
+    }
 
     return <View style={defaultStyles.container}>
 
         <CustomSelectDropdown
         placeholder="Select League" 
         data={leagueData}
-        onChangeSelection={handleOnChangeLeague}/>
+        onChangeSelection={handleOnChangeLeague}
+        isDisabled={false}
+        value={leagueName}/>
 
         <CustomSelectDropdown
         placeholder="Select Season" 
         data={currentSeasonData}
-        onChangeSelection={handleOnChangeSeason}/>
+        onChangeSelection={handleOnChangeSeason}
+        isDisabled={isSeasonDropdownDisabled}
+        value={seasonName}/>
 
         <FetchDataButton 
             iconSize={24} 
@@ -132,23 +219,17 @@ const StandingsScreen = () => {
             onPressButton={handlePressFetchData}
         />
 
-        <View style={{flexDirection: 'row'}}>
-            <Text style={{width: "40%", textAlign: 'left'}}>{seasonName} season</Text>
-            <Text style={{width: "9%", textAlign: 'center'}}>GP</Text>
-            <Text style={{width: "9%", textAlign: 'center'}}>W</Text>
-            <Text style={{width: "9%", textAlign: 'center'}}>D</Text>
-            <Text style={{width: "9%", textAlign: 'center'}}>L</Text>
-            <Text style={{width: "15%", textAlign: 'center'}}>PD</Text>
-            <Text style={{width: "9%", textAlign: 'center'}}>P</Text>
-        </View>
+        {headerRender(leagueName == "worldRankings")}
         
-        
+    
         <FlatList 
         data={standingsArray}
-        renderItem={({item}) => 
+        renderItem={({item, index}) => 
         <StandingPanel
+            index={index}
             league={leagueName}
             isHeader={item.isHeader}
+            isWorldRanking={leagueName == "worldRankings"}
             teamPool={item.teamPool}
             teamName={item.teamName}
             teamGP={item.teamGP}
@@ -161,6 +242,21 @@ const StandingsScreen = () => {
 
     </View>
 }
+
+export const standingsHeadingStyles = StyleSheet.create({
+    seasonTitle: {
+        textAlign: 'left',
+        borderBottomColor: 'grey',
+        borderBottomWidth: 2,
+    },
+    headerStat: {
+        borderBottomColor: 'grey', 
+        borderBottomWidth: 2,
+        textAlign: 'center',
+    },
+  })
+
+
 
 type FetchDataButtonProps = {
 	style?: ViewStyle
