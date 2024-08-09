@@ -28,13 +28,8 @@ const TabsNavigation = () => {
             name="fixtures" 
             options={{
                 title: "Fixtures",
-                tabBarIcon: ({color}) => <FontAwesome name="heart" size={20} color={color} />
+                tabBarIcon: ({color}) => <MaterialCommunityIcons name="rugby" size={24} color={color} />
             }} />
-            <Tabs.Screen name="rankings" 
-                options={{
-                    title: "Rankings",
-                    tabBarIcon: ({color}) => <MaterialCommunityIcons name="playlist-play" size={28} color={color} />
-                }} />
             <Tabs.Screen name="(teams)" 
                 options={{
                     title: "Teams",

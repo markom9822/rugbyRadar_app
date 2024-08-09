@@ -4,7 +4,7 @@ export const getFullMatchStats = (matchStats: any) => {
     const homeTeamName = matchStats.boxscore.teams[0].team.displayName;
     const awayTeamName = matchStats.boxscore.teams[1].team.displayName;
 
-    if (matchStats.boxscore.teams[0].statistics.length == 0 || matchStats.boxscore.teams[1].statitics.length == 0) {
+    if (matchStats.boxscore.teams[0].statistics.length == 0 || matchStats.boxscore.teams[1].statistics.length == 0) {
         const blankArray = [
             {
                 homeTeamName: homeTeamName,
@@ -53,7 +53,7 @@ export const getFullMatchStats = (matchStats: any) => {
     
             return blankArray
     
-        }
+    }
     
 
     const homeTeamPossession = matchStats.boxscore.teams[0].statistics[0].stats[20].value;

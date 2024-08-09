@@ -122,7 +122,9 @@ const FixturesScreen = () => {
         <CustomSelectDropdown
         placeholder="Select League" 
         data={leagueData}
-        onChangeSelection={handleOnChangeLeague}/>
+        onChangeSelection={handleOnChangeLeague}
+        value={leagueName}
+        isDisabled={false}/>
 
         <FetchDataButton 
             iconSize={24} 

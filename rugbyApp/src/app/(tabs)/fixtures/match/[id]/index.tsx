@@ -29,7 +29,7 @@ export const getMatchInfo = (matchDetails: any) => {
     const matchVenue = matchDetails.gameInfo.venue.fullName;
     const matchAttendance = matchDetails.gameInfo.attendance;
 
-    if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statitics.length == 0 )
+    if(matchDetails.boxscore.teams[0].statistics == undefined || matchDetails.boxscore.teams[1].statitics == undefined )
     {
         const blankArray = [
             {
