@@ -1,7 +1,15 @@
+import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams";
 import { BathLogo, BristolLogo, ExeterLogo, GloucesterLogo, HarlequinsLogo, LeicesterLogo, NewcastleLogo, NorthamptonLogo, SaleLogo, SaracensLogo } from "./PremiershipTeamsLogos/PremiershipTeams";
 
 export const getPremTeamInfoFromName = (name: string) => {
 
+  const defaultTeam =  {
+    type: 'Prem Club',
+    displayName: 'Default',
+    abbreviation: 'DEF',
+    logo: DefaultLogo,
+    colour: '#00845c',
+  }
     const match = PremRugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
     {
@@ -9,7 +17,7 @@ export const getPremTeamInfoFromName = (name: string) => {
     }
     else
     {
-        return null
+        return defaultTeam
     }
 }
 

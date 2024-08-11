@@ -111,6 +111,7 @@ const FixturesScreen = () => {
         { label: 'Premiership', value: 'prem' },
         { label: 'URC', value: 'urc' },
         { label: 'Top 14', value: 'top14' },
+        { label: 'Champions Cup', value: 'championsCup' },
         { label: 'Rugby Championship', value: 'rugbyChamp' },
         { label: 'Olympics Mens Sevens', value: 'menSevens' },
 

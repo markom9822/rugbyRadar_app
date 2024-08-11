@@ -104,6 +104,8 @@ const StandingsScreen = () => {
     const leagueData = [
         { label: 'URC', value: 'urc' },
         { label: 'Premiership', value: 'prem' },
+        { label: 'Top 14', value: 'top14' },
+        { label: 'Champions Cup', value: 'championsCup' },
         { label: 'Six Nations', value: 'sixNations' },
         { label: 'Rugby World Cup', value: 'rugbyWorldCup' },
         { label: 'World Rankings', value: 'worldRankings'}
@@ -151,6 +153,14 @@ const StandingsScreen = () => {
             currentSeasonData = seasonRegData; 
             break; 
         } 
+        case "top14": { 
+            currentSeasonData = seasonRegData; 
+            break; 
+        }
+        case "championsCup": { 
+            currentSeasonData = seasonRegData; 
+            break; 
+        }
         case "sixNations": { 
             currentSeasonData = seasonRegData; 
             break; 
@@ -180,7 +190,7 @@ const StandingsScreen = () => {
         else {
             return (
                 <>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={[standingsHeadingStyles.seasonTitle, { width: "40%", textAlign: 'left' }]}>{seasonName} season</Text>
                         <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>GP</Text>
                         <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>W</Text>

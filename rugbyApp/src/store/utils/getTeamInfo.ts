@@ -3,6 +3,7 @@ import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
 import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
 import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
+import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase";
 
 
 export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string, awayTeam: string) => {
@@ -39,6 +40,11 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     {
         homeInfo = getTop14TeamInfoFromName(homeTeam)
         awayInfo = getTop14TeamInfoFromName(awayTeam)
+    }
+    else if(league === "championsCup")
+    {
+        homeInfo = getChampionsCupTeamInfoFromName(homeTeam)
+        awayInfo = getChampionsCupTeamInfoFromName(awayTeam)
     }
     else if(league === "menSevens")
     {

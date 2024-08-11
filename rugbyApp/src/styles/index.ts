@@ -36,6 +36,7 @@ export const standingsPanelStyles = StyleSheet.create({
       backgroundColor: 'white',
       borderBottomWidth: 1,
       borderBottomColor: 'grey',
+      alignItems: 'center'
   },
   teamText: {
       fontSize: fontSize.xs,

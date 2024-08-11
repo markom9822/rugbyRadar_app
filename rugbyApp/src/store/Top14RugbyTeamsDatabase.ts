@@ -1,5 +1,15 @@
+import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { BayonneLogo, BordeauxLogo, BriveLogo, CastresLogo, ClermontLogo, LaRochelleLogo, LyonLogo, MontpellierLogo, PauLogo, PerpignanLogo, Racing92Logo, StadeFrancaisLogo, ToulonLogo, ToulouseLogo, VannesLogo } from "./Top14TeamLogos/Top14Teams";
+
 export const getTop14TeamInfoFromName = (name: string) => {
 
+  const defaultTeam =  {
+    type: 'Top14 Club',
+    displayName: 'Default',
+    abbreviation: 'DEF',
+    logo: DefaultLogo,
+    colour: '#00845c',
+  }
     const match = Top14RugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
     {
@@ -7,7 +17,7 @@ export const getTop14TeamInfoFromName = (name: string) => {
     }
     else
     {
-        return null
+        return defaultTeam
     }
 }
 
@@ -17,105 +27,105 @@ export const Top14RugbyTeams = [
     type: 'Top14 Club',
     displayName: 'Bayonne',
     abbreviation: 'BAY',
-    logo: '',
+    logo: BayonneLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Bordeaux Begles',
     abbreviation: 'BEG',
-    logo: '',
+    logo: BordeauxLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Brive',
     abbreviation: 'BRIVE',
-    logo: '',
+    logo: BriveLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Castres Olympique',
     abbreviation: 'CAS',
-    logo: '',
+    logo: CastresLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Clermont Auvergne',
     abbreviation: 'CLER',
-    logo: '',
+    logo: ClermontLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'La Rochelle',
     abbreviation: 'LA RO',
-    logo: '',
+    logo: LaRochelleLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Lyon',
     abbreviation: 'LYON',
-    logo: '',
+    logo: LyonLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Montpellier Herault',
     abbreviation: 'MONTP',
-    logo: '',
+    logo: MontpellierLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Vannes',
     abbreviation: 'VANN',
-    logo: '',
+    logo: VannesLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Pau',
     abbreviation: 'PAU',
-    logo: '',
+    logo: PauLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Perpignan',
     abbreviation: 'PERP',
-    logo: '',
+    logo: PerpignanLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Racing 92',
     abbreviation: 'RAMET',
-    logo: '',
+    logo: Racing92Logo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Stade Francais Paris',
     abbreviation: 'SFRAN',
-    logo: '',
+    logo: StadeFrancaisLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Toulon',
     abbreviation: 'TOUL',
-    logo: '',
+    logo: ToulonLogo,
     colour: '#',
   },
   {
     type: 'Top14 Club',
     displayName: 'Stade Toulousain',
     abbreviation: 'TOUL',
-    logo: '',
+    logo: ToulouseLogo,
     colour: '#',
   },
   

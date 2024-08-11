@@ -1,8 +1,16 @@
+import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams"
 import { BenettonLogo, BullsLogo, CardiffLogo, ConnachtLogo, DragonsLogo, EdinburghLogo, GlasgowLogo, LeinsterLogo, LionsLogo, MunsterLogo, OspreysLogo, ScarletsLogo, SharksLogo, StormersLogo, UlsterLogo, ZebreLogo } from "./URCTeamLogos/URCTeams"
 
 
 export const getURCTeamInfoFromName = (name: string) => {
 
+  const defaultTeam =  {
+    type: 'URC Club',
+    displayName: 'Default',
+    abbreviation: 'DEF',
+    logo: DefaultLogo,
+    colour: '#00845c',
+  }
     const match = URCRugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
     {
@@ -10,7 +18,7 @@ export const getURCTeamInfoFromName = (name: string) => {
     }
     else
     {
-        return null
+        return defaultTeam
     }
 }
 
