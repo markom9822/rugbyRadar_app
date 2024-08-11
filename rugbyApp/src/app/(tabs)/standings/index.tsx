@@ -106,6 +106,7 @@ const StandingsScreen = () => {
         { label: 'Premiership', value: 'prem' },
         { label: 'Top 14', value: 'top14' },
         { label: 'Champions Cup', value: 'championsCup' },
+        { label: 'Super Rugby', value: 'superRugby' },
         { label: 'Six Nations', value: 'sixNations' },
         { label: 'Rugby World Cup', value: 'rugbyWorldCup' },
         { label: 'World Rankings', value: 'worldRankings'}
@@ -154,6 +155,10 @@ const StandingsScreen = () => {
             break; 
         } 
         case "top14": { 
+            currentSeasonData = seasonRegData; 
+            break; 
+        }
+        case "superRugby": { 
             currentSeasonData = seasonRegData; 
             break; 
         }

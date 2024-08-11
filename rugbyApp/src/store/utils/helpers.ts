@@ -3,6 +3,7 @@ export const leagueCodes = [
     { value: 'urc', code: "270557" },
     { value: 'prem', code: "267979" },
     { value: 'top14', code: "270559" },
+    { value: 'superRugby', code: "242041" },
     { value: 'rugbyChamp', code: "244293" },
     { value: 'rugbyWorldCup', code: "164205" },
     { value: 'championsCup', code: "271937" },

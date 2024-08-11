@@ -9,6 +9,7 @@ export const getPremTeamInfoFromName = (name: string) => {
     abbreviation: 'DEF',
     logo: DefaultLogo,
     colour: '#00845c',
+    id: '0',
   }
     const match = PremRugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
@@ -29,6 +30,7 @@ export const PremRugbyTeams = [
     abbreviation: 'BATH',
     logo: BathLogo,
     colour: '#1e3b84',
+    id: '25898'
   },
   {
     type: 'Prem Club',
@@ -36,6 +38,7 @@ export const PremRugbyTeams = [
     abbreviation: 'BRIST',
     logo: BristolLogo,
     colour: '#121254',
+    id: '25899'
   },
   {
     type: 'Prem Club',
@@ -43,6 +46,7 @@ export const PremRugbyTeams = [
     abbreviation: 'EXET',
     logo: ExeterLogo,
     colour: '#1a1a1a',
+    id: '116227'
   },
   {
     type: 'Prem Club',
@@ -50,6 +54,7 @@ export const PremRugbyTeams = [
     abbreviation: 'GLOUC',
     logo: GloucesterLogo,
     colour: '#c8202e',
+    id: '25900'
   },
   {
     type: 'Prem Club',
@@ -57,6 +62,7 @@ export const PremRugbyTeams = [
     abbreviation: 'HQUINN',
     logo: HarlequinsLogo,
     colour: '#b6234a',
+    id: '25901'
   },
   {
     type: 'Prem Club',
@@ -64,6 +70,7 @@ export const PremRugbyTeams = [
     abbreviation: 'LEICS',
     logo: LeicesterLogo,
     colour: '#044437',
+    id: '25903'
   },
   {
     type: 'Prem Club',
@@ -71,6 +78,7 @@ export const PremRugbyTeams = [
     abbreviation: 'NEWC',
     logo: NewcastleLogo,
     colour: '#1a1a1a',
+    id: '25906'
   },
   {
     type: 'Prem Club',
@@ -78,6 +86,7 @@ export const PremRugbyTeams = [
     abbreviation: 'NTHMP',
     logo: NorthamptonLogo,
     colour: '#1a1a1a',
+    id: '25907'
   },
   {
     type: 'Prem Club',
@@ -85,6 +94,7 @@ export const PremRugbyTeams = [
     abbreviation: 'SALE',
     logo: SaleLogo,
     colour: '#000050',
+    id: '25908'
   },
   {
     type: 'Prem Club',
@@ -92,6 +102,7 @@ export const PremRugbyTeams = [
     abbreviation: 'SARAC',
     logo: SaracensLogo,
     colour: '#1a1a1a',
+    id: '25909'
   },
   
 ];

@@ -4,6 +4,8 @@ import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
 import { getInternationalTeamInfoFromName } from "../InternationalRugbyTeamsDatabase"
 import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase"
+import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
+import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase"
 
 
 type StandingPanelProps = {
@@ -40,6 +42,14 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     else if(league === "top14")
     {
         teamInfo = getTop14TeamInfoFromName(teamName)
+    }
+    else if(league === "superRugby")
+    {
+            teamInfo = getSuperRugbyTeamInfoFromName(teamName)
+    }
+    else if(league === "championsCup")
+    {
+        teamInfo = getChampionsCupTeamInfoFromName(teamName)
     }
     else if(league === "rugbyWorldCup")
     {

@@ -6,7 +6,8 @@ import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
 import { defaultStyles } from "@/styles"
 import { useState } from "react"
-import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, FlatList, Image, StyleSheet} from "react-native"
+import { Link } from "expo-router"
+import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, FlatList, Image, StyleSheet, Pressable} from "react-native"
 
 export type SearchTeamInfo = {
     type: string;
@@ -14,12 +15,14 @@ export type SearchTeamInfo = {
     abbreviation: string;
     logo: any;
     colour: string;
+    id: string;
 }
 
 
 const getFilteredSearchTeams = (searchValue: string) => {
 
-    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
+    //const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
+    const teamsArray = InternationalRugbyTeams;
 
     const filteredData = teamsArray.filter(item => {
           return Object.values(item)
@@ -39,8 +42,6 @@ const TeamsScreen = () => {
     const [teamSearch, setTeamSearch] = useState<string>('');
     const [searchArray, setSearchArray] = useState<SearchTeamInfo[]>([]);
 
-
-    const teamsArray = InternationalRugbyTeams;
 
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
@@ -65,7 +66,8 @@ const TeamsScreen = () => {
                     renderItem={({ item, index }) =>
                         <TeamInfoPanel
                         teamName={item.displayName}
-                        teamLogo={item.logo}/>}
+                        teamLogo={item.logo}
+                        teamID={item.id}/>}
                 />
 
             </View>
@@ -76,22 +78,34 @@ const TeamsScreen = () => {
 type TeamInfoPanelProps = {
     teamName: string,
     teamLogo: any,
+    teamID: string,
 
 }
 
 
-export const TeamInfoPanel = ({ teamName, teamLogo }: TeamInfoPanelProps) => {
+export const TeamInfoPanel = ({ teamName, teamLogo, teamID }: TeamInfoPanelProps) => {
 
     return (
-        <TouchableWithoutFeedback onPress={()=>{}}>
-        <View style={[teamInfoPanelStyles.container]}>
-            <View style={{padding: 5}}>
-                <Image
-                style={[teamInfoPanelStyles.teamLogo]}
-                source={teamLogo} />
+        <TouchableWithoutFeedback onPress={() => { }}>
+            <View>
+                <Link href={`/(tabs)/(teams)/team/${teamID}`} asChild>
+                    <Pressable>
+
+                    <View style={[teamInfoPanelStyles.container]}>
+
+
+                        <View style={{ padding: 5 }}>
+                            <Image
+                                style={[teamInfoPanelStyles.teamLogo]}
+                                source={teamLogo} />
+                        </View>
+                        <Text style={[teamInfoPanelStyles.teamName]}>{teamName}</Text>
+                    </View>
+
+                    </Pressable>
+                </Link>
+
             </View>
-            <Text style={[teamInfoPanelStyles.teamName]}>{teamName}</Text>
-        </View>
         </TouchableWithoutFeedback>
     )
 }

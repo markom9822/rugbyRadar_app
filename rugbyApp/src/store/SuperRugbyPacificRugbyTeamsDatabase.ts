@@ -1,7 +1,7 @@
 import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams"
 import { BluesLogo, BrumbiesLogo, ChiefsLogo, CrusadersLogo, DruaLogo, ForceLogo, HighlandersLogo, HurricanesLogo, MoanaLogo, RebelsLogo, RedsLogo, WaratahsLogo } from "./SuperRugbyTeamLogos/SuperRugbyTeams"
 
-export const getInternationalTeamInfoFromName = (name: string) => {
+export const getSuperRugbyTeamInfoFromName = (name: string) => {
 
     const defaultTeam =  {
       type: 'Super Rugby Club',
@@ -28,83 +28,83 @@ export const SuperRugbyTeams = [
         displayName: 'Hurricanes',
         abbreviation: 'HURRI',
         logo: HurricanesLogo,
-        colour: '#',
+        colour: '#fede00',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Blues',
         abbreviation: 'BLUES',
         logo: BluesLogo,
-        colour: '#',
+        colour: '#1f3bc4',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Brumbies',
         abbreviation: 'BRUMB',
         logo: BrumbiesLogo,
-        colour: '#',
+        colour: '#002B54',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Chiefs',
         abbreviation: 'CHIEF',
         logo: ChiefsLogo,
-        colour: '#',
+        colour: '#f03737',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Queensland Reds',
         abbreviation: 'REDS',
         logo: RedsLogo,
-        colour: '#',
+        colour: '#D01044',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Highlanders',
         abbreviation: 'HLAND',
         logo: HighlandersLogo,
-        colour: '#',
+        colour: '#ebbc13',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Fijian Drua',
         abbreviation: 'FIJ',
         logo: DruaLogo,
-        colour: '#',
+        colour: '#1313eb',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Melbourne Rebels',
         abbreviation: 'REBEL',
         logo: RebelsLogo,
-        colour: '#',
+        colour: '#002B5C',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Crusaders',
         abbreviation: 'CRUS',
         logo: CrusadersLogo,
-        colour: '#',
+        colour: '#e84141',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Western Force',
         abbreviation: 'FORCE',
         logo: ForceLogo,
-        colour: '#',
+        colour: '#004A9F',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'Moana Pasifika',
         abbreviation: 'MOA',
         logo: MoanaLogo,
-        colour: '#',
+        colour: '#0bd1e3',
     },
     {
         type: 'Super Rugby Club',
         displayName: 'New South Wales Waratahs',
         abbreviation: 'WARAT',
         logo: WaratahsLogo,
-        colour: '#',
+        colour: '#D41042',
     },
   ];

@@ -10,6 +10,7 @@ export const getURCTeamInfoFromName = (name: string) => {
     abbreviation: 'DEF',
     logo: DefaultLogo,
     colour: '#00845c',
+    id: '0'
   }
     const match = URCRugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
@@ -30,6 +31,7 @@ export const URCRugbyTeams = [
     abbreviation: 'LEINS',
     logo: LeinsterLogo,
     colour: '#003287',
+    id: '25924'
   },
   {
     type: 'URC Club',
@@ -37,6 +39,7 @@ export const URCRugbyTeams = [
     abbreviation: 'MUNST',
     logo: MunsterLogo,
     colour: '#cd0a2d',
+    id: '25925'
   },
   {
     type: 'URC Club',
@@ -44,6 +47,7 @@ export const URCRugbyTeams = [
     abbreviation: 'CONN',
     logo: ConnachtLogo,
     colour: '#00b446',
+    id: '25923'
   },
   {
     type: 'URC Club',
@@ -51,6 +55,7 @@ export const URCRugbyTeams = [
     abbreviation: 'ULST',
     logo: UlsterLogo,
     colour: '#e61d03',
+    id: '25926'
   },
   {
     type: 'URC Club',
@@ -58,6 +63,7 @@ export const URCRugbyTeams = [
     abbreviation: 'EDINB',
     logo: EdinburghLogo,
     colour: '#1e144b',
+    id: '25951'
   },
   {
     type: 'URC Club',
@@ -65,6 +71,7 @@ export const URCRugbyTeams = [
     abbreviation: 'GLASG',
     logo: GlasgowLogo,
     colour: '#5aaaf0',
+    id: '25952'
   },
   {
     type: 'URC Club',
@@ -72,6 +79,7 @@ export const URCRugbyTeams = [
     abbreviation: 'CDB',
     logo: CardiffLogo,
     colour: '#6ebeff',
+    id: '25965'
   },
   {
     type: 'URC Club',
@@ -79,6 +87,7 @@ export const URCRugbyTeams = [
     abbreviation: 'SCARL',
     logo: ScarletsLogo,
     colour: '#78040d',
+    id: '25966'
   },
   {
     type: 'URC Club',
@@ -86,6 +95,7 @@ export const URCRugbyTeams = [
     abbreviation: 'OSP',
     logo: OspreysLogo,
     colour: '#5a5a64',
+    id: '25968'
   },
   {
     type: 'URC Club',
@@ -93,6 +103,7 @@ export const URCRugbyTeams = [
     abbreviation: 'DRA',
     logo: DragonsLogo,
     colour: '#ffaa00',
+    id: '25967'
   },
   {
     type: 'URC Club',
@@ -100,6 +111,7 @@ export const URCRugbyTeams = [
     abbreviation: 'TRE',
     logo: BenettonLogo,
     colour: '#00b46f',
+    id: '25927'
   },
   {
     type: 'URC Club',
@@ -107,6 +119,7 @@ export const URCRugbyTeams = [
     abbreviation: 'ZEB',
     logo: ZebreLogo,
     colour: '#233268',
+    id: '167124'
   },
   {
     type: 'URC Club',
@@ -114,6 +127,7 @@ export const URCRugbyTeams = [
     abbreviation: 'STORM',
     logo: StormersLogo,
     colour: '#005295',
+    id: '25962'
   },
   {
     type: 'URC Club',
@@ -121,6 +135,7 @@ export const URCRugbyTeams = [
     abbreviation: 'BULLS',
     logo: BullsLogo,
     colour: '#0082e6',
+    id: '25953'
   },
   {
     type: 'URC Club',
@@ -128,6 +143,7 @@ export const URCRugbyTeams = [
     abbreviation: 'LIONS',
     logo: LionsLogo,
     colour: '#ff1e29',
+    id: '25958'
   },
   {
     type: 'URC Club',
@@ -135,6 +151,7 @@ export const URCRugbyTeams = [
     abbreviation: 'SHARK',
     logo: SharksLogo,
     colour: '#504b50',
+    id: '25961'
   },
 
 ];

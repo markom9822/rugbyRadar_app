@@ -9,6 +9,7 @@ export const getTop14TeamInfoFromName = (name: string) => {
     abbreviation: 'DEF',
     logo: DefaultLogo,
     colour: '#00845c',
+    id: '0'
   }
     const match = Top14RugbyTeams.find((item) => item.displayName === name)
     if(match !== undefined)
@@ -29,6 +30,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'BAY',
     logo: BayonneLogo,
     colour: '#',
+    id: '25912'
   },
   {
     type: 'Top14 Club',
@@ -36,6 +38,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'BEG',
     logo: BordeauxLogo,
     colour: '#',
+    id: '143737'
   },
   {
     type: 'Top14 Club',
@@ -43,6 +46,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'BRIVE',
     logo: BriveLogo,
     colour: '#',
+    id: '0'
   },
   {
     type: 'Top14 Club',
@@ -50,6 +54,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'CAS',
     logo: CastresLogo,
     colour: '#',
+    id: '25916'
   },
   {
     type: 'Top14 Club',
@@ -57,6 +62,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'CLER',
     logo: ClermontLogo,
     colour: '#',
+    id: '25917'
   },
   {
     type: 'Top14 Club',
@@ -64,6 +70,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'LA RO',
     logo: LaRochelleLogo,
     colour: '#',
+    id: '119318'
   },
   {
     type: 'Top14 Club',
@@ -71,6 +78,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'LYON',
     logo: LyonLogo,
     colour: '#',
+    id: '143736'
   },
   {
     type: 'Top14 Club',
@@ -78,6 +86,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'MONTP',
     logo: MontpellierLogo,
     colour: '#',
+    id: '25918'
   },
   {
     type: 'Top14 Club',
@@ -85,6 +94,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'VANN',
     logo: VannesLogo,
     colour: '#',
+    id: '289337'
   },
   {
     type: 'Top14 Club',
@@ -92,6 +102,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'PAU',
     logo: PauLogo,
     colour: '#',
+    id: '270567'
   },
   {
     type: 'Top14 Club',
@@ -99,6 +110,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'PERP',
     logo: PerpignanLogo,
     colour: '#',
+    id: '25920'
   },
   {
     type: 'Top14 Club',
@@ -106,6 +118,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'RAMET',
     logo: Racing92Logo,
     colour: '#',
+    id: '99855'
   },
   {
     type: 'Top14 Club',
@@ -113,6 +126,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'SFRAN',
     logo: StadeFrancaisLogo,
     colour: '#',
+    id: '25921'
   },
   {
     type: 'Top14 Club',
@@ -120,6 +134,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'TOUL',
     logo: ToulonLogo,
     colour: '#',
+    id: '25986'
   },
   {
     type: 'Top14 Club',
@@ -127,6 +142,6 @@ export const Top14RugbyTeams = [
     abbreviation: 'TOUL',
     logo: ToulouseLogo,
     colour: '#',
+    id: '25922'
   },
-  
 ];
