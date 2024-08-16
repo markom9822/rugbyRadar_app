@@ -140,7 +140,7 @@ const FixturesScreen = () => {
             <Text style={defaultStyles.text}>Date: {selectedDate.toLocaleDateString()}</Text>
         </TouchableOpacity>
 
-        <View>
+        <View style={{borderBottomColor: 'grey', borderBottomWidth: 1}}>
             {
                 datePickerOpen && (
                     <DateTimePicker 
@@ -152,7 +152,8 @@ const FixturesScreen = () => {
             }
         </View>
 
-        <FlatList data={matchesArray}
+        <FlatList 
+        data={matchesArray}
         renderItem={({item, index}) =>
         <ScorePanel
         league={leagueName}

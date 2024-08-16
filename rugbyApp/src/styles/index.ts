@@ -77,7 +77,7 @@ export const fixtureStyles = StyleSheet.create({
   },
     cardHeaderGameInfo: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         backgroundColor: '#f0f2f0',
     },

@@ -56,7 +56,7 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
     for (let index = 0; index < rosterLength; index++) {
 
         const playerName = matchDetails.rosters[rosterIndex].roster[index].athlete.displayName;
-        const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");;
+        const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");
 
         const playerPosition = matchDetails.rosters[rosterIndex].roster[index].position.displayName;
         const isPlayerCaptain = matchDetails.rosters[rosterIndex].roster[index].captain;

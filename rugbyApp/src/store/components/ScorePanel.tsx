@@ -40,18 +40,20 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
     const homeScoreWeight = (new Number(homeScore) > new Number(awayScore)) ? ('600'):('300');
     const awayScoreWeight = (new Number(awayScore) > new Number(homeScore)) ? ('600'):('300');
 
-    const matchTime = matchDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
+    const matchTime = matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 
     return(
         <View style={[fixtureStyles.card]}>
               <View style={[fixtureStyles.cardHeaderAllInfo]}>
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
-                    <Text style={[fixtureStyles.teamName]}>{homeTeamInfo.abbreviation}</Text>
-                    <Image
+                    <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
+                        <Text style={[fixtureStyles.teamName]}>{homeTeamInfo.abbreviation}</Text>
+                        <Image
                         style={[fixtureStyles.teamLogo]}
                         source={homeTeamInfo.logo} />
-
-                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                    </View>
+                    
+                    <View style={{width: "30%", flexDirection: 'column', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight }]}>{homeScore}</Text>
                             <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight}]}>{awayScore}</Text>
@@ -59,10 +61,12 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
                         <Text>{matchTime}</Text>
                     </View>
 
-                    <Image
+                    <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+                        <Image
                         style={[fixtureStyles.teamLogo]}
                         source={awayTeamInfo.logo} />
-                    <Text style={[fixtureStyles.teamName]}>{awayTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName]}>{awayTeamInfo.abbreviation}</Text>
+                    </View>
                 </View>
 
                 <View style={[fixtureStyles.moreInfoView]}>
@@ -82,8 +86,6 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
 
                   <Text style={{borderBottomColor: 'grey', borderBottomWidth: 2}}>Match Venue:</Text>
                   <Text>{matchVenue}</Text>
-                  <Text style={{borderBottomColor: 'grey', borderBottomWidth: 2}}>Broadcasters</Text>
-                  <Text>Sky Sports</Text>
 
                 </View>
               )}
