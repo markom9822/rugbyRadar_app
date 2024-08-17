@@ -163,12 +163,6 @@ type TeamSummaryPanelProps = {
 
 export const TeamSummaryPanel = ({ teamName, homeVenue, teamForm}: TeamSummaryPanelProps) => {
 
-    const teamTextInfo = "The Ireland national rugby union team is the men's representative " + 
-    "national team for the island of Ireland in rugby union. The team represents both the Republic of Ireland and Northern Ireland.\n\n" +  
-    "Ireland competes in the annual Six Nations Championship and in the Rugby World Cup. Ireland is one of the four unions that make up" + 
-    " the British & Irish Lions." + 
-    "The Ireland national team dates to 1875, when it played its first international match against England."
-
     if(teamName == undefined) return
     if(homeVenue == undefined) return
 
@@ -190,6 +184,10 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, teamForm}: TeamSummaryPa
             <View style={{flexDirection: 'row'}}>
                 <MaterialIcons name="stadium" size={20} color={'black'} />
                 <Text>{homeVenue}</Text>
+            </View>
+
+            <View>
+                <Text>Founded: {teamInfo.foundedYear}</Text>
             </View>
             
 
