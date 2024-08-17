@@ -1,4 +1,3 @@
-
 import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image } from "react-native";
@@ -16,7 +15,6 @@ export type TeamEvent = {
     awayTeamScore: string,
     leagueName: string,
     eventState: string,
-   
 }
 
 const TeamResults = () => {
@@ -205,7 +203,6 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
                 </View>
 
                 {scoreRender(eventState === "pre")}
-            
 
                 <View style={{width: "35%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
 

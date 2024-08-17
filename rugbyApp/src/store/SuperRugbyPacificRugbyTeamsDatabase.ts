@@ -9,7 +9,8 @@ export const getSuperRugbyTeamInfoFromName = (name: string) => {
       abbreviation: 'DEF',
       logo: DefaultLogo,
       colour: '#00845c',
-      id: '0'
+      id: '0',
+      textInfo: ''
     }
   
       const match = SuperRugbyTeams.find((item) => item.displayName === name)
@@ -30,7 +31,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'HURRI',
         logo: HurricanesLogo,
         colour: '#fede00',
-        id: '25939'
+        id: '25939',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -38,7 +40,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'BLUES',
         logo: BluesLogo,
         colour: '#1f3bc4',
-        id: '25932'
+        id: '25932',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -46,7 +49,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'BRUMB',
         logo: BrumbiesLogo,
         colour: '#002B54',
-        id: '25889'
+        id: '25889',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -54,7 +58,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'CHIEF',
         logo: ChiefsLogo,
         colour: '#f03737',
-        id: '25934'
+        id: '25934',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -62,7 +67,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'REDS',
         logo: RedsLogo,
         colour: '#D01044',
-        id: '182'
+        id: '182',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -70,7 +76,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'HLAND',
         logo: HighlandersLogo,
         colour: '#ebbc13',
-        id: '25938'
+        id: '25938',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -78,7 +85,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'FIJ',
         logo: DruaLogo,
         colour: '#1313eb',
-        id: '289338'
+        id: '289338',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -86,7 +94,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'REBEL',
         logo: RebelsLogo,
         colour: '#002B5C',
-        id: '25894'
+        id: '25894',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -94,7 +103,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'CRUS',
         logo: CrusadersLogo,
         colour: '#e84141',
-        id: '25936'
+        id: '25936',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -102,7 +112,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'FORCE',
         logo: ForceLogo,
         colour: '#004A9F',
-        id: '25893'
+        id: '25893',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -110,7 +121,8 @@ export const SuperRugbyTeams = [
         abbreviation: 'MOA',
         logo: MoanaLogo,
         colour: '#0bd1e3',
-        id: '289319'
+        id: '289319',
+        textInfo: ''
     },
     {
         type: 'Super Rugby Club',
@@ -118,6 +130,7 @@ export const SuperRugbyTeams = [
         abbreviation: 'WARAT',
         logo: WaratahsLogo,
         colour: '#D41042',
-        id: '227'
+        id: '227',
+        textInfo: ''
     },
   ];

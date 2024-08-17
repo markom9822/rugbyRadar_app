@@ -198,7 +198,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, teamForm}: TeamSummaryPa
             <View style={{marginVertical: 10}}>
                 <Text>Team Info</Text>
                 <View style={{marginVertical: 5, padding: 5, borderColor: 'grey', borderWidth: 1}}>
-                    <Text>{teamTextInfo}</Text>
+                    <Text>{teamInfo.textInfo}</Text>
                 </View>
                 
             </View>
