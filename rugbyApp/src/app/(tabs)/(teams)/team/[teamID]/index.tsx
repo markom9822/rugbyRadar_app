@@ -6,134 +6,129 @@ import { useState } from "react";
 import { getAnyTeamInfoFromName, getLeagueCodeFromDisplayName } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
 import { getTeamInfo } from "@/store/utils/getTeamInfo";
-import { StormersLogo } from "@/store/URCTeamLogos/URCTeams";
 
-export type SquadMember = {
-    playerName: string,
-    playerNumber: string,
-    //playerCaps: string,
-    //clubProvince: string,
-   
+
+export const getTeamBasicInfo = (teamDetails: any) => {
+
+    const teamName = teamDetails.team.displayName;
+    const homeVenue = teamDetails.team.venue.fullName
+    const homeVenueCity = teamDetails.team.venue.address.city
+    const homeVenueState = teamDetails.team.venue.address.state
+
+    const teamForm = teamDetails.team.form;
+
+    return (
+        {
+            teamName: teamName,
+            homeVenue: homeVenue,
+            homeLocation: homeVenueCity + ', ' + homeVenueState,
+            teamForm: teamForm,
+        }
+    )
 }
 
 
 
-export const getLastFiveGamesSquad = async (setCurrentSquadArray: any, teamID: string | string[] | undefined) => {
+export const getTeamStandingsInfo = (seasonStandings: any) => {
 
-    const unique = <T extends { [key: string]: unknown }>(arr: T[], key: string): T[] => [   ...new Map(arr.map((item: T) => [item[key], item])).values() ];
+    var newArray = [];
 
-    const apiString1 = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=2024&lang=en&limit=50&region=gb&team=' + teamID + '&tz=Europe/London';
+    const standingsChildren = seasonStandings.children.length
 
-    const teamDetails = await fetch(apiString1,).then((res) => res.json())
+    for (let j = 0; j < seasonStandings.children.length; j++) {
 
-    const teamEventID = teamDetails.scores[0].events[0].id;
-    const teamLeagueID = teamDetails.scores[0].leagues[0].slug;
-    const teamName = teamDetails.team.displayName;
+        const standingsCount = seasonStandings.children[j].standings.entries.length;
+        
+        for (let index = 0; index < standingsCount; index++) {
 
-    console.info(teamEventID)
-    console.info(teamLeagueID)
+            const teamPool = seasonStandings.children[j].name;
+            if(index == 0 && standingsChildren > 1)
+            {
+                let headerRankingInfo = {
+                    isHeader: true,
+                    teamPool: teamPool,
+                    teamName: 'Pool',
+                    teamGP: '0',
+                    teamPD: '0',
+                    teamPoints: '0',
+                };
 
-    const apiString2 = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + teamLeagueID + '/summary?contentorigin=espn&event=' + teamEventID + '&lang=en&region=gb';
-
-    const last5GamesDetails = await fetch(apiString2,).then((res) => res.json())
-
-    var last5EventIDs = [];
-    var last5Rosters = [];
-
-
-    for (let index = 0; index < last5GamesDetails.lastFiveGames.length; index++) {
-
-        if (last5GamesDetails.lastFiveGames[index].team.displayName == teamName) {
-            for (let j = 0; j < last5GamesDetails.lastFiveGames[index].events.length; j++) {
-
-                const thisEventID = last5GamesDetails.lastFiveGames[index].events[j].id
-                const thisEventLeagueName = last5GamesDetails.lastFiveGames[index].events[j].leagueName;
-                const thisEventLeagueID = getLeagueCodeFromDisplayName(thisEventLeagueName)
-
-                console.info(`Event ID: ${thisEventLeagueID}`)
-                if (thisEventLeagueID == undefined) {
-                    continue;
-                }
-
-                last5EventIDs.push(last5GamesDetails.lastFiveGames[index].events[j].id)
-                const apiString3 = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + thisEventLeagueID + '/summary?contentorigin=espn&event=' + thisEventID + '&lang=en&region=gb';
-                const thisEventDetails = await fetch(apiString3,).then((res) => res.json())
-
-                for (let x = 0; x < thisEventDetails.rosters.length; x++) {
-
-                    if (thisEventDetails.rosters[x].team.displayName == teamName) {
-                        for (let z = 0; z < thisEventDetails.rosters[x].roster.length; z++) {
-
-                            const playerName = thisEventDetails.rosters[x].roster[z].athlete.displayName;
-                            const playerNumber = thisEventDetails.rosters[x].roster[z].jersey.replace(/\s/g, "");
-
-                            const newArray = {
-                                playerName: playerName,
-                                playerNumber: playerNumber,
-                            };
-
-                            last5Rosters.push(newArray)
-
-                        }
-
-                    }
-
-                }
-
-
+                newArray.push(headerRankingInfo)
             }
+
+            const teamName = seasonStandings.children[j].standings.entries[index].team.displayName;
+            const teamGP = seasonStandings.children[j].standings.entries[index].stats[7].value;
+            const teamPD = seasonStandings.children[j].standings.entries[index].stats[11].value;
+            const teamPoints = seasonStandings.children[j].standings.entries[index].stats[12].value;
+
+            let newRankingInfo = {
+                    isHeader: false,
+                    teamPool: teamPool,
+                    teamName: teamName,
+                    teamGP: teamGP,
+                    teamPD: teamPD,
+                    teamPoints: teamPoints,
+            };
+
+            newArray.push(newRankingInfo)
         }
     }
 
-    const last5RostersFiltered = unique(last5Rosters, 'playerName')
+    console.info(newArray)
 
-    setCurrentSquadArray(last5RostersFiltered)
+    return(
+        newArray
+    )
+
+}
+
+export type StandingInfo = {
+    isHeader: boolean
+    teamPool: string
+    teamName: string
+	teamGP: string
+    teamPD: string
+    teamPoints: string
 }
 
 export type TeamInfo = {
     teamName: string
     homeVenue: string
+    homeLocation: string
     teamForm: string
 }
 
-
-
 const TeamSummary = () => {
 
-    const [currentSquadArray, setCurrentSquadArray] = useState<SquadMember[] | undefined>();
     const [teamInfo, setTeamInfo] = useState<TeamInfo | undefined>();
-
+    const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
 
     const {teamID} = useLocalSearchParams();
+
+    const currentYear = new Date().getFullYear().valueOf();
 
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch WIKI")
 
-        // try collect lineups from last 5 games
-        // this will  the current squad
-
-
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/'+ teamID;
 
         const teamDetails = await fetch(apiString,).then((res) => res.json())
+        const basicTeamInfo = getTeamBasicInfo(teamDetails)
+        setTeamInfo(basicTeamInfo)
 
-        const teamName = teamDetails.team.displayName;
-        const homeVenue = teamDetails.team.venue.fullName
-        const homeVenueCity = teamDetails.team.venue.address.city
-        const homeVenueState = teamDetails.team.venue.address.state
+        const thisTeamLeague = "Six Nations"
+        const thisLeagueCode = getLeagueCodeFromDisplayName(thisTeamLeague)
 
-        const teamForm = teamDetails.team.form;
-
-        setTeamInfo({
-            teamName: teamName,
-            homeVenue: homeVenue + ', ' + homeVenueCity + ', ' + homeVenueState,
-            teamForm: teamForm,
-        })
+        const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
+             + currentYear + '&seasontype=1&sort=rank:asc&type=0';
+            
+        const seasonStandings = await fetch( apiStringStandings,).then((res) => res.json())
+        const standingsInfo = getTeamStandingsInfo(seasonStandings)
+        setStandingsArray(standingsInfo)
     }
 
     return(
         <View style={defaultStyles.container}>
-            <Text>Team Name</Text>
             <Text>Team ID {teamID}</Text>
 
             <FetchDataButton 
@@ -147,8 +142,14 @@ const TeamSummary = () => {
             <TeamSummaryPanel 
             teamName={teamInfo?.teamName}
             homeVenue={teamInfo?.homeVenue}
+            homeLocation={teamInfo?.homeLocation}
             teamForm={teamInfo?.teamForm}
             />
+
+            <TeamStandingPanel 
+            standingsArray={standingsArray}
+            teamLeagueName="Six Nations"
+            currentTeamName="Ireland"/>
 
         </View>
     )
@@ -157,11 +158,12 @@ const TeamSummary = () => {
 type TeamSummaryPanelProps = {
     teamName: string | undefined
     homeVenue: string | undefined
+    homeLocation: string | undefined
     teamForm: string | undefined
 }
 
 
-export const TeamSummaryPanel = ({ teamName, homeVenue, teamForm}: TeamSummaryPanelProps) => {
+export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}: TeamSummaryPanelProps) => {
 
     if(teamName == undefined) return
     if(homeVenue == undefined) return
@@ -169,58 +171,123 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, teamForm}: TeamSummaryPa
 
     const teamInfo = getAnyTeamInfoFromName(teamName)
 
+    const foundedYear = Number(teamInfo.foundedYear);
+    const currentYear = Number(new Date().getFullYear().valueOf());
+    const yearDiff = currentYear - foundedYear;
+
     return(
         <View style={{justifyContent: 'center', marginHorizontal: 3}}>
             <View style={{flexDirection: 'row', paddingVertical: 5}}>
                 <Image source={teamInfo.logo} 
                     style={{resizeMode: 'contain',
-                        width: 50,
-                        height: 50,
-                        minHeight:50,
-                        minWidth: 50,}}/>
-                <Text style={{fontSize: fontSize.lg, padding: 10 }}>{teamName}</Text>
+                        width: 60,
+                        height: 60,
+                        minHeight:60,
+                        minWidth: 60,}}/>
+                <View style={{flexDirection: 'column', paddingHorizontal: 5}}>
+                    <Text style={{fontSize: fontSize.lg, fontWeight: 600}}>{teamName.toUpperCase()}</Text>
+                    <Text style={{color: 'grey'}}>{teamForm}</Text>
+                </View>
+                
             </View>
             
             <View style={{flexDirection: 'row'}}>
-                <MaterialIcons name="stadium" size={20} color={'black'} />
-                <Text>{homeVenue}</Text>
+                <MaterialIcons name="stadium" size={20} color={'grey'} />
+                <Text style={{paddingHorizontal: 5}}>{homeVenue}</Text>
             </View>
 
             <View>
-                <Text>Founded: {teamInfo.foundedYear}</Text>
+                <Text>Location: {homeLocation}</Text>
             </View>
-            
 
-            <Text>Team Form : {teamForm}</Text>
-
-            <View style={{marginVertical: 10}}>
-                <Text>Team Info</Text>
-                <View style={{marginVertical: 5, padding: 5, borderColor: 'grey', borderWidth: 1}}>
-                    <Text>{teamInfo.textInfo}</Text>
-                </View>
-                
+            <View>
+                <Text>Founded: {teamInfo.foundedYear} ({yearDiff} years ago)</Text>
             </View>
     
         </View>
     )
 }
 
+type TeamStandingPanelProps = {
+    standingsArray: StandingInfo[] | undefined,
+    teamLeagueName: string | undefined,
+    currentTeamName: string | undefined
 
-type CurrentSquadPanelProps = {
-    playerName: string
-    playerNumber: string
 }
 
 
-export const CurrentSquadPanel = ({ playerName, playerNumber}: CurrentSquadPanelProps) => {
+export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName}: TeamStandingPanelProps) => {
 
-    return(
-        <View style={{flexDirection: 'row'}}>
-            <Text>{playerNumber}</Text>
-            <Text>{playerName}</Text>
+    if(standingsArray == undefined) return
+
+
+    return (
+        <View style={{marginVertical: 10, marginHorizontal: 20}}>
+            <Text style={{fontWeight: 500}}>{teamLeagueName} Table</Text>
+
+            <View style={{ flexDirection: 'row', paddingVertical: 2, borderTopColor: 'grey', borderTopWidth: 1, borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                <Text style={{ width: "10%" }}>R</Text>
+                <Text style={{ width: "40%" }}>TEAM</Text>
+                <Text style={{ width: "15%", textAlign: 'right' }}>GP</Text>
+                <Text style={{ width: "20%", textAlign: 'right' }}>PD</Text>
+                <Text style={{ width: "15%", textAlign: 'right' }}>P</Text>
+            </View>
+
+            <View>
+            {standingsArray.map((match, index) => {
+                return (
+                    <TeamStandingItem
+                    key={index}
+                    teamName={match.teamName}
+                    gamesPlayed={match.teamGP}
+                    pointsDiff={match.teamPD}
+                    points={match.teamPoints}
+                    index={index}
+                    isCurrentTeam={currentTeamName == match.teamName}
+                    isLastItem={index == standingsArray.length-1}
+                    />
+                );
+            })}
+            </View>
         </View>
     )
 }
+
+type TeamStandingItemProps = {
+    teamName: string
+    gamesPlayed: string
+    pointsDiff: string
+    points: string
+    index: number
+    isCurrentTeam: boolean
+    isLastItem: boolean
+
+}
+
+export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, index, isCurrentTeam, isLastItem}: TeamStandingItemProps) => {
+
+    const ranking = index + 1;
+    const textWeight = (isCurrentTeam) ? ('600'):('400');
+
+    const itemBottomBorderColour = (isLastItem) ? ('grey'):('lightgrey');
+
+    return (
+        <View style={{flexDirection: 'row', paddingVertical: 2, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
+            <Text style={{width: "10%", fontWeight: textWeight}}>{ranking}</Text>
+            <Text style={{width: "40%", fontWeight: textWeight}}>{teamName}</Text>
+            <Text style={{width: "15%", fontWeight: textWeight, textAlign: 'right'}}>{gamesPlayed}</Text>
+            <Text style={{width: "20%", fontWeight: textWeight, textAlign: 'right'}}>{pointsDiff}</Text>
+            <Text style={{width: "15%", fontWeight: textWeight, textAlign: 'right'}}>{points}</Text>
+        </View>
+    )
+
+}
+
+export const TeamTopScorersPanel = ({ }: TeamSummaryPanelProps) => {
+
+
+}
+
 
 type FetchDataButtonProps = {
 	style?: ViewStyle

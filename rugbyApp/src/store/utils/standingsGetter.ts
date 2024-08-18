@@ -1,6 +1,6 @@
 
 
-export const getAllStandingsData = (seasonStandings: any, pooledLeague: boolean) => {
+export const getAllStandingsData = (seasonStandings: any) => {
 
     var newArray = [];
 

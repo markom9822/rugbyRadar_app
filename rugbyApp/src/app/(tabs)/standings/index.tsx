@@ -83,7 +83,7 @@ const StandingsScreen = () => {
              + seasonName + '&seasontype=1&sort=rank:asc&type=0';
             
             const seasonStandings = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsData(seasonStandings, false)
+            const newArray = getAllStandingsData(seasonStandings)
 
             console.info(newArray)
             setStandingsArray(newArray)
