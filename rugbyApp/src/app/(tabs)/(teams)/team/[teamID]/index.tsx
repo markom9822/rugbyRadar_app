@@ -114,9 +114,10 @@ const TeamSummary = () => {
 
         const teamDetails = await fetch(apiString,).then((res) => res.json())
         const basicTeamInfo = getTeamBasicInfo(teamDetails)
+        const teamName = basicTeamInfo.teamName;
         setTeamInfo(basicTeamInfo)
 
-        const thisTeamLeague = "Six Nations"
+        const thisTeamLeague = getAnyTeamInfoFromName(teamName).defaultLeague;
         const thisLeagueCode = getLeagueCodeFromDisplayName(thisTeamLeague)
 
         const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
@@ -219,7 +220,6 @@ type TeamStandingPanelProps = {
 export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName}: TeamStandingPanelProps) => {
 
     if(standingsArray == undefined) return
-
 
     return (
         <View style={{marginVertical: 10, marginHorizontal: 20}}>

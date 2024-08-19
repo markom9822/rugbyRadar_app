@@ -5,10 +5,10 @@ import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 
 export const leagueCodes = [
-    { value: 'urc', code: "270557", displayName: '' },
-    { value: 'prem', code: "267979", displayName: ''},
-    { value: 'top14', code: "270559", displayName: '' },
-    { value: 'superRugby', code: "242041", displayName: '' },
+    { value: 'urc', code: "270557", displayName: 'United Rugby Championship' },
+    { value: 'prem', code: "267979", displayName: 'Premiership Rugby'},
+    { value: 'top14', code: "270559", displayName: 'Top 14' },
+    { value: 'superRugby', code: "242041", displayName: 'Super Rugby Pacific' },
     { value: 'rugbyChamp', code: "244293", displayName: 'Rugby Championship' },
     { value: 'rugbyWorldCup', code: "164205", displayName: 'Rugby World Cup' },
     { value: 'championsCup', code: "271937", displayName: '' },
@@ -44,6 +44,8 @@ export const getAnyTeamInfoFromName = (name: string) => {
       abbreviation: 'DEF',
       logo: DefaultLogo,
       colour: '#00845c',
+      id: '0',
+      defaultLeague: '',
       foundedYear: '',
       textInfo: ''
     }

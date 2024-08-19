@@ -9,6 +9,7 @@ export const getInternationalTeamInfoFromName = (name: string) => {
     logo: DefaultLogo,
     colour: '#00845c',
     id: '0',
+    defaultLeague: '',
     foundedYear: '',
     textInfo: '',
   }
@@ -32,6 +33,7 @@ export const InternationalRugbyTeams = [
     logo: IrelandLogo,
     colour: '#00845c',
     id: '3',
+    defaultLeague: 'Six Nations',
     foundedYear: '1875',
     textInfo: "The Ireland national rugby union team is the men's representative " + 
     "national team for the island of Ireland in rugby union. The team represents both the Republic of Ireland and Northern Ireland.\n\n" +  
@@ -45,6 +47,7 @@ export const InternationalRugbyTeams = [
     logo: SouthAfricaLogo,
     colour: '#006400',
     id: '5',
+    defaultLeague: 'Rugby Championship',
     foundedYear: '1891',
     textInfo: "The South Africa national rugby union team, commonly known as the Springboks (colloquially the Boks, Bokke or Amabhokobhoko)," + 
      "is the country's national team governed by the South African Rugby Union. The Springboks play in green and gold jerseys with white shorts," + 
@@ -59,6 +62,7 @@ export const InternationalRugbyTeams = [
     logo: EnglandLogo,
     colour: '#ffffff',
     id: '1',
+    defaultLeague: 'Six Nations',
     foundedYear: '1871',
     textInfo: "The England men's national rugby union team represents the Rugby Football Union in men's international rugby union." + 
      "They compete in the annual Six Nations Championship with France, Ireland, Italy, Scotland and Wales." + 
@@ -73,6 +77,7 @@ export const InternationalRugbyTeams = [
     logo: NewZealandLogo,
     colour: '#ffffff',
     id: '8',
+    defaultLeague: 'Rugby Championship',
     foundedYear: '1884',
     textInfo: "The New Zealand national rugby union team, commonly known as the All Blacks, represents New Zealand in men's international rugby union," +
      "which is considered the country's national sport. Famed for their international success, the All Blacks have often been regarded as one of the most" + 
@@ -89,6 +94,7 @@ export const InternationalRugbyTeams = [
     logo: AustraliaLogo,
     colour: '#ffbb00',
     id: '6',
+    defaultLeague: 'Rugby Championship',
     foundedYear: '1899',
     textInfo: "The Australia men's national rugby union team, nicknamed the Wallabies, is the representative men's national team in the sport of rugby union" + 
      "for the nation of Australia. The team first played at Sydney in 1899, winning their first test match against the touring British Isles team." + 
@@ -104,6 +110,7 @@ export const InternationalRugbyTeams = [
     logo: FranceLogo,
     colour: '#003b7c',
     id: '9',
+    defaultLeague: 'Six Nations',
     foundedYear: '1893',
     textInfo: "The France national rugby union team (French: Équipe de France de rugby à XV) represents the French Rugby Federation (FFR; Fédération française de rugby)" + 
      "in men's international rugby union matches. Colloquially known as Le XV de France (French for 'The XV of France'), the team traditionally wears blue shirts with a" + 
@@ -118,6 +125,7 @@ export const InternationalRugbyTeams = [
     logo: ScotlandLogo,
     colour: '#ffbb00',
     id: '2',
+    defaultLeague: 'Six Nations',
     foundedYear: '1871',
     textInfo: "The Scotland national rugby union team represents the Scottish Rugby Union in men's international rugby union." + 
     "The history of the team extends back to 1871 when the Scottish rugby team played their first official test match, winning 1–0 against England at Raeburn Place." + 
@@ -131,6 +139,7 @@ export const InternationalRugbyTeams = [
     logo: WalesLogo,
     colour: '#d21034',
     id: '4',
+    defaultLeague: 'Six Nations',
     foundedYear: '1881',
     textInfo: "The Wales national rugby union team represents the Welsh Rugby Union in men's international rugby union. Its governing body, the Welsh Rugby Union (WRU)," + 
      "was established in 1881, the same year that Wales played their first international against England." + 
@@ -145,6 +154,7 @@ export const InternationalRugbyTeams = [
     logo: ItalyLogo,
     colour: '#ffffff',
     id: '20',
+    defaultLeague: 'Six Nations',
     foundedYear: '1911',
     textInfo: "The Italy national rugby union team represents the Italian Rugby Federation in men's international rugby union. The team is known as gli Azzurri (the light-blues)." + 
     "Italy has played international rugby since 1929, and for decades was considered one of the best European teams outside the Five Nations Championship." + 
@@ -158,6 +168,7 @@ export const InternationalRugbyTeams = [
     logo: ArgentinaLogo,
     colour: '#43a1d5',
     id: '10',
+    defaultLeague: 'Rugby Championship',
     foundedYear: '1910',
     textInfo: "The Argentina national rugby union team (Spanish: Selección de rugby de Argentina) represents Argentina in men's international competitions," +
      "The Argentine Rugby Union. Officially nicknamed Los Pumas, they play in sky blue and white jerseys." + 
@@ -171,6 +182,7 @@ export const InternationalRugbyTeams = [
     logo: JapanLogo,
     colour: '#f4d5e2',
     id: '23',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1932',
     textInfo: "The Japan national rugby union team, also known as the Cherry Blossoms, the Brave Blossoms, or simply Sakura, represents Japan in men's international rugby union." + 
     "Rugby was first played in Japan's treaty ports as early as 1866. Popular participation by local university teams was established in 1899 and Japan's first recorded international" +
@@ -184,6 +196,7 @@ export const InternationalRugbyTeams = [
     logo: GeorgiaLogo,
     colour: '#551828',
     id: '81',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1959',
     textInfo: "The Georgia national rugby union team, nicknamed The Lelos, represents Georgia in men's international rugby union." + 
     "There were several unsuccessful attempts to introduce a rugby union into Georgia, the earliest known being in 1928, with subsequent attempts also in 1940 and in 1948." +
@@ -196,6 +209,7 @@ export const InternationalRugbyTeams = [
     logo: FijiLogo,
     colour: '#ffffff',
     id: '14',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1913',
     textInfo: "The Fiji national rugby union team nicknamed the 'Flying Fijians represents Fiji in men's international rugby union." +
     "Fiji is one of the few countries where rugby union is the main sport. There are approximately 80,000 registered players from a total population of around 950,000." + 
@@ -210,6 +224,7 @@ export const InternationalRugbyTeams = [
     logo: CanadaLogo,
     colour: '#e82042',
     id: '25',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1932',
     textInfo: "The Canada men's national rugby union team represents the Canada in men's international rugby union competitions." +
     "The Canadian Rugby Football Union was established in 1884 and they have been playing international rugby since their 1932 debut against Japan."
@@ -221,6 +236,7 @@ export const InternationalRugbyTeams = [
     logo: USALogo,
     colour: '#0a3161',
     id: '11',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1976',
     textInfo: "The United States men's national rugby union team, nicknamed the Eagles, represents the United States of America Rugby Football Union in men's international rugby union." +
     "The first recorded rugby game in the U.S. was played in May 1874 when local Harvard University hosted Canadian McGill University"
@@ -232,6 +248,7 @@ export const InternationalRugbyTeams = [
     logo: RomaniaLogo,
     colour: '#002b7f',
     id: '12',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1924',
     textInfo: "The Romania national rugby union team represents Romania in men's international rugby union competitions." +
     "Nicknamed Stejarii (The Oaks), the team is long considered one of the stronger European teams outside the Six Nations."  +
@@ -245,6 +262,7 @@ export const InternationalRugbyTeams = [
     logo: PortugalLogo,
     colour: '#046a38',
     id: '27',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1935',
     textInfo: "The Portugal national rugby union team, nicknamed Os Lobos (The Wolves), represents Portugal in men's international rugby union competitions." +
     "Portugal played its first ever rugby international in April 1935 against Spain." +
@@ -258,6 +276,7 @@ export const InternationalRugbyTeams = [
     logo: NamibiaLogo,
     colour: '#001489',
     id: '82',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1916',
     textInfo: "The Namibia national rugby union team represents Namibia in men's international rugby union competitions nicknamed the Welwitschias," +
      "are a tier-two nation in the World Rugby tier system" + 
@@ -270,6 +289,7 @@ export const InternationalRugbyTeams = [
     logo: TongaLogo,
     colour: '#ed1c24',
     id: '16',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1924',
     textInfo: "The Tonga national rugby union team represents the Tonga Rugby Union in men's international rugby union. The team is nicknamed ʻIkale Tahi (Sea Eagles)." +
      "Like their Polynesian neighbours, the Tongans start their matches with a traditional challenge – the Sipi Tau (pre-game war dance)." +
@@ -283,6 +303,7 @@ export const InternationalRugbyTeams = [
     logo: SamoaLogo,
     colour: '#264282',
     id: '15',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1924',
     textInfo: "The Samoa national rugby union team represents the Samoa Rugby Union in men's international rugby union." +
     "They are also known as 'Manu Samoa', which is thought to derive from the name of a Samoan warrior." +
@@ -296,6 +317,7 @@ export const InternationalRugbyTeams = [
     logo: SpainLogo,
     colour: '#ffcc00',
     id: '18',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1929',
     textInfo: "The Spain national rugby union team, nicknamed Los Leones (The Lions), represents the Spanish Rugby Federation in men's international rugby union competitions." +
     "Rugby union in Spain dates back to 1901, although Spain did not play its first international until 1929, beating Italy 9–0 in Barcelona." +
@@ -309,6 +331,7 @@ export const InternationalRugbyTeams = [
     logo: ChileLogo,
     colour: '#0032a0',
     id: '28',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1936',
     textInfo: "The Chilean national rugby union team represents the Chilean Rugby Federation in men's international rugby union." +
     "Nicknamed Los Cóndores (The Condors in English), they play in red and white jerseys." +
@@ -321,6 +344,7 @@ export const InternationalRugbyTeams = [
     logo: UruguayLogo,
     colour: '#0038a8',
     id: '29',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1948',
     textInfo: "The Uruguay national rugby union team, nicknamed Los Teros, represents the Uruguayan Rugby Union in men's international rugby union." +
     "Uruguay made their official international debut in 1948, in a game against Chile, which Uruguay lost 21–3." +
@@ -333,6 +357,7 @@ export const InternationalRugbyTeams = [
     logo: RussiaLogo,
     colour: '#ffff',
     id: '',
+    defaultLeague: 'Rugby World Cup',
     foundedYear: '1974',
     textInfo: "The Russia national rugby union team, nicknamed Medvedi (The Bears), represented Russia in men's international rugby union international competitions." +
     "The Rugby Union of the Soviet Union was founded in 1936, although the national side did not play its first official international until 1974."
@@ -344,6 +369,7 @@ export const InternationalRugbyTeams = [
     logo: BALionsLogo,
     colour: '#d21034',
     id: '32',
+    defaultLeague: '',
     foundedYear: '1888',
     textInfo: "The British & Irish Lions is a rugby union team selected from players eligible for the national teams of England, Ireland, Scotland, and Wales." +
      "The Lions are a test side and most often select players who have already played for their national team, although they can pick uncapped players who are " +

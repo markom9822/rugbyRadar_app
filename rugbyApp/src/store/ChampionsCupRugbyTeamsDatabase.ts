@@ -12,6 +12,10 @@ export const getChampionsCupTeamInfoFromName = (name: string) => {
       abbreviation: 'DEF',
       logo: DefaultLogo,
       colour: '#00845c',
+      id: '0',
+      defaultLeague: '',
+      foundedYear: '',
+      textInfo: '',
     }
 
     const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];

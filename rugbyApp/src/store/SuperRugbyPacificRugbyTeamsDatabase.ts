@@ -10,6 +10,7 @@ export const getSuperRugbyTeamInfoFromName = (name: string) => {
       logo: DefaultLogo,
       colour: '#00845c',
       id: '0',
+      defaultLeague: '',
       foundedYear: '',
       textInfo: ''
     }
@@ -33,6 +34,7 @@ export const SuperRugbyTeams = [
         logo: HurricanesLogo,
         colour: '#fede00',
         id: '25939',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1996',
         textInfo: "The Hurricanes (formerly the Wellington Hurricanes) is a New Zealand professional men's rugby union team based in Wellington. " +
         "The Hurricanes were formed to represent the lower North Island, including the East Coast, Hawke's Bay, Horowhenua Kapiti, Manawatū," +
@@ -46,6 +48,7 @@ export const SuperRugbyTeams = [
         logo: BluesLogo,
         colour: '#1f3bc4',
         id: '25932',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1996',
         textInfo: "The Blues (known as the Auckland Blues from 1996 to 1999) are a New Zealand professional rugby union team based in Auckland. " +
         "Like New Zealand's four other Super Rugby teams, the Blues were established by the NZRU in 1996. "
@@ -57,6 +60,7 @@ export const SuperRugbyTeams = [
         logo: BrumbiesLogo,
         colour: '#002B54',
         id: '25889',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1995',
         textInfo: "The ACT Brumbies (known from 2005 to 2022 as simply the Brumbies) is an Australian professional rugby union team based in Canberra, " +
         "Australian Capital Territory (ACT). " +
@@ -70,7 +74,8 @@ export const SuperRugbyTeams = [
         logo: ChiefsLogo,
         colour: '#f03737',
         id: '25934',
-        foundedYear: '',
+        defaultLeague: 'Super Rugby Pacific',
+        foundedYear: '1996',
         textInfo: "The Chiefs (formerly known as the Waikato Chiefs and officially called the Gallagher Chiefs for sponsorship reasons) are a New Zealand " +
         "professional rugby union team based in Hamilton, Waikato. " +
         "The Chiefs are central to six provincial teams; Waikato, Bay of Plenty, Taranaki and Counties Manukau playing in the National Provincial Championship (NPC), " +
@@ -83,6 +88,7 @@ export const SuperRugbyTeams = [
         logo: RedsLogo,
         colour: '#D01044',
         id: '182',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1996',
         textInfo: "The Queensland Reds is the rugby union team for the Australian state of Queensland that competes in the Southern Hemisphere's Super Rugby competition. " +
         "Prior to 1996, they were a representative team selected from the rugby union club competitions in Queensland. "
@@ -94,6 +100,7 @@ export const SuperRugbyTeams = [
         logo: HighlandersLogo,
         colour: '#ebbc13',
         id: '25938',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1996',
         textInfo: "The Highlanders (formerly the Otago Highlanders) is a New Zealand professional rugby union team based in Dunedin. " +
         "The team was formed in 1996 to represent the lower South Island in the newly formed Super 12 competition, and includes the Otago, " +
@@ -107,6 +114,7 @@ export const SuperRugbyTeams = [
         logo: DruaLogo,
         colour: '#1313eb',
         id: '289338',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '2017',
         textInfo: "The Fijian Drua (currently known as the Swire Shipping Fijian Drua for sponsorship reasons) is a professional rugby union team based in Fiji. " +
         "The team was created by the Fiji Rugby Union and launched in August 2017. "
@@ -118,6 +126,7 @@ export const SuperRugbyTeams = [
         logo: RebelsLogo,
         colour: '#002B5C',
         id: '25894',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '2009',
         textInfo: "The Melbourne Rebels were an Australian professional rugby union team based in Melbourne. " +
         "The Rebels made their debut in SANZAR's Super Rugby tournament in 2011."
@@ -129,6 +138,7 @@ export const SuperRugbyTeams = [
         logo: CrusadersLogo,
         colour: '#e84141',
         id: '25936',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1996',
         textInfo: "The Crusaders (formerly Canterbury Crusaders) are a New Zealand professional rugby union team based in Christchurch. " +
         "Formed in 1996 to represent the upper South Island of New Zealand in the Super 12, the Crusaders represent the Buller, Canterbury, " +
@@ -141,6 +151,7 @@ export const SuperRugbyTeams = [
         logo: ForceLogo,
         colour: '#004A9F',
         id: '25893',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '2005',
         textInfo: "The Western Force is an Australian professional rugby union team based in Perth, Western Australia. " +
         "They previously played in Super Rugby from 2006 until they were axed from the competition in 2017."
@@ -152,6 +163,7 @@ export const SuperRugbyTeams = [
         logo: MoanaLogo,
         colour: '#0bd1e3',
         id: '289319',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '2020',
         textInfo: "Moana Pasifika is a rugby union team made up of players from various Pacific Island nations as well as New Zealand " +
         "or Australian born players of Pasifika heritage, including Fiji, Samoa, Tonga and the Cook Islands. " +
@@ -166,6 +178,7 @@ export const SuperRugbyTeams = [
         logo: WaratahsLogo,
         colour: '#D41042',
         id: '227',
+        defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1882',
         textInfo: "The New South Wales Waratahs referred to as the Waratahs, are an Australian professional rugby union team representing the majority of New South Wales. " +
         "In 1882 the first New South Wales team was selected to play Queensland in a two-match series. "
