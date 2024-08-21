@@ -1,6 +1,6 @@
-import { colors, fontSize } from "@/constants/tokens";
+import { colors, fontSize, fontWeight } from "@/constants/tokens";
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image } from "react-native";
+import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { useState } from "react";
 import { getAnyTeamInfoFromName, getLeagueCodeFromDisplayName } from "@/store/utils/helpers";
@@ -82,6 +82,86 @@ export const getTeamStandingsInfo = (seasonStandings: any) => {
 
 }
 
+export type SeasonStatsInfo = {
+    playerName: string,
+    points: string,
+    matchCount: number,
+}
+
+export const getPlayerSeasonStats = async (
+    seasonName: string, teamID: string | string[] | undefined,
+     targetLeagueName: string ) => {
+
+    // get season match stats for league
+    const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates='+ seasonName +'&lang=en&limit=50&region=gb&team=' + teamID + '&tz=Europe/London';
+    const teamResults = await fetch(apiString,).then((res) => res.json())
+    const leagueID = getLeagueCodeFromDisplayName(targetLeagueName);
+
+    var playerStatsArray: SeasonStatsInfo[];
+    playerStatsArray=[];
+
+    for (let index = 0; index < teamResults.scores.length; index++) {
+
+        const leagueName = teamResults.scores[index].leagues[0].name;
+
+        if(leagueName == targetLeagueName)
+        {
+            for (let eventIndex = 0; eventIndex < teamResults.scores[index].events.length; eventIndex++) {
+
+                const eventID = teamResults.scores[index].events[eventIndex].id;
+            
+                const apiStatsString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
+                const statsResults = await fetch(apiStatsString,).then((res) => res.json())
+
+                for (let teamIndex = 0; teamIndex < statsResults.boxscore.players.length; teamIndex++) {
+
+                    if(statsResults.boxscore.players[teamIndex].team.id == teamID)
+                    {
+                        const playerCount = statsResults.boxscore.players[teamIndex].statistics[0].athletes.length;
+                        for (let playerIndex = 0; playerIndex < playerCount; playerIndex++) {
+
+                            const playerName = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].athlete.displayName;
+                            const points = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[16].value;
+
+                            let newStatsInfo = {
+                                playerName: playerName,
+                                points: points,
+                                matchCount: 1,
+                            };
+
+                            let index = playerStatsArray.findIndex(el => el.playerName === playerName);
+
+                            // player is not in list - add it in
+                            if(index < 0)
+                            {
+                                playerStatsArray.push(newStatsInfo);
+                            }
+                            else
+                            {
+                                const prevPoints = playerStatsArray[index].points;
+                                const prevMatchCount = playerStatsArray[index].matchCount;
+
+                                playerStatsArray[index] = {...playerStatsArray[index], points: prevPoints + points, matchCount: prevMatchCount + 1}
+                            }
+                        }
+
+                    }
+                    
+                }
+
+            }
+
+        }
+    }
+
+    console.info(playerStatsArray)
+
+    return(
+        playerStatsArray
+    )
+
+}
+
 export type StandingInfo = {
     isHeader: boolean
     teamPool: string
@@ -102,6 +182,9 @@ const TeamSummary = () => {
 
     const [teamInfo, setTeamInfo] = useState<TeamInfo | undefined>();
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
+    const [playerStatsArray, setPlayerStatsArray] = useState<SeasonStatsInfo[]>([]);
+
+    const [teamLeagueName, setTeamLeagueName] = useState<string>('');
 
     const {teamID} = useLocalSearchParams();
 
@@ -110,6 +193,7 @@ const TeamSummary = () => {
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch WIKI")
 
+        // getting basic team info
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/'+ teamID;
 
         const teamDetails = await fetch(apiString,).then((res) => res.json())
@@ -118,14 +202,20 @@ const TeamSummary = () => {
         setTeamInfo(basicTeamInfo)
 
         const thisTeamLeague = getAnyTeamInfoFromName(teamName).defaultLeague;
+        setTeamLeagueName(thisTeamLeague)
         const thisLeagueCode = getLeagueCodeFromDisplayName(thisTeamLeague)
 
+        // getting this teams standings table
         const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
              + currentYear + '&seasontype=1&sort=rank:asc&type=0';
             
         const seasonStandings = await fetch( apiStringStandings,).then((res) => res.json())
         const standingsInfo = getTeamStandingsInfo(seasonStandings)
         setStandingsArray(standingsInfo)
+
+        // getting season stats
+        const playerSeasonStats = await getPlayerSeasonStats(currentYear.toString(), teamID, thisTeamLeague)
+        setPlayerStatsArray(playerSeasonStats)
     }
 
     return(
@@ -140,6 +230,8 @@ const TeamSummary = () => {
             onPressButton={handlePressFetchData}
             />
 
+            <ScrollView>
+        
             <TeamSummaryPanel 
             teamName={teamInfo?.teamName}
             homeVenue={teamInfo?.homeVenue}
@@ -149,8 +241,16 @@ const TeamSummary = () => {
 
             <TeamStandingPanel 
             standingsArray={standingsArray}
-            teamLeagueName="Six Nations"
-            currentTeamName="Ireland"/>
+            teamLeagueName={teamLeagueName}
+            currentTeamName={teamInfo?.teamName}
+            currentYear={currentYear.toString()}/>
+
+            <TeamPlayerStatsPanel 
+            playerStatsArray={playerStatsArray}
+            teamLeagueName={teamLeagueName}
+            currentYear={currentYear.toString()}
+            />
+            </ScrollView>
 
         </View>
     )
@@ -212,18 +312,18 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
 type TeamStandingPanelProps = {
     standingsArray: StandingInfo[] | undefined,
     teamLeagueName: string | undefined,
-    currentTeamName: string | undefined
+    currentTeamName: string | undefined,
+    currentYear: string | undefined,
 
 }
 
-
-export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName}: TeamStandingPanelProps) => {
+export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName, currentYear}: TeamStandingPanelProps) => {
 
     if(standingsArray == undefined) return
 
     return (
         <View style={{marginVertical: 10, marginHorizontal: 20}}>
-            <Text style={{fontWeight: 500}}>{teamLeagueName} Table</Text>
+            <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Table</Text>
 
             <View style={{ flexDirection: 'row', paddingVertical: 2, borderTopColor: 'grey', borderTopWidth: 1, borderBottomColor: 'grey', borderBottomWidth: 1}}>
                 <Text style={{ width: "10%" }}>R</Text>
@@ -261,7 +361,6 @@ type TeamStandingItemProps = {
     index: number
     isCurrentTeam: boolean
     isLastItem: boolean
-
 }
 
 export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, index, isCurrentTeam, isLastItem}: TeamStandingItemProps) => {
@@ -280,12 +379,77 @@ export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, in
             <Text style={{width: "15%", fontWeight: textWeight, textAlign: 'right'}}>{points}</Text>
         </View>
     )
+}
+
+type TeamPlayerStatsPanelProps = {
+    playerStatsArray: SeasonStatsInfo[] | undefined,
+    teamLeagueName: string | undefined,
+    currentYear: string | undefined,
+}
+
+export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentYear}: TeamPlayerStatsPanelProps) => {
+
+    if(playerStatsArray == undefined) return
+
+    const filteredArray = playerStatsArray.filter(function(item){
+        return Number(item.points) > 0;
+     })
+
+    const sortedArray = filteredArray.sort((a, b) => Number(b.points) - Number(a.points))
+
+    return (
+        <View style={{marginVertical: 10, marginHorizontal: 20}}>
+            <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Player Stats</Text>
+
+
+            <View style={{justifyContent: 'center', paddingVertical: 5}}>
+
+            <View style={{paddingTop: 3, borderBottomColor: 'grey', borderBottomWidth: 2}}>
+                <Text>Points Leaders</Text>
+            </View>
+            
+            {sortedArray.map((match, index) => {
+                return (
+                    <PlayerStatsItem
+                    key={index}
+                    playerName={match.playerName}
+                    points={match.points}
+                    matchCount={match.matchCount}
+                    />
+                );
+            })}
+            </View>
+
+        </View>
+    )
 
 }
 
-export const TeamTopScorersPanel = ({ }: TeamSummaryPanelProps) => {
+type PlayerStatsItemProps = {
+    playerName: string,
+    points: string,
+    matchCount: number,
 
+}
 
+export const PlayerStatsItem = ({ playerName, points, matchCount}: PlayerStatsItemProps) => {
+
+    return (
+        <View style={{flexDirection: 'row', paddingVertical: 2 }}>
+
+            <View style={{paddingHorizontal: 3}}>
+                <Text style={{fontSize: fontSize.base, fontWeight: 500}}>{points}</Text>
+            </View>
+            
+            <View style={{paddingHorizontal: 3}}>
+                <Text>{playerName}</Text>
+            </View>
+
+            <View style={{paddingHorizontal: 3}}>
+                <Text>Matches: {matchCount}</Text>
+            </View>
+        </View>
+    )
 }
 
 
