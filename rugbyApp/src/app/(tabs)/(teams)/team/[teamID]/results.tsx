@@ -156,17 +156,24 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     const formattedDate  = new Date(eventDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric'})
     const eventTime = new Date(eventDate).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
 
-
     const homeTeamInfo = getAnyTeamInfoFromName(homeTeamName)
     const awayTeamInfo = getAnyTeamInfoFromName(awayTeamName)
+
+    const panelBackgroundColour = (eventState === "pre") ? ('white'):('#f0f2f0');
+
+    const homeScoreWeight = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? ('500'):('300');
+    const awayScoreWeight = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? ('500'):('300');
 
 
     const scoreRender = (eventNotStarted: boolean) => {
 
         if (!eventNotStarted) {
             return (
-                <View style={{width: "30%"}}>
-                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.lg, textAlign: 'center'}}>{homeTeamScore} - {awayTeamScore}</Text>
+                <View style={{width: "30%", flexDirection:'row', justifyContent: 'center'}}>
+                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontWeight: homeScoreWeight,
+                        fontSize: fontSize.lg, textAlign: 'center', width: "50%"}}>{homeTeamScore}</Text>
+                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontWeight: awayScoreWeight,
+                        fontSize: fontSize.lg, textAlign: 'center', width: "50%"}}>{awayTeamScore}</Text>
                 </View>
             )
         }
@@ -180,7 +187,8 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     }
 
     return (
-        <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginVertical: 5, borderColor: 'grey', borderWidth: 1}}>
+        <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+         marginVertical: 5, borderColor: 'lightgrey', borderWidth: 1, backgroundColor: panelBackgroundColour, marginHorizontal: 4, borderRadius: 4}}>
 
             <Text style={{fontSize: fontSize.xs}}>{formattedDate}</Text>
 
@@ -223,7 +231,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
 
             </View>
 
-            <Text style={{fontSize: fontSize.xs}}>{leagueName}</Text>
+            <Text style={{fontSize: fontSize.xs, color: 'grey'}}>{leagueName}</Text>
 
         </View>  
     )

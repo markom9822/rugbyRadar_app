@@ -25,8 +25,8 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
     const yearDiff = currentYear - foundedYear;
 
     return(
-        <View style={{justifyContent: 'center', marginHorizontal: 3}}>
-            <View style={{flexDirection: 'row', paddingVertical: 5}}>
+        <View style={{justifyContent: 'center', marginHorizontal: 5}}>
+            <View style={{flexDirection: 'row', paddingVertical: 10}}>
                 <Image source={teamInfo.logo} 
                     style={{resizeMode: 'contain',
                         width: 60,
@@ -39,20 +39,33 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                 </View>
                 
             </View>
-            
-            <View style={{flexDirection: 'row'}}>
-                <MaterialIcons name="stadium" size={20} color={'grey'} />
-                <Text style={{paddingHorizontal: 5}}>{homeVenue}</Text>
-            </View>
 
-            <View>
-                <Text>Location: {homeLocation}</Text>
-            </View>
+            <View style={{backgroundColor: '#f0f2f0', paddingVertical: 6, paddingHorizontal: 2, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1}}>
+                <View style={{ flexDirection: 'row', marginVertical: 4}}>
+                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
+                        <MaterialIcons name="stadium" size={20} color={'grey'} />
+                    </View>
+                    
+                    <Text style={{ paddingHorizontal: 8 }}>{homeVenue}</Text>
+                </View>
 
-            <View>
-                <Text>Founded: {teamInfo.foundedYear} ({yearDiff} years ago)</Text>
+                <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
+                        <MaterialIcons name="location-pin" size={20} color={'grey'} />
+                    </View>
+                    
+                    <Text style={{ paddingHorizontal: 8 }}>{homeLocation}</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
+                        <MaterialCommunityIcons name="timer-sand" size={20} color={'grey'} />
+                    </View>
+                    
+                    <Text style={{ paddingHorizontal: 8 }}>{teamInfo.foundedYear} ({yearDiff} years ago)</Text>
+                </View>
+
             </View>
-    
         </View>
     )
 }

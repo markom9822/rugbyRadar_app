@@ -23,7 +23,8 @@ export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamN
     if(standingsArray == undefined) return
 
     return (
-        <View style={{marginVertical: 10, marginHorizontal: 20}}>
+        <View style={{marginVertical: 20, marginHorizontal: 5, backgroundColor: '#f0f2f0', borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
+         paddingHorizontal: 10, paddingBottom: 15, paddingTop: 8}}>
             <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Table</Text>
 
             <View style={{ flexDirection: 'row', paddingVertical: 2, borderTopColor: 'grey', borderTopWidth: 1, borderBottomColor: 'grey', borderBottomWidth: 1}}>

@@ -9,15 +9,30 @@ import { getTeamInfo } from "@/store/utils/getTeamInfo";
 import { getTeamStandingsInfo } from "@/store/utils/getTeamStandingsInfo";
 import { TeamSummaryPanel } from "@/store/components/TeamSummaryPanel";
 import { StandingInfo, TeamStandingPanel } from "@/store/components/TeamStandingPanel";
+import { TeamPlayerStatsPanel } from "@/store/components/TeamPlayerStatsPanel";
 
 
 export const getTeamBasicInfo = (teamDetails: any) => {
 
     const teamName = teamDetails.team.displayName;
-    const homeVenue = teamDetails.team.venue.fullName
-    const homeVenueCity = teamDetails.team.venue.address.city
-    const homeVenueState = teamDetails.team.venue.address.state
 
+    var homeVenue;
+    var homeVenueCity;
+    var homeVenueState;
+    
+    if(teamDetails.team.venue !== undefined)
+    {
+        homeVenue = teamDetails.team.venue.fullName
+        homeVenueCity = teamDetails.team.venue.address.city
+        homeVenueState = teamDetails.team.venue.address.state
+    }
+    else
+    {
+        homeVenue = 'Not found'
+        homeVenueCity = 'empty'
+        homeVenueState = 'empty'
+    }
+    
     const teamForm = teamDetails.team.form;
 
     return (
@@ -34,6 +49,9 @@ export type SeasonStatsInfo = {
     playerName: string,
     playerPosition: string,
     points: string,
+    tries: string,
+    tackles: string,
+    penaltiesConc: string,
     matchCount: number,
 }
 
@@ -58,9 +76,12 @@ export const getPlayerSeasonStats = async (
             for (let eventIndex = 0; eventIndex < teamResults.scores[index].events.length; eventIndex++) {
 
                 const eventID = teamResults.scores[index].events[eventIndex].id;
+                console.info(eventID)
             
                 const apiStatsString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
                 const statsResults = await fetch(apiStatsString,).then((res) => res.json())
+
+                if(statsResults.boxscore.players == undefined) continue
 
                 for (let teamIndex = 0; teamIndex < statsResults.boxscore.players.length; teamIndex++) {
 
@@ -72,12 +93,17 @@ export const getPlayerSeasonStats = async (
                             const playerName = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].athlete.displayName;
                             const playerPosition = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].athlete.position.abbreviation;
                             const points = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[16].value;
-        
+                            const tries = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[23].value;
+                            const tackles = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[20].value;
+                            const penaltiesConc = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[14].value;
 
                             let newStatsInfo = {
                                 playerName: playerName,
                                 playerPosition: playerPosition,
                                 points: points,
+                                tries: tries,
+                                tackles: tackles,
+                                penaltiesConc: penaltiesConc,
                                 matchCount: 1,
                             };
 
@@ -92,17 +118,18 @@ export const getPlayerSeasonStats = async (
                             {
                                 const prevPoints = playerStatsArray[index].points;
                                 const prevMatchCount = playerStatsArray[index].matchCount;
+                                const prevTries = playerStatsArray[index].tries;
+                                const prevTackles = playerStatsArray[index].tackles;
+                                const prevPenaltiesConc = playerStatsArray[index].penaltiesConc;
 
-                                playerStatsArray[index] = {...playerStatsArray[index], points: prevPoints + points, matchCount: prevMatchCount + 1}
+                                playerStatsArray[index] = {...playerStatsArray[index],
+                                     points: prevPoints + points, tries: prevTries + tries, tackles: prevTackles + tackles,
+                                      penaltiesConc: prevPenaltiesConc + penaltiesConc , matchCount: prevMatchCount + 1}
                             }
                         }
-
                     }
-                    
                 }
-
             }
-
         }
     }
 
@@ -195,93 +222,6 @@ const TeamSummary = () => {
             />
             </ScrollView>
 
-        </View>
-    )
-}
-
-
-type TeamPlayerStatsPanelProps = {
-    playerStatsArray: SeasonStatsInfo[] | undefined,
-    teamLeagueName: string | undefined,
-    currentYear: string | undefined,
-}
-
-export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentYear}: TeamPlayerStatsPanelProps) => {
-
-    const [currentStatsTab, setCurrentStatsTab] = useState<string>('');
-
-    if(playerStatsArray == undefined) return
-
-    const filteredArray = playerStatsArray.filter(function(item){
-        return Number(item.points) > 0;
-     })
-
-    const sortedArray = filteredArray.sort((a, b) => Number(b.points) - Number(a.points))
-
-    return (
-        <View style={{marginVertical: 10, marginHorizontal: 20}}>
-            <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Player Stats</Text>
-
-
-            <View style={{justifyContent: 'center', paddingVertical: 5}}>
-
-            <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity onPress={() => setCurrentStatsTab('points')} style={{padding: 3, marginHorizontal: 3, borderBottomColor: 'grey', borderBottomWidth: 2, width: "20%"}}>
-                        <Text style={{textAlign: 'center'}}>Points</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={{padding: 3, marginHorizontal: 3, borderBottomColor: 'grey', borderBottomWidth: 2, width: "20%"}}>
-                    <Text style={{textAlign: 'center'}}>Tries</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{padding: 3, marginHorizontal: 3, borderBottomColor: 'grey', borderBottomWidth: 2, width: "20%"}}>
-                    <Text style={{textAlign: 'center'}}>Tackles</Text>
-                </TouchableOpacity>
-            </View>
-
-            
-            
-            {sortedArray.map((match, index) => {
-                return (
-                    <PlayerStatsItem
-                    key={index}
-                    playerName={match.playerName}
-                    playerPosition={match.playerPosition}
-                    points={match.points}
-                    matchCount={match.matchCount}
-                    />
-                );
-            })}
-            </View>
-        </View>
-    )
-}
-
-type PlayerStatsItemProps = {
-    playerName: string,
-    playerPosition: string,
-    points: string,
-    matchCount: number,
-
-}
-
-export const PlayerStatsItem = ({ playerName, playerPosition, points, matchCount}: PlayerStatsItemProps) => {
-
-    return (
-        <View style={{flexDirection: 'row', paddingVertical: 2, marginVertical: 4, backgroundColor: '#f0f2f0', alignItems: 'center'}}>
-
-            <View style={{paddingHorizontal: 3, width: "15%", borderRightColor: 'grey', borderRightWidth: 1}}>
-                <Text style={{fontSize: fontSize.base, fontWeight: 500}}>{points}</Text>
-            </View>
-            
-            <View style={{paddingHorizontal: 3, marginHorizontal: 5, width: "60%", flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{paddingHorizontal: 4}} >{playerName}</Text>
-                <Text style={{fontSize: fontSize.xs, fontWeight: 600, color: 'grey' ,paddingHorizontal: 4}}>{playerPosition}</Text>
-            </View>
-
-            <View style={{paddingHorizontal: 3, width: "25%"}}>
-                <Text style={{fontSize: fontSize.xs, fontWeight: 200}}>Matches: {matchCount}</Text>
-            </View>
         </View>
     )
 }
