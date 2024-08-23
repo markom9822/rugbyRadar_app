@@ -70,8 +70,10 @@ const TeamResults = () => {
         }
 
         console.info(teamMatchesArray)
-        setTeamEventsArray(teamMatchesArray)
 
+        const sortedArray = teamMatchesArray.sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
+
+        setTeamEventsArray(sortedArray)
     }
 
     const handleOnChangeSeason = (item: DropdownData) => {
@@ -115,10 +117,6 @@ const TeamResults = () => {
             }}
             onPressButton={handlePressFetchData}
             />
-
-            <View>
-                <Text style={{fontSize: fontSize.base, fontWeight: 600}}>Results - {seasonName}</Text>
-            </View>
 
             <FlatList
                 data={teamEventsArray}
@@ -180,7 +178,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
         else {
             return (
                 <View style={{width: "30%"}}>
-                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.base, textAlign: 'center'}}>{eventTime}</Text>
+                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center'}}>{eventTime}</Text>
                 </View>
             )
         }

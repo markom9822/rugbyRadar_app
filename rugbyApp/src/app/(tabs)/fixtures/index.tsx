@@ -1,16 +1,12 @@
 import { datePickerStyles, defaultStyles, fixtureStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, Pressable, Modal } from "react-native"
-import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize, fontWeight } from "@/constants/tokens"
-import { InternationalRugbyTeams, getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { useState } from "react"
-import { isEnabled } from "react-native/Libraries/Performance/Systrace"
-import Entypo from '@expo/vector-icons/Entypo';
-import { Link } from "expo-router"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown"
+import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 
 
 export type MatchInfo = {
@@ -106,6 +102,7 @@ const FixturesScreen = () => {
     }
 
     const leagueData = [
+        { label: 'All Leagues', value: 'all' },
         { label: 'International Test Match', value: 'inter' },
         { label: 'Six Nations', value: 'sixNations' },
         { label: 'Premiership', value: 'prem' },
@@ -136,17 +133,20 @@ const FixturesScreen = () => {
         />
 
 
-        <TouchableOpacity onPress={handlePressDatePicker}>
-            <Text style={defaultStyles.text}>Date: {selectedDate.toLocaleDateString()}</Text>
-        </TouchableOpacity>
-
-        <View style={{borderBottomColor: 'grey', borderBottomWidth: 1}}>
+        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }}>
+            <TouchableOpacity onPress={handlePressDatePicker} 
+            style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 5, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
+                <View style={{paddingHorizontal: 5}}>
+                    <MaterialIcons name="date-range" size={20} color={'black'} />
+                </View>
+                <Text style={{fontSize: fontSize.sm}}>{selectedDate.toLocaleDateString()}</Text>
+            </TouchableOpacity>
             {
                 datePickerOpen && (
-                    <DateTimePicker 
-                    value={selectedDate}
-                    mode="date"
-                    onChange={handleSelectedDate}
+                    <DateTimePicker
+                        value={selectedDate}
+                        mode="date"
+                        onChange={handleSelectedDate}
                     />
                 )
             }
