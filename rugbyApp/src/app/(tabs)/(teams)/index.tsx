@@ -22,7 +22,7 @@ export type SearchTeamInfo = {
 const getFilteredSearchTeams = (searchValue: string) => {
 
     //const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
-    const teamsArray = InternationalRugbyTeams;
+    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams];;
 
     const filteredData = teamsArray.filter(item => {
           return Object.values(item)

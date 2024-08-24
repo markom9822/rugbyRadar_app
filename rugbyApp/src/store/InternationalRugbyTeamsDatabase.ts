@@ -11,7 +11,7 @@ export const getInternationalTeamInfoFromName = (name: string) => {
     id: '0',
     defaultLeague: '',
     foundedYear: '',
-    textInfo: '',
+    seasonType: '',
   }
 
     const match = InternationalRugbyTeams.find((item) => item.displayName === name)
@@ -35,10 +35,7 @@ export const InternationalRugbyTeams = [
     id: '3',
     defaultLeague: 'Six Nations',
     foundedYear: '1875',
-    textInfo: "The Ireland national rugby union team is the men's representative " + 
-    "national team for the island of Ireland in rugby union. The team represents both the Republic of Ireland and Northern Ireland.\n\n" +  
-    "Ireland competes in the annual Six Nations Championship and in the Rugby World Cup. Ireland is one of the four unions that make up" + 
-    " the British & Irish Lions. The Ireland national team dates to 1875, when it played its first international match against England."
+    seasonType: 'north',
   },
   {
     type: 'International',
@@ -49,11 +46,7 @@ export const InternationalRugbyTeams = [
     id: '5',
     defaultLeague: 'Rugby Championship',
     foundedYear: '1891',
-    textInfo: "The South Africa national rugby union team, commonly known as the Springboks (colloquially the Boks, Bokke or Amabhokobhoko)," + 
-     "is the country's national team governed by the South African Rugby Union. The Springboks play in green and gold jerseys with white shorts," + 
-    "and their emblem is the Springbok, a native antelope and the national animal of South Africa." + 
-    "The team made its World Cup debut in 1995, when the newly democratic South Africa hosted the tournament." + 
-    "Rugby union is a highly popular sport in South Africa, often attracting the country's most talented athletes."
+    seasonType: 'south',
   },
   {
     type: 'International',

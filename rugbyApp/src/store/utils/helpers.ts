@@ -5,17 +5,17 @@ import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 
 export const leagueCodes = [
-    { value: 'urc', code: "270557", displayName: 'United Rugby Championship' },
+    { value: 'urc', code: "270557", displayName: 'United Rugby Championship'},
     { value: 'prem', code: "267979", displayName: 'Premiership Rugby'},
-    { value: 'top14', code: "270559", displayName: 'Top 14' },
-    { value: 'superRugby', code: "242041", displayName: 'Super Rugby Pacific' },
-    { value: 'rugbyChamp', code: "244293", displayName: 'Rugby Championship' },
-    { value: 'rugbyWorldCup', code: "164205", displayName: 'Rugby World Cup' },
-    { value: 'championsCup', code: "271937", displayName: '' },
-    { value: 'challengeCup', code: "272073", displayName: '' },
-    { value: 'sixNations', code: "180659", displayName: 'Six Nations' },
-    { value: 'inter', code: "289234", displayName: 'International Test Match' },
-    { value: 'menSevens', code: "282", displayName: '' },
+    { value: 'top14', code: "270559", displayName: 'Top 14'},
+    { value: 'superRugby', code: "242041", displayName: 'Super Rugby Pacific'},
+    { value: 'rugbyChamp', code: "244293", displayName: 'Rugby Championship'},
+    { value: 'rugbyWorldCup', code: "164205", displayName: 'Rugby World Cup'},
+    { value: 'championsCup', code: "271937", displayName: 'European Rugby Champions Cup'},
+    { value: 'challengeCup', code: "272073", displayName: ''},
+    { value: 'sixNations', code: "180659", displayName: 'Six Nations'},
+    { value: 'inter', code: "289234", displayName: 'International Test Match'},
+    { value: 'menSevens', code: "282", displayName: ''},
 ];
 
 export const getLeagueCode = (name: string) => {
@@ -46,6 +46,12 @@ export const getLeagueDisplayNameFromCode = (leagueCode: string) => {
     
     const result = leagueCodes.find((element) => element.code == leagueCode)
     return result?.displayName.toString()
+}
+
+export const getLeagueInfoFromDisplayName  = (displayName: string) => {
+    
+    const result = leagueCodes.find((element) => element.displayName == displayName)
+    return result
 }
 
 export const getAnyTeamInfoFromName = (name: string) => {

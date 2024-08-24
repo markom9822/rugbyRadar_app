@@ -2,7 +2,7 @@ import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image } from "react-native";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { getAnyTeamInfoFromName, getLeagueCodeFromDisplayName } from "@/store/utils/helpers";
+import { getAnyTeamInfoFromName, getLeagueCodeFromDisplayName, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
 import { colors, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown";
@@ -20,52 +20,71 @@ export type TeamEvent = {
 const TeamResults = () => {
 
     const [teamEventsArray, setTeamEventsArray] = useState<TeamEvent[] | undefined>();
-    const [seasonName, setSeasonName] = useState<string>('');
+    const [seasonYear, setSeasonYear] = useState<string>('');
 
     const {teamID} = useGlobalSearchParams();
 
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch Team Results")
 
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates='+ seasonName +'&lang=en&limit=50&region=gb&team=' + teamID + '&tz=Europe/London';
 
-        const teamResults = await fetch(apiString,).then((res) => res.json())
+        // need to check for season type, northern or southern
+        const seasonsArray = [Number(seasonYear) - 1, Number(seasonYear)]
+
+        const seasonStartDate = new Date(seasonsArray[0], 9, 0)
+        const seasonEndDate = new Date(seasonsArray[1], 7, 0)
+
+
+        console.info(seasonStartDate)
+        console.info(seasonEndDate)
 
         var teamMatchesArray = [];
-
-        for (let index = 0; index < teamResults.scores.length; index++) {
-
-            const leagueName = teamResults.scores[index].leagues[0].name;
-
-            if(getLeagueCodeFromDisplayName(leagueName) !== undefined)
-            {
-                // get events
-                console.info(teamResults.scores[index].leagues[0].name)
-
-                for (let eventIndex = 0; eventIndex < teamResults.scores[index].events.length; eventIndex++) {
-
-                    const eventDate = teamResults.scores[index].events[eventIndex].competitions[0].date;
-                    const homeTeamName = teamResults.scores[index].events[eventIndex].competitions[0].competitors[0].team.displayName;
-                    const awayTeamName = teamResults.scores[index].events[eventIndex].competitions[0].competitors[1].team.displayName;
-
-                    const homeTeamScore = teamResults.scores[index].events[eventIndex].competitions[0].competitors[0].score;
-                    const awayTeamScore = teamResults.scores[index].events[eventIndex].competitions[0].competitors[1].score;
-                    const eventState = teamResults.scores[index].events[eventIndex].status.type.state;
-
-
-                    const newArray = {
-                        eventDate: eventDate,
-                        homeTeamName: homeTeamName,
-                        awayTeamName: awayTeamName,
-                        homeTeamScore: homeTeamScore,
-                        awayTeamScore: awayTeamScore,
-                        leagueName: leagueName,
-                        eventState: eventState,
-                    };
-
-                    teamMatchesArray.push(newArray)
-                }
+        
+        for (let seasonIndex = 0; seasonIndex < seasonsArray.length; seasonIndex++) {
             
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + seasonsArray[seasonIndex] 
+            + '&lang=en&limit=50&region=gb&team=' + teamID + '&tz=Europe/London';
+            const teamResults = await fetch(apiString,).then((res) => res.json())
+
+
+            for (let index = 0; index < teamResults.scores.length; index++) {
+
+                const leagueName = teamResults.scores[index].leagues[0].name;
+
+                if (getLeagueCodeFromDisplayName(leagueName) !== undefined) {
+                    // get events
+                    console.info(teamResults.scores[index].leagues[0].name)
+
+                    for (let eventIndex = 0; eventIndex < teamResults.scores[index].events.length; eventIndex++) {
+
+                        const eventDate = teamResults.scores[index].events[eventIndex].competitions[0].date;
+
+                        if (new Date(eventDate) < seasonStartDate || new Date(eventDate) > seasonEndDate) {
+                            // date is outside of this season so skip
+                            continue;
+                        }
+
+                        const homeTeamName = teamResults.scores[index].events[eventIndex].competitions[0].competitors[0].team.displayName;
+                        const awayTeamName = teamResults.scores[index].events[eventIndex].competitions[0].competitors[1].team.displayName;
+
+                        const homeTeamScore = teamResults.scores[index].events[eventIndex].competitions[0].competitors[0].score;
+                        const awayTeamScore = teamResults.scores[index].events[eventIndex].competitions[0].competitors[1].score;
+                        const eventState = teamResults.scores[index].events[eventIndex].status.type.state;
+
+                        const newArray = {
+                            eventDate: eventDate,
+                            homeTeamName: homeTeamName,
+                            awayTeamName: awayTeamName,
+                            homeTeamScore: homeTeamScore,
+                            awayTeamScore: awayTeamScore,
+                            leagueName: leagueName,
+                            eventState: eventState,
+                        };
+
+                        teamMatchesArray.push(newArray)
+                    }
+
+                }
             }
         }
 
@@ -77,7 +96,7 @@ const TeamResults = () => {
     }
 
     const handleOnChangeSeason = (item: DropdownData) => {
-        setSeasonName(item.value)
+        setSeasonYear(item.value)
         setTeamEventsArray([])
     }
 
@@ -108,7 +127,7 @@ const TeamResults = () => {
                 data={seasonRegData}
                 onChangeSelection={handleOnChangeSeason}
                 isDisabled={false}
-                value={seasonName} />
+                value={seasonYear} />
 
             <FetchDataButton 
             iconSize={24} 

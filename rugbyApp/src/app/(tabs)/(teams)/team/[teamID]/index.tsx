@@ -195,7 +195,7 @@ const TeamSummary = () => {
 
         // getting this teams standings table
         const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
-             + teamInfoYear + '&seasontype=1&sort=rank:asc&type=0';
+             + targetYear + '&seasontype=1&sort=rank:asc&type=0';
             
         const seasonStandings = await fetch( apiStringStandings,).then((res) => res.json())
         const standingsInfo = getTeamStandingsInfo(seasonStandings)
