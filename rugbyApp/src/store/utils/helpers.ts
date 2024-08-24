@@ -36,6 +36,18 @@ export const getLeagueName = (leagueCode: string) => {
     return result?.value.toString()
 }
 
+export const getLeagueNameFromDisplayName = (displayName: string) => {
+    
+    const result = leagueCodes.find((element) => element.displayName == displayName)
+    return result?.value.toString()
+}
+
+export const getLeagueDisplayNameFromCode = (leagueCode: string) => {
+    
+    const result = leagueCodes.find((element) => element.code == leagueCode)
+    return result?.displayName.toString()
+}
+
 export const getAnyTeamInfoFromName = (name: string) => {
 
     const defaultTeam =  {

@@ -3,10 +3,11 @@ import { View, Text, TouchableOpacity, Image, FlatList, Pressable, Modal } from 
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from "expo-router"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
+import { getLeagueNameFromDisplayName } from "../utils/helpers";
 
 
 type ScorePanelProps = {
-    league: string
+    leagueDisplayName: string
     index: number
     currentIndex: Number | null
 	homeTeam: string
@@ -16,15 +17,16 @@ type ScorePanelProps = {
     matchDate: Date
     matchTitle: string
     matchVenue: string
-    matchType: string
+    matchLeague: string
     matchID: string
     OnPressPanel: (index: Number) => void
 }
 
-export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, matchDate,
-     index, currentIndex, matchTitle, matchVenue, matchType, matchID, OnPressPanel}: ScorePanelProps) => {
+export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
+     index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, OnPressPanel}: ScorePanelProps) => {
 
-    const homeAwayInfo = getHomeAwayTeamInfo(league, homeTeam, awayTeam);
+    const leagueName = getLeagueNameFromDisplayName(leagueDisplayName)
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
     
@@ -82,7 +84,7 @@ export const ScorePanel = ({ league, homeTeam, awayTeam, homeScore, awayScore, m
               {index === currentIndex && (
                 <View style={fixtureStyles.subCategoriesList}>
                   <Text>{matchTitle}</Text>
-                  <Text>{matchType}</Text>
+                  <Text>{matchLeague}</Text>
 
                   <Text style={{borderBottomColor: 'grey', borderBottomWidth: 2}}>Match Venue:</Text>
                   <Text>{matchVenue}</Text>
