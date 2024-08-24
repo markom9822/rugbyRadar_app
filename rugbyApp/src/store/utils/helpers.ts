@@ -74,7 +74,20 @@ export const getAnyTeamInfoFromName = (name: string) => {
     {
         return defaultTeam
     }
-  }
+}
+
+export const getClosestWorldCupYear = (year: number) => {
+
+    const yearDifference = year - 1987;
+    const remainder = yearDifference % 4;
+
+    if(remainder == 0)
+    {
+        return year;
+    }
+
+    return year - remainder;
+}
 
 
 export function dateCustomFormatting(date: Date): string {

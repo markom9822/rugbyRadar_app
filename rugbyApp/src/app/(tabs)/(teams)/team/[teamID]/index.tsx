@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { useState } from "react";
-import { getAnyTeamInfoFromName, getLeagueCodeFromDisplayName } from "@/store/utils/helpers";
+import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
 import { getTeamInfo } from "@/store/utils/getTeamInfo";
 import { getTeamStandingsInfo } from "@/store/utils/getTeamStandingsInfo";
@@ -56,8 +56,10 @@ export type SeasonStatsInfo = {
 }
 
 export const getPlayerSeasonStats = async (
-    seasonName: string, teamID: string | string[] | undefined,
+    seasonName: number, teamID: string | string[] | undefined,
      targetLeagueName: string ) => {
+
+    console.info(seasonName)
 
     // get season match stats for league
     const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates='+ seasonName +'&lang=en&limit=50&region=gb&team=' + teamID + '&tz=Europe/London';
@@ -66,6 +68,8 @@ export const getPlayerSeasonStats = async (
 
     var playerStatsArray: SeasonStatsInfo[];
     playerStatsArray=[];
+
+    console.info(teamResults)
 
     for (let index = 0; index < teamResults.scores.length; index++) {
 
@@ -155,6 +159,7 @@ const TeamSummary = () => {
     const [playerStatsArray, setPlayerStatsArray] = useState<SeasonStatsInfo[]>([]);
 
     const [teamLeagueName, setTeamLeagueName] = useState<string>('');
+    const [teamInfoYear, setTeamInfoYear] = useState<number>(0);
 
     const {teamID} = useLocalSearchParams();
 
@@ -175,16 +180,29 @@ const TeamSummary = () => {
         setTeamLeagueName(thisTeamLeague)
         const thisLeagueCode = getLeagueCodeFromDisplayName(thisTeamLeague)
 
+        var targetYear = 0
+        // need to get closest world cup year
+        if(thisTeamLeague == "Rugby World Cup")
+        {
+            setTeamInfoYear(getClosestWorldCupYear(currentYear));
+            targetYear = getClosestWorldCupYear(currentYear);
+        }
+        else
+        {
+            setTeamInfoYear(currentYear);
+            targetYear = currentYear
+        }
+
         // getting this teams standings table
         const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
-             + currentYear + '&seasontype=1&sort=rank:asc&type=0';
+             + teamInfoYear + '&seasontype=1&sort=rank:asc&type=0';
             
         const seasonStandings = await fetch( apiStringStandings,).then((res) => res.json())
         const standingsInfo = getTeamStandingsInfo(seasonStandings)
         setStandingsArray(standingsInfo)
 
         // getting season stats
-        const playerSeasonStats = await getPlayerSeasonStats(currentYear.toString(), teamID, thisTeamLeague)
+        const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamID, thisTeamLeague)
         setPlayerStatsArray(playerSeasonStats)
     }
 
@@ -213,12 +231,12 @@ const TeamSummary = () => {
             standingsArray={standingsArray}
             teamLeagueName={teamLeagueName}
             currentTeamName={teamInfo?.teamName}
-            currentYear={currentYear.toString()}/>
+            currentYear={teamInfoYear.toString()}/>
 
             <TeamPlayerStatsPanel 
             playerStatsArray={playerStatsArray}
             teamLeagueName={teamLeagueName}
-            currentYear={currentYear.toString()}
+            currentYear={teamInfoYear.toString()}
             />
             </ScrollView>
 
