@@ -15,7 +15,7 @@ export const getChampionsCupTeamInfoFromName = (name: string) => {
       id: '0',
       defaultLeague: '',
       foundedYear: '',
-      textInfo: '',
+      seasonType: '',
     }
 
     const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];

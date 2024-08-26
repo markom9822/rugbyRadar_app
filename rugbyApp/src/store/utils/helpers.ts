@@ -65,13 +65,40 @@ export const getAnyTeamInfoFromName = (name: string) => {
       id: '0',
       defaultLeague: '',
       foundedYear: '',
-      textInfo: ''
+      seasonType: '',
     }
 
     const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...InternationalRugbyTeams];
 
   
     const match = allTeamsArray.find((item) => item.displayName === name)
+    if(match !== undefined)
+    {
+        return match
+    }
+    else
+    {
+        return defaultTeam
+    }
+}
+
+export const getAnyTeamInfoFromID = (id: string) => {
+
+    const defaultTeam =  {
+      type: 'Champions Cup',
+      displayName: 'Default',
+      abbreviation: 'DEF',
+      logo: DefaultLogo,
+      colour: '#00845c',
+      id: '0',
+      defaultLeague: '',
+      foundedYear: '',
+      seasonType: '',
+    }
+
+    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...InternationalRugbyTeams];
+  
+    const match = allTeamsArray.find((item) => item.id === id)
     if(match !== undefined)
     {
         return match

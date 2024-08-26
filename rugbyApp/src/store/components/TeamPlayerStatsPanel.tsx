@@ -154,12 +154,12 @@ export const PlayerStatsItem = ({ playerName, playerPosition, matchInfo, matchCo
                 <Text style={{fontSize: fontSize.base, fontWeight: 500}}>{currentStat}</Text>
             </View>
             
-            <View style={{paddingHorizontal: 3, marginHorizontal: 5, width: "60%", flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{paddingHorizontal: 3, marginHorizontal: 3, width: "55%", flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={{paddingHorizontal: 4}} >{playerName}</Text>
                 <Text style={{fontSize: fontSize.xs, fontWeight: 600, color: 'grey' ,paddingHorizontal: 4}}>{playerPosition}</Text>
             </View>
 
-            <View style={{paddingHorizontal: 3, width: "25%"}}>
+            <View style={{paddingHorizontal: 1, width: "30%"}}>
                 <Text style={{fontSize: fontSize.xs, fontWeight: 200}}>Matches: {matchCount}</Text>
             </View>
         </View>

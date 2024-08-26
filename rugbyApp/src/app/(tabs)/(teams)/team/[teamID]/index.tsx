@@ -10,6 +10,7 @@ import { getTeamStandingsInfo } from "@/store/utils/getTeamStandingsInfo";
 import { TeamSummaryPanel } from "@/store/components/TeamSummaryPanel";
 import { StandingInfo, TeamStandingPanel } from "@/store/components/TeamStandingPanel";
 import { TeamPlayerStatsPanel } from "@/store/components/TeamPlayerStatsPanel";
+import { getPlayerSeasonStats } from "@/store/utils/getPlayerSeasonStats";
 
 
 export const getTeamBasicInfo = (teamDetails: any) => {
@@ -55,96 +56,6 @@ export type SeasonStatsInfo = {
     matchCount: number,
 }
 
-export const getPlayerSeasonStats = async (
-    seasonName: number, teamID: string | string[] | undefined,
-     targetLeagueName: string ) => {
-
-    console.info(seasonName)
-
-    // get season match stats for league
-    const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates='+ seasonName +'&lang=en&limit=50&region=gb&team=' + teamID + '&tz=Europe/London';
-    const teamResults = await fetch(apiString,).then((res) => res.json())
-    const leagueID = getLeagueCodeFromDisplayName(targetLeagueName);
-
-    var playerStatsArray: SeasonStatsInfo[];
-    playerStatsArray=[];
-
-    console.info(teamResults)
-
-    for (let index = 0; index < teamResults.scores.length; index++) {
-
-        const leagueName = teamResults.scores[index].leagues[0].name;
-
-        if(leagueName == targetLeagueName)
-        {
-            for (let eventIndex = 0; eventIndex < teamResults.scores[index].events.length; eventIndex++) {
-
-                const eventID = teamResults.scores[index].events[eventIndex].id;
-                console.info(eventID)
-            
-                const apiStatsString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
-                const statsResults = await fetch(apiStatsString,).then((res) => res.json())
-
-                if(statsResults.boxscore.players == undefined) continue
-
-                for (let teamIndex = 0; teamIndex < statsResults.boxscore.players.length; teamIndex++) {
-
-                    if(statsResults.boxscore.players[teamIndex].team.id == teamID)
-                    {
-                        const playerCount = statsResults.boxscore.players[teamIndex].statistics[0].athletes.length;
-                        for (let playerIndex = 0; playerIndex < playerCount; playerIndex++) {
-
-                            const playerName = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].athlete.displayName;
-                            const playerPosition = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].athlete.position.abbreviation;
-                            const points = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[16].value;
-                            const tries = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[23].value;
-                            const tackles = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[20].value;
-                            const penaltiesConc = statsResults.boxscore.players[teamIndex].statistics[0].athletes[playerIndex].statistics[0].stats[14].value;
-
-                            let newStatsInfo = {
-                                playerName: playerName,
-                                playerPosition: playerPosition,
-                                points: points,
-                                tries: tries,
-                                tackles: tackles,
-                                penaltiesConc: penaltiesConc,
-                                matchCount: 1,
-                            };
-
-                            let index = playerStatsArray.findIndex(el => el.playerName === playerName);
-
-                            // player is not in list - add it in
-                            if(index < 0)
-                            {
-                                playerStatsArray.push(newStatsInfo);
-                            }
-                            else
-                            {
-                                const prevPoints = playerStatsArray[index].points;
-                                const prevMatchCount = playerStatsArray[index].matchCount;
-                                const prevTries = playerStatsArray[index].tries;
-                                const prevTackles = playerStatsArray[index].tackles;
-                                const prevPenaltiesConc = playerStatsArray[index].penaltiesConc;
-
-                                playerStatsArray[index] = {...playerStatsArray[index],
-                                     points: prevPoints + points, tries: prevTries + tries, tackles: prevTackles + tackles,
-                                      penaltiesConc: prevPenaltiesConc + penaltiesConc , matchCount: prevMatchCount + 1}
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    console.info(playerStatsArray)
-
-    return(
-        playerStatsArray
-    )
-
-}
-
 export type TeamInfo = {
     teamName: string
     homeVenue: string
@@ -177,6 +88,8 @@ const TeamSummary = () => {
         setTeamInfo(basicTeamInfo)
 
         const thisTeamLeague = getAnyTeamInfoFromName(teamName).defaultLeague;
+        const thisTeamSeasonType = getAnyTeamInfoFromName(teamName).seasonType;
+        console.info(thisTeamSeasonType)
         setTeamLeagueName(thisTeamLeague)
         const thisLeagueCode = getLeagueCodeFromDisplayName(thisTeamLeague)
 
@@ -189,8 +102,24 @@ const TeamSummary = () => {
         }
         else
         {
-            setTeamInfoYear(currentYear);
-            targetYear = currentYear
+            if(thisTeamSeasonType == 'north')
+            {
+                const seasonStartDate = new Date(currentYear, 8, 0)
+                if (new Date() > seasonStartDate) {
+                    setTeamInfoYear(currentYear + 1);
+                    targetYear = currentYear + 1;
+                }
+                else
+                {
+                    setTeamInfoYear(currentYear);
+                    targetYear = currentYear
+                }
+            }
+            else
+            {
+                setTeamInfoYear(currentYear);
+                targetYear = currentYear
+            }
         }
 
         // getting this teams standings table
@@ -202,7 +131,7 @@ const TeamSummary = () => {
         setStandingsArray(standingsInfo)
 
         // getting season stats
-        const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamID, thisTeamLeague)
+        const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamID, thisTeamLeague, getAnyTeamInfoFromName(teamName).seasonType)
         setPlayerStatsArray(playerSeasonStats)
     }
 
