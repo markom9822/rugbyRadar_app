@@ -19,10 +19,9 @@ export type SearchTeamInfo = {
 }
 
 
-const getFilteredSearchTeams = (searchValue: string) => {
+const getFilteredSearchTeams = (teamsArray: SearchTeamInfo[], searchValue: string) => {
 
     //const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
-    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams];;
 
     const filteredData = teamsArray.filter(item => {
           return Object.values(item)
@@ -36,16 +35,17 @@ const getFilteredSearchTeams = (searchValue: string) => {
     )
 }
 
-
-
 const TeamsScreen = () => {
+
+    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams];;
+
     const [teamSearch, setTeamSearch] = useState<string>('');
-    const [searchArray, setSearchArray] = useState<SearchTeamInfo[]>([]);
+    const [searchArray, setSearchArray] = useState<SearchTeamInfo[]>(teamsArray);
 
 
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
-        setSearchArray(getFilteredSearchTeams(search))
+        setSearchArray(getFilteredSearchTeams(teamsArray, search))
     }
     
     return (
@@ -66,6 +66,7 @@ const TeamsScreen = () => {
                     renderItem={({ item, index }) =>
                         <TeamInfoPanel
                         teamName={item.displayName}
+                        teamColour={item.colour}
                         teamLogo={item.logo}
                         teamID={item.id}/>}
                 />
@@ -77,38 +78,49 @@ const TeamsScreen = () => {
 
 type TeamInfoPanelProps = {
     teamName: string,
+    teamColour: string,
     teamLogo: any,
     teamID: string,
-
 }
 
+export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamID }: TeamInfoPanelProps) => {
 
-export const TeamInfoPanel = ({ teamName, teamLogo, teamID }: TeamInfoPanelProps) => {
+    const [selected, setSelected] = useState(false);
+
+    const teamBkgRBGA = hexToRGB(teamColour, '0.7')
+    const teamBorderRBGA = hexToRGB(teamColour, '0.9')
+
 
     return (
-        <TouchableWithoutFeedback onPress={() => { }}>
-            <View>
+            <View style={{backgroundColor: '#f0f2f0'}}>
                 <Link href={`/(tabs)/(teams)/team/${teamID}`} asChild>
-                    <Pressable>
+                    <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)} 
+                    onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
 
-                    <View style={[teamInfoPanelStyles.container]}>
-
-
+                    <View style={[teamInfoPanelStyles.container, 
+                        {backgroundColor: selected ? teamBkgRBGA : "white", borderColor: selected ? teamBorderRBGA : 'lightgrey', borderWidth: 2}]}>
                         <View style={{ padding: 5 }}>
                             <Image
                                 style={[teamInfoPanelStyles.teamLogo]}
                                 source={teamLogo} />
                         </View>
-                        <Text style={[teamInfoPanelStyles.teamName]}>{teamName}</Text>
+                        <Text style={[teamInfoPanelStyles.teamName, {color: selected ? "white" : "black" }]}>{teamName.toLocaleUpperCase()}</Text>
                     </View>
 
                     </Pressable>
                 </Link>
 
             </View>
-        </TouchableWithoutFeedback>
     )
 }
+
+export const hexToRGB = (hexValue: string, alpha: string) => {
+    const numericValue = parseInt(hexValue.slice(1), 16);
+    const r = numericValue >> 16 & 0xFF;
+    const g = numericValue >> 8 & 0xFF;
+    const b = numericValue & 0xFF;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
 
 export const teamInfoPanelStyles = StyleSheet.create({
     container: {
@@ -117,8 +129,7 @@ export const teamInfoPanelStyles = StyleSheet.create({
       alignItems: 'center',
       padding: 5,
       margin: 3, 
-      borderColor: 'grey', 
-      borderWidth: 1,
+      borderRadius: 4
     },
     teamLogo: {
       resizeMode: 'contain',
@@ -130,8 +141,8 @@ export const teamInfoPanelStyles = StyleSheet.create({
     teamName: {
         paddingHorizontal: 10,
         textAlign: 'center',
-        fontWeight: 500,
-        fontSize: fontSize.base
+        fontWeight: 600,
+        fontSize: 18
     },
   })
 
