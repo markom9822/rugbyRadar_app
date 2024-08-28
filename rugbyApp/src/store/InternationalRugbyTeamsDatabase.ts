@@ -7,6 +7,7 @@ export const getInternationalTeamInfoFromName = (name: string) => {
     displayName: 'Default',
     abbreviation: 'DEF',
     logo: DefaultLogo,
+    altLogo: DefaultLogo,
     colour: '#00845c',
     id: '0',
     defaultLeague: '',
