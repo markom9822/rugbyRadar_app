@@ -32,7 +32,7 @@ export const FijiLogo = require('@/store/InternationalTeamLogos/Logo_Fiji_Rugby.
 export const FijiAltLogo = require('@/store/InternationalTeamLogos/Fiji_Rugby_Logo_White.png')
 
 export const JapanLogo = require('@/store/InternationalTeamLogos/Logo_Japan_Rugby.png')
-//export const JapanAltLogo = require('@/store/InternationalTeamLogos/Logo_Japan_Rugby.png')
+export const JapanAltLogo = require('@/store/InternationalTeamLogos/Japan_Rugby_Logo_White.png')
 
 export const GeorgiaLogo = require('@/store/InternationalTeamLogos/Georgian_Rugby_Union.png')
 export const GeorgiaAltLogo = require('@/store/InternationalTeamLogos/Georgia_Rugby_Logo_White.png')
@@ -47,13 +47,13 @@ export const USALogo = require('@/store/InternationalTeamLogos/United_States_nat
 export const USAAltLogo = require('@/store/InternationalTeamLogos/USA_Rugby_Logo_White.png')
 
 export const ChileLogo = require('@/store/InternationalTeamLogos/Condores_Chile_Rugby.png')
-//export const ChileAltLogo = require('@/store/InternationalTeamLogos/Condores_Chile_Rugby.png')
+export const ChileAltLogo = require('@/store/InternationalTeamLogos/Chile_Rugby_Logo_White.png')
 
 export const NamibiaLogo = require('@/store/InternationalTeamLogos/Logo_Namibia_Rugby.png')
 export const NamibiaAltLogo = require('@/store/InternationalTeamLogos/Namibia_Rugby_Logo_White.png')
 
 export const TongaLogo = require('@/store/InternationalTeamLogos/Logo_Tonga_Rugby.png')
-//export const TongaAltLogo = require('@/store/InternationalTeamLogos/Logo_Tonga_Rugby.png')
+export const TongaAltLogo = require('@/store/InternationalTeamLogos/Tonga_Rugby_Logo_White.png')
 
 export const SamoaLogo = require('@/store/InternationalTeamLogos/Logo_Samoa_Rugby.png')
 export const SamoaAltLogo = require('@/store/InternationalTeamLogos/Samoa_Rugby_Logo_White.png')
@@ -62,7 +62,7 @@ export const RomaniaLogo = require('@/store/InternationalTeamLogos/Romania_natio
 export const RomaniaAltLogo = require('@/store/InternationalTeamLogos/Romania_Rugby_Logo_White.png')
 
 export const SpainLogo = require('@/store/InternationalTeamLogos/Spain_Rugby_logo.png')
-//export const SpainAltLogo = require('@/store/InternationalTeamLogos/Spain_Rugby_logo.png')
+export const SpainAltLogo = require('@/store/InternationalTeamLogos/Spain_Rugby_Logo_White.png')
 
 export const UruguayLogo = require('@/store/InternationalTeamLogos/Uruguay_Los_teros_logo.png')
 export const UruguayAltLogo = require('@/store/InternationalTeamLogos/Uruguay_Rugby_Logo_White.png')
@@ -70,6 +70,7 @@ export const UruguayAltLogo = require('@/store/InternationalTeamLogos/Uruguay_Ru
 export const RussiaLogo = require('@/store/InternationalTeamLogos/Russia_Rugby_Logo.png')
 
 export const BALionsLogo = require('@/store/InternationalTeamLogos/British_&_Irish_Lions_logo.png')
+export const BALionsAltLogo = require('@/store/InternationalTeamLogos/British_&_Irish_Lions_Logo_White.png')
 
 export const DefaultLogo = require('@/store/InternationalTeamLogos/Default_Team_Logo.png')
 
