@@ -14,14 +14,13 @@ export type SearchTeamInfo = {
     displayName: string;
     abbreviation: string;
     logo: any;
+    altLogo: any,
     colour: string;
     id: string;
 }
 
 
 const getFilteredSearchTeams = (teamsArray: SearchTeamInfo[], searchValue: string) => {
-
-    //const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
 
     const filteredData = teamsArray.filter(item => {
           return Object.values(item)
@@ -37,7 +36,7 @@ const getFilteredSearchTeams = (teamsArray: SearchTeamInfo[], searchValue: strin
 
 const TeamsScreen = () => {
 
-    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams];;
+    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams];;
 
     const [teamSearch, setTeamSearch] = useState<string>('');
     const [searchArray, setSearchArray] = useState<SearchTeamInfo[]>(teamsArray);
@@ -68,6 +67,7 @@ const TeamsScreen = () => {
                         teamName={item.displayName}
                         teamColour={item.colour}
                         teamLogo={item.logo}
+                        teamAltLogo={item.altLogo}
                         teamID={item.id}/>}
                 />
 
@@ -80,16 +80,18 @@ type TeamInfoPanelProps = {
     teamName: string,
     teamColour: string,
     teamLogo: any,
+    teamAltLogo: any,
     teamID: string,
 }
 
-export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamID }: TeamInfoPanelProps) => {
+export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, teamID }: TeamInfoPanelProps) => {
 
     const [selected, setSelected] = useState(false);
 
     const teamBkgRBGA = hexToRGB(teamColour, '0.7')
     const teamBorderRBGA = hexToRGB(teamColour, '0.9')
 
+    const currentTeamLogo = selected ? teamAltLogo : teamLogo;
 
     return (
             <View style={{backgroundColor: '#f0f2f0'}}>
@@ -102,7 +104,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamID }: TeamIn
                         <View style={{ padding: 5 }}>
                             <Image
                                 style={[teamInfoPanelStyles.teamLogo]}
-                                source={teamLogo} />
+                                source={currentTeamLogo} />
                         </View>
                         <Text style={[teamInfoPanelStyles.teamName, {color: selected ? "white" : "black" }]}>{teamName.toLocaleUpperCase()}</Text>
                     </View>

@@ -1,6 +1,7 @@
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
+import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 
@@ -61,6 +62,7 @@ export const getAnyTeamInfoFromName = (name: string) => {
       displayName: 'Default',
       abbreviation: 'DEF',
       logo: DefaultLogo,
+      altLogo: DefaultLogo,
       colour: '#00845c',
       id: '0',
       defaultLeague: '',
@@ -68,9 +70,8 @@ export const getAnyTeamInfoFromName = (name: string) => {
       seasonType: '',
     }
 
-    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...InternationalRugbyTeams];
+    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams];
 
-  
     const match = allTeamsArray.find((item) => item.displayName === name)
     if(match !== undefined)
     {
@@ -89,6 +90,7 @@ export const getAnyTeamInfoFromID = (id: string) => {
       displayName: 'Default',
       abbreviation: 'DEF',
       logo: DefaultLogo,
+      altLogo: DefaultLogo,
       colour: '#00845c',
       id: '0',
       defaultLeague: '',
@@ -96,7 +98,7 @@ export const getAnyTeamInfoFromID = (id: string) => {
       seasonType: '',
     }
 
-    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...InternationalRugbyTeams];
+    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams];
   
     const match = allTeamsArray.find((item) => item.id === id)
     if(match !== undefined)

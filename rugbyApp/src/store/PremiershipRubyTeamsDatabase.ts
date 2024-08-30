@@ -1,5 +1,5 @@
-import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams";
-import { BathLogo, BristolLogo, ExeterLogo, GloucesterLogo, HarlequinsLogo, LeicesterLogo, NewcastleLogo, NorthamptonLogo, SaleLogo, SaracensLogo } from "./PremiershipTeamsLogos/PremiershipTeams";
+import { DefaultLogo, NewZealandAltLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { BathAltLogo, BathLogo, BristolAltLogo, BristolLogo, ExeterAltLogo, ExeterLogo, GloucesterAltLogo, GloucesterLogo, HarlequinsAltLogo, HarlequinsLogo, LeicesterAltLogo, LeicesterLogo, NewcastleAltLogo, NewcastleLogo, NorthamptonAltLogo, NorthamptonLogo, SaleAltLogo, SaleLogo, SaracensAltLogo, SaracensLogo } from "./PremiershipTeamsLogos/PremiershipTeams";
 
 export const getPremTeamInfoFromName = (name: string) => {
 
@@ -8,6 +8,7 @@ export const getPremTeamInfoFromName = (name: string) => {
     displayName: 'Default',
     abbreviation: 'DEF',
     logo: DefaultLogo,
+    altLogo: DefaultLogo,
     colour: '#00845c',
     id: '0',
     defaultLeague: '',
@@ -32,6 +33,7 @@ export const PremRugbyTeams = [
     displayName: 'Bath Rugby',
     abbreviation: 'BATH',
     logo: BathLogo,
+    altLogo: BathAltLogo,
     colour: '#1e3b84',
     id: '25898',
     defaultLeague: 'Premiership Rugby',
@@ -43,6 +45,7 @@ export const PremRugbyTeams = [
     displayName: 'Bristol Rugby',
     abbreviation: 'BRIST',
     logo: BristolLogo,
+    altLogo: BristolAltLogo,
     colour: '#121254',
     id: '25899',
     defaultLeague: 'Premiership Rugby',
@@ -54,6 +57,7 @@ export const PremRugbyTeams = [
     displayName: 'Exeter Chiefs',
     abbreviation: 'EXET',
     logo: ExeterLogo,
+    altLogo: ExeterAltLogo,
     colour: '#1a1a1a',
     id: '116227',
     defaultLeague: 'Premiership Rugby',
@@ -65,6 +69,7 @@ export const PremRugbyTeams = [
     displayName: 'Gloucester Rugby',
     abbreviation: 'GLOUC',
     logo: GloucesterLogo,
+    altLogo: GloucesterAltLogo,
     colour: '#c8202e',
     id: '25900',
     defaultLeague: 'Premiership Rugby',
@@ -76,6 +81,7 @@ export const PremRugbyTeams = [
     displayName: 'Harlequins',
     abbreviation: 'HQUINN',
     logo: HarlequinsLogo,
+    altLogo: HarlequinsAltLogo,
     colour: '#b6234a',
     id: '25901',
     defaultLeague: 'Premiership Rugby',
@@ -87,6 +93,7 @@ export const PremRugbyTeams = [
     displayName: 'Leicester Tigers',
     abbreviation: 'LEICS',
     logo: LeicesterLogo,
+    altLogo: LeicesterAltLogo,
     colour: '#044437',
     id: '25903',
     defaultLeague: 'Premiership Rugby',
@@ -98,6 +105,7 @@ export const PremRugbyTeams = [
     displayName: 'Newcastle Falcons',
     abbreviation: 'NEWC',
     logo: NewcastleLogo,
+    altLogo: NewcastleAltLogo,
     colour: '#1a1a1a',
     id: '25906',
     defaultLeague: 'Premiership Rugby',
@@ -109,6 +117,7 @@ export const PremRugbyTeams = [
     displayName: 'Northampton Saints',
     abbreviation: 'NTHMP',
     logo: NorthamptonLogo,
+    altLogo: NorthamptonAltLogo,
     colour: '#1a1a1a',
     id: '25907',
     defaultLeague: 'Premiership Rugby',
@@ -120,6 +129,7 @@ export const PremRugbyTeams = [
     displayName: 'Sale Sharks',
     abbreviation: 'SALE',
     logo: SaleLogo,
+    altLogo: SaleAltLogo,
     colour: '#000050',
     id: '25908',
     defaultLeague: 'Premiership Rugby',
@@ -131,6 +141,7 @@ export const PremRugbyTeams = [
     displayName: 'Saracens',
     abbreviation: 'SARAC',
     logo: SaracensLogo,
+    altLogo: SaracensAltLogo,
     colour: '#1a1a1a',
     id: '25909',
     defaultLeague: 'Premiership Rugby',
