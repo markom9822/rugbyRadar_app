@@ -72,14 +72,15 @@ export const fixtureStyles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#f0f2f0',
-      borderBottomColor: 'grey',
-      borderBottomWidth: 2,
+      borderColor: 'lightgrey',
+      borderWidth: 2,
   },
     cardHeaderGameInfo: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
         backgroundColor: '#f0f2f0',
+        padding: 3
     },
     teamName: {
         paddingHorizontal: 5,
@@ -98,9 +99,18 @@ export const fixtureStyles = StyleSheet.create({
         minWidth: 50
     },
     quickViewButton: {
-      backgroundColor: '#ffff',
-      width: 100,
-      alignItems: 'center'
+      backgroundColor: '#f0f2f0',
+      width: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomColor: 'lightgrey',
+      borderBottomWidth: 1,
+      borderRightColor: 'lightgrey',
+      borderRightWidth: 1,
+      borderLeftColor: 'lightgrey',
+      borderLeftWidth: 1,
+      borderBottomLeftRadius: 3,
+      borderBottomRightRadius: 3,
     },
     moreInfoView: {
       position: 'absolute',
@@ -108,7 +118,7 @@ export const fixtureStyles = StyleSheet.create({
       top: 0,
       bottom: 0,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     moreInfoButton: {
       backgroundColor: '#cfd4cf',
@@ -117,21 +127,19 @@ export const fixtureStyles = StyleSheet.create({
       justifyContent: 'center'
     },
     subCategoriesList: {
-      backgroundColor: '#e1e3e1',
       padding: 5,
       width: '100%',
-      alignItems: 'center'
+      borderBottomColor: 'grey',
+      borderBottomWidth: 2
       },
   });
 
 export const lineupPanelStyles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      justifyContent: 'space-between'
     },
     teamName: {
-        fontSize: fontSize.base,
-        color: 'black',
+        fontSize: fontSize.base,      
     },
     teamLogo: {
       resizeMode: 'contain',
@@ -141,14 +149,14 @@ export const lineupPanelStyles = StyleSheet.create({
       minWidth: 50,
     },
     teamHeader: {
-      width: "50%",
+      width: "45%",
       flexDirection: 'row',
       alignItems: 'center',
-      borderBottomColor: 'grey',
-      borderBottomWidth: 2,
+      marginHorizontal: 5,
+      marginVertical: 3,
+      borderRadius: 6
     },
     playerInfo: {
-      width: "50%",
       paddingLeft: 5
     },
     substitutesHeader: {

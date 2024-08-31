@@ -131,3 +131,11 @@ export function dateCustomFormatting(date: Date): string {
 
     return `${date.getFullYear()}${padStart(date.getMonth() + 1)}${padStart(date.getDate())}`;
 }
+
+export const hexToRGB = (hexValue: string, alpha: string) => {
+    const numericValue = parseInt(hexValue.slice(1), 16);
+    const r = numericValue >> 16 & 0xFF;
+    const g = numericValue >> 8 & 0xFF;
+    const b = numericValue & 0xFF;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }

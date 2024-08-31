@@ -8,6 +8,7 @@ import { defaultStyles } from "@/styles"
 import { useState } from "react"
 import { Link } from "expo-router"
 import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, FlatList, Image, StyleSheet, Pressable} from "react-native"
+import { hexToRGB } from "@/store/utils/helpers"
 
 export type SearchTeamInfo = {
     type: string;
@@ -115,14 +116,6 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
             </View>
     )
 }
-
-export const hexToRGB = (hexValue: string, alpha: string) => {
-    const numericValue = parseInt(hexValue.slice(1), 16);
-    const r = numericValue >> 16 & 0xFF;
-    const g = numericValue >> 8 & 0xFF;
-    const b = numericValue & 0xFF;
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`
-  }
 
 export const teamInfoPanelStyles = StyleSheet.create({
     container: {

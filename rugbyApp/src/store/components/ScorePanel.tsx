@@ -74,7 +74,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 <View style={[fixtureStyles.moreInfoView]}>
                     <Link href={`/(tabs)/fixtures/match/${matchID}`} asChild>
                         <Pressable>
-                            <Entypo name="chevron-right" size={24} color="black" />
+                                <Entypo name="chevron-right" size={24} color="black" />
                         </Pressable> 
                     </Link>
                 </View>
@@ -82,12 +82,11 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
               </View>
 
               {index === currentIndex && (
-                <View style={fixtureStyles.subCategoriesList}>
-                  <Text>{matchTitle}</Text>
-                  <Text>{matchLeague}</Text>
+                <View style={[fixtureStyles.subCategoriesList, {backgroundColor: 'rgba(52, 52, 52, 0.3)'}]}>
+                  <Text style={{fontWeight: 500, fontSize: 15, color: 'black'}}>{matchTitle}</Text>
+                  <Text style={{fontWeight: 300, color: 'black'}}>{matchLeague}</Text>
 
-                  <Text style={{borderBottomColor: 'grey', borderBottomWidth: 2}}>Match Venue:</Text>
-                  <Text>{matchVenue}</Text>
+                  <Text style={{color: 'black', fontWeight: 400}}>{matchVenue}</Text>
 
                 </View>
               )}
@@ -97,7 +96,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 onPress={handlePressedPanel} 
                 activeOpacity={0.9}
                 style={{width: 100, alignItems: 'center'}}>
-                    <Entypo name="chevron-down" size={18} color="black" />
+                    <Entypo name="chevron-down" size={14} color="black" />
                 </TouchableOpacity>
               </View>
             </View>

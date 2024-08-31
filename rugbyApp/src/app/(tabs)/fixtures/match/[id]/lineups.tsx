@@ -5,7 +5,7 @@ import { colors, fontSize } from "@/constants/tokens";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
 import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase";
-import { getLeagueName } from "@/store/utils/helpers";
+import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 
 
@@ -83,6 +83,7 @@ const Lineups = () => {
 
     const [homeTeamName, setHomeTeamName] = useState<string>('');
     const [awayTeamName, setAwayTeamName] = useState<string>('');
+    const [selectedTeam, setSelectedTeam] = useState<string>('home');
 
     const [allLineupsArray, setAllLineupsArray] = useState<AllLineUpsInfo[]>([]);
 
@@ -175,11 +176,13 @@ const Lineups = () => {
     if(homeTeamInfo === undefined) return
     if(awayTeamInfo === undefined) return
 
+    const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.7')
+    const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.7')
+
     return(
         <View style={defaultStyles.container}>
             <Text>Event ID: {eventID}</Text>
             <Text>League ID: {leagueID}</Text>
-
 
             <FetchDataButton 
             iconSize={24} 
@@ -191,23 +194,27 @@ const Lineups = () => {
             />
 
             <View style={lineupPanelStyles.container}>
-                <View style={ [lineupPanelStyles.teamHeader, {borderRightWidth: 2, borderRightColor: 'grey'}]}>
-                    <Image source={homeTeamInfo.logo} 
+                <TouchableOpacity onPress={() => setSelectedTeam('home')}
+                style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA):('white'), justifyContent: 'center'}]}>
+                    <Image source={(selectedTeam === "home") ? homeTeamInfo.altLogo : homeTeamInfo.logo} 
                     style={lineupPanelStyles.teamLogo}/>
-                    <Text style={lineupPanelStyles.teamName}>{homeTeamInfo.abbreviation}</Text>
-                </View>
-
-                <View style={[lineupPanelStyles.teamHeader]}>
-                    <Image source={awayTeamInfo.logo} 
+                    <Text style={[lineupPanelStyles.teamName, {color: (selectedTeam === "home") ? 'white': 'black'}]}>{homeTeamInfo.abbreviation}</Text>
+                </TouchableOpacity>
+                
+ 
+                <TouchableOpacity onPress={() => setSelectedTeam('away')}
+                style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA):('white'), justifyContent: 'center'}]}>
+                    <Image source={(selectedTeam === "away") ? awayTeamInfo.altLogo : awayTeamInfo.logo}  
                     style={lineupPanelStyles.teamLogo}/>
-                    <Text style={lineupPanelStyles.teamName}>{awayTeamInfo.abbreviation}</Text>
-                </View>
+                    <Text style={[lineupPanelStyles.teamName, {color: (selectedTeam === "away") ? 'white': 'black'}]}>{awayTeamInfo.abbreviation}</Text>
+                </TouchableOpacity>
             </View>
             
             <FlatList data={allLineupsArray}
             renderItem={({item, index}) =>
             <LineupPlayerPanel
             key={index}
+            selectedTeam={selectedTeam}
             hometeamPlayer={item.hometeamPlayer}
             hometeamPlayerPosition={item.hometeamPlayerPosition}
             hometeamPlayerNum={item.hometeamPlayerNum}
@@ -223,6 +230,7 @@ const Lineups = () => {
 }
 
 type LineupPlayerPanelProps = {
+    selectedTeam: string,
     hometeamPlayer: string,
     hometeamPlayerPosition: string,
     hometeamPlayerNum: string,
@@ -234,29 +242,40 @@ type LineupPlayerPanelProps = {
 }
 
 
-export const LineupPlayerPanel = ({ hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum, isHomePlayerCaptain,
+export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum, isHomePlayerCaptain,
      awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain }: LineupPlayerPanelProps) => {
 
-    const homePlayerWeight = (isHomePlayerCaptain) ? ('600'):('300');
-    const awayPlayerWeight = (isAwayPlayerCaptain) ? ('600'):('300');
-
-    const homeCaptainText = (isHomePlayerCaptain) ? ('(c)'):('');
-    const awayCaptainText = (isAwayPlayerCaptain) ? ('(c)'):('');
+    var playerName = ''
+    var playerNumber = ''
+    var isCaptain = false;
+    if(selectedTeam == 'home')
+    {
+        playerName = hometeamPlayer;
+        playerNumber = hometeamPlayerNum;
+        isCaptain = isHomePlayerCaptain;
+    }
+    else
+    {
+        playerName = awayteamPlayer;
+        playerNumber = awayteamPlayerNum;
+        isCaptain = isAwayPlayerCaptain;
+    }
 
 
     if (hometeamPlayer === "Substitutes") {
         return (
             <View style={lineupPanelStyles.container}>
-                <Text style={[lineupPanelStyles.substitutesHeader, {borderRightColor: 'grey', borderRightWidth: 2}]}>{hometeamPlayer}</Text>
-                <Text style={[lineupPanelStyles.substitutesHeader]}>{awayteamPlayer}</Text>
+                <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName}</Text>
             </View>
         )
     }
     else {
         return (
-            <View style={lineupPanelStyles.container}>
-                <Text style={[lineupPanelStyles.playerInfo, {fontWeight: homePlayerWeight, borderRightColor: 'grey', borderRightWidth: 2}]}>{hometeamPlayerNum} : {hometeamPlayer} {homeCaptainText}</Text>
-                <Text style={[lineupPanelStyles.playerInfo, {fontWeight: awayPlayerWeight}]}>{awayteamPlayerNum} : {awayteamPlayer} {awayCaptainText}</Text>
+            <View style={[lineupPanelStyles.container, {paddingVertical: 2}]}>
+                <Text style={{fontWeight: (isCaptain) ? '600' : '300', paddingHorizontal: 4, fontSize: fontSize.sm}}>
+                    {playerNumber}
+                </Text>
+                <Text style={{fontWeight: (isCaptain) ? '600' : '300', paddingHorizontal: 4, fontSize: fontSize.sm}}>{playerName} {(isCaptain) ? '(c)' : ''}</Text>
             </View>
         )
     }

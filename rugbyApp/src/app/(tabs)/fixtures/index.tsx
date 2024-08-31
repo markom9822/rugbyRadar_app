@@ -276,7 +276,9 @@ const FixturesScreen = () => {
             OnPressPanel={handlePressPanel}
         />}
         renderSectionHeader={({section: {title}}) => (
-            <Text style={{fontSize: fontSize.sm, color: 'grey'}}>{title}</Text>
+            <View style={{marginTop: 10}}>
+                <Text style={{fontSize: fontSize.sm, color: 'grey', fontWeight: 300}}>{title}</Text>
+            </View>
         )}
         />
 

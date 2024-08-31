@@ -46,11 +46,6 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
         homeInfo = getChampionsCupTeamInfoFromName(homeTeam)
         awayInfo = getChampionsCupTeamInfoFromName(awayTeam)
     }
-    else if(league === "menSevens")
-    {
-        homeInfo = getWorldFlagTeamInfoFromName(homeTeam)
-        awayInfo = getWorldFlagTeamInfoFromName(awayTeam)
-    }
     else
     {
         return null
