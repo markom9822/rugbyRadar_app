@@ -4,6 +4,7 @@ import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
 import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
 import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase";
+import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase";
 
 
 export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string, awayTeam: string) => {
@@ -40,6 +41,11 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     {
         homeInfo = getTop14TeamInfoFromName(homeTeam)
         awayInfo = getTop14TeamInfoFromName(awayTeam)
+    }
+    else if(league === "superRugby")
+    {
+            homeInfo = getSuperRugbyTeamInfoFromName(homeTeam)
+            awayInfo = getSuperRugbyTeamInfoFromName(awayTeam)
     }
     else if(league === "championsCup")
     {

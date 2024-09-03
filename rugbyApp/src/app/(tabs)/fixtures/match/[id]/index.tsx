@@ -29,7 +29,7 @@ export const getMatchInfo = (matchDetails: any) => {
     const matchVenue = matchDetails.gameInfo.venue.fullName;
     const matchAttendance = matchDetails.gameInfo.attendance;
 
-    if(matchDetails.boxscore.teams[0].statistics == undefined || matchDetails.boxscore.teams[1].statitics == undefined )
+    if(matchDetails.boxscore.teams[0].statistics == undefined || matchDetails.boxscore.teams[1].statistics == undefined )
     {
         const blankArray = [
             {
@@ -181,7 +181,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                             source={homeTeamInfo?.logo}/>
                             <Text style={[summaryPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
-                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "50%"}}></Text>
+                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "40%"}}></Text>
                         <View style={[summaryPanelStyles.teamInfoContainer]}>
                             <Text style={[summaryPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[summaryPanelStyles.teamLogo]} 
@@ -269,6 +269,7 @@ export const summaryPanelStyles = StyleSheet.create({
       alignItems: 'center'
     },
     matchName: {
+        textAlign: 'center',
         fontSize: fontSize.lg,
         color: 'black',
         fontWeight: 600,
@@ -294,7 +295,7 @@ export const summaryPanelStyles = StyleSheet.create({
         fontWeight: 500,
     },
     teamInfoContainer:{
-        width: "20%",
+        width: "25%",
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'

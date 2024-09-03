@@ -187,7 +187,7 @@ const StandingsScreen = () => {
         if (isWorldRanking) {
             return (
                 <View style={{ flexDirection: 'row' }}>
-                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "60%", textAlign: 'center' }]}>Teams</Text>
+                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "60%", textAlign: 'left' }]}> #        Team</Text>
                         <Text style={[standingsHeadingStyles.headerStat, { width: "40%" }]}>Points</Text>
                 </View>
             )
@@ -196,7 +196,7 @@ const StandingsScreen = () => {
             return (
                 <>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "40%", textAlign: 'left' }]}>{seasonName} season</Text>
+                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "40%", textAlign: 'left' }]}> #    Team</Text>
                         <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>GP</Text>
                         <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>W</Text>
                         <Text style={[standingsHeadingStyles.headerStat, { width: "9%" }]}>D</Text>
@@ -261,13 +261,15 @@ const StandingsScreen = () => {
 export const standingsHeadingStyles = StyleSheet.create({
     seasonTitle: {
         textAlign: 'left',
-        borderBottomColor: 'grey',
-        borderBottomWidth: 2,
+        fontSize: 13,
+        fontWeight: 500,
+        color: 'grey',
     },
     headerStat: {
-        borderBottomColor: 'grey', 
-        borderBottomWidth: 2,
         textAlign: 'center',
+        fontSize: 13,
+        fontWeight: 500,
+        color: 'grey',
     },
   })
 

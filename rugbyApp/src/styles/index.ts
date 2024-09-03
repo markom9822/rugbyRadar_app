@@ -39,8 +39,9 @@ export const standingsPanelStyles = StyleSheet.create({
       alignItems: 'center'
   },
   teamText: {
-      fontSize: fontSize.xs,
+      fontSize: 13,
       color: 'black',
+      fontWeight: 500
   },
   teamStat: {
       fontSize: fontSize.xs,
@@ -71,19 +72,15 @@ export const fixtureStyles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#f0f2f0',
-      borderColor: 'lightgrey',
-      borderWidth: 2,
   },
     cardHeaderGameInfo: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#f0f2f0',
         padding: 3
     },
     teamName: {
-        paddingHorizontal: 5,
+        paddingHorizontal: 6,
         fontSize: fontSize.sm,
         fontWeight: 'bold',
     },

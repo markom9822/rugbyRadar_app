@@ -91,13 +91,13 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
             {
                 return (
                     <>
-                        <View style={{ width: "60%", flexDirection: 'row', borderRightWidth: 1, borderRightColor: 'grey', 
-                            padding: 5, justifyContent: 'space-evenly', alignItems: 'center', backgroundColor: panelBkgColour }}>
+                        <View style={{ width: "60%", flexDirection: 'row', padding: 7, justifyContent: 'space-evenly',
+                             alignItems: 'center', backgroundColor: panelBkgColour }}>
                             <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{index + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
                                 source={teamInfo.logo} />
-                            <Text style={[standingsPanelStyles.teamText, {width: "65%", paddingLeft: 5}]}>{teamName}</Text>
+                            <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '40%', fontWeight: 600}]}>{teamPoints}</Text>
     
@@ -109,13 +109,13 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
             {
                 return (
                     <>
-                        <View style={{ width: "40%", flexDirection: 'row', borderRightWidth: 1, borderRightColor: 'grey',
-                             padding: 5, justifyContent: 'space-evenly', alignItems: 'center'}}>
+                        <View style={{ width: "40%", flexDirection: 'row', padding: 7,
+                             justifyContent: 'space-evenly', alignItems: 'center'}}>
                             <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{index + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
                                 source={teamInfo.logo} />
-                            <Text style={[standingsPanelStyles.teamText, {width: "65%", paddingLeft: 5}]}>{teamName}</Text>
+                            <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamGP}</Text>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamWins}</Text>

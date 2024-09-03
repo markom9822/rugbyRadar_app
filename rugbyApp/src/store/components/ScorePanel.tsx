@@ -4,6 +4,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from "expo-router"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getLeagueNameFromDisplayName } from "../utils/helpers";
+import { useState } from "react";
 
 
 type ScorePanelProps = {
@@ -25,6 +26,8 @@ type ScorePanelProps = {
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
      index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, OnPressPanel}: ScorePanelProps) => {
 
+    const [selected, setSelected] = useState(false);
+
     const leagueName = getLeagueNameFromDisplayName(leagueDisplayName)
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -44,41 +47,45 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
     const matchTime = matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 
+    const currentHomeTeamLogo = selected ? homeTeamInfo.altLogo : homeTeamInfo.logo;
+    const currentAwayTeamLogo = selected ? awayTeamInfo.altLogo : awayTeamInfo.logo;
+
+
     return(
         <View style={[fixtureStyles.card]}>
-              <View style={[fixtureStyles.cardHeaderAllInfo]}>
+              <View style={[fixtureStyles.cardHeaderAllInfo,
+                 {backgroundColor: selected ? 'grey' : '#f0f2f0', borderColor: selected ? 'black' : 'lightgrey', borderWidth: 2}]}>
+
+                <Link href={`/(tabs)/fixtures/match/${matchID}`} asChild>
+                <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
+                    onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
+
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Text style={[fixtureStyles.teamName]}>{homeTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: selected ? 'white':'black'}]}>{homeTeamInfo.abbreviation}</Text>
                         <Image
                         style={[fixtureStyles.teamLogo]}
-                        source={homeTeamInfo.logo} />
+                        source={currentHomeTeamLogo} />
                     </View>
                     
                     <View style={{width: "30%", flexDirection: 'column', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight }]}>{homeScore}</Text>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight}]}>{awayScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: selected ? 'white':'black' }]}>{homeScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: selected ? 'white':'black'}]}>{awayScore}</Text>
                         </View>
-                        <Text>{matchTime}</Text>
+                        <Text style={{color: selected ? 'white':'black'}}>{matchTime}</Text>
                     </View>
 
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <Image
                         style={[fixtureStyles.teamLogo]}
-                        source={awayTeamInfo.logo} />
-                        <Text style={[fixtureStyles.teamName]}>{awayTeamInfo.abbreviation}</Text>
+                        source={currentAwayTeamLogo} />
+                        <Text style={[fixtureStyles.teamName, {color: selected ? 'white':'black'}]}>{awayTeamInfo.abbreviation}</Text>
                     </View>
                 </View>
 
-                <View style={[fixtureStyles.moreInfoView]}>
-                    <Link href={`/(tabs)/fixtures/match/${matchID}`} asChild>
-                        <Pressable>
-                                <Entypo name="chevron-right" size={24} color="black" />
-                        </Pressable> 
-                    </Link>
-                </View>
-                
+                </Pressable> 
+                </Link>
               </View>
 
               {index === currentIndex && (

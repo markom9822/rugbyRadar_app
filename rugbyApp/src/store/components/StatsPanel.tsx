@@ -79,7 +79,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                             source={homeTeamInfo?.logo}/>
                             <Text style={[statsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
-                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "50%"}}></Text>
+                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
                         <View style={[statsPanelStyles.teamInfoContainer]}>
                             <Text style={[statsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[statsPanelStyles.teamLogo]} 
@@ -254,7 +254,7 @@ export const statsPanelStyles = StyleSheet.create({
         fontSize: fontSize.base
     },
     teamInfoContainer:{
-        width: "20%",
+        width: "30%",
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'

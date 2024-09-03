@@ -212,6 +212,7 @@ const FixturesScreen = () => {
         { label: 'Premiership', value: 'prem' },
         { label: 'URC', value: 'urc' },
         { label: 'Top 14', value: 'top14' },
+        { label: 'Super Rugby', value: 'superRugby' },
         { label: 'Champions Cup', value: 'championsCup' },
         { label: 'Rugby Championship', value: 'rugbyChamp' },
         { label: 'Olympics Mens Sevens', value: 'menSevens' },
@@ -276,7 +277,7 @@ const FixturesScreen = () => {
             OnPressPanel={handlePressPanel}
         />}
         renderSectionHeader={({section: {title}}) => (
-            <View style={{marginTop: 10}}>
+            <View style={{marginTop: 10, marginHorizontal: 5}}>
                 <Text style={{fontSize: fontSize.sm, color: 'grey', fontWeight: 300}}>{title}</Text>
             </View>
         )}

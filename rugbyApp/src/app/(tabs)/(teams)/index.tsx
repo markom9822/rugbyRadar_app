@@ -94,6 +94,20 @@ const TeamsScreen = () => {
         setSearchSections(getFilteredSearchTeams(teamSections, search))
     }
 
+    const sectionHeader = (title: string, data: SearchTeamInfo[]) => {
+
+        if(data.length !== 0)
+        {
+            return (
+                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300 }}>{title}</Text>
+                </View>
+            )
+        }
+        
+        return null
+    }
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -119,10 +133,8 @@ const TeamsScreen = () => {
                             teamAltLogo={item.altLogo}
                             teamID={item.id}
                         />}
-                    renderSectionHeader={({ section: { title } }) => (
-                        <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                            <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300 }}>{title}</Text>
-                        </View>
+                    renderSectionHeader={({ section: { title, data } }) => (
+                        sectionHeader(title, data)
                     )}
                 />
 
