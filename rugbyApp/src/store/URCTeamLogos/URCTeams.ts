@@ -44,4 +44,4 @@ export const SharksLogo = require('@/store/URCTeamLogos/Sharks_rugby_union_logo.
 export const SharksAltLogo = require('@/store/URCTeamLogos/Sharks_Rugby_Logo_White.png')
 
 export const BullsLogo = require('@/store/URCTeamLogos/Vodacom-Bulls-logo.png')
-//export const BullsAltLogo = require('@/store/URCTeamLogos/Vodacom-Bulls-logo.png')
+export const BullsAltLogo = require('@/store/URCTeamLogos/Vodacom-Bulls-Logo_White.png')
