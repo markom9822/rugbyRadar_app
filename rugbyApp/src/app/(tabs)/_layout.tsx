@@ -33,7 +33,7 @@ const TabsNavigation = () => {
             <Tabs.Screen name="(teams)" 
                 options={{
                     title: "Teams",
-                    tabBarIcon: ({color}) => <FontAwesome6 name="shield-halved" size={24} color={color} />
+                    tabBarIcon: ({color}) => <FontAwesome6 name="shield-halved" size={22} color={color} />
                 }} />
             <Tabs.Screen name="standings" 
                 options={{

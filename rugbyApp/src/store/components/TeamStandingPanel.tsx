@@ -1,3 +1,4 @@
+import { fontSize } from "@/constants/tokens"
 import { View, Text, Image} from "react-native"
 
 export type StandingInfo = {
@@ -28,11 +29,11 @@ export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamN
             <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Table</Text>
 
             <View style={{ flexDirection: 'row', paddingVertical: 2, borderTopColor: 'grey', borderTopWidth: 1, borderBottomColor: 'grey', borderBottomWidth: 1}}>
-                <Text style={{ width: "10%" }}>R</Text>
-                <Text style={{ width: "40%" }}>TEAM</Text>
-                <Text style={{ width: "15%", textAlign: 'right' }}>GP</Text>
-                <Text style={{ width: "20%", textAlign: 'right' }}>PD</Text>
-                <Text style={{ width: "15%", textAlign: 'right' }}>P</Text>
+                <Text style={{ width: "10%", fontSize: fontSize.xs, fontWeight: 500, color: 'grey' }}>R</Text>
+                <Text style={{ width: "40%", fontSize: fontSize.xs, fontWeight: 500, color: 'grey' }}>TEAM</Text>
+                <Text style={{ width: "15%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'grey' }}>GP</Text>
+                <Text style={{ width: "20%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'grey' }}>PD</Text>
+                <Text style={{ width: "15%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'grey' }}>P</Text>
             </View>
 
             <View>

@@ -19,6 +19,8 @@ export type MatchInfo = {
     matchVenue: string,
     matchLeague: string,
     matchID: string,
+    eventState: string,
+    stateDetail: string
 }
 
 export type FixturesSection = {
@@ -39,7 +41,8 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
         const matchVenue = todaysMatches.events[index].competitions[0].venue.fullName;
         const eventID = todaysMatches.events[index].id;
         const matchID = eventID + currentLeagueCode;
-
+        const eventState = todaysMatches.events[index].status.type.state;
+        const stateDetail = todaysMatches.events[index].status.type.shortDetail;
 
         const homeTeamName = todaysMatches.events[index].competitions[0].competitors[0].team.name;
         const homeTeamScore = todaysMatches.events[index].competitions[0].competitors[0].score;
@@ -59,6 +62,8 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
             matchVenue: matchVenue,
             matchLeague: leagueDisplayName,
             matchID: matchID,
+            eventState: eventState,
+            stateDetail: stateDetail,
         };
 
         newArray.push(newMatchInfo)
@@ -106,7 +111,8 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
                 const matchVenue = leagueEvents[eventIndex].competitions[0].venue.fullName;
                 const eventID = leagueEvents[eventIndex].id;
                 const matchID = eventID + leagueID;
-
+                const eventState = leagueEvents[eventIndex].status.type.state;
+                const stateDetail = leagueEvents[eventIndex].status.type.shortDetail;
 
                 const homeTeamName = leagueEvents[eventIndex].competitions[0].competitors[0].team.name;
                 const homeTeamScore = leagueEvents[eventIndex].competitions[0].competitors[0].score;
@@ -125,6 +131,8 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
                     matchVenue: matchVenue,
                     matchLeague: leagueName,
                     matchID: matchID,
+                    eventState: eventState,
+                    stateDetail: stateDetail,
                 };
 
                 leagueArray.push(newMatchInfo)
@@ -188,10 +196,6 @@ const FixturesScreen = () => {
         setMatchesSections(leagueFixturesArray)
     }
 
-    const handlePressPanel = (index: Number) => {
-        setCurrentIndex(index === currentIndex ? null : index)
-    }
-
     const handlePressDatePicker = () => {
         setDatePickerOpen(!datePickerOpen)
     }
@@ -220,14 +224,14 @@ const FixturesScreen = () => {
     ];
 
     return <View style={defaultStyles.container}>
-        <Text style={defaultStyles.text}>Rugby Matches</Text>
 
         <CustomSelectDropdown
         placeholder="Select League" 
         data={leagueData}
         onChangeSelection={handleOnChangeLeague}
         value={leagueName}
-        isDisabled={false}/>
+        isDisabled={false}
+        iconName="trophy-outline"/>
 
         <FetchDataButton 
             iconSize={24} 
@@ -274,7 +278,8 @@ const FixturesScreen = () => {
             matchID={item.matchID}
             currentIndex={currentIndex}
             index={index}
-            OnPressPanel={handlePressPanel}
+            eventState={item.eventState}
+            stateDetail={item.stateDetail}
         />}
         renderSectionHeader={({section: {title}}) => (
             <View style={{marginTop: 10, marginHorizontal: 5}}>

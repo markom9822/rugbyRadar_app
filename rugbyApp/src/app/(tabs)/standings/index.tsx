@@ -217,14 +217,16 @@ const StandingsScreen = () => {
         data={leagueData}
         onChangeSelection={handleOnChangeLeague}
         isDisabled={false}
-        value={leagueName}/>
+        value={leagueName}
+        iconName="trophy-outline"/>
 
         <CustomSelectDropdown
         placeholder="Select Season" 
         data={currentSeasonData}
         onChangeSelection={handleOnChangeSeason}
         isDisabled={isSeasonDropdownDisabled}
-        value={seasonName}/>
+        value={seasonName}
+        iconName="calendar-range"/>
 
         <FetchDataButton 
             iconSize={24} 

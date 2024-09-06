@@ -59,19 +59,19 @@ export const fixtureStyles = StyleSheet.create({
       justifyContent: 'center',
     },
     cardContainer: {
-      flexGrow: 1,
     },
     card: {
-      flexGrow: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      marginVertical: 5
+      marginVertical: 5,
+      marginHorizontal: 3,
     },
     cardHeaderAllInfo: {
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      paddingVertical: 4
   },
     cardHeaderGameInfo: {
         flexDirection: 'row',
@@ -86,7 +86,7 @@ export const fixtureStyles = StyleSheet.create({
     },
     teamScore: {
         fontSize: fontSize.lg,
-        paddingHorizontal: 10
+        paddingHorizontal: 8
     },
     teamLogo: {
         resizeMode: 'contain',

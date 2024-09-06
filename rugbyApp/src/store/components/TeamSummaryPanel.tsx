@@ -27,12 +27,15 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
     return(
         <View style={{justifyContent: 'center', marginHorizontal: 5}}>
             <View style={{flexDirection: 'row', paddingVertical: 10}}>
-                <Image source={teamInfo.logo} 
+                <View style={{marginHorizontal: 4}}>
+                    <Image source={teamInfo.logo} 
                     style={{resizeMode: 'contain',
                         width: 60,
                         height: 60,
                         minHeight:60,
                         minWidth: 60,}}/>
+                </View>
+                
                 <View style={{flexDirection: 'column', paddingHorizontal: 5}}>
                     <Text style={{fontSize: fontSize.lg, fontWeight: 600}}>{teamName.toUpperCase()}</Text>
                     <Text style={{color: 'grey'}}>{teamForm}</Text>

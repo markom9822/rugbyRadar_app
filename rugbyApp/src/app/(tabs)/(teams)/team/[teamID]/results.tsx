@@ -65,7 +65,8 @@ const TeamResults = () => {
                 data={seasonRegData}
                 onChangeSelection={handleOnChangeSeason}
                 isDisabled={false}
-                value={seasonYear} />
+                value={seasonYear}
+                iconName="calendar-range" />
 
             <FetchDataButton 
             iconSize={24} 
@@ -109,7 +110,7 @@ type TeamResultsPanelProps = {
 export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTeamScore, awayTeamScore, leagueName, eventState}: TeamResultsPanelProps) => {
 
     const formattedDate  = new Date(eventDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'})
-    const eventTime = new Date(eventDate).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})
+    const eventTime = new Date(eventDate).toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 
     const homeTeamInfo = getAnyTeamInfoFromName(homeTeamName)
     const awayTeamInfo = getAnyTeamInfoFromName(awayTeamName)

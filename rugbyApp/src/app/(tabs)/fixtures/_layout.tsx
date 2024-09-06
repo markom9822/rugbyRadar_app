@@ -9,7 +9,7 @@ const FavouritesScreenLayout = () => {
     return <View style={defaultStyles.container}>
         <Stack screenOptions={{
             headerStyle: {
-            backgroundColor: '#4e6db5'
+            backgroundColor: 'grey'
             },
             headerTitleStyle: {
                 color: 'white'

@@ -4,7 +4,15 @@ import { View } from "react-native"
 
 const TeamsSearchLayout = () => {
     return <View style={defaultStyles.container}>
-        <Stack>
+        <Stack screenOptions={{
+            headerStyle: {
+            backgroundColor: 'grey'
+            },
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerTintColor: 'white'
+        }}>
             <Stack.Screen name="index" options={{
                 headerTitle: 'Teams'
                 }} />

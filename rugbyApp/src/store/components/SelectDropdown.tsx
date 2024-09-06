@@ -15,6 +15,7 @@ export type CustomSelectDropdownProps = {
     placeholder: string
     isDisabled: boolean
     value: string
+    iconName: keyof typeof MaterialCommunityIcons.glyphMap
 }
 
 export const CustomSelectDropdown = ({
@@ -23,6 +24,7 @@ export const CustomSelectDropdown = ({
     placeholder,
     isDisabled,
     value,
+    iconName,
 }: CustomSelectDropdownProps) => {
 
     const textColour = (isDisabled) ? ('grey'):('black');
@@ -51,7 +53,9 @@ export const CustomSelectDropdown = ({
           onChangeSelection(item)
         }}
         renderLeftIcon={() => (
-            <MaterialCommunityIcons name="rugby" style={[styles.icon, {opacity: iconOpacity}]} color={iconColour} size={20} />
+          <View style={{paddingHorizontal: 3}}>
+            <MaterialCommunityIcons name={iconName} style={[styles.icon, {opacity: iconOpacity}]} color={iconColour} size={20} />
+          </View>  
         )}
       />
     )
