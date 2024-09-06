@@ -6,6 +6,7 @@ import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
 import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase"
+import { colors } from "@/constants/tokens"
 
 
 type StandingPanelProps = {
@@ -25,7 +26,7 @@ type StandingPanelProps = {
 
 export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool, teamName, teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints}: StandingPanelProps) => {
 
-    var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; colour: string } | null | undefined;
+    var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
 
     if(league === "urc")
     {
@@ -67,9 +68,8 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     if(teamInfo === null) return
     if(teamInfo === undefined) return
 
-    const teamPDTextColour = (new Number(teamPD) >= new Number(0)) ? ('green'):('red');
-    const panelBkgColour = (index % 2 == 0) ? ('#f2f1f0'): ('white');
-
+    const teamPDTextColour = (new Number(teamPD) >= new Number(0)) ? ('#31ad35'):('#c22727');
+    const panelBkgColour = (index % 2 == 0) ? (colors.altBackground): (colors.background);
 
     const standingsRender = (isHeader: boolean) => {
 
@@ -80,7 +80,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
         {
             return (
                 <View style={{width: "50%", flexDirection: 'row', paddingTop: 10, paddingLeft: 3}}>
-                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 500}]}>{teamPool}</Text>
+                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 500, color: colors.text}]}>{teamPool}</Text>
                 </View>
             )
         }
@@ -96,7 +96,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                             <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{index + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
-                                source={teamInfo.logo} />
+                                source={teamInfo.altLogo} />
                             <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '40%', fontWeight: 600}]}>{teamPoints}</Text>
@@ -114,7 +114,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                             <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{index + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
-                                source={teamInfo.logo} />
+                                source={teamInfo.altLogo} />
                             <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamGP}</Text>

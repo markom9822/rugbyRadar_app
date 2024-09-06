@@ -33,19 +33,16 @@ export const rankingPanelStyles = StyleSheet.create({
 export const standingsPanelStyles = StyleSheet.create({
   container: {
       flexDirection: 'row',
-      backgroundColor: 'white',
-      borderBottomWidth: 1,
-      borderBottomColor: 'grey',
       alignItems: 'center'
   },
   teamText: {
       fontSize: 13,
-      color: 'black',
+      color: colors.text,
       fontWeight: 500
   },
   teamStat: {
       fontSize: fontSize.xs,
-      color: 'black',
+      color: colors.text,
       padding: 5,
       textAlign: 'center'
   },
