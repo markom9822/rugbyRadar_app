@@ -3,6 +3,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useState } from "react";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
+import { colors } from "@/constants/tokens";
 
 export type DropdownData = {
     label: string
@@ -27,10 +28,10 @@ export const CustomSelectDropdown = ({
     iconName,
 }: CustomSelectDropdownProps) => {
 
-    const textColour = (isDisabled) ? ('grey'):('black');
+    const textColour = (isDisabled) ? ('grey'):(colors.text);
     const textOpacity = (isDisabled) ? (0.5):(1);
 
-    const iconColour = (isDisabled) ? ('grey'):('black');
+    const iconColour = (isDisabled) ? ('grey'):(colors.icon);
     const iconOpacity = (isDisabled) ? (0.5):(1);
 
     return(
@@ -40,6 +41,11 @@ export const CustomSelectDropdown = ({
         selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity}]}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={[styles.iconStyle]}
+        itemContainerStyle={{backgroundColor: colors.background}}
+        itemTextStyle={{color: colors.text}}
+        containerStyle={{backgroundColor: colors.background, borderColor: 'lightgrey', borderRadius: 1}}
+        activeColor={colors.altBackground}
+
         data={data}
         search
         maxHeight={300}
@@ -66,8 +72,9 @@ const styles = StyleSheet.create({
     dropdown: {
       margin: 10,
       height: 50,
-      borderBottomColor: 'gray',
+      borderBottomColor: 'grey',
       borderBottomWidth: 0.5,
+  
     },
     icon: {
       marginRight: 5,
@@ -85,5 +92,8 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
       height: 40,
       fontSize: 16,
+      color: colors.text,
+      borderColor: 'grey',
+      borderRadius: 3,
     },
   });

@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
-import { fontSize } from "@/constants/tokens"
+import { colors, fontSize } from "@/constants/tokens"
 
 export type TeamEventStatsInfo = {
     currentTeam: string,
@@ -25,9 +25,9 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
     return (
         <View style={[teamEventsPanelStyles.container]}>
-            <Text>{panelTitle}</Text>
+            <Text style={{color: colors.text}}>{panelTitle}</Text>
 
-            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
 
             {teamEventArray.map((match, index) => {
                 return (

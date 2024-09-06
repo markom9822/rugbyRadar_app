@@ -1,4 +1,4 @@
-import { fontSize } from "@/constants/tokens"
+import { colors, fontSize } from "@/constants/tokens"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { View, Image, Text, StyleSheet } from "react-native"
 
@@ -70,7 +70,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     return (
         <View style={[statsPanelStyles.container]}>
 
-            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2 }}>
@@ -196,7 +196,7 @@ export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelPr
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: '#d4d1cf'}]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.altBackground}]}>{statTitle}</Text>
                 <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
             </View>
         </View>

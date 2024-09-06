@@ -1,5 +1,5 @@
 import { SeasonStatsInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
-import { fontSize } from "@/constants/tokens";
+import { colors, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
@@ -44,9 +44,10 @@ type TeamPlayerStatsPanelProps = {
     playerStatsArray: SeasonStatsInfo[] | undefined,
     teamLeagueName: string | undefined,
     currentYear: string | undefined,
+    teamBorderColour: string | undefined
 }
 
-export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentYear}: TeamPlayerStatsPanelProps) => {
+export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentYear, teamBorderColour}: TeamPlayerStatsPanelProps) => {
 
     const [currentStatsTab, setCurrentStatsTab] = useState<string>('points');
 
@@ -57,7 +58,7 @@ export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentY
     if(sortedArray == undefined) return
 
     return (
-        <View style={{marginVertical: 10, marginHorizontal: 5, backgroundColor: '#f0f2f0', borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
+        <View style={{marginVertical: 10, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: teamBorderColour, borderWidth: 2,
             paddingHorizontal: 5, paddingVertical: 10}}>
             <View style={{paddingBottom: 4, marginHorizontal: 5}}>
                 <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Player Stats</Text>

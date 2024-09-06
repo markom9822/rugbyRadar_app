@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 export const defaultStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
     },
     text: {
         fontSize: fontSize.base,
@@ -163,7 +163,7 @@ export const lineupPanelStyles = StyleSheet.create({
       paddingLeft: 5,
       paddingTop: 10,
       fontWeight: 500,
-      color: 'grey',
+      color: colors.text,
     },
 })
 

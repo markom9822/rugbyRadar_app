@@ -9,7 +9,8 @@ const TabsNavigation = () => {
 
     return (
         <Tabs screenOptions={{
-            tabBarActiveTintColor: colors.primary,
+            tabBarActiveTintColor: 'rgba(255,255,255, 1)',
+            tabBarInactiveTintColor: 'rgba(255,255,255,0.5)',
             tabBarLabelStyle: {
                 fontSize: fontSize.xs,
                 fontWeight: '500',
@@ -20,6 +21,7 @@ const TabsNavigation = () => {
                 borderTopRightRadius: 20,
                 borderTopWidth: 0,
                 paddingTop: 8,
+                backgroundColor: 'grey'
             },
         
 

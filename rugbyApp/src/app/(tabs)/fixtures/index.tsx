@@ -246,9 +246,9 @@ const FixturesScreen = () => {
             <TouchableOpacity onPress={handlePressDatePicker} 
             style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 5, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
                 <View style={{paddingHorizontal: 5}}>
-                    <MaterialIcons name="date-range" size={20} color={'black'} />
+                    <MaterialIcons name="date-range" size={20} color={colors.icon} />
                 </View>
-                <Text style={{fontSize: fontSize.sm}}>{selectedDate.toLocaleDateString()}</Text>
+                <Text style={{fontSize: fontSize.sm, color: colors.text}}>{selectedDate.toLocaleDateString()}</Text>
             </TouchableOpacity>
             {
                 datePickerOpen && (

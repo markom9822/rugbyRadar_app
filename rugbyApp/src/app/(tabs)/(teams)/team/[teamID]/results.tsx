@@ -115,7 +115,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     const homeTeamInfo = getAnyTeamInfoFromName(homeTeamName)
     const awayTeamInfo = getAnyTeamInfoFromName(awayTeamName)
 
-    const panelBackgroundColour = (eventState === "pre") ? ('white'):('#f0f2f0');
+    const panelBackgroundColour = (eventState === "pre") ? (colors.altBackground):(colors.background);
 
     const homeScoreWeight = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? ('500'):('300');
     const awayScoreWeight = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? ('500'):('300');
@@ -127,16 +127,16 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
             return (
                 <View style={{width: "30%", flexDirection:'row', justifyContent: 'center'}}>
                     <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontWeight: homeScoreWeight,
-                        fontSize: fontSize.lg, textAlign: 'center', width: "50%"}}>{homeTeamScore}</Text>
+                        fontSize: fontSize.lg, textAlign: 'center', width: "50%", color: colors.text}}>{homeTeamScore}</Text>
                     <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontWeight: awayScoreWeight,
-                        fontSize: fontSize.lg, textAlign: 'center', width: "50%"}}>{awayTeamScore}</Text>
+                        fontSize: fontSize.lg, textAlign: 'center', width: "50%", color: colors.text}}>{awayTeamScore}</Text>
                 </View>
             )
         }
         else {
             return (
                 <View style={{width: "30%"}}>
-                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center'}}>{eventTime}</Text>
+                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', color: colors.text}}>{eventTime}</Text>
                 </View>
             )
         }
@@ -146,15 +146,15 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
          marginVertical: 5, borderColor: 'lightgrey', borderWidth: 1, backgroundColor: panelBackgroundColour, marginHorizontal: 4, borderRadius: 4}}>
 
-            <Text style={{fontSize: fontSize.xs}}>{formattedDate}</Text>
+            <Text style={{fontSize: fontSize.xs, color: colors.text}}>{formattedDate}</Text>
 
             <View style={{ flexDirection: 'row', padding: 5, justifyContent: 'space-evenly', alignItems: 'center'}}>
                 <View style={{width: "35%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
 
-                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500}}>{homeTeamInfo.abbreviation}</Text>
+                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text}}>{homeTeamInfo.abbreviation}</Text>
 
                     <View style={{paddingHorizontal: 5}}>
-                        <Image source={homeTeamInfo.logo}
+                        <Image source={homeTeamInfo.altLogo}
                             style={{
                                 resizeMode: 'contain',
                                 width: 40,
@@ -171,7 +171,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
                 <View style={{width: "35%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
 
                     <View style={{paddingHorizontal: 5}}>
-                        <Image source={awayTeamInfo.logo}
+                        <Image source={awayTeamInfo.altLogo}
                             style={{
                                 resizeMode: 'contain',
                                 width: 40,
@@ -181,13 +181,13 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
                             }} />
                     </View>
                     
-                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500}}>{awayTeamInfo.abbreviation}</Text>
+                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text}}>{awayTeamInfo.abbreviation}</Text>
 
                 </View>
 
             </View>
 
-            <Text style={{fontSize: fontSize.xs, color: 'grey'}}>{leagueName}</Text>
+            <Text style={{fontSize: fontSize.xs, color: 'lightgrey'}}>{leagueName}</Text>
 
         </View>  
     )

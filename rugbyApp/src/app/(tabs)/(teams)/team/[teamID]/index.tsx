@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { useState } from "react";
-import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName } from "@/store/utils/helpers";
+import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, hexToRGB } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
 import { getTeamInfo } from "@/store/utils/getTeamInfo";
 import { getTeamStandingsInfo } from "@/store/utils/getTeamStandingsInfo";
@@ -135,9 +135,16 @@ const TeamSummary = () => {
         setPlayerStatsArray(playerSeasonStats)
     }
 
+    var teamBorderRBGA = ''
+    if(teamInfo)
+    {
+        const thisTeamDetails = getAnyTeamInfoFromName(teamInfo?.teamName)
+        teamBorderRBGA = hexToRGB(thisTeamDetails.colour, '0.7')
+    }
+
     return(
         <View style={defaultStyles.container}>
-            <Text>Team ID {teamID}</Text>
+            <Text style={{color: colors.text}}>Team ID {teamID}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -154,18 +161,21 @@ const TeamSummary = () => {
             homeVenue={teamInfo?.homeVenue}
             homeLocation={teamInfo?.homeLocation}
             teamForm={teamInfo?.teamForm}
+            teamBorderColour={teamBorderRBGA}
             />
 
             <TeamStandingPanel
             standingsArray={standingsArray}
             teamLeagueName={teamLeagueName}
             currentTeamName={teamInfo?.teamName}
-            currentYear={teamInfoYear.toString()}/>
+            currentYear={teamInfoYear.toString()}
+            teamBorderColour={teamBorderRBGA}/>
 
             <TeamPlayerStatsPanel 
             playerStatsArray={playerStatsArray}
             teamLeagueName={teamLeagueName}
             currentYear={teamInfoYear.toString()}
+            teamBorderColour={teamBorderRBGA}
             />
             </ScrollView>
 

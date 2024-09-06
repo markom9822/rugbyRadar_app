@@ -5,6 +5,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getLeagueName } from "@/store/utils/helpers";
+import { defaultStyles} from "@/styles";
 
 export type MatchInfo = {
     homeTeamName: string,
@@ -116,9 +117,9 @@ const MatchSummary = () => {
     }
 
     return(
-        <View>
-            <Text>Event ID: {eventID}</Text>
-            <Text>League ID: {leagueID}</Text>
+        <View style={defaultStyles.container}>
+            <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
+            <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -147,7 +148,6 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
 
     if(matchInfoArray == undefined) return
 
-
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
@@ -163,16 +163,16 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                 {matchInfoArray[0].homeTeamName} v {matchInfoArray[0].awayTeamName}
             </Text>
 
-            <Text style={{fontWeight: 500}}>Game Info</Text>
-                <View style={{ backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5, marginBottom: 15 }}>
+            <Text style={{fontWeight: 500, color: colors.text}}>Game Info</Text>
+                <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15 }}>
                     <View style={{alignItems: 'center', flexDirection: 'column'}}>
-                        <Text style={{fontWeight: 500}}>Venue</Text>
-                        <Text style={{marginBottom: 10}}>{matchInfoArray[0].matchVenue}</Text>
+                        <Text style={{fontWeight: 500, color: colors.altText}}>Venue</Text>
+                        <Text style={{marginBottom: 10, color: colors.altText}}>{matchInfoArray[0].matchVenue}</Text>
                         <Text>Attendance: {matchAttendance}</Text>
                     </View>
                 </View>
-            <Text style={{fontWeight: 500}}>Match Stats</Text>
-            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+            <Text style={{fontWeight: 500, color: colors.text}}>Match Stats</Text>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2 }}>
@@ -229,7 +229,7 @@ export const SummaryStatsPanel = ({homeStat, statTitle, awayStat}: SummaryStatsP
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
-                <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: '#d4d1cf'}]}>{statTitle}</Text>
+                <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.altBackground}]}>{statTitle}</Text>
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
             </View>
         </View>
@@ -266,12 +266,13 @@ export const summaryPanelStyles = StyleSheet.create({
     container: {
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      backgroundColor: colors.background
     },
     matchName: {
         textAlign: 'center',
         fontSize: fontSize.lg,
-        color: 'black',
+        color: colors.text,
         fontWeight: 600,
         marginBottom: 15,
         marginTop: 10
@@ -302,7 +303,7 @@ export const summaryPanelStyles = StyleSheet.create({
     },
     statsLink: {
       fontWeight: 600,
-      color: 'blue'
+      color: 'lightblue'
     }
   })
 

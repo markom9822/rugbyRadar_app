@@ -3,7 +3,8 @@ import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens";
-import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
+import { getTeamInfo } from "@/store/utils/getTeamInfo";
+import { defaultStyles} from "@/styles";
 import { useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
 import { getFullMatchStats } from "@/store/utils/getFullMatchStats";
@@ -120,9 +121,9 @@ const MatchSummary = () => {
     }
 
     return(
-        <View style={{flex: 1}}>
-            <Text>Event ID: {eventID}</Text>
-            <Text>League ID: {leagueID}</Text>
+        <View style={defaultStyles.container}>
+            <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
+            <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -197,9 +198,9 @@ export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsP
     {
         return(
             <View style={[keyEventsPanelStyles.container]}>
-            <Text>Key Events</Text>
+            <Text style={{color: colors.text}}>Key Events</Text>
 
-            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
                 <Text style={{color:'grey'}}>Currently no key events</Text>
             </View>
         </View>
@@ -208,9 +209,9 @@ export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsP
 
     return (
         <View style={[keyEventsPanelStyles.container]}>
-            <Text>Key Events</Text>
+            <Text style={{color: colors.text}}>Key Events</Text>
 
-            <View style={{backgroundColor: '#ebe9e8', padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
 
             {keyEventArray.map((match, index) => {
                 return (

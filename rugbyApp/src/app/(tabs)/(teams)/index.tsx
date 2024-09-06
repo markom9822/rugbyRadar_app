@@ -1,4 +1,4 @@
-import { fontSize } from "@/constants/tokens"
+import { colors, fontSize } from "@/constants/tokens"
 import { CustomSelectDropdown } from "@/store/components/SelectDropdown"
 import { InternationalRugbyTeams } from "@/store/InternationalRugbyTeamsDatabase"
 import { PremRugbyTeams } from "@/store/PremiershipRubyTeamsDatabase"
@@ -110,16 +110,17 @@ const TeamsScreen = () => {
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style={{ flex: 1, backgroundColor: colors.background }}>
 
                 <TextInput
                     style={{ height: 40, margin: 12, borderRadius: 4 , 
-                        borderColor: 'grey', borderWidth: 1, padding: 10 }}
+                        borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text }}
                     returnKeyType="search"
                     placeholder="Search teams"
+                    placeholderTextColor={colors.text}
+                    cursorColor={'lightgrey'}
                     onChangeText={(search) => handleOnSearchTextChange(search)}
                     value={teamSearch}
-
                 />
 
                 <SectionList
@@ -155,25 +156,25 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
 
     const [selected, setSelected] = useState(false);
 
-    const teamBkgRBGA = hexToRGB(teamColour, '0.7')
+    const teamBkgRBGA = hexToRGB(teamColour, '0.1')
     const teamBorderRBGA = hexToRGB(teamColour, '0.9')
 
-    const currentTeamLogo = selected ? teamAltLogo : teamLogo;
+    const currentTeamLogo = selected ? teamLogo : teamAltLogo;
 
     return (
-        <View style={{ backgroundColor: '#f0f2f0' }}>
+        <View style={{ backgroundColor: colors.background }}>
             <Link href={`/(tabs)/(teams)/team/${teamID}`} asChild>
                 <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
                     onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
 
                     <View style={[teamInfoPanelStyles.container,
-                    { backgroundColor: selected ? teamBkgRBGA : "white", borderColor: selected ? teamBorderRBGA : 'lightgrey', borderWidth: 2 }]}>
+                    { backgroundColor: selected ? teamBkgRBGA : colors.altBackground, borderColor: selected ? teamBorderRBGA : 'lightgrey', borderWidth: 2 }]}>
                         <View style={{ padding: 5 }}>
                             <Image
                                 style={[teamInfoPanelStyles.teamLogo]}
                                 source={currentTeamLogo} />
                         </View>
-                        <Text style={[teamInfoPanelStyles.teamName, { color: selected ? "white" : "black" }]}>{teamName.toLocaleUpperCase()}</Text>
+                        <Text style={[teamInfoPanelStyles.teamName, { color: selected ? 'lightgrey' : colors.text }]}>{teamName.toLocaleUpperCase()}</Text>
                     </View>
 
                 </Pressable>

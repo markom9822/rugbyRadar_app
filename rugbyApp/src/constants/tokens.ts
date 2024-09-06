@@ -1,7 +1,10 @@
 export const colors = {
-	primary: '#fc3c44',
-	background: 'grey',
+	primary: 'white',
+	secondary: 'lightgrey',
+	background: '#1c1b1b',
+	altBackground: '#595757',
 	text: '#fff',
+	altText: 'black',
 	textMuted: '#9ca3af',
 	icon: '#fff',
 	maximumTrackTintColor: 'rgba(255,255,255,0.4)',
