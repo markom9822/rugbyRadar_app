@@ -1,22 +1,34 @@
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
+import { ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 
 export const leagueCodes = [
-    { value: 'urc', code: "270557", displayName: 'United Rugby Championship'},
-    { value: 'prem', code: "267979", displayName: 'Premiership Rugby'},
-    { value: 'top14', code: "270559", displayName: 'Top 14'},
-    { value: 'superRugby', code: "242041", displayName: 'Super Rugby Pacific'},
-    { value: 'rugbyChamp', code: "244293", displayName: 'Rugby Championship'},
-    { value: 'rugbyWorldCup', code: "164205", displayName: 'Rugby World Cup'},
-    { value: 'championsCup', code: "271937", displayName: 'European Rugby Champions Cup'},
-    { value: 'challengeCup', code: "272073", displayName: ''},
-    { value: 'sixNations', code: "180659", displayName: 'Six Nations'},
-    { value: 'inter', code: "289234", displayName: 'International Test Match'},
-    { value: 'menSevens', code: "282", displayName: ''},
+    { value: 'urc', code: "270557",
+         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo},
+    { value: 'prem', code: "267979",
+         displayName: 'Premiership Rugby', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
+    { value: 'top14', code: "270559",
+         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+    { value: 'superRugby', code: "242041",
+         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
+    { value: 'rugbyChamp', code: "244293",
+         displayName: 'Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
+    { value: 'rugbyWorldCup', code: "164205",
+         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+    { value: 'championsCup', code: "271937",
+         displayName: 'European Rugby Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
+    { value: 'challengeCup', code: "272073",
+         displayName: '', leagueLogo: null, leagueAltLogo: null},
+    { value: 'sixNations', code: "180659",
+         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
+    { value: 'inter', code: "289234",
+         displayName: 'International Test Match', leagueLogo: null, leagueAltLogo: null},
+    { value: 'menSevens', code: "282",
+         displayName: '', leagueLogo: null, leagueAltLogo: null},
 ];
 
 export const getLeagueCode = (name: string) => {

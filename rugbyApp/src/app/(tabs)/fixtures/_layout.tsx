@@ -9,12 +9,12 @@ const FavouritesScreenLayout = () => {
     return <View style={defaultStyles.container}>
         <Stack screenOptions={{
             headerStyle: {
-            backgroundColor: 'grey'
+            backgroundColor: colors.background
             },
             headerTitleStyle: {
-                color: 'white'
+                color: colors.text
             },
-            headerTintColor: 'white'
+            headerTintColor: colors.text
         }}>
             <Stack.Screen name="index" options={{
                 headerTitle: 'Fixtures'

@@ -1,5 +1,5 @@
 export const ChampionsCupLogo = require('@/store/LeagueLogos/Champions_Cup_Logo.png')
-export const ChampionsCupAltLogo = require('@/store/LeagueLogos/Champions_Cup_Logo.png')
+export const ChampionsCupAltLogo = require('@/store/LeagueLogos/Champions_Cup_Logo_White.png')
 
 export const PremiershipLogo = require('@/store/LeagueLogos/Prem_Logo.png')
 export const PremiershipAltLogo = require('@/store/LeagueLogos/Prem_Logo_White.png')

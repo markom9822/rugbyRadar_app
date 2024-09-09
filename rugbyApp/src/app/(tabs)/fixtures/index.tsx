@@ -3,10 +3,11 @@ import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, Pressable, Mo
 import { colors, fontSize, fontWeight } from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { dateCustomFormatting, getLeagueCode, getLeagueCodeFromDisplayName, getLeagueDisplayNameFromCode } from "@/store/utils/helpers"
+import { dateCustomFormatting, getLeagueCode, getLeagueCodeFromDisplayName, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
-import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown"
+import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
+import { ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
 
 export type MatchInfo = {
@@ -210,22 +211,21 @@ const FixturesScreen = () => {
     }
 
     const leagueData = [
-        { label: 'All Leagues', value: 'all' },
-        { label: 'International Test Match', value: 'inter' },
-        { label: 'Six Nations', value: 'sixNations' },
-        { label: 'Premiership', value: 'prem' },
-        { label: 'URC', value: 'urc' },
-        { label: 'Top 14', value: 'top14' },
-        { label: 'Super Rugby', value: 'superRugby' },
-        { label: 'Champions Cup', value: 'championsCup' },
-        { label: 'Rugby Championship', value: 'rugbyChamp' },
-        { label: 'Olympics Mens Sevens', value: 'menSevens' },
-
+        { label: 'All Leagues', value: 'all', logo: null },
+        { label: 'International Test Match', value: 'inter', logo: null },
+        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
+        { label: 'URC', value: 'urc', logo: URCAltLogo },
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
+        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
+        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
+        { label: 'Olympics Mens Sevens', value: 'menSevens', logo: null},
     ];
 
     return <View style={defaultStyles.container}>
 
-        <CustomSelectDropdown
+        <LeagueSelectDropdown
         placeholder="Select League" 
         data={leagueData}
         onChangeSelection={handleOnChangeLeague}
@@ -281,9 +281,18 @@ const FixturesScreen = () => {
             eventState={item.eventState}
             stateDetail={item.stateDetail}
         />}
-        renderSectionHeader={({section: {title}}) => (
-            <View style={{marginTop: 10, marginHorizontal: 5}}>
-                <Text style={{fontSize: fontSize.sm, color: 'grey', fontWeight: 300}}>{title}</Text>
+        renderSectionHeader={({section: {title, data}}) => (
+            <View style={{marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{paddingHorizontal: 10}}>
+                    <Image
+                        style={{resizeMode: 'contain',
+                            width: 20,
+                            height: 20,
+                            minHeight:20,
+                            minWidth: 20}}
+                        source={getLeagueInfoFromDisplayName(data[0].matchLeague)?.leagueAltLogo} />
+                </View>
+                <Text style={{fontSize: 13, color: 'grey', fontWeight: 600}}>{title.toUpperCase()}</Text>
             </View>
         )}
         />

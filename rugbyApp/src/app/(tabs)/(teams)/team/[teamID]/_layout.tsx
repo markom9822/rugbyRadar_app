@@ -1,5 +1,6 @@
 import { Stack, withLayoutContext } from "expo-router";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { colors } from "@/constants/tokens";
 
 const Tab = createMaterialTopTabNavigator();
 const TopTabs = withLayoutContext(Tab.Navigator)
@@ -12,11 +13,11 @@ export default function TeamLayout() {
             tabBarLabelStyle: {
 
             },
-            tabBarStyle: { backgroundColor: '#d9dbde' },
-            tabBarInactiveTintColor: 'grey',
-            tabBarActiveTintColor: 'black',
+            tabBarStyle: { backgroundColor: colors.altBackground },
+            tabBarInactiveTintColor: 'lightgrey',
+            tabBarActiveTintColor: colors.text,
             tabBarIndicatorStyle: {
-                backgroundColor: 'black',
+                backgroundColor: 'white',
                 height: 3
             }
         }}>

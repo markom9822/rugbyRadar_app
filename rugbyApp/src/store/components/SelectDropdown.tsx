@@ -1,7 +1,5 @@
-import { StyleSheet, View, Text} from "react-native";
-import Entypo from '@expo/vector-icons/Entypo';
+import { StyleSheet, View, Text, Image} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
-import { useState } from "react";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors } from "@/constants/tokens";
 
@@ -63,9 +61,88 @@ export const CustomSelectDropdown = ({
             <MaterialCommunityIcons name={iconName} style={[styles.icon, {opacity: iconOpacity}]} color={iconColour} size={20} />
           </View>  
         )}
+        
       />
     )
  
+}
+
+export type LeagueDropdownData = {
+  label: string
+  value: string
+  logo: any
+}
+
+export type LeagueSelectDropdownProps = {
+  data: LeagueDropdownData[];
+  onChangeSelection: (item: LeagueDropdownData) => void;
+  placeholder: string
+  isDisabled: boolean
+  value: string
+  iconName: keyof typeof MaterialCommunityIcons.glyphMap
+}
+
+export const LeagueSelectDropdown = ({
+  data,
+  onChangeSelection,
+  placeholder,
+  isDisabled,
+  value,
+  iconName,
+}: LeagueSelectDropdownProps) => {
+
+  const textColour = (isDisabled) ? ('grey'):(colors.text);
+  const textOpacity = (isDisabled) ? (0.5):(1);
+
+  const iconColour = (isDisabled) ? ('grey'):(colors.icon);
+  const iconOpacity = (isDisabled) ? (0.5):(1);
+
+  return(
+      <Dropdown
+      style={styles.dropdown}
+      placeholderStyle={[styles.placeholderStyle, {color: textColour, opacity: textOpacity}]}
+      selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity}]}
+      inputSearchStyle={styles.inputSearchStyle}
+      iconStyle={[styles.iconStyle]}
+      itemContainerStyle={{backgroundColor: colors.background}}
+      itemTextStyle={{color: colors.text}}
+      containerStyle={{backgroundColor: colors.background, borderColor: 'lightgrey', borderRadius: 1}}
+      activeColor={colors.altBackground}
+
+      data={data}
+      search
+      maxHeight={300}
+      labelField="label"
+      valueField="value"
+      placeholder={placeholder}
+      searchPlaceholder="Search..."
+      value={value}
+      disable={isDisabled}
+      onChange={item => {
+        onChangeSelection(item)
+      }}
+      renderLeftIcon={() => (
+        <View style={{paddingHorizontal: 3}}>
+          <MaterialCommunityIcons name={iconName} style={[styles.icon, {opacity: iconOpacity}]} color={iconColour} size={20} />
+        </View>  
+      )}
+
+      renderItem={(item) => {
+        return(
+          <View style={{flexDirection: 'row', marginVertical: 10, marginHorizontal: 5}}>
+           <View style={{paddingHorizontal: 10}}>
+              <Image
+                style={[styles.leagueLogo]}
+                source={item.logo} />
+            </View>
+            <Text style={{color: colors.text, paddingHorizontal: 3}}>{item.label}</Text>
+          </View>
+        )
+      }}
+      
+    />
+  )
+
 }
 
 const styles = StyleSheet.create({
@@ -96,4 +173,11 @@ const styles = StyleSheet.create({
       borderColor: 'grey',
       borderRadius: 3,
     },
+    leagueLogo: {
+      resizeMode: 'contain',
+      width: 20,
+      height: 20,
+      minHeight:20,
+      minWidth: 20
+  },
   });

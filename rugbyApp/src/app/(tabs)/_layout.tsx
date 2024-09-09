@@ -1,7 +1,5 @@
 import { colors, fontSize } from "@/constants/tokens"
-import { BlurView } from "expo-blur"
 import { Tabs } from "expo-router"
-import { StyleSheet } from "react-native"
 import {FontAwesome, MaterialCommunityIcons, Ionicons, FontAwesome6} from '@expo/vector-icons'
 
 
@@ -16,14 +14,12 @@ const TabsNavigation = () => {
                 fontWeight: '500',
             },
             headerShown: false,
+           
             tabBarStyle: {
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
                 borderTopWidth: 0,
                 paddingTop: 8,
                 backgroundColor: 'grey'
             },
-        
 
         }}>
             <Tabs.Screen 

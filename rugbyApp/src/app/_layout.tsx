@@ -1,3 +1,4 @@
+import { colors } from '@/constants/tokens'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
@@ -15,7 +16,8 @@ const App = () => {
 const RootNavigation = () => {
 	return(
 		<Stack>
-			<Stack.Screen  name='(tabs)' options={{headerShown: false}}/>
+			<Stack.Screen  name='(tabs)' options={{headerShown: false, statusBarColor: colors.background,
+				 navigationBarColor: colors.background}}/>
 		</Stack>
 	)
 }

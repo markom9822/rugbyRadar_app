@@ -1,12 +1,13 @@
 import { defaultStyles} from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, StyleSheet } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, StyleSheet, LogBox, ImageBackground } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { useState } from "react"
-import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown"
+import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { getLeagueCode } from "@/store/utils/helpers"
 import { getAllStandingsData } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
+import { ChampionsCupAltLogo, PremiershipAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
 
 export type StandingInfo = {
@@ -102,14 +103,14 @@ const StandingsScreen = () => {
     }
 
     const leagueData = [
-        { label: 'URC', value: 'urc' },
-        { label: 'Premiership', value: 'prem' },
-        { label: 'Top 14', value: 'top14' },
-        { label: 'Champions Cup', value: 'championsCup' },
-        { label: 'Super Rugby', value: 'superRugby' },
-        { label: 'Six Nations', value: 'sixNations' },
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup' },
-        { label: 'World Rankings', value: 'worldRankings'}
+        { label: 'URC', value: 'urc', logo: URCAltLogo },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
+        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
+        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
+        { label: 'World Rankings', value: 'worldRankings', logo: null}
     ];
 
     const seasonRegData = [
@@ -212,7 +213,7 @@ const StandingsScreen = () => {
 
     return <View style={defaultStyles.container}>
 
-        <CustomSelectDropdown
+        <LeagueSelectDropdown
         placeholder="Select League" 
         data={leagueData}
         onChangeSelection={handleOnChangeLeague}
@@ -238,7 +239,6 @@ const StandingsScreen = () => {
 
         {headerRender(leagueName == "worldRankings")}
         
-    
         <FlatList 
         data={standingsArray}
         renderItem={({item, index}) => 

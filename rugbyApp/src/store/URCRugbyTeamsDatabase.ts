@@ -1,5 +1,5 @@
 import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams"
-import { BenettonAltLogo, BenettonLogo, BullsLogo, CardiffAltLogo, CardiffLogo, ConnachtAltLogo, ConnachtLogo, DragonsAltLogo, DragonsLogo, EdinburghAltLogo, EdinburghLogo, GlasgowAltLogo, GlasgowLogo, LeinsterAltLogo, LeinsterLogo, LionsAltLogo, LionsLogo, MunsterAltLogo, MunsterLogo, OspreysAltLogo, OspreysLogo, ScarletsAltLogo, ScarletsLogo, SharksAltLogo, SharksLogo, StormersAltLogo, StormersLogo, UlsterAltLogo, UlsterLogo, ZebreAltLogo, ZebreLogo } from "./URCTeamLogos/URCTeams"
+import { BenettonAltLogo, BenettonLogo, BullsAltLogo, BullsLogo, CardiffAltLogo, CardiffLogo, ConnachtAltLogo, ConnachtLogo, DragonsAltLogo, DragonsLogo, EdinburghAltLogo, EdinburghLogo, GlasgowAltLogo, GlasgowLogo, LeinsterAltLogo, LeinsterLogo, LionsAltLogo, LionsLogo, MunsterAltLogo, MunsterLogo, OspreysAltLogo, OspreysLogo, ScarletsAltLogo, ScarletsLogo, SharksAltLogo, SharksLogo, StormersAltLogo, StormersLogo, UlsterAltLogo, UlsterLogo, ZebreAltLogo, ZebreLogo } from "./URCTeamLogos/URCTeams"
 
 
 export const getURCTeamInfoFromName = (name: string) => {
@@ -190,7 +190,7 @@ export const URCRugbyTeams = [
     displayName: 'Bulls',
     abbreviation: 'BULLS',
     logo: BullsLogo,
-    altLogo: BullsLogo,
+    altLogo: BullsAltLogo,
     colour: '#0082e6',
     id: '25953',
     defaultLeague: 'United Rugby Championship',
