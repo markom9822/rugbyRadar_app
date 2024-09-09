@@ -63,7 +63,7 @@ export const getAnyTeamInfoFromName = (name: string) => {
       abbreviation: 'DEF',
       logo: DefaultLogo,
       altLogo: DefaultLogo,
-      colour: '#00845c',
+      colour: '#00000',
       id: '0',
       defaultLeague: '',
       foundedYear: '',
