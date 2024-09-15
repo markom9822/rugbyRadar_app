@@ -84,30 +84,41 @@ export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, hom
         winOrLoseText = (!homeWinner) ? ('W'):('L');
     }
 
-    const winLossColour = (winOrLoseText === 'W') ? ('green'):('red');
+    const winLossColour = (winOrLoseText === 'W') ? ("#42c765"):("#d94a4a");
 
     if(homeTeamInfo == undefined) return
     if(awayTeamInfo == undefined) return
 
     return (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
             
             {(showWinLoss)  && 
-                <Text style={{color: winLossColour}}>{winOrLoseText}</Text>
+                <View style={{flexDirection: 'row', width: "5%", justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{color: winLossColour, paddingHorizontal: 1, fontSize: 10, fontWeight: 600}}>{winOrLoseText}</Text>
+                </View>
             }
 
-            <Image
-            style={[teamEventsPanelStyles.teamLogo]}
-            source={homeTeamInfo.logo} />
-            <Text style={[teamEventsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
+            <View style={{flexDirection: 'row', width: "20%", justifyContent: 'flex-start' }}>
+                <Image
+                    style={[teamEventsPanelStyles.teamLogo]}
+                    source={homeTeamInfo.altLogo} />
+                <Text style={[teamEventsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
+            </View>
 
-            <Text style={[teamEventsPanelStyles.matchScore]}>{homeTeamScore} - {awayTeamScore}</Text>
-
-            <Text style={[teamEventsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
-            <Image
-            style={[teamEventsPanelStyles.teamLogo]}
-            source={awayTeamInfo.logo} />
-            <Text style={[teamEventsPanelStyles.matchDate]}>{formattedDate}</Text>
+            <View style={{flexDirection: 'row', width: "25%", justifyContent: 'center'}}>
+                <Text style={[teamEventsPanelStyles.matchScore]}>{homeTeamScore} - {awayTeamScore}</Text>
+            </View>
+            
+            <View style={{flexDirection: 'row', width: "20%", justifyContent: 'flex-end'}}>
+                <Text style={[teamEventsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
+                <Image
+                style={[teamEventsPanelStyles.teamLogo]}
+                source={awayTeamInfo.altLogo} />
+            </View>
+            
+            <View style={{flexDirection: 'row', width: "30%", justifyContent: 'center'}}>
+                <Text style={[teamEventsPanelStyles.matchDate]}>{formattedDate}</Text>
+            </View>
         </View>
     )
 }
@@ -130,19 +141,22 @@ export const teamEventsPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
+        color: colors.text
     },
     matchDate: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontSize: fontSize.xs,
+        color: colors.text
     },
     teamName: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
-        fontSize: fontSize.xs
+        fontSize: 11,
+        color: colors.text
     },
     teamInfoContainer:{
         width: "20%",

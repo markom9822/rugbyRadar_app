@@ -133,14 +133,15 @@ export const lineupPanelStyles = StyleSheet.create({
       flexDirection: 'row',
     },
     teamName: {
-        fontSize: fontSize.base,      
+        fontSize: fontSize.base, 
+        fontWeight: 600     
     },
     teamLogo: {
       resizeMode: 'contain',
-      width: 50,
-      height: 50,
-      minHeight:50,
-      minWidth: 50,
+      width: 40,
+      height: 40,
+      minHeight:40,
+      minWidth: 40,
     },
     teamHeader: {
       width: "45%",
@@ -155,8 +156,8 @@ export const lineupPanelStyles = StyleSheet.create({
     },
     substitutesHeader: {
       width: "50%",
-      borderBottomWidth: 2, 
-      borderBottomColor: 'grey',
+      borderBottomWidth: 1, 
+      borderBottomColor: 'lightgrey',
       paddingLeft: 5,
       paddingTop: 10,
       fontWeight: 500,

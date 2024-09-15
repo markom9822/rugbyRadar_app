@@ -70,20 +70,20 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     return (
         <View style={[statsPanelStyles.container]}>
 
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5}}>
 
                 <View style={{ alignItems: 'center' }}>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2 }}>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 2 }}>
                         <View style={[statsPanelStyles.teamInfoContainer]}>
                             <Image style={[statsPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.logo}/>
+                            source={homeTeamInfo?.altLogo}/>
                             <Text style={[statsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
                         <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
                         <View style={[statsPanelStyles.teamInfoContainer]}>
                             <Text style={[statsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[statsPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.logo}/>
+                            source={awayTeamInfo?.altLogo}/>
                         </View>
                     </View>
                 </View>
@@ -236,22 +236,25 @@ export const statsPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
+        color: colors.text
     },
     statsTitle: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500, 
-        borderBottomColor: 'grey',
+        borderBottomColor: 'lightgrey',
         borderBottomWidth: 2,
         width : "90%",
+        color: colors.text
     },
     teamName: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
-        fontSize: fontSize.base
+        fontSize: fontSize.base,
+        color: colors.text
     },
     teamInfoContainer:{
         width: "30%",

@@ -193,20 +193,29 @@ const Lineups = () => {
             onPressButton={handlePressFetchData}
             />
 
-            <View style={lineupPanelStyles.container}>
+            <View style={[lineupPanelStyles.container, {borderBottomColor: 'lightgrey', borderBottomWidth: 1, paddingVertical: 8}]}>
                 <TouchableOpacity onPress={() => setSelectedTeam('home')}
-                style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA):(colors.altBackground), justifyContent: 'center'}]}>
-                    <Image source={(selectedTeam === "home") ? homeTeamInfo.altLogo : homeTeamInfo.logo} 
-                    style={lineupPanelStyles.teamLogo}/>
-                    <Text style={[lineupPanelStyles.teamName, {color: (selectedTeam === "home") ? 'white': 'black'}]}>{homeTeamInfo.abbreviation}</Text>
+                style={[lineupPanelStyles.teamHeader, 
+                {backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA):(colors.background),
+                 borderColor: (selectedTeam === "home") ? 'white': 'lightgrey', borderWidth: (selectedTeam === "home") ? 2: 1, justifyContent: 'center'}]}>
+                    <View style={{padding: 5}}>
+                        <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo} 
+                        style={lineupPanelStyles.teamLogo}/>
+                    </View>
+                    
+                    <Text style={[lineupPanelStyles.teamName, {color: colors.text}]}>{homeTeamInfo.abbreviation}</Text>
                 </TouchableOpacity>
                 
  
                 <TouchableOpacity onPress={() => setSelectedTeam('away')}
-                style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA):(colors.altBackground), justifyContent: 'center'}]}>
-                    <Image source={(selectedTeam === "away") ? awayTeamInfo.altLogo : awayTeamInfo.logo}  
-                    style={lineupPanelStyles.teamLogo}/>
-                    <Text style={[lineupPanelStyles.teamName, {color: (selectedTeam === "away") ? 'white': 'black'}]}>{awayTeamInfo.abbreviation}</Text>
+                style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA):(colors.background),
+                    borderColor: (selectedTeam === "away") ? 'white': 'lightgrey', borderWidth: (selectedTeam === "away") ? 2: 1, justifyContent: 'center'}]}>
+                    <View style={{padding: 5}}>
+                        <Image source={(selectedTeam === "away") ? awayTeamInfo.logo : awayTeamInfo.altLogo}  
+                        style={lineupPanelStyles.teamLogo}/>
+                    </View>
+                
+                    <Text style={[lineupPanelStyles.teamName, {color: colors.text}]}>{awayTeamInfo.abbreviation}</Text>
                 </TouchableOpacity>
             </View>
             
@@ -264,14 +273,14 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
 
     if (hometeamPlayer === "Substitutes") {
         return (
-            <View style={lineupPanelStyles.container}>
+            <View style={{flexDirection: 'row', backgroundColor: colors.altBackground}}>
                 <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName}</Text>
             </View>
         )
     }
     else {
         return (
-            <View style={[lineupPanelStyles.container, {paddingVertical: 2}]}>
+            <View style={[{flexDirection: 'row', backgroundColor: colors.altBackground, paddingVertical: 2}]}>
                 <Text style={{fontWeight: (isCaptain) ? '600' : '300', paddingHorizontal: 4, fontSize: fontSize.sm, color: colors.text}}>
                     {playerNumber}
                 </Text>

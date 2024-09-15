@@ -201,7 +201,7 @@ export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsP
             <Text style={{color: colors.text}}>Key Events</Text>
 
             <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
-                <Text style={{color:'grey'}}>Currently no key events</Text>
+                <Text style={{color:'lightgrey'}}>Currently no key events</Text>
             </View>
         </View>
         )
