@@ -13,7 +13,7 @@ export const ConnachtAltLogo = require('@/store/URCTeamLogos/Connacht_Rugby_Logo
 export const CardiffLogo = require('@/store/URCTeamLogos/Cardiff-Rugby_logo.png')
 export const CardiffAltLogo = require('@/store/URCTeamLogos/Cardiff_Rugby_Logo_White.png')
 
-export const EdinburghLogo = require('@/store/URCTeamLogos/Edinburgh_Rugby_logo_2018.png')
+export const EdinburghLogo = require('@/store/URCTeamLogos/Edinburgh_Rugby_Logo.png')
 export const EdinburghAltLogo = require('@/store/URCTeamLogos/Edinburgh_Rugby_Logo_White.png')
 
 export const GlasgowLogo = require('@/store/URCTeamLogos/Glasgow_Warriors_Logo.png')

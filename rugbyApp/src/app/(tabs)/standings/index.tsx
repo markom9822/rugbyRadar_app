@@ -7,7 +7,7 @@ import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/stor
 import { getLeagueCode } from "@/store/utils/helpers"
 import { getAllStandingsData } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
-import { ChampionsCupAltLogo, PremiershipAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
 
 export type StandingInfo = {
@@ -110,7 +110,7 @@ const StandingsScreen = () => {
         { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
         { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
-        { label: 'World Rankings', value: 'worldRankings', logo: null}
+        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo}
     ];
 
     const seasonRegData = [

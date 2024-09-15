@@ -1,4 +1,4 @@
-import { ArgentinaAltLogo, ArgentinaLogo, AustraliaAltLogo, AustraliaLogo, BALionsAltLogo, BALionsLogo, CanadaAltLogo, CanadaLogo, ChileAltLogo, ChileLogo, DefaultLogo, EnglandAltLogo, EnglandLogo, FijiAltLogo, FijiLogo, FranceAltLogo, FranceLogo, GeorgiaAltLogo, GeorgiaLogo, IrelandAltLogo, IrelandLogo, ItalyAltLogo, ItalyLogo, JapanAltLogo, JapanLogo, NamibiaAltLogo, NamibiaLogo, NewZealandAltLogo, NewZealandLogo, PortugalAltLogo, PortugalLogo, RomaniaAltLogo, RomaniaLogo, RussiaLogo, SamoaAltLogo, SamoaLogo, ScotlandAltLogo, ScotlandLogo, SouthAfricaAltLogo, SouthAfricaLogo, SpainAltLogo, SpainLogo, TongaAltLogo, TongaLogo, UruguayAltLogo, UruguayLogo, USAAltLogo, USALogo, WalesAltLogo, WalesLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { ArgentinaAltLogo, ArgentinaLogo, AustraliaAltLogo, AustraliaLogo, BALionsAltLogo, BALionsLogo, CanadaAltLogo, CanadaLogo, ChileAltLogo, ChileLogo, DefaultLogo, EnglandAltLogo, EnglandLogo, FijiAltLogo, FijiLogo, FranceAltLogo, FranceLogo, GeorgiaAltLogo, GeorgiaLogo, IrelandAltLogo, IrelandLogo, ItalyAltLogo, ItalyLogo, JapanAltLogo, JapanLogo, NamibiaAltLogo, NamibiaLogo, NewZealandAltLogo, NewZealandLogo, PortugalAltLogo, PortugalLogo, RomaniaAltLogo, RomaniaLogo, SamoaAltLogo, SamoaLogo, ScotlandAltLogo, ScotlandLogo, SouthAfricaAltLogo, SouthAfricaLogo, SpainAltLogo, SpainLogo, TongaAltLogo, TongaLogo, UruguayAltLogo, UruguayLogo, USAAltLogo, USALogo, WalesAltLogo, WalesLogo } from "./InternationalTeamLogos/InternationalTeams";
 
 export const getInternationalTeamInfoFromName = (name: string) => {
 
@@ -33,7 +33,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'IRE',
     logo: IrelandLogo,
     altLogo: IrelandAltLogo,
-    colour: '#00845c',
+    colour: '#006144',
     id: '3',
     defaultLeague: 'Six Nations',
     foundedYear: '1875',
@@ -57,7 +57,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'ENG',
     logo: EnglandLogo,
     altLogo: EnglandAltLogo,
-    colour: '#9c191f',
+    colour: '#751216',
     id: '1',
     defaultLeague: 'Six Nations',
     foundedYear: '1871',
@@ -69,7 +69,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'NZL',
     logo: NewZealandLogo,
     altLogo: NewZealandAltLogo,
-    colour: '#00000',
+    colour: '#000000',
     id: '8',
     defaultLeague: 'Rugby Championship',
     foundedYear: '1884',
@@ -165,7 +165,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'GEO',
     logo: GeorgiaLogo,
     altLogo: GeorgiaAltLogo,
-    colour: '#551828',
+    colour: '#b52f53',
     id: '81',
     defaultLeague: 'Rugby World Cup',
     foundedYear: '1959',
@@ -225,7 +225,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'POR',
     logo: PortugalLogo,
     altLogo: PortugalAltLogo,
-    colour: '#046a38',
+    colour: '#9c0c1d',
     id: '27',
     defaultLeague: 'Rugby World Cup',
     foundedYear: '1935',
@@ -301,18 +301,6 @@ export const InternationalRugbyTeams = [
     id: '29',
     defaultLeague: 'Rugby World Cup',
     foundedYear: '1948',
-    seasonType: 'south',
-  },
-  {
-    type: 'International',
-    displayName: 'Russia',
-    abbreviation: 'RUS',
-    logo: RussiaLogo,
-    altLogo: RussiaLogo,
-    colour: '#ffffff',
-    id: '',
-    defaultLeague: 'Rugby World Cup',
-    foundedYear: '1974',
     seasonType: 'south',
   },
   {

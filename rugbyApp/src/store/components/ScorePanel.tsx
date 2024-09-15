@@ -55,7 +55,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         if (eventNotStarted) {
             return (
                 <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
-                        <Text style={{color: selected ? colors.altText:colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center'}}>{matchTime}</Text>
+                        <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center'}}>{matchTime}</Text>
                 </View>  
             )
         }
@@ -63,10 +63,10 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             return (
                 <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: selected ? colors.altText:colors.text }]}>{homeScore}</Text>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: selected ? colors.altText:colors.text}]}>{awayScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text }]}>{homeScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text}]}>{awayScore}</Text>
                         </View>
-                        <Text style={{textAlign: 'center', fontWeight: 500, color: selected ? colors.altText:colors.text}}>{stateDetail}</Text>
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{stateDetail}</Text>
                 </View> 
             )
         }
@@ -77,7 +77,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         if (eventNotStarted) {
             return (
                 <View style={{paddingVertical: 1}}>
-                    <Text style={{textAlign: 'center', fontSize: fontSize.xs, fontWeight: 300, color: selected ? colors.altText:colors.text}}>{matchVenue}</Text>
+                    <Text style={{textAlign: 'center', fontSize: fontSize.xs, fontWeight: 300, color: colors.text}}>{matchVenue}</Text>
                 </View>  
             )
         }
@@ -91,7 +91,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     return(
         <View style={[fixtureStyles.card]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
-                 {backgroundColor: selected ? 'lightgrey' : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
+                 {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
 
                 <Link href={`/(tabs)/fixtures/match/${matchID}`} asChild>
                 <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
@@ -99,7 +99,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Text style={[fixtureStyles.teamName, {color: selected ? colors.altText:colors.text}]}>{homeTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text}]}>{homeTeamInfo.abbreviation}</Text>
                         <View style={{paddingHorizontal: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
@@ -116,7 +116,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                             style={[fixtureStyles.teamLogo]}
                             source={currentAwayTeamLogo} />
                         </View>
-                        <Text style={[fixtureStyles.teamName, {color: selected ? colors.altText:colors.text}]}>{awayTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text}]}>{awayTeamInfo.abbreviation}</Text>
                     </View>
 
                 </View>

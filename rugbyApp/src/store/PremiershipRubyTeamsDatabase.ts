@@ -118,7 +118,7 @@ export const PremRugbyTeams = [
     abbreviation: 'NTHMP',
     logo: NorthamptonLogo,
     altLogo: NorthamptonAltLogo,
-    colour: '#1a1a1a',
+    colour: '#006442',
     id: '25907',
     defaultLeague: 'Premiership Rugby',
     foundedYear: '1880',

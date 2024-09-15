@@ -21,3 +21,5 @@ export const Top14AltLogo = require('@/store/LeagueLogos/Top_14_Logo_White.png')
 
 export const URCLogo = require('@/store/LeagueLogos/URC_Logo.png')
 export const URCAltLogo = require('@/store/LeagueLogos/URC_Logo_White.png')
+
+export const RankingsLogo = require('@/store/LeagueLogos/Rankings_Icon.png')

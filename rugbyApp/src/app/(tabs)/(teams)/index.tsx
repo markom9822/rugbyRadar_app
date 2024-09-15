@@ -9,6 +9,7 @@ import { useState } from "react"
 import { Link } from "expo-router"
 import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, FlatList, Image, StyleSheet, Pressable, SectionList } from "react-native"
 import { hexToRGB } from "@/store/utils/helpers"
+import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
 
 export type SearchTeamInfo = {
     type: string;
@@ -71,18 +72,26 @@ const getFilteredSearchTeams = (teamSections: TeamsSection[], searchValue: strin
 const TeamsScreen = () => {
 
     const teamSections = [
-        {
-            title: 'International',
-            data: InternationalRugbyTeams,
-        },
-        {
-            title: 'United Rugby Championship',
-            data: URCRugbyTeams,
-        },
-        {
-            title: 'Premiership',
-            data: PremRugbyTeams,
-        },
+        //{
+        //    title: 'International',
+       //     data: InternationalRugbyTeams,
+       // },
+        //{
+       //     title: 'United Rugby Championship',
+       //     data: URCRugbyTeams,
+       // },
+       // {
+       //     title: 'Premiership',
+       //     data: PremRugbyTeams,
+       // },
+       {
+            title: 'Top 14',
+            data: Top14RugbyTeams,
+       },
+        //{
+        //    title: 'Super Rugby',
+        //    data: SuperRugbyTeams,
+        //},
     ]
 
     const [teamSearch, setTeamSearch] = useState<string>('');
@@ -156,7 +165,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
 
     const [selected, setSelected] = useState(false);
 
-    const teamBkgRBGA = hexToRGB(teamColour, '0.1')
+    const teamBkgRBGA = hexToRGB(teamColour, '0.3')
     const teamBorderRBGA = hexToRGB(teamColour, '0.9')
 
     const currentTeamLogo = selected ? teamLogo : teamAltLogo;
@@ -169,12 +178,14 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
 
                     <View style={[teamInfoPanelStyles.container,
                     { backgroundColor: selected ? teamBkgRBGA : colors.altBackground, borderColor: selected ? teamBorderRBGA : 'lightgrey', borderWidth: 2 }]}>
-                        <View style={{ padding: 5 }}>
+                        <View style={{ padding: 5, width: "20%", alignItems: 'center' }}>
                             <Image
                                 style={[teamInfoPanelStyles.teamLogo]}
                                 source={currentTeamLogo} />
                         </View>
-                        <Text style={[teamInfoPanelStyles.teamName, { color: selected ? 'lightgrey' : colors.text }]}>{teamName.toLocaleUpperCase()}</Text>
+                        <View style={{width: "80%"}}>
+                            <Text style={[teamInfoPanelStyles.teamName, { color: selected ? 'lightgrey' : colors.text,}]}>{teamName.toLocaleUpperCase()}</Text>
+                        </View>
                     </View>
 
                 </Pressable>
@@ -187,7 +198,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
 export const teamInfoPanelStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         padding: 5,
         margin: 3,
@@ -202,7 +213,7 @@ export const teamInfoPanelStyles = StyleSheet.create({
     },
     teamName: {
         paddingHorizontal: 10,
-        textAlign: 'center',
+        textAlign: 'left',
         fontWeight: 600,
         fontSize: 18
     },
