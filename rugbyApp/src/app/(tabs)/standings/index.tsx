@@ -20,6 +20,8 @@ export type StandingInfo = {
     teamLosses: string
     teamPD: string
     teamPoints: string
+    ranking: number
+    isLastItem: boolean
 }
 
 const getWorldRankingsData = (todaysRankings: any) => {
@@ -46,6 +48,8 @@ const getWorldRankingsData = (todaysRankings: any) => {
             teamLosses: '-',
             teamPD: '-',
             teamPoints: teamPoints,
+            ranking: index,
+            isLastItem: index == rankListLength - 1
     };
 
         newArray.push(newRankingInfo)
@@ -254,7 +258,9 @@ const StandingsScreen = () => {
             teamDraws={item.teamDraws}
             teamLosses={item.teamLosses}
             teamPD={item.teamPD}
-            teamPoints={item.teamPoints} />}
+            teamPoints={item.teamPoints}
+            ranking={item.ranking}
+            isLastItem={item.isLastItem} />}
         />
 
     </View>

@@ -27,6 +27,8 @@ export const getAllStandingsData = (seasonStandings: any) => {
                     teamLosses: '0',
                     teamPD: '0',
                     teamPoints: '0',
+                    ranking: index,
+                    isLastItem: false,
                 };
 
                 newArray.push(headerRankingInfo)
@@ -51,6 +53,8 @@ export const getAllStandingsData = (seasonStandings: any) => {
                     teamLosses: teamLosses,
                     teamPD: teamPD,
                     teamPoints: teamPoints,
+                    ranking: index,
+                    isLastItem: index == standingsCount - 1
             };
 
             newArray.push(newRankingInfo)

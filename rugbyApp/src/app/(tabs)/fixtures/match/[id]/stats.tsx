@@ -3,7 +3,7 @@ import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens";
-import { getTeamInfo } from "@/store/utils/getTeamInfo";
+import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
 import { useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
@@ -142,6 +142,8 @@ const MatchSummary = () => {
                 <KeyEventsPanel
                 keyEventArray={keyEventsArray}
                 matchID={id} 
+                homeTeam={mainTeamName}
+                awayTeam={opponentTeamName}
                 leagueName={leagueName}
                 />
 
@@ -186,21 +188,27 @@ export type KeyEventsInfo = {
 
 type KeyEventsPanelProps = {
 	keyEventArray: KeyEventsInfo[] | undefined,
+    homeTeam: string | undefined,
+    awayTeam: string | undefined,
     matchID: string | string[] | undefined,
     leagueName: string | undefined,
 }
 
-export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsPanelProps) => {
+export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, leagueName}: KeyEventsPanelProps) => {
 
     if(keyEventArray === undefined) return 
+    if(homeTeam === undefined) return
+    if(awayTeam === undefined) return
+
+    const homeAwayTeamInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam)
 
     if(keyEventArray.length == 0)
     {
         return(
-            <View style={[keyEventsPanelStyles.container]}>
+        <View style={[keyEventsPanelStyles.container]}>
             <Text style={{color: colors.text}}>Key Events</Text>
 
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey'}}>
                 <Text style={{color:'lightgrey'}}>Currently no key events</Text>
             </View>
         </View>
@@ -211,7 +219,20 @@ export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsP
         <View style={[keyEventsPanelStyles.container]}>
             <Text style={{color: colors.text}}>Key Events</Text>
 
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey', width: "80%"}}>
+
+                <View style={{flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'lightgrey', paddingVertical: 5}}>
+                    <View style={{width: "50%", justifyContent: 'center', alignItems: 'center'}}>
+                        <Image style={[keyEventsPanelStyles.teamLogo]} 
+                        source={homeAwayTeamInfo?.homeInfo.altLogo}/>
+                    </View>
+
+                    <View style={{width: "50%", justifyContent: 'center', alignItems: 'center'}}>
+                        <Image style={[keyEventsPanelStyles.teamLogo]} 
+                        source={homeAwayTeamInfo?.awayInfo.altLogo}/>
+                    </View>
+                    
+                </View>
 
             {keyEventArray.map((match, index) => {
                 return (
@@ -224,6 +245,7 @@ export const KeyEventsPanel = ({ keyEventArray, matchID, leagueName}: KeyEventsP
                     eventScore={match.eventScore}
                     eventTeam={match.eventTeam}
                     eventIcon={match.eventIcon}
+                    isHomeTeam={match.eventTeam == homeTeam}
                      />
                 );
             })}
@@ -241,31 +263,69 @@ type KeyEventItemProps = {
     eventScore: string,
     eventTeam: string,
     eventIcon: any,
+    isHomeTeam: boolean,
 }
 
-export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventScore, eventTeam, eventIcon}: KeyEventItemProps) => {
+export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventScore, eventTeam, eventIcon, isHomeTeam}: KeyEventItemProps) => {
 
+    const eventRender = (isHome: boolean) => {
 
-    const eventTeamInfo = getTeamInfo(leagueName, eventTeam);
+        if (isHome) {
+            return (
+                <View style={{ flexDirection: 'row', marginVertical: 5, justifyContent: 'flex-end', alignItems: 'center' }}>
+
+                    <View style={{width: "40%", flexDirection: 'column', paddingVertical: 2, borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                        <Text style={{ color: colors.text }}>{eventPlayer}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: 500, color: colors.text }}>{eventTime}</Text>
+                            <Text style={{ marginHorizontal: 10, color: colors.text }}>{eventScore}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ padding: 5, width: "20%" }}>
+                        <Image
+                            style={[keyEventsPanelStyles.eventIcon]}
+                            source={eventIcon} />
+                    </View>
+
+                    <View style={{width: "40%"}}>
+
+                    </View>
+                </View>
+            )
+        }
+        else { 
+            return (
+                <View style={{ flexDirection: 'row', marginVertical: 5, justifyContent: 'flex-start', alignItems: 'center' }}>
+
+                    <View style={{width: "40%"}}>
+
+                    </View>
+
+                    <View style={{ padding: 5, width: "20%" }}>
+                        <Image
+                            style={[keyEventsPanelStyles.eventIcon]}
+                            source={eventIcon} />
+                    </View>
+
+                    <View style={{width: "40%", flexDirection: 'column', borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                        <Text style={{ color: colors.text }}>{eventPlayer}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: 500, color: colors.text }}>{eventTime}</Text>
+                            <Text style={{ marginHorizontal: 10, color: colors.text }}>{eventScore}</Text>
+                        </View>
+                    </View>
+
+                </View>
+            )
+        }
+    }
+
+    const render = eventRender(isHomeTeam)
 
     return (
-        <View style={{flexDirection: 'row', marginVertical: 5, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontWeight: 600, color: eventTeamInfo?.teamInfo?.colour}}>{eventTeamInfo?.teamInfo?.abbreviation}</Text>
-           
-            <View style={{padding: 5, borderWidth: 2, borderColor: eventTeamInfo?.teamInfo?.colour, borderRadius: 20, marginHorizontal: 5}}>
-                <Image
-                style={[keyEventsPanelStyles.eventIcon]}
-                source={eventIcon} />
-            </View>
-            
-            <View style={{flexDirection: 'column'}}>
-                <Text>{eventPlayer}</Text>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontWeight: 500}}>{eventTime}</Text>
-                    <Text style={{marginHorizontal: 10}}>{eventScore}</Text>
-                </View>
-            </View>
-            
+        <View>
+            {render}
         </View>
     )
 
@@ -303,7 +363,7 @@ export const keyEventsPanelStyles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      marginVertical: 10
+      marginVertical: 10,
     },
     teamLogo: {
       resizeMode: 'contain',
@@ -314,10 +374,10 @@ export const keyEventsPanelStyles = StyleSheet.create({
     },
     eventIcon: {
         resizeMode: 'center',
-        width: 25,
-        height: 25,
-        minHeight: 25,
-        minWidth: 25,
+        width: 20,
+        height: 20,
+        minHeight: 20,
+        minWidth: 20,
     },
     matchScore: {
         paddingHorizontal: 10,

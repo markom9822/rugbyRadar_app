@@ -270,22 +270,24 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
         isCaptain = isAwayPlayerCaptain;
     }
 
+    const panelBackground = hexToRGB(colors.altBackground, '0.4')
+
 
     if (hometeamPlayer === "Substitutes") {
         return (
-            <View style={{flexDirection: 'row', backgroundColor: colors.altBackground}}>
-                <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName}</Text>
+            <View style={{flexDirection: 'row', backgroundColor: panelBackground}}>
+                <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName.toUpperCase()}</Text>
             </View>
         )
     }
     else {
         return (
-            <View style={[{flexDirection: 'row', backgroundColor: colors.altBackground, paddingVertical: 2}]}>
-                <Text style={{fontWeight: (isCaptain) ? '600' : '300', paddingHorizontal: 4, fontSize: fontSize.sm, color: colors.text}}>
+            <View style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 4, borderBottomColor: 'grey', borderBottomWidth: 1}]}>
+                <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 12, color: colors.text, width: "8%", textAlign: 'right'}}>
                     {playerNumber}
                 </Text>
-                <Text style={{fontWeight: (isCaptain) ? '600' : '300', paddingHorizontal: 4, fontSize: fontSize.sm, color: colors.text}}>
-                    {playerName} {(isCaptain) ? '(c)' : ''}</Text>
+                <Text style={{fontWeight: 500, paddingHorizontal: 6, fontSize: 12, color: colors.text, textAlign: 'left', width: "92%"}}>
+                    {playerName.toUpperCase()} {(isCaptain) ? '(c)' : ''}</Text>
             </View>
         )
     }

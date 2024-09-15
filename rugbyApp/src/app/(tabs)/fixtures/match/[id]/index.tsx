@@ -164,28 +164,28 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
             </Text>
 
             <Text style={{fontWeight: 500, color: colors.text}}>Game Info</Text>
-                <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15 }}>
+                <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
                     <View style={{alignItems: 'center', flexDirection: 'column'}}>
-                        <Text style={{fontWeight: 500, color: colors.altText}}>Venue</Text>
-                        <Text style={{marginBottom: 10, color: colors.altText}}>{matchInfoArray[0].matchVenue}</Text>
-                        <Text>Attendance: {matchAttendance}</Text>
+                        <Text style={{fontWeight: 500, color: colors.text}}>Venue</Text>
+                        <Text style={{marginBottom: 10, color: colors.text}}>{matchInfoArray[0].matchVenue}</Text>
+                        <Text style={{color: colors.text}}>Attendance: {matchAttendance}</Text>
                     </View>
                 </View>
             <Text style={{fontWeight: 500, color: colors.text}}>Match Stats</Text>
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>
 
                 <View style={{ alignItems: 'center' }}>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2 }}>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>
                         <View style={[summaryPanelStyles.teamInfoContainer]}>
                             <Image style={[summaryPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.logo}/>
+                            source={homeTeamInfo?.altLogo}/>
                             <Text style={[summaryPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
                         <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "40%"}}></Text>
                         <View style={[summaryPanelStyles.teamInfoContainer]}>
                             <Text style={[summaryPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[summaryPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.logo}/>
+                            source={awayTeamInfo?.altLogo}/>
                         </View>
                     </View>
                 </View>
@@ -288,12 +288,14 @@ export const summaryPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
+        color: colors.text
     },
     teamName: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
+        color: colors.text,
     },
     teamInfoContainer:{
         width: "25%",
@@ -303,7 +305,7 @@ export const summaryPanelStyles = StyleSheet.create({
     },
     statsLink: {
       fontWeight: 600,
-      color: 'lightblue'
+      color: '#7185eb'
     }
   })
 

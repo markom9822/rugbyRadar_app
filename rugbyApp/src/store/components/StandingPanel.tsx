@@ -7,6 +7,7 @@ import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
 import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase"
 import { colors } from "@/constants/tokens"
+import { hexToRGB } from "../utils/helpers"
 
 
 type StandingPanelProps = {
@@ -22,9 +23,12 @@ type StandingPanelProps = {
     teamLosses: string
     teamPD: string
     teamPoints: string
+    ranking: number
+    isLastItem: boolean
 }
 
-export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool, teamName, teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints}: StandingPanelProps) => {
+export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool, teamName,
+     teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem}: StandingPanelProps) => {
 
     var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
 
@@ -46,7 +50,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     }
     else if(league === "superRugby")
     {
-            teamInfo = getSuperRugbyTeamInfoFromName(teamName)
+        teamInfo = getSuperRugbyTeamInfoFromName(teamName)
     }
     else if(league === "championsCup")
     {
@@ -68,8 +72,9 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     if(teamInfo === null) return
     if(teamInfo === undefined) return
 
+    const altBackgroundColour = hexToRGB(colors.altBackground, "0.5")
     const teamPDTextColour = (new Number(teamPD) >= new Number(0)) ? ('#31ad35'):('#c22727');
-    const panelBkgColour = (index % 2 == 0) ? (colors.altBackground): (colors.background);
+    const panelBkgColour = (ranking % 2 == 0) ? (altBackgroundColour): (colors.background);
 
     const standingsRender = (isHeader: boolean) => {
 
@@ -80,7 +85,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
         {
             return (
                 <View style={{width: "50%", flexDirection: 'row', paddingTop: 10, paddingLeft: 3}}>
-                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 500, color: colors.text}]}>{teamPool}</Text>
+                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 600, color: 'lightgrey', fontSize: 11}]}>{teamPool.toUpperCase()}</Text>
                 </View>
             )
         }
@@ -93,7 +98,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                     <>
                         <View style={{ width: "60%", flexDirection: 'row', padding: 7, justifyContent: 'space-evenly',
                              alignItems: 'center', backgroundColor: panelBkgColour }}>
-                            <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{index + 1}</Text>
+                            <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{ranking + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
                                 source={teamInfo.altLogo} />
@@ -111,7 +116,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                     <>
                         <View style={{ width: "40%", flexDirection: 'row', padding: 7,
                              justifyContent: 'space-evenly', alignItems: 'center'}}>
-                            <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{index + 1}</Text>
+                            <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{ranking + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
                                 source={teamInfo.altLogo} />
@@ -133,7 +138,9 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
 
 
     return(
-        <View style={[standingsPanelStyles.container, {backgroundColor: panelBkgColour}]}>
+        <View style={[standingsPanelStyles.container, 
+        {backgroundColor: (isHeader) ? altBackgroundColour: panelBkgColour, borderBottomColor: (isHeader || isLastItem) ? 'grey': 'transparent',
+         borderBottomWidth: (isHeader || isLastItem) ? 1: 0}]}>
             {standingsRender(isHeader)}
         </View>
     )
