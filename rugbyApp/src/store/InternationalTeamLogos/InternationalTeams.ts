@@ -70,5 +70,5 @@ export const UruguayAltLogo = require('@/store/InternationalTeamLogos/Uruguay_Ru
 export const BALionsLogo = require('@/store/InternationalTeamLogos/British_&_Irish_Lions_logo.png')
 export const BALionsAltLogo = require('@/store/InternationalTeamLogos/British_&_Irish_Lions_Logo_White.png')
 
-export const DefaultLogo = require('@/store/InternationalTeamLogos/Default_Team_Logo.png')
+export const DefaultLogo = require('@/store/InternationalTeamLogos/Rugby_Default_Crest.png')
 
