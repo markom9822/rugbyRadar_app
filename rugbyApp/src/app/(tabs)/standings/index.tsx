@@ -60,10 +60,44 @@ const getWorldRankingsData = (todaysRankings: any) => {
     )
 }
 
+export type SeasonDateInfo = {
+    label: string,
+    value: string
+}
+
+export const generateSeasonList = () =>{
+
+    const currentYear = new Date().getFullYear().valueOf();
+    const startYear = "2009"
+
+    var seasonArray: SeasonDateInfo[] = []
+
+    for (let index = 0; index < Number(currentYear) - Number(startYear) + 1; index++) {
+
+        const year = Number(currentYear) - (index-1);
+        const lastYear  = year - 1;
+
+        let newItem = {
+            label: lastYear.toString() + "/" + year.toString().substring(year.toString().length - 2),
+            value: year.toString()
+        }
+
+        seasonArray.push(newItem)
+    }
+
+    console.info(seasonArray)
+
+    return (
+        seasonArray
+    )
+
+}
+
 const StandingsScreen = () => {
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
     const [leagueName, setLeagueName] = useState<string>('');
     const [seasonName, setSeasonName] = useState<string>('');
+    const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Standings")
@@ -117,25 +151,6 @@ const StandingsScreen = () => {
         { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo}
     ];
 
-    const seasonRegData = [
-        { label: '2024/25', value: '2025' },
-        { label: '2023/24', value: '2024' },
-        { label: '2022/23', value: '2023' },
-        { label: '2021/22', value: '2022' },
-        { label: '2020/21', value: '2021' },
-        { label: '2019/20', value: '2020' },
-        { label: '2018/19', value: '2019' },
-        { label: '2017/18', value: '2018' },
-        { label: '2016/17', value: '2017' },
-        { label: '2015/16', value: '2016' },
-        { label: '2014/15', value: '2015' },
-        { label: '2013/14', value: '2014' },
-        { label: '2012/13', value: '2013' },
-        { label: '2011/12', value: '2012' },
-        { label: '2010/11', value: '2011' },
-        { label: '2009/10', value: '2010' },
-    ];
-
     const seasonWorldCupData = [
         { label: '2023', value: '2023' },
         { label: '2019', value: '2019' },
@@ -153,27 +168,27 @@ const StandingsScreen = () => {
 
     switch(leagueName) { 
         case "urc": { 
-           currentSeasonData = seasonRegData; 
+           currentSeasonData = seasonDates; 
            break; 
         } 
         case "prem": { 
-            currentSeasonData = seasonRegData; 
+            currentSeasonData = seasonDates; 
             break; 
         } 
         case "top14": { 
-            currentSeasonData = seasonRegData; 
+            currentSeasonData = seasonDates; 
             break; 
         }
         case "superRugby": { 
-            currentSeasonData = seasonRegData; 
+            currentSeasonData = seasonDates; 
             break; 
         }
         case "championsCup": { 
-            currentSeasonData = seasonRegData; 
+            currentSeasonData = seasonDates; 
             break; 
         }
         case "sixNations": { 
-            currentSeasonData = seasonRegData; 
+            currentSeasonData = seasonDates; 
             break; 
         } 
         case "rugbyWorldCup": { 
@@ -181,7 +196,7 @@ const StandingsScreen = () => {
            break; 
         }
         default: { 
-            currentSeasonData = seasonRegData; 
+            currentSeasonData = seasonDates; 
            break; 
         }
     } 

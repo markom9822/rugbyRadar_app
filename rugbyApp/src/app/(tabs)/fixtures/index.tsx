@@ -7,7 +7,7 @@ import { dateCustomFormatting, getLeagueCode, getLeagueCodeFromDisplayName, getL
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { ChampionsCupAltLogo, InternationalLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -209,7 +209,7 @@ const FixturesScreen = () => {
 
     const leagueData = [
         { label: 'All Leagues', value: 'all', logo: null },
-        { label: 'International Test Match', value: 'inter', logo: null },
+        { label: 'International Test Match', value: 'inter', logo: InternationalLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
         { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
         { label: 'URC', value: 'urc', logo: URCAltLogo },
