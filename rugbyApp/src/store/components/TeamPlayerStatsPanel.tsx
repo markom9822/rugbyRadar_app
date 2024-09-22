@@ -44,10 +44,9 @@ type TeamPlayerStatsPanelProps = {
     playerStatsArray: SeasonStatsInfo[] | undefined,
     teamLeagueName: string | undefined,
     currentYear: string | undefined,
-    teamBorderColour: string | undefined
 }
 
-export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentYear, teamBorderColour}: TeamPlayerStatsPanelProps) => {
+export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentYear}: TeamPlayerStatsPanelProps) => {
 
     const [currentStatsTab, setCurrentStatsTab] = useState<string>('points');
 
@@ -58,41 +57,41 @@ export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentY
     if(sortedArray == undefined) return
 
     return (
-        <View style={{marginVertical: 10, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: teamBorderColour, borderWidth: 2,
+        <View style={{marginVertical: 10, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
             paddingHorizontal: 5, paddingVertical: 10}}>
             <View style={{paddingBottom: 4, marginHorizontal: 5}}>
-                <Text style={{fontWeight: 500}}>{currentYear} {teamLeagueName} Player Stats</Text>
+                <Text style={{fontWeight: 500, color: colors.text}}>{currentYear} {teamLeagueName} Player Stats</Text>
             </View>
 
             <View style={{justifyContent: 'center', paddingVertical: 5}}>
 
             <View style={{flexDirection: 'row', marginHorizontal: 5}}>
                 <TouchableOpacity onPress={() => setCurrentStatsTab('points')} 
-                style={{padding: 1, borderBottomColor: (currentStatsTab === "points") ? ('grey'):('lightgrey'),
-                 borderBottomWidth: 2, backgroundColor: (currentStatsTab === "points") ? ('white'):('#f0f2f0') ,
+                style={{padding: 1, borderBottomColor: (currentStatsTab === "points") ? ('lightgrey'):(colors.background),
+                 borderBottomWidth: 2, backgroundColor: colors.altBackground ,
                  borderTopLeftRadius: 4, borderTopRightRadius: 4, width: "20%"}}>
-                        <Text style={{textAlign: 'center'}}>Points</Text>
+                        <Text style={{textAlign: 'center', color: (currentStatsTab === "points") ? (colors.text):('lightgrey')}}>Points</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => setCurrentStatsTab('tries')} 
-                style={{padding: 1, borderBottomColor: (currentStatsTab === "tries") ? ('grey'):('lightgrey'),
-                 borderBottomWidth: 2, backgroundColor: (currentStatsTab === "tries") ? ('white'):('#f0f2f0'), 
+                style={{padding: 1, borderBottomColor: (currentStatsTab === "tries") ? ('lightgrey'):(colors.background),
+                 borderBottomWidth: 2, backgroundColor: colors.altBackground, 
                  borderTopLeftRadius: 4, borderTopRightRadius: 4, width: "20%"}}>
-                    <Text style={{textAlign: 'center'}}>Tries</Text>
+                    <Text style={{textAlign: 'center', color: (currentStatsTab === "tries") ? (colors.text):('lightgrey')}}>Tries</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => setCurrentStatsTab('tackles')} 
-                style={{padding: 1, borderBottomColor: (currentStatsTab === "tackles") ? ('grey'):('lightgrey'),
-                 borderBottomWidth: 2, backgroundColor: (currentStatsTab === "tackles") ? ('white'):('#f0f2f0'), 
+                style={{padding: 1, borderBottomColor: (currentStatsTab === "tackles") ? ('lightgrey'):(colors.background),
+                 borderBottomWidth: 2, backgroundColor: colors.altBackground, 
                  borderTopLeftRadius: 4, borderTopRightRadius: 4, width: "20%"}}>
-                    <Text style={{textAlign: 'center'}}>Tackles</Text>
+                    <Text style={{textAlign: 'center', color: (currentStatsTab === "tackles") ? (colors.text):('lightgrey')}}>Tackles</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => setCurrentStatsTab('penaltiesConc')} 
-                style={{padding: 1, borderBottomColor: (currentStatsTab === "penaltiesConc") ? ('grey'):('lightgrey'),
-                 borderBottomWidth: 2, backgroundColor: (currentStatsTab === "penaltiesConc") ? ('white'):('#f0f2f0'), 
+                style={{padding: 1, borderBottomColor: (currentStatsTab === "penaltiesConc") ? ('lightgrey'):(colors.background),
+                 borderBottomWidth: 2, backgroundColor: colors.altBackground, 
                  borderTopLeftRadius: 4, borderTopRightRadius: 4, width: "40%"}}>
-                    <Text style={{textAlign: 'center'}}>Penalties Conc.</Text>
+                    <Text style={{textAlign: 'center', color: (currentStatsTab === "penaltiesConc") ? (colors.text):('lightgrey')}}>Penalties Conc.</Text>
                 </TouchableOpacity>
             </View>
             
@@ -147,21 +146,21 @@ export const PlayerStatsItem = ({ playerName, playerPosition, matchInfo, matchCo
     const panelBorderRadius = (isLastItem) ? (4):(0);
 
     return (
-        <View style={{flexDirection: 'row', paddingVertical: 2, backgroundColor: 'white', alignItems: 'center', marginHorizontal: 5,
+        <View style={{flexDirection: 'row', paddingVertical: 2, backgroundColor: colors.altBackground, alignItems: 'center', marginHorizontal: 5,
             borderBottomLeftRadius: panelBorderRadius, borderBottomRightRadius: panelBorderRadius
         }}>
 
-            <View style={{paddingHorizontal: 5, width: "15%", borderRightColor: 'grey', borderRightWidth: 1}}>
-                <Text style={{fontSize: fontSize.base, fontWeight: 500}}>{currentStat}</Text>
+            <View style={{paddingHorizontal: 5, width: "15%", borderRightColor: 'lightgrey', borderRightWidth: 1}}>
+                <Text style={{fontSize: fontSize.base, fontWeight: 500, color: colors.text}}>{currentStat}</Text>
             </View>
             
-            <View style={{paddingHorizontal: 3, marginHorizontal: 3, width: "55%", flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{paddingHorizontal: 4}} >{playerName}</Text>
-                <Text style={{fontSize: fontSize.xs, fontWeight: 600, color: 'grey' ,paddingHorizontal: 4}}>{playerPosition}</Text>
+            <View style={{paddingHorizontal: 3, marginHorizontal: 3, width: "60%", flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{paddingHorizontal: 4, color: colors.text}} >{playerName}</Text>
+                <Text style={{fontSize: fontSize.xs, fontWeight: 600, color: 'lightgrey' ,paddingHorizontal: 4}}>{playerPosition}</Text>
             </View>
 
             <View style={{paddingHorizontal: 1, width: "30%"}}>
-                <Text style={{fontSize: fontSize.xs, fontWeight: 200}}>Matches: {matchCount}</Text>
+                <Text style={{fontSize: fontSize.xs, fontWeight: 200, color: colors.text}}>Matches: {matchCount}</Text>
             </View>
         </View>
     )

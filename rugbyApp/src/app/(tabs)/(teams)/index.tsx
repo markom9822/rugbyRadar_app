@@ -44,6 +44,12 @@ export const filterTeams = (teamArray: SearchTeamInfo[], searchString: string) =
 export const filterSectionList = (teamsSections: TeamsSection[], search: string) => {
 
     var filteredSections = [];
+
+    if(search == "")
+    {
+        return []
+    }
+
     for (let index = 0; index < teamsSections.length; index++) {
         
         let newSection = {
@@ -72,30 +78,30 @@ const getFilteredSearchTeams = (teamSections: TeamsSection[], searchValue: strin
 const TeamsScreen = () => {
 
     const teamSections = [
-        //{
-        //    title: 'International',
-       //     data: InternationalRugbyTeams,
-       // },
-        //{
-       //     title: 'United Rugby Championship',
-       //     data: URCRugbyTeams,
-       // },
-       // {
-       //     title: 'Premiership',
-       //     data: PremRugbyTeams,
-       // },
-       {
+        {
+            title: 'International',
+            data: InternationalRugbyTeams,
+        },
+        {
+            title: 'United Rugby Championship',
+            data: URCRugbyTeams,
+        },
+        {
+            title: 'Premiership',
+            data: PremRugbyTeams,
+        },
+        {
             title: 'Top 14',
             data: Top14RugbyTeams,
-       },
-        //{
-        //    title: 'Super Rugby',
-        //    data: SuperRugbyTeams,
-        //},
+        },
+        {
+            title: 'Super Rugby',
+            data: SuperRugbyTeams,
+        },
     ]
 
     const [teamSearch, setTeamSearch] = useState<string>('');
-    const [searchSections, setSearchSections] = useState<TeamsSection[]>(teamSections);
+    const [searchSections, setSearchSections] = useState<TeamsSection[]>([]);
 
 
     const handleOnSearchTextChange = (search: string) => {
@@ -117,6 +123,21 @@ const TeamsScreen = () => {
         return null
     }
 
+    const notFoundHeader = (teamSearch: string) => {
+
+        if(teamSearch == "")
+        {
+            return (
+                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Matching Team</Text>
+                </View>
+            )
+        }
+        
+        return null
+    }
+
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -131,6 +152,8 @@ const TeamsScreen = () => {
                     onChangeText={(search) => handleOnSearchTextChange(search)}
                     value={teamSearch}
                 />
+
+                {notFoundHeader(teamSearch)}
 
                 <SectionList
                     sections={searchSections}

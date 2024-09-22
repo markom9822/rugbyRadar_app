@@ -9,7 +9,7 @@ export const getSuperRugbyTeamInfoFromName = (name: string) => {
       abbreviation: 'DEF',
       logo: DefaultLogo,
       altLogo: DefaultLogo,
-      colour: '#00845c',
+      colour: '#000000',
       id: '0',
       defaultLeague: '',
       foundedYear: '',

@@ -9,11 +9,10 @@ type TeamSummaryPanelProps = {
     homeVenue: string | undefined
     homeLocation: string | undefined
     teamForm: string | undefined
-    teamBorderColour: string | undefined
 }
 
 
-export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm, teamBorderColour}: TeamSummaryPanelProps) => {
+export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}: TeamSummaryPanelProps) => {
 
     if(teamName == undefined) return
     if(homeVenue == undefined) return
@@ -39,12 +38,12 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm, 
                 
                 <View style={{flexDirection: 'column', paddingHorizontal: 5}}>
                     <Text style={{fontSize: fontSize.lg, fontWeight: 600, color: colors.text}}>{teamName.toUpperCase()}</Text>
-                    <Text style={{color: colors.text}}>{teamForm}</Text>
+                    <Text style={{color: 'lightgrey'}}>{teamForm}</Text>
                 </View>
                 
             </View>
 
-            <View style={{backgroundColor: colors.altBackground, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 4, borderColor: teamBorderColour, borderWidth: 2}}>
+            <View style={{backgroundColor: colors.altBackground, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1}}>
                 <View style={{ flexDirection: 'row', marginVertical: 4}}>
                     <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
                         <MaterialIcons name="stadium" size={20} color={'lightgrey'} />

@@ -9,7 +9,6 @@ import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/stor
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
-
 export type MatchInfo = {
     homeTeam: string,
     awayTeam: string,
@@ -155,9 +154,7 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
     return (
         sections
     )
-
 }
-
 
 const FixturesScreen = () => {
 
@@ -220,7 +217,6 @@ const FixturesScreen = () => {
         { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
-        { label: 'Olympics Mens Sevens', value: 'menSevens', logo: null},
     ];
 
     return <View style={defaultStyles.container}>
@@ -242,7 +238,7 @@ const FixturesScreen = () => {
         />
 
 
-        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }}>
+        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={handlePressDatePicker} 
             style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 5, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
                 <View style={{paddingHorizontal: 5}}>
@@ -256,6 +252,7 @@ const FixturesScreen = () => {
                         value={selectedDate}
                         mode="date"
                         onChange={handleSelectedDate}
+                    
                     />
                 )
             }

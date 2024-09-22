@@ -16,15 +16,14 @@ type TeamStandingPanelProps = {
     teamLeagueName: string | undefined,
     currentTeamName: string | undefined,
     currentYear: string | undefined,
-    teamBorderColour: string | undefined
 }
 
-export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName, currentYear, teamBorderColour}: TeamStandingPanelProps) => {
+export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName, currentYear}: TeamStandingPanelProps) => {
 
     if(standingsArray == undefined) return
 
     return (
-        <View style={{marginVertical: 20, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: teamBorderColour, borderWidth: 2,
+        <View style={{marginVertical: 20, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
          paddingHorizontal: 10, paddingBottom: 15, paddingTop: 8}}>
             <Text style={{fontWeight: 500, color: colors.text}}>{currentYear} {teamLeagueName} Table</Text>
 
@@ -75,11 +74,11 @@ export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, in
 
     return (
         <View style={{flexDirection: 'row', paddingVertical: 2, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
-            <Text style={{width: "10%", fontWeight: textWeight, color: colors.text}}>{ranking}</Text>
-            <Text style={{width: "40%", fontWeight: textWeight, color: colors.text}}>{teamName}</Text>
-            <Text style={{width: "15%", fontWeight: textWeight, textAlign: 'right', color: colors.text}}>{gamesPlayed}</Text>
-            <Text style={{width: "20%", fontWeight: textWeight, textAlign: 'right', color: colors.text}}>{pointsDiff}</Text>
-            <Text style={{width: "15%", fontWeight: textWeight, textAlign: 'right', color: colors.text}}>{points}</Text>
+            <Text style={{width: "10%", fontWeight: textWeight, fontSize: 13, color: colors.text}}>{ranking}</Text>
+            <Text style={{width: "40%", fontWeight: textWeight, fontSize: 13, color: colors.text}}>{teamName}</Text>
+            <Text style={{width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text}}>{gamesPlayed}</Text>
+            <Text style={{width: "20%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text}}>{pointsDiff}</Text>
+            <Text style={{width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text}}>{points}</Text>
         </View>
     )
 }

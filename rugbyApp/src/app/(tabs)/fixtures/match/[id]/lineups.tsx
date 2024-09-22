@@ -176,8 +176,11 @@ const Lineups = () => {
     if(homeTeamInfo === undefined) return
     if(awayTeamInfo === undefined) return
 
-    const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.7')
-    const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.7')
+    const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.3')
+    const homeTeamBorderRBGA = hexToRGB(homeTeamInfo.colour, '0.9')
+
+    const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.3')
+    const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.9')
 
     return(
         <View style={defaultStyles.container}>
@@ -197,7 +200,7 @@ const Lineups = () => {
                 <TouchableOpacity onPress={() => setSelectedTeam('home')}
                 style={[lineupPanelStyles.teamHeader, 
                 {backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA):(colors.background),
-                 borderColor: (selectedTeam === "home") ? 'white': 'lightgrey', borderWidth: (selectedTeam === "home") ? 2: 1, justifyContent: 'center'}]}>
+                 borderColor: (selectedTeam === "home") ? homeTeamBorderRBGA: 'grey', borderWidth: (selectedTeam === "home") ? 2: 1, justifyContent: 'center'}]}>
                     <View style={{padding: 5}}>
                         <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo} 
                         style={lineupPanelStyles.teamLogo}/>
@@ -209,7 +212,7 @@ const Lineups = () => {
  
                 <TouchableOpacity onPress={() => setSelectedTeam('away')}
                 style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA):(colors.background),
-                    borderColor: (selectedTeam === "away") ? 'white': 'lightgrey', borderWidth: (selectedTeam === "away") ? 2: 1, justifyContent: 'center'}]}>
+                    borderColor: (selectedTeam === "away") ? awayTeamBorderRBGA: 'grey', borderWidth: (selectedTeam === "away") ? 2: 1, justifyContent: 'center'}]}>
                     <View style={{padding: 5}}>
                         <Image source={(selectedTeam === "away") ? awayTeamInfo.logo : awayTeamInfo.altLogo}  
                         style={lineupPanelStyles.teamLogo}/>
@@ -231,7 +234,8 @@ const Lineups = () => {
             awayteamPlayer={item.awayteamPlayer}
             awayteamPlayerPosition={item.awayteamPlayerPosition}
             awayteamPlayerNum={item.awayteamPlayerNum}
-            isAwayPlayerCaptain={item.isAwayPlayerCaptain}/>}
+            isAwayPlayerCaptain={item.isAwayPlayerCaptain}
+            teamColour={(selectedTeam === "home") ? homeTeamInfo.colour: awayTeamInfo.colour}/>}
             />
 
         </View>
@@ -248,11 +252,12 @@ type LineupPlayerPanelProps = {
     awayteamPlayerPosition: string,
     awayteamPlayerNum: string,
     isAwayPlayerCaptain: boolean,
+    teamColour: string,
 }
 
 
 export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum, isHomePlayerCaptain,
-     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain }: LineupPlayerPanelProps) => {
+     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain, teamColour }: LineupPlayerPanelProps) => {
 
     var playerName = ''
     var playerNumber = ''
@@ -270,7 +275,7 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
         isCaptain = isAwayPlayerCaptain;
     }
 
-    const panelBackground = hexToRGB(colors.altBackground, '0.4')
+    const panelBackground = hexToRGB(teamColour, '0.1')
 
 
     if (hometeamPlayer === "Substitutes") {

@@ -118,6 +118,7 @@ const StandingsScreen = () => {
     ];
 
     const seasonRegData = [
+        { label: '2024/25', value: '2025' },
         { label: '2023/24', value: '2024' },
         { label: '2022/23', value: '2023' },
         { label: '2021/22', value: '2022' },
