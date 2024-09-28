@@ -136,6 +136,10 @@ export const getClosestWorldCupYear = (year: number) => {
     return year - remainder;
 }
 
+export const isLastItemInSectionList = (index: number, section: any, globalData: any) => {
+    return (index === section.data.length - 1 && section.title === globalData.at(-1).title)
+}
+
 
 export function dateCustomFormatting(date: Date): string {
     const padStart = (value: number): string =>

@@ -4,7 +4,7 @@ import { Stack } from "expo-router"
 import { View } from "react-native"
 
 const TeamsSearchLayout = () => {
-    return <View style={defaultStyles.container}>
+    return <View style={[defaultStyles.container]}>
         <Stack screenOptions={{
             headerStyle: {
             backgroundColor: colors.background

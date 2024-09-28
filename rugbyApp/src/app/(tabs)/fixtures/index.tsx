@@ -3,7 +3,7 @@ import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, Pressable, Mo
 import { colors, fontSize, fontWeight } from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { dateCustomFormatting, getLeagueCode, getLeagueCodeFromDisplayName, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName } from "@/store/utils/helpers"
+import { dateCustomFormatting, getLeagueCode, getLeagueCodeFromDisplayName, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, isLastItemInSectionList } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
@@ -20,7 +20,8 @@ export type MatchInfo = {
     matchLeague: string,
     matchID: string,
     eventState: string,
-    stateDetail: string
+    stateDetail: string,
+    eventTime: string,
 }
 
 export type FixturesSection = {
@@ -48,9 +49,14 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
         const homeTeamScore = todaysMatches.events[index].competitions[0].competitors[0].score;
         const awayTeamName = todaysMatches.events[index].competitions[0].competitors[1].team.name;
         const awayTeamScore = todaysMatches.events[index].competitions[0].competitors[1].score;
-
         const matchDate = new Date(todaysMatches.events[index].date)
-        console.info(todaysMatches.events[index].status.type.shortDetail)
+
+        const detailsLength = Number(todaysMatches.events[index].competitions[0].details.length);
+        var eventTime = '0';
+        if(detailsLength > 0)
+        {
+            eventTime = todaysMatches.events[index].competitions[0].details[detailsLength - 1].clock.displayValue;
+        }
 
         let newMatchInfo = {
             homeTeam: homeTeamName,
@@ -64,6 +70,7 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
             matchID: matchID,
             eventState: eventState,
             stateDetail: stateDetail,
+            eventTime: eventTime,
         };
 
         newArray.push(newMatchInfo)
@@ -106,7 +113,7 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
 
                 console.info(leagueEvents[eventIndex].name)
                 console.info(leagueEvents[eventIndex].competitions[0].venue.fullName)
-
+                
                 const matchTitle = leagueEvents[eventIndex].name;
                 const matchVenue = leagueEvents[eventIndex].competitions[0].venue.fullName;
                 const eventID = leagueEvents[eventIndex].id;
@@ -119,8 +126,21 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
                 const awayTeamName = leagueEvents[eventIndex].competitions[0].competitors[1].team.name;
                 const awayTeamScore = leagueEvents[eventIndex].competitions[0].competitors[1].score;
 
+                console.info(homeTeamScore)
+                console.info(awayTeamScore)
+
                 const matchDate = new Date(leagueEvents[eventIndex].date)
 
+                var eventTime = '0';
+                if(leagueEvents[eventIndex].competitions[0].details != undefined)
+                {
+                    const detailsLength = Number(leagueEvents[eventIndex].competitions[0].details.length);
+                    if(detailsLength > 0)
+                    {
+                        eventTime = leagueEvents[eventIndex].competitions[0].details[detailsLength - 1].clock.displayValue;
+                    }
+                }
+            
                 let newMatchInfo = {
                     homeTeam: homeTeamName,
                     awayTeam: awayTeamName,
@@ -133,6 +153,7 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
                     matchID: matchID,
                     eventState: eventState,
                     stateDetail: stateDetail,
+                    eventTime: eventTime,
                 };
 
                 leagueArray.push(newMatchInfo)
@@ -165,6 +186,31 @@ const FixturesScreen = () => {
     const [selectedDate, setDate] = useState(new Date())
 
     const [leagueName, setLeagueName] = useState<string>('');
+    
+    const filterSectionList = (fixturesSections: FixturesSection[], leagueName: string) => {
+    
+        var filteredSections = [];
+    
+        if(leagueName == "")
+        {
+            return []
+        }
+    
+        for (let index = 0; index < fixturesSections.length; index++) {
+
+            if(fixturesSections[index].title == leagueName)
+            {
+                filteredSections.push({
+                    title: fixturesSections[index].title,
+                    data: fixturesSections[index].data,
+                })
+            } 
+        }
+    
+        return (
+            filteredSections
+        )
+    }
 
 
     const handlePressFetchData = async () =>{
@@ -173,25 +219,28 @@ const FixturesScreen = () => {
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(leagueName)
 
+        const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + formattedDate + '&lang=en&region=gb&tz=Europe/London'
+        const todaysAllMatches = await fetch( apiStringAll, {
+            headers: {
+                'Cache-control': 'no-cache'
+            }
+        }
+        ).then((res) => res.json())
+        const allFixturesArray = getFixturesForAll(todaysAllMatches)
+
         if(leagueName == 'all')
         {
-                const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + formattedDate + '&lang=en&region=gb&tz=Europe/London'
-                const todaysAllMatches = await fetch( apiStringAll,).then((res) => res.json())
-                const allFixturesArray = getFixturesForAll(todaysAllMatches)
-                setMatchesSections(allFixturesArray)
+            setMatchesSections(allFixturesArray)
         }
-            
-        if(currentLeagueCode == undefined) return
-        
-        const leagueDisplayName = getLeagueDisplayNameFromCode(currentLeagueCode)
+        else
+        {
+            if(currentLeagueCode == undefined) return
+            const leagueDisplayName = getLeagueDisplayNameFromCode(currentLeagueCode)
+            if(leagueDisplayName == undefined) return
 
-        if(leagueDisplayName == undefined) return
-
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ currentLeagueCode +'/scoreboard?contentorigin=espn&dates=' + formattedDate + '&lang=en&limit=300&region=gb&sort=events:asc&tz=Europe/London'
-        const todaysMatches = await fetch( apiString,).then((res) => res.json())
-        const leagueFixturesArray = getFixturesForLeague(todaysMatches, currentLeagueCode, leagueDisplayName)
-
-        setMatchesSections(leagueFixturesArray)
+            const leagueFixtures = filterSectionList(allFixturesArray, leagueDisplayName)
+            setMatchesSections(leagueFixtures)
+        }
     }
 
     const handlePressDatePicker = () => {
@@ -276,7 +325,7 @@ const FixturesScreen = () => {
         <SectionList
         sections={matchesSections}
         keyExtractor={(item, index) => item.matchID + index}
-        renderItem={({item, index}) =>
+        renderItem={({item, index, section}) =>
         <ScorePanel
             leagueDisplayName={item.matchLeague}
             homeTeam={item.homeTeam}
@@ -292,6 +341,8 @@ const FixturesScreen = () => {
             index={index}
             eventState={item.eventState}
             stateDetail={item.stateDetail}
+            eventTime={item.eventTime}
+            isLastItem={isLastItemInSectionList(index, section, matchesSections)}
         />}
         renderSectionHeader={({section: {title, data}}) => (
             <View style={{marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>

@@ -140,7 +140,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     return(
         <View style={[standingsPanelStyles.container, 
         {backgroundColor: (isHeader) ? altBackgroundColour: panelBkgColour, borderBottomColor: (isHeader || isLastItem) ? 'grey': 'transparent',
-         borderBottomWidth: (isHeader || isLastItem) ? 1: 0}]}>
+         borderBottomWidth: (isHeader || isLastItem) ? 1: 0, marginBottom: (isLastItem) ? 50: 0}]}>
             {standingsRender(isHeader)}
         </View>
     )

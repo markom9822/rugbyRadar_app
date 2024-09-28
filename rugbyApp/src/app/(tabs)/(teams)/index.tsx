@@ -8,7 +8,7 @@ import { defaultStyles } from "@/styles"
 import { useState } from "react"
 import { Link } from "expo-router"
 import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, FlatList, Image, StyleSheet, Pressable, SectionList } from "react-native"
-import { getLeagueInfoFromDisplayName, hexToRGB } from "@/store/utils/helpers"
+import { getLeagueInfoFromDisplayName, hexToRGB, isLastItemInSectionList } from "@/store/utils/helpers"
 import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
 import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
@@ -162,7 +162,7 @@ const TeamsScreen = () => {
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={{ flex: 1, backgroundColor: colors.background }}>
+            <View style={{ flex: 1, backgroundColor: colors.background}}>
 
                 <TextInput
                     style={{ height: 40, margin: 12, borderRadius: 4 , 
@@ -180,13 +180,14 @@ const TeamsScreen = () => {
                 <SectionList
                     sections={searchSections}
                     keyExtractor={(item, index) => item.id + index}
-                    renderItem={({ item, index }) =>
+                    renderItem={({ item, index, section }) =>
                         <TeamInfoPanel
                             teamName={item.displayName}
                             teamColour={item.colour}
                             teamLogo={item.logo}
                             teamAltLogo={item.altLogo}
                             teamID={item.id}
+                            isLastItem={isLastItemInSectionList(index, section, searchSections)}
                         />}
                     renderSectionHeader={({ section: { title, data } }) => (
                         sectionHeader(title, data)
@@ -204,9 +205,10 @@ type TeamInfoPanelProps = {
     teamLogo: any,
     teamAltLogo: any,
     teamID: string,
+    isLastItem: boolean
 }
 
-export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, teamID }: TeamInfoPanelProps) => {
+export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, teamID, isLastItem }: TeamInfoPanelProps) => {
 
     const [selected, setSelected] = useState(false);
 
@@ -216,7 +218,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
     const currentTeamLogo = selected ? teamLogo : teamAltLogo;
 
     return (
-        <View style={{ backgroundColor: colors.background }}>
+        <View style={{ backgroundColor: colors.background, marginBottom: (isLastItem) ? 50: 0 }}>
             <Link href={`/(tabs)/(teams)/team/${teamID}`} asChild>
                 <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
                     onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>

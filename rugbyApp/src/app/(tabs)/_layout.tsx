@@ -1,6 +1,7 @@
 import { colors, fontSize } from "@/constants/tokens"
 import { Tabs } from "expo-router"
-import {FontAwesome, MaterialCommunityIcons, Ionicons, FontAwesome6} from '@expo/vector-icons'
+import {MaterialCommunityIcons, FontAwesome6} from '@expo/vector-icons'
+import * as SystemUI from 'expo-system-ui';
 
 
 const TabsNavigation = () => {
@@ -18,7 +19,13 @@ const TabsNavigation = () => {
             tabBarStyle: {
                 borderTopWidth: 0,
                 paddingTop: 8,
-                backgroundColor: 'grey'
+                borderTopRightRadius: 20,
+                borderTopLeftRadius: 20,
+                backgroundColor: 'grey',
+                position: 'absolute',
+                left: 0,
+                bottom: 0,
+                right: 0,
             },
 
         }}>

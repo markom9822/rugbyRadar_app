@@ -23,10 +23,12 @@ type ScorePanelProps = {
     matchID: string
     eventState: string
     stateDetail: string
+    eventTime: string,
+    isLastItem: boolean,
 }
 
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
-     index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail}: ScorePanelProps) => {
+     index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem}: ScorePanelProps) => {
 
     const [selected, setSelected] = useState(false);
 
@@ -50,15 +52,30 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
     const panelBackgroundColour = (eventState === "pre") ? (colors.altBackground):(colors.altBackground);
 
-    const scoreRender = (eventNotStarted: boolean) => {
+    const scoreRender = (eventState: string) => {
 
-        if (eventNotStarted) {
+        // not started yet
+        if (eventState === "pre") {
             return (
                 <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
                         <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center'}}>{matchTime}</Text>
                 </View>  
             )
         }
+        // event finished
+        else if (eventState === "post")
+        {
+            return (
+            <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text }]}>{homeScore}</Text>
+                        <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text}]}>{awayScore}</Text>
+                    </View>
+                    <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{stateDetail}</Text>
+            </View> 
+            )
+        }
+        // event ongoing
         else { 
             return (
                 <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
@@ -66,7 +83,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                             <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text }]}>{homeScore}</Text>
                             <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text}]}>{awayScore}</Text>
                         </View>
-                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{stateDetail}</Text>
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{eventTime}</Text>
                 </View> 
             )
         }
@@ -89,7 +106,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     }
 
     return(
-        <View style={[fixtureStyles.card]}>
+        <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 50: 0}]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
                  {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
 
@@ -108,7 +125,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         
                     </View>
                     
-                    {scoreRender(eventState === "pre")}
+                    {scoreRender(eventState)}
 
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <View style={{paddingHorizontal: 2}}>
