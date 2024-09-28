@@ -203,7 +203,12 @@ const StandingsScreen = () => {
 
     const isSeasonDropdownDisabled = leagueName == "worldRankings"
 
-    const headerRender = (isWorldRanking: boolean) => {
+    const headerRender = (isWorldRanking: boolean, eventsArray: StandingInfo[]) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return;
+        }
 
         if (isWorldRanking) {
             return (
@@ -231,6 +236,21 @@ const StandingsScreen = () => {
         }
     }
 
+    const notFoundHeader = (eventsArray: StandingInfo[]) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return (
+                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Standings Found</Text>
+                </View>
+            )
+        }
+        
+        return null
+    }
+
+
     return <View style={defaultStyles.container}>
 
         <LeagueSelectDropdown
@@ -257,7 +277,9 @@ const StandingsScreen = () => {
             onPressButton={handlePressFetchData}
         />
 
-        {headerRender(leagueName == "worldRankings")}
+        {headerRender(leagueName == "worldRankings", standingsArray)}
+
+        {notFoundHeader(standingsArray)}
         
         <FlatList 
         data={standingsArray}

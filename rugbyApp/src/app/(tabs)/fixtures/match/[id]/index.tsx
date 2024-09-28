@@ -30,7 +30,7 @@ export const getMatchInfo = (matchDetails: any) => {
     const matchVenue = matchDetails.gameInfo.venue.fullName;
     const matchAttendance = matchDetails.gameInfo.attendance;
 
-    if(matchDetails.boxscore.teams[0].statistics == undefined || matchDetails.boxscore.teams[1].statistics == undefined )
+    if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statistics.length == 0 )
     {
         const blankArray = [
             {
@@ -109,9 +109,6 @@ const MatchSummary = () => {
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
 
         const matchDetails = await fetch( apiString,).then((res) => res.json())
-
-        console.info(matchDetails.boxscore.teams[0].team.displayName)
-
         const matchInfo = getMatchInfo(matchDetails)
         setMatchInfoArray(matchInfo)
     }

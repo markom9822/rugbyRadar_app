@@ -219,6 +219,20 @@ const FixturesScreen = () => {
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
 
+    const notFoundHeader = (eventsArray: FixturesSection[]) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return (
+                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Fixtures Found</Text>
+                </View>
+            )
+        }
+        
+        return null
+    }
+
     return <View style={defaultStyles.container}>
 
         <LeagueSelectDropdown
@@ -236,7 +250,6 @@ const FixturesScreen = () => {
             }}
             onPressButton={handlePressFetchData}
         />
-
 
         <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={handlePressDatePicker} 
@@ -257,6 +270,8 @@ const FixturesScreen = () => {
                 )
             }
         </View>
+
+        {notFoundHeader(matchesSections)}
 
         <SectionList
         sections={matchesSections}

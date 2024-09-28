@@ -8,8 +8,9 @@ import { defaultStyles } from "@/styles"
 import { useState } from "react"
 import { Link } from "expo-router"
 import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, FlatList, Image, StyleSheet, Pressable, SectionList } from "react-native"
-import { hexToRGB } from "@/store/utils/helpers"
+import { getLeagueInfoFromDisplayName, hexToRGB } from "@/store/utils/helpers"
 import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
+import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
 export type SearchTeamInfo = {
     type: string;
@@ -100,9 +101,22 @@ const TeamsScreen = () => {
         },
     ]
 
+    const teamLeagueLogos = [
+        { displayName: 'United Rugby Championship', leagueLogo: URCAltLogo},
+        { displayName: 'Premiership', leagueLogo: PremiershipAltLogo},
+        { displayName: 'Top 14', leagueLogo: Top14AltLogo},
+        { displayName: 'Super Rugby', leagueLogo: SuperRugbyAltLogo},
+        { displayName: 'International', leagueLogo: InternationalLogo},
+    ];
+
     const [teamSearch, setTeamSearch] = useState<string>('');
     const [searchSections, setSearchSections] = useState<TeamsSection[]>([]);
 
+    const getLeagueLogoFromDisplayName  = (displayName: string) => {
+    
+        const result = teamLeagueLogos.find((element) => element.displayName == displayName)
+        return result
+    }
 
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
@@ -114,9 +128,18 @@ const TeamsScreen = () => {
         if(data.length !== 0)
         {
             return (
-                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300 }}>{title}</Text>
+                <View style={{marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{paddingHorizontal: 10}}>
+                    <Image
+                        style={{resizeMode: 'contain',
+                            width: 20,
+                            height: 20,
+                            minHeight:20,
+                            minWidth: 20}}
+                        source={getLeagueLogoFromDisplayName(title)?.leagueLogo} />
                 </View>
+                <Text style={{fontSize: 13, color: 'grey', fontWeight: 600}}>{title.toUpperCase()}</Text>
+            </View>
             )
         }
         
@@ -136,7 +159,6 @@ const TeamsScreen = () => {
         
         return null
     }
-
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

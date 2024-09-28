@@ -56,6 +56,20 @@ const TeamResults = () => {
         { label: '2009/10', value: '2010' },
     ];
 
+    const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return (
+                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Events Found</Text>
+                </View>
+            )
+        }
+        
+        return null
+    }
+
 
     return(
         <View style={defaultStyles.container}>
@@ -75,6 +89,8 @@ const TeamResults = () => {
             }}
             onPressButton={handlePressFetchData}
             />
+
+            {notFoundHeader(teamEventsArray)}
 
             <FlatList
                 data={teamEventsArray}

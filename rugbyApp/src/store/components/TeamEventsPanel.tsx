@@ -23,11 +23,28 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
     if(teamEventArray === undefined) return
 
+    const notFoundHeader = (eventsArray: TeamEventStatsInfo[]) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return (
+                <View style={{ margin: 10 }}>
+                    <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'center' }}>No Events Found</Text>
+                </View>
+            )
+        }
+        
+        return null
+    }
+
+
     return (
         <View style={[teamEventsPanelStyles.container]}>
             <Text style={{color: colors.text}}>{panelTitle}</Text>
 
             <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>
+
+            {notFoundHeader(teamEventArray)}
 
             {teamEventArray.map((match, index) => {
                 return (

@@ -253,7 +253,7 @@ export const statsPanelStyles = StyleSheet.create({
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
-        fontSize: fontSize.base,
+        fontSize: 18,
         color: colors.text
     },
     teamInfoContainer:{
