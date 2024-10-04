@@ -17,9 +17,10 @@ export type TeamEventPanelProps = {
     leagueName: string | undefined,
     panelTitle: string,
     showWinLoss: boolean,
+    isLastItem: boolean,
 }
 
-export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle, showWinLoss}: TeamEventPanelProps) => {
+export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle, showWinLoss, isLastItem}: TeamEventPanelProps) => {
 
     if(teamEventArray === undefined) return
 
@@ -39,7 +40,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
 
     return (
-        <View style={[teamEventsPanelStyles.container]}>
+        <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 50: 0}]}>
             <Text style={{color: colors.text}}>{panelTitle}</Text>
 
             <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>

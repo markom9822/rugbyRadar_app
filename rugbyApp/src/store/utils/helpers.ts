@@ -1,3 +1,4 @@
+import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
 import { ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
@@ -135,6 +136,35 @@ export const getClosestWorldCupYear = (year: number) => {
 
     return year - remainder;
 }
+
+export const generateSeasonList = () =>{
+
+    const currentYear = new Date().getFullYear().valueOf();
+    const startYear = "2009"
+
+    var seasonArray: SeasonDateInfo[] = []
+
+    for (let index = 0; index < Number(currentYear) - Number(startYear) + 1; index++) {
+
+        const year = Number(currentYear) - (index-1);
+        const lastYear  = year - 1;
+
+        let newItem = {
+            label: lastYear.toString() + "/" + year.toString().substring(year.toString().length - 2),
+            value: year.toString()
+        }
+
+        seasonArray.push(newItem)
+    }
+
+    console.info(seasonArray)
+
+    return (
+        seasonArray
+    )
+
+}
+
 
 export const isLastItemInSectionList = (index: number, section: any, globalData: any) => {
     return (index === section.data.length - 1 && section.title === globalData.at(-1).title)

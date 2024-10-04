@@ -57,6 +57,7 @@ export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentY
     if(sortedArray == undefined) return
 
     return (
+        <View style={{marginBottom: 50}}>
         <View style={{marginVertical: 10, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
             paddingHorizontal: 5, paddingVertical: 10}}>
             <View style={{paddingBottom: 4, marginHorizontal: 5}}>
@@ -109,6 +110,7 @@ export const TeamPlayerStatsPanel = ({playerStatsArray, teamLeagueName, currentY
                 );
             })}
             </View>
+        </View>
         </View>
     )
 }

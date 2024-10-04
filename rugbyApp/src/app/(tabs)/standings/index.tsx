@@ -4,7 +4,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { getLeagueCode } from "@/store/utils/helpers"
+import { generateSeasonList, getLeagueCode } from "@/store/utils/helpers"
 import { getAllStandingsData } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
@@ -65,33 +65,6 @@ export type SeasonDateInfo = {
     value: string
 }
 
-export const generateSeasonList = () =>{
-
-    const currentYear = new Date().getFullYear().valueOf();
-    const startYear = "2009"
-
-    var seasonArray: SeasonDateInfo[] = []
-
-    for (let index = 0; index < Number(currentYear) - Number(startYear) + 1; index++) {
-
-        const year = Number(currentYear) - (index-1);
-        const lastYear  = year - 1;
-
-        let newItem = {
-            label: lastYear.toString() + "/" + year.toString().substring(year.toString().length - 2),
-            value: year.toString()
-        }
-
-        seasonArray.push(newItem)
-    }
-
-    console.info(seasonArray)
-
-    return (
-        seasonArray
-    )
-
-}
 
 const StandingsScreen = () => {
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);

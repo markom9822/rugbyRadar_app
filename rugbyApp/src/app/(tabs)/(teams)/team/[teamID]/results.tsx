@@ -2,11 +2,12 @@ import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image } from "react-native";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { getAnyTeamInfoFromID, getAnyTeamInfoFromName, getLeagueCodeFromDisplayName, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
+import { generateSeasonList, getAnyTeamInfoFromName } from "@/store/utils/helpers";
 import { colors, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown";
 import { getTeamSeasonFixtures } from "@/store/utils/getTeamSeasonFixtures";
+import { SeasonDateInfo } from "@/app/(tabs)/standings";
 
 export type TeamEvent = {
     eventDate: string,
@@ -22,6 +23,7 @@ const TeamResults = () => {
 
     const [teamEventsArray, setTeamEventsArray] = useState<TeamEvent[] | undefined>();
     const [seasonYear, setSeasonYear] = useState<string>('');
+    const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
 
     const {teamID} = useGlobalSearchParams();
 
@@ -37,25 +39,6 @@ const TeamResults = () => {
         setTeamEventsArray([])
     }
 
-    const seasonRegData = [
-        { label: '2024/25', value: '2025' },
-        { label: '2023/24', value: '2024' },
-        { label: '2022/23', value: '2023' },
-        { label: '2021/22', value: '2022' },
-        { label: '2020/21', value: '2021' },
-        { label: '2019/20', value: '2020' },
-        { label: '2018/19', value: '2019' },
-        { label: '2017/18', value: '2018' },
-        { label: '2016/17', value: '2017' },
-        { label: '2015/16', value: '2016' },
-        { label: '2014/15', value: '2015' },
-        { label: '2013/14', value: '2014' },
-        { label: '2012/13', value: '2013' },
-        { label: '2011/12', value: '2012' },
-        { label: '2010/11', value: '2011' },
-        { label: '2009/10', value: '2010' },
-    ];
-
     const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
 
         if(eventsArray == undefined || eventsArray.length == 0)
@@ -70,13 +53,25 @@ const TeamResults = () => {
         return null
     }
 
+    const findLastItem = (eventsArray: TeamEvent[] | undefined, index: number) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return index === eventsArray.length - 1;
+        }
+
+    }
 
     return(
         <View style={defaultStyles.container}>
 
             <CustomSelectDropdown
                 placeholder="Select Season"
-                data={seasonRegData}
+                data={seasonDates}
                 onChangeSelection={handleOnChangeSeason}
                 isDisabled={false}
                 value={seasonYear}
@@ -103,14 +98,11 @@ const TeamResults = () => {
                     awayTeamScore={item.awayTeamScore}
                     leagueName={item.leagueName}
                     eventState={item.eventState}
+                    isLastItem={findLastItem(teamEventsArray, index)}
                         />}
             />
-
-
         </View>
     )
-
-
 }
 
 type TeamResultsPanelProps = {
@@ -121,9 +113,10 @@ type TeamResultsPanelProps = {
     awayTeamScore: string,
     leagueName: string,
     eventState: string,
+    isLastItem: boolean,
 }
 
-export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTeamScore, awayTeamScore, leagueName, eventState}: TeamResultsPanelProps) => {
+export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTeamScore, awayTeamScore, leagueName, eventState, isLastItem}: TeamResultsPanelProps) => {
 
     const formattedDate  = new Date(eventDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'})
     const eventTime = new Date(eventDate).toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
@@ -159,6 +152,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     }
 
     return (
+        <View style={{marginBottom: (isLastItem) ? 50: 0}}>
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
          marginVertical: 5, borderColor: 'lightgrey', borderWidth: 1, backgroundColor: panelBackgroundColour, marginHorizontal: 4, borderRadius: 4}}>
 
@@ -205,6 +199,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
 
             <Text style={{fontSize: fontSize.xs, color: 'lightgrey'}}>{leagueName}</Text>
 
+        </View>
         </View>  
     )
 }

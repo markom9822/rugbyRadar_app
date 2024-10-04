@@ -4,7 +4,6 @@ import { useState } from "react";
 import { colors, fontSize } from "@/constants/tokens";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
-import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase";
 import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 
@@ -182,6 +181,19 @@ const Lineups = () => {
     const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.3')
     const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.9')
 
+    const findLastItem = (lineupArray: AllLineUpsInfo[], index: number) => {
+
+        if(lineupArray == undefined || lineupArray.length == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return index === lineupArray.length - 1;
+        }
+
+    }
+
     return(
         <View style={defaultStyles.container}>
             <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
@@ -235,7 +247,9 @@ const Lineups = () => {
             awayteamPlayerPosition={item.awayteamPlayerPosition}
             awayteamPlayerNum={item.awayteamPlayerNum}
             isAwayPlayerCaptain={item.isAwayPlayerCaptain}
-            teamColour={(selectedTeam === "home") ? homeTeamInfo.colour: awayTeamInfo.colour}/>}
+            teamColour={(selectedTeam === "home") ? homeTeamInfo.colour: awayTeamInfo.colour}
+            isLastItem={findLastItem(allLineupsArray, index)}
+            />}
             />
 
         </View>
@@ -253,11 +267,12 @@ type LineupPlayerPanelProps = {
     awayteamPlayerNum: string,
     isAwayPlayerCaptain: boolean,
     teamColour: string,
+    isLastItem: boolean,
 }
 
 
 export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum, isHomePlayerCaptain,
-     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain, teamColour }: LineupPlayerPanelProps) => {
+     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem }: LineupPlayerPanelProps) => {
 
     var playerName = ''
     var playerNumber = ''
@@ -287,7 +302,7 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
     }
     else {
         return (
-            <View style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 4, borderBottomColor: 'grey', borderBottomWidth: 1}]}>
+            <View style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 4, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 50: 0}]}>
                 <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 12, color: colors.text, width: "8%", textAlign: 'right'}}>
                     {playerNumber}
                 </Text>

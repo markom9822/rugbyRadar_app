@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image, ScrollView, FlatList } from "react-native"
+import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image, ScrollView} from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens";
-import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
+import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
 import { useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
@@ -153,6 +153,7 @@ const MatchSummary = () => {
                 leagueName={leagueName}
                 panelTitle="Head to Head Matches"
                 showWinLoss={false}
+                isLastItem={false}
                 />
 
                 <TeamEventsPanel 
@@ -161,6 +162,7 @@ const MatchSummary = () => {
                 leagueName={leagueName}
                 panelTitle={`${mainTeamName} Form`}
                 showWinLoss={true}
+                isLastItem={false}
                 />
 
                 <TeamEventsPanel 
@@ -169,6 +171,7 @@ const MatchSummary = () => {
                 leagueName={leagueName}
                 panelTitle={`${opponentTeamName} Form`}
                 showWinLoss={true}
+                isLastItem={true}
                 />
 
             </ScrollView>
