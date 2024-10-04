@@ -21,7 +21,7 @@ const TabsNavigation = () => {
                 paddingTop: 8,
                 borderTopRightRadius: 20,
                 borderTopLeftRadius: 20,
-                backgroundColor: 'grey',
+                backgroundColor: 'rgba(140,140,140,0.95)',
                 position: 'absolute',
                 left: 0,
                 bottom: 0,

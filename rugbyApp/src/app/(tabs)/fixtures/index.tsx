@@ -1,5 +1,5 @@
 import { defaultStyles } from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl } from "react-native"
 import { colors, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -34,6 +34,7 @@ const FixturesScreen = () => {
 
     const [matchesSections, setMatchesSections] = useState<FixturesSection[]>([]);
     const [currentIndex, setCurrentIndex] = useState<Number | null>(null);
+    const [refreshing, setRefreshing] = useState(false);
 
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [selectedDate, setDate] = useState(new Date())
@@ -211,6 +212,9 @@ const FixturesScreen = () => {
                 <Text style={{fontSize: 13, color: 'grey', fontWeight: 600}}>{title.toUpperCase()}</Text>
             </View>
         )}
+        refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData}/>
+        }
         />
 
     </View>
