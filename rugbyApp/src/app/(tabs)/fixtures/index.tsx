@@ -136,6 +136,26 @@ const FixturesScreen = () => {
         return null
     }
 
+    const dateHeader = (eventsArray: FixturesSection[]) => {
+
+        const dateString = new Date(selectedDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'})
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return null
+        }
+        else
+        {
+            return (
+                <View style={{ marginBottom: 2, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'left' }}>{dateString}</Text>
+                </View>
+            )
+
+        }
+
+    }
+
     return <View style={defaultStyles.container}>
 
         <LeagueSelectDropdown
@@ -156,7 +176,7 @@ const FixturesScreen = () => {
 
         <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={handlePressDatePicker} 
-            style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 5, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
+            style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 4, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
                 <View style={{paddingHorizontal: 5}}>
                     <MaterialIcons name="date-range" size={20} color={colors.icon} />
                 </View>
@@ -172,6 +192,8 @@ const FixturesScreen = () => {
                     />
                 )
             }
+
+            {dateHeader(matchesSections)}
         </View>
 
         {notFoundHeader(matchesSections)}
