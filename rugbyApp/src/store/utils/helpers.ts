@@ -6,6 +6,7 @@ import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
+import { BEINSportsLogo, DiscoveryPlusLogo, PremierSportsLogo, RTELogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
@@ -122,6 +123,23 @@ export const getAnyTeamInfoFromID = (id: string) => {
     {
         return defaultTeam
     }
+}
+
+export const broadcasters = [
+    { name: 'RTE', logo: RTELogo},
+    { name: 'S4C', logo: S4CLogo},
+    { name: 'Prem', logo: PremierSportsLogo},
+    { name: 'DISC', logo: DiscoveryPlusLogo},
+    { name: 'bein', logo: BEINSportsLogo},
+    { name: 'TG4', logo: TG4Logo},
+    { name: 'TNT', logo: TNTSportsLogo},
+];
+
+
+export const getBroadcasterLogo = (broadcasterName: string) => {
+
+    const result = broadcasters.find((element) => element.name == broadcasterName)
+    return result?.logo
 }
 
 export const getClosestWorldCupYear = (year: number) => {

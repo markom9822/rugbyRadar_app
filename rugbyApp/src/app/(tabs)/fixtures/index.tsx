@@ -151,7 +151,6 @@ const FixturesScreen = () => {
         // use separate API for URC
         if(leagueName == 'urc')
         {
-
             const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId=1068&images=true&season='+selectedDate.getFullYear()+'01'
             const seasonsAllMatches = await fetch( apiStringAll, {
                 headers: {

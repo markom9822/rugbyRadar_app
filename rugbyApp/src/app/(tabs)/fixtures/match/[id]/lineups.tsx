@@ -5,7 +5,7 @@ import { colors, fontSize } from "@/constants/tokens";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
 import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
-import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 
 
 export type LineUpInfo = {
@@ -78,39 +78,19 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
     )
 }
 
-export const getLineupRugbyViz = (matchDetails: any, rosterIndex: number) => {
+export const getLineupRugbyViz = (matchDetails: any, isHome: boolean) => {
 
-    if(matchDetails.rosters[rosterIndex].roster === undefined)
-    {
-        var blankArray = [];
-
-        for (let index = 0; index < 23; index++) {
-            let blankLineupInfo = {
-                teamPlayer: '-',
-                teamPlayerPosition: '-',
-                teamPlayerNum: index + 1,
-                isPlayerCaptain: false,
-                };
-    
-            blankArray.push(blankLineupInfo)
-        }
-
-        return(
-            blankArray
-        )
-    } 
-
-    const rosterLength = matchDetails.rosters[rosterIndex].roster.length;
+    const targetRoster = isHome ? matchDetails.data.homeTeam.players : matchDetails.data.awayTeam.players
 
     var newArray = [];
 
-    for (let index = 0; index < rosterLength; index++) {
+    for (let index = 0; index < targetRoster.length; index++) {
 
-        const playerName = matchDetails.rosters[rosterIndex].roster[index].athlete.displayName;
-        const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");
+        const playerName = targetRoster[index].name;
+        const playerNumber = targetRoster[index].positionId;
 
-        const playerPosition = matchDetails.rosters[rosterIndex].roster[index].position.displayName;
-        const isPlayerCaptain = matchDetails.rosters[rosterIndex].roster[index].captain;
+        const playerPosition = targetRoster[index].position;
+        const isPlayerCaptain = targetRoster[index].captain;
 
         let newLineupInfo = {
             teamPlayer: playerName,
@@ -201,12 +181,12 @@ const Lineups = () => {
 
             const matchDetails = await fetch(apiString,).then((res) => res.json())
             const homeTeam = matchDetails.data.homeTeam.shortName;
-            const awayTeam = matchDetails.rosters[1].team.displayName;
+            const awayTeam = matchDetails.data.awayTeam.shortName;
             setHomeTeamName(homeTeam)
             setAwayTeamName(awayTeam)
 
-            const homeLineup = getLineup(matchDetails, 0)
-            const awayLineup = getLineup(matchDetails, 1)
+            const homeLineup = getLineupRugbyViz(matchDetails, true)
+            const awayLineup = getLineupRugbyViz(matchDetails, false)
 
             console.info('Home Team Lineup')
             console.info(homeLineup)
@@ -255,7 +235,7 @@ const Lineups = () => {
         setAllLineupsArray(combinedArray)
     }
 
-    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeamName, awayTeamName);
+    const homeAwayInfo = getAnyHomeAwayTeamInfo(homeTeamName, awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 

@@ -1,10 +1,10 @@
 import { colors, fontSize } from "@/constants/tokens";
 import { Link, useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
-import { getLeagueName } from "@/store/utils/helpers";
+import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 
 export type MatchInfo = {
@@ -21,6 +21,7 @@ export type MatchInfo = {
 
     matchVenue: string,
     matchAttendance: string,
+    matchBroadcasters: string[]
 }
 
 export const getMatchInfo = (matchDetails: any) => {
@@ -47,7 +48,7 @@ export const getMatchInfo = (matchDetails: any) => {
     
                 matchVenue: matchVenue,
                 matchAttendance: matchAttendance,
-            
+                matchBroadcasters: []
             }
         ];
 
@@ -83,6 +84,7 @@ export const getMatchInfo = (matchDetails: any) => {
 
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
+            matchBroadcasters: []
         
         }
     ];
@@ -98,6 +100,7 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
     const awayTeamName = matchDetails.data.awayTeam.shortName;
     const matchVenue = matchDetails.data.venue.name;
     const matchAttendance = matchDetails.data.attendance;
+    const matchBroadcasters = matchDetails.data.broadcasters;
 
     /*if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statistics.length == 0 )
     {
@@ -152,7 +155,7 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
 
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
-        
+            matchBroadcasters: matchBroadcasters,
         }
     ];
 
@@ -164,7 +167,6 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
 const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
-
 
     const {id} = useLocalSearchParams();
     const eventID = new String(id).substring(0,6);
@@ -206,10 +208,12 @@ const MatchSummary = () => {
             onPressButton={handlePressFetchData}
             />
 
-            <GameInfoPanel 
-            matchInfoArray={matchInfoArray}
-            matchID={id}
-             />
+            <ScrollView>
+                <GameInfoPanel
+                    matchInfoArray={matchInfoArray}
+                    matchID={id}
+                />
+            </ScrollView>
 
         </View>
     )
@@ -223,8 +227,6 @@ type GameInfoPanelProps = {
 export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) => {
 
     if(matchInfoArray == undefined) return
-
-    console.info(matchInfoArray)
 
     const homeAwayInfo = getAnyHomeAwayTeamInfo(matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -249,8 +251,23 @@ export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) =>
                         <Text style={{color: colors.text}}>Attendance: {matchAttendance}</Text>
                     </View>
                 </View>
+            
+            <Text style={{fontWeight: 500, color: colors.text}}>Match Broadcasters</Text>
+                <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
+                    {matchInfoArray[0].matchBroadcasters.map((item, index) => {
+                        return (
+                            <BroadcasterItem
+                                key={index}
+                                broadcasterName={item}
+                            />
+                        );
+                    })}
+                </View>
+                </View>
+
             <Text style={{fontWeight: 500, color: colors.text}}>Match Stats</Text>
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 50}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>
@@ -310,6 +327,29 @@ export const SummaryStatsPanel = ({homeStat, statTitle, awayStat}: SummaryStatsP
                 <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.altBackground}]}>{statTitle}</Text>
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
             </View>
+        </View>
+    )
+}
+
+type BroadcasterItemProps = {
+	broadcasterName: string
+}
+
+export const BroadcasterItem = ({broadcasterName}: BroadcasterItemProps ) => {
+
+    const logo = getBroadcasterLogo(broadcasterName)
+
+    if(logo === undefined)
+    {
+        return (
+            <></>
+        )
+    }
+    
+    return (
+        <View style={{paddingHorizontal: 4}}>
+            <Image style={[{resizeMode: 'contain',width: 35,height: 35,minHeight: 35, minWidth: 35}]} 
+                source={logo}/>
         </View>
     )
 }
