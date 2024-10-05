@@ -1,5 +1,6 @@
 import { colors, fontSize } from "@/constants/tokens"
 import { View, Text, Image} from "react-native"
+import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens"
 
 export type StandingInfo = {
     isHeader: boolean
@@ -47,6 +48,8 @@ export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamN
                     index={index}
                     isCurrentTeam={currentTeamName == match.teamName}
                     isLastItem={index == standingsArray.length-1}
+                    isHeader={match.isHeader}
+                    teamPool={match.teamPool}
                     />
                 );
             })}
@@ -63,22 +66,45 @@ type TeamStandingItemProps = {
     index: number
     isCurrentTeam: boolean
     isLastItem: boolean
+    isHeader: boolean
+    teamPool: string
 }
 
-export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, index, isCurrentTeam, isLastItem}: TeamStandingItemProps) => {
+export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, index, isCurrentTeam, isLastItem, isHeader, teamPool}: TeamStandingItemProps) => {
 
     const ranking = index + 1;
     const textWeight = (isCurrentTeam) ? ('600'):('300');
 
     const itemBottomBorderColour = (isLastItem) ? ('grey'):('lightgrey');
 
+    const standingsRender = (isHeaderItem: boolean) => {
+
+        if(isHeaderItem)
+        {
+            return (
+                <View style={{width: "100%", flexDirection: 'row', paddingTop: 8, paddingLeft: 3, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
+                    <Text style={[{fontWeight: 600, color: 'lightgrey', fontSize: 11}]}>{teamPool.toUpperCase()}</Text>
+                </View>
+            )
+        }
+        else
+        {
+            return (
+                <View style={{ flexDirection: 'row', paddingVertical: 2, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
+                    <Text style={{ width: "10%", fontWeight: textWeight, fontSize: 13, color: colors.text }}>{ranking}</Text>
+                    <Text style={{ width: "40%", fontWeight: textWeight, fontSize: 13, color: colors.text }}>{teamName}</Text>
+                    <Text style={{ width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text }}>{gamesPlayed}</Text>
+                    <Text style={{ width: "20%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text }}>{pointsDiff}</Text>
+                    <Text style={{ width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text }}>{points}</Text>
+                </View>
+            )
+        }
+
+    }
+
     return (
-        <View style={{flexDirection: 'row', paddingVertical: 2, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
-            <Text style={{width: "10%", fontWeight: textWeight, fontSize: 13, color: colors.text}}>{ranking}</Text>
-            <Text style={{width: "40%", fontWeight: textWeight, fontSize: 13, color: colors.text}}>{teamName}</Text>
-            <Text style={{width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text}}>{gamesPlayed}</Text>
-            <Text style={{width: "20%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text}}>{pointsDiff}</Text>
-            <Text style={{width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text}}>{points}</Text>
-        </View>
+        <>
+        {standingsRender(isHeader)}
+        </>
     )
 }

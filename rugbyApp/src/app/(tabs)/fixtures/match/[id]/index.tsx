@@ -3,7 +3,7 @@ import { Link, useLocalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
-import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 
@@ -92,6 +92,75 @@ export const getMatchInfo = (matchDetails: any) => {
     )
 }
 
+export const getMatchInfoRugbyViz = (matchDetails: any) => {
+
+    const homeTeamName = matchDetails.data.homeTeam.shortName;
+    const awayTeamName = matchDetails.data.awayTeam.shortName;
+    const matchVenue = matchDetails.data.venue.name;
+    const matchAttendance = matchDetails.data.attendance;
+
+    /*if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statistics.length == 0 )
+    {
+        const blankArray = [
+            {
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamPossession: '0',
+                awayTeamPossession: '0',
+                homeTeamTries: '-',
+                awayTeamTries: '-',
+                homeTeamTackles: '-',
+                awayTeamTackles: '-',
+                homeTeamMetres: '-',
+                awayTeamMetres: '-',
+    
+                matchVenue: matchVenue,
+                matchAttendance: matchAttendance,
+            
+            }
+        ];
+
+        return blankArray
+
+    }*/
+
+    const homeTeamPossession = matchDetails.data.homeTeam.stats.possession;
+    const awayTeamPossession = matchDetails.data.awayTeam.stats.possession;
+
+    const homeTeamTries = matchDetails.data.homeTeam.stats.tries;
+    const awayTeamTries = matchDetails.data.awayTeam.stats.tries;
+
+    const homeTeamTackles = matchDetails.data.homeTeam.stats.tackles;
+    const awayTeamTackles = matchDetails.data.awayTeam.stats.tackles;
+
+    const homeTeamMetres =  matchDetails.data.homeTeam.stats.metres;
+    const awayTeamMetres =  matchDetails.data.homeTeam.stats.metres;
+
+
+    const newArray = [
+        {
+            homeTeamName: homeTeamName,
+            awayTeamName: awayTeamName,
+            homeTeamPossession: homeTeamPossession,
+            awayTeamPossession: awayTeamPossession,
+            homeTeamTries: homeTeamTries,
+            awayTeamTries: awayTeamTries,
+            homeTeamTackles: homeTeamTackles,
+            awayTeamTackles: awayTeamTackles,
+            homeTeamMetres: homeTeamMetres,
+            awayTeamMetres: awayTeamMetres,
+
+            matchVenue: matchVenue,
+            matchAttendance: matchAttendance,
+        
+        }
+    ];
+
+    return(
+        newArray
+    )
+}
+
 const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
@@ -105,6 +174,17 @@ const MatchSummary = () => {
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
+
+        // handle differently - separate API
+        if(leagueID === "_RugbyViz")
+        {
+            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/'+ eventID +'?provider=rugbyviz';
+
+            const matchDetails = await fetch( apiString,).then((res) => res.json())
+            const matchInfo = getMatchInfoRugbyViz(matchDetails)
+            setMatchInfoArray(matchInfo)
+            return;
+        }
 
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
 
@@ -129,7 +209,7 @@ const MatchSummary = () => {
             <GameInfoPanel 
             matchInfoArray={matchInfoArray}
             matchID={id}
-            leagueName={leagueName} />
+             />
 
         </View>
     )
@@ -138,14 +218,15 @@ const MatchSummary = () => {
 type GameInfoPanelProps = {
 	matchInfoArray: MatchInfo[] | undefined,
     matchID: string | string[] | undefined,
-    leagueName: string | undefined,
 }
 
-export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPanelProps) => {
+export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) => {
 
     if(matchInfoArray == undefined) return
 
-    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
+    console.info(matchInfoArray)
+
+    const homeAwayInfo = getAnyHomeAwayTeamInfo(matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 

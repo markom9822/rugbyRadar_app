@@ -83,7 +83,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                             <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text }]}>{homeScore}</Text>
                             <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text}]}>{awayScore}</Text>
                         </View>
-                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{eventTime}</Text>
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{eventTime}'</Text>
                 </View> 
             )
         }
@@ -105,12 +105,22 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         }
     }
 
+    var linkID
+    if(leagueDisplayName === "United Rugby Championship")
+    {
+        linkID = matchID + "_RugbyViz"
+    }
+    else
+    {
+        linkID = matchID;
+    }
+
     return(
         <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 50: 0}]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
                  {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
 
-                <Link href={`/(tabs)/fixtures/match/${matchID}`} asChild>
+                <Link href={`/(tabs)/fixtures/match/${linkID}`} asChild>
                 <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
                     onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
 

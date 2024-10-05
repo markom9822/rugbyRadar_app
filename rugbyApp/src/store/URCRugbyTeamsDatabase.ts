@@ -91,7 +91,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Glasgow Warriors',
+    displayName: 'Glasgow',
     abbreviation: 'GLASG',
     logo: GlasgowLogo,
     altLogo: GlasgowAltLogo,
@@ -103,7 +103,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Cardiff Blues',
+    displayName: 'Cardiff',
     abbreviation: 'CDB',
     logo: CardiffLogo,
     altLogo: CardiffAltLogo,
@@ -139,7 +139,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Dragons',
+    displayName: 'Dragons RFC',
     abbreviation: 'DRA',
     logo: DragonsLogo,
     altLogo: DragonsAltLogo,
@@ -151,7 +151,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Benetton Treviso',
+    displayName: 'Benetton',
     abbreviation: 'TRE',
     logo: BenettonLogo,
     altLogo: BenettonAltLogo,
