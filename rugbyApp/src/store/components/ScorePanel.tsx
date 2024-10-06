@@ -108,7 +108,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     var linkID
     if(isLeagueInRugbyViz(leagueDisplayName))
     {
-        linkID = matchID + "_RugbyViz"
+        linkID = matchID + leagueName + "_RugbyViz"
     }
     else
     {

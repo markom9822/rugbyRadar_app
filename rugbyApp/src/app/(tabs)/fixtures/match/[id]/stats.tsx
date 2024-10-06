@@ -24,19 +24,19 @@ const MatchSummary = () => {
 
     const [mainTeamName, setMainTeamName] = useState<string | undefined>();
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
+    const [leagueName, setLeagueName] = useState<string>('');
 
 
     const {id} = useGlobalSearchParams();
 
     const eventID = new String(id).substring(0,6);
     const leagueID = new String(id).slice(6)
-    const leagueName = getLeagueName(leagueID);
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
 
         // handle differently - separate API
-        if (leagueID === "_RugbyViz") {
+        if(leagueID.indexOf("_RugbyViz") !== -1){
 
             const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
             const matchStats = await fetch(apiString,).then((res) => res.json())
@@ -57,6 +57,7 @@ const MatchSummary = () => {
             setMainTeamFormStatsArray(mainTeamFormStats)
             setOpponentTeamFormStatsArray(opponentTeamFormStats)
             setKeyEventsArray(keyEvents)
+            setLeagueName(leagueID.replace("_RugbyViz", ""))
             return;
         }
 
@@ -64,6 +65,7 @@ const MatchSummary = () => {
         const statsDetails = await fetch( apiString,).then((res) => res.json())
         setMainTeamName(statsDetails.boxscore.teams[0].team.displayName)
         setOpponentTeamName(statsDetails.boxscore.teams[1].team.displayName)
+        setLeagueName(getLeagueName(leagueID));
 
         const matchStats = getFullMatchStats(statsDetails)
         const headToHeadStats = getHeadToHeadStats(statsDetails)
@@ -82,6 +84,7 @@ const MatchSummary = () => {
         <View style={defaultStyles.container}>
             <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
             <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
+            <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -161,7 +164,7 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
     if(homeTeam === undefined) return
     if(awayTeam === undefined) return
 
-    const homeAwayTeamInfo = getAnyHomeAwayTeamInfo(homeTeam, awayTeam)
+    const homeAwayTeamInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam)
 
     if(keyEventArray.length == 0)
     {

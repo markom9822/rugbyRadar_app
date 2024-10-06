@@ -95,6 +95,8 @@ export const getKeyEventsRugbyViz = (matchStats: any) => {
     var keyEventsArray = [];
 
     const keyEvents= matchStats.data.events;
+    if(keyEvents == null) return []
+
     const homeTeamID = matchStats.data.homeTeam.id;
     const awayTeamID = matchStats.data.awayTeam.id;
 

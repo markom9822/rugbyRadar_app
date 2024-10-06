@@ -3,6 +3,14 @@ import { PremRugbyTeams } from "./PremiershipRubyTeamsDatabase";
 import { Top14RugbyTeams } from "./Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "./URCRugbyTeamsDatabase";
 
+export const rugbyVizTop14Names = [
+  { databaseName: 'La Rochelle', rugbyVizName: 'Stade Rochelais',},
+  { databaseName: 'Toulon', rugbyVizName: 'RC Toulon',},
+  { databaseName: 'Bordeaux Begles', rugbyVizName: 'Bordeaux-Bègles',},
+  { databaseName: 'Bayonne', rugbyVizName: 'Aviron Bayonnais',},
+  { databaseName: 'Pau', rugbyVizName: 'Section Paloise',},
+  { databaseName: 'Montpellier Herault', rugbyVizName: 'Montpellier Hérault',},
+];
 
 export const getChampionsCupTeamInfoFromName = (name: string) => {
 
@@ -20,9 +28,20 @@ export const getChampionsCupTeamInfoFromName = (name: string) => {
     }
 
     const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
+    var searchName = '';
+
+    const top14NameResult = rugbyVizTop14Names.find((element) => element.rugbyVizName == name)
+    if(top14NameResult !== undefined)
+    {
+        searchName = top14NameResult.databaseName;
+    }
+    else
+    {
+        searchName = name;
+    }
 
   
-    const match = champsCupTeamsArray.find((item) => item.displayName === name)
+    const match = champsCupTeamsArray.find((item) => item.displayName === searchName)
     if(match !== undefined)
     {
         return match

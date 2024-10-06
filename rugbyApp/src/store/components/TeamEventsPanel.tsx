@@ -83,7 +83,7 @@ type TeamEventsItemProps = {
 
 export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate, showWinLoss}: TeamEventsItemProps) => {
 
-    const homeAwayInfo = getAnyHomeAwayTeamInfo(homeTeam, awayTeam);
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 

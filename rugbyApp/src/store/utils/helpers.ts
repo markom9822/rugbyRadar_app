@@ -22,7 +22,7 @@ export const leagueCodes = [
     { value: 'rugbyWorldCup', code: "164205",
          displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
     { value: 'championsCup', code: "271937",
-         displayName: 'European Rugby Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
+         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
     { value: 'challengeCup', code: "272073",
          displayName: '', leagueLogo: null, leagueAltLogo: null},
     { value: 'sixNations', code: "180659",
@@ -38,10 +38,8 @@ export const rugbyVizleagueCodes = [
          displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo},
     { value: 'prem', code: "1011",
          displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
-    { value: 'top14', code: "1002",
-         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
     { value: 'championsCup', code: "1008",
-         displayName: 'European Rugby Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
+         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
     { value: 'challengeCup', code: "1026",
          displayName: '', leagueLogo: null, leagueAltLogo: null},
 ];
@@ -50,6 +48,16 @@ export const getRugbyVizLeagueCode = (name: string) => {
 
     const result = rugbyVizleagueCodes.find((element) => element.value == name)
     return result?.code.toString()
+}
+
+export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
+
+    const result = rugbyVizleagueCodes.find((element) => element.code == code)
+    if(result == undefined)
+    {
+        return ''
+    }
+    return result.displayName.toString()
 }
 
 export const isLeagueInRugbyViz = (displayName: string) => {
@@ -73,7 +81,15 @@ export const getLeagueCodeFromDisplayName = (displayName: string) => {
 export const getLeagueName = (leagueCode: string) => {
     
     const result = leagueCodes.find((element) => element.code == leagueCode)
-    return result?.value.toString()
+    if(result !== undefined)
+    {
+        return result.value.toString()
+    }
+    else
+    {
+        return ''
+    }
+    
 }
 
 export const getLeagueNameFromDisplayName = (displayName: string) => {

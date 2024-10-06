@@ -4,7 +4,7 @@ import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet, ScrollView 
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
-import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
+import { getBroadcasterLogo, getLeagueDisplayNameFromCode, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 
 export type MatchInfo = {
@@ -94,6 +94,20 @@ export const getMatchInfo = (matchDetails: any) => {
     )
 }
 
+export const handleGetMatchStat = (stat: any) => {
+
+    if(stat == null)
+    {
+        return '-'
+    }
+    else
+    {
+        return stat
+    }
+
+
+}
+
 export const getMatchInfoRugbyViz = (matchDetails: any) => {
 
     const homeTeamName = matchDetails.data.homeTeam.shortName;
@@ -102,42 +116,17 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
     const matchAttendance = matchDetails.data.attendance;
     const matchBroadcasters = matchDetails.data.broadcasters;
 
-    /*if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statistics.length == 0 )
-    {
-        const blankArray = [
-            {
-                homeTeamName: homeTeamName,
-                awayTeamName: awayTeamName,
-                homeTeamPossession: '0',
-                awayTeamPossession: '0',
-                homeTeamTries: '-',
-                awayTeamTries: '-',
-                homeTeamTackles: '-',
-                awayTeamTackles: '-',
-                homeTeamMetres: '-',
-                awayTeamMetres: '-',
-    
-                matchVenue: matchVenue,
-                matchAttendance: matchAttendance,
-            
-            }
-        ];
+    const homeTeamPossession = handleGetMatchStat(matchDetails.data.homeTeam.stats?.possession);
+    const awayTeamPossession = handleGetMatchStat(matchDetails.data.awayTeam.stats?.possession);
 
-        return blankArray
+    const homeTeamTries = handleGetMatchStat(matchDetails.data.homeTeam.stats?.tries);
+    const awayTeamTries = handleGetMatchStat(matchDetails.data.awayTeam.stats?.tries);
 
-    }*/
+    const homeTeamTackles = handleGetMatchStat(matchDetails.data.homeTeam.stats?.tackles);
+    const awayTeamTackles = handleGetMatchStat(matchDetails.data.awayTeam.stats?.tackles);
 
-    const homeTeamPossession = matchDetails.data.homeTeam.stats.possession;
-    const awayTeamPossession = matchDetails.data.awayTeam.stats.possession;
-
-    const homeTeamTries = matchDetails.data.homeTeam.stats.tries;
-    const awayTeamTries = matchDetails.data.awayTeam.stats.tries;
-
-    const homeTeamTackles = matchDetails.data.homeTeam.stats.tackles;
-    const awayTeamTackles = matchDetails.data.awayTeam.stats.tackles;
-
-    const homeTeamMetres =  matchDetails.data.homeTeam.stats.metres;
-    const awayTeamMetres =  matchDetails.data.homeTeam.stats.metres;
+    const homeTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
+    const awayTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
 
 
     const newArray = [
@@ -167,24 +156,24 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
 const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
+    const [leagueName, setLeagueName] = useState<string>('');
 
     const {id} = useLocalSearchParams();
     const eventID = new String(id).substring(0,6);
     const leagueID = new String(id).slice(6)
-    const leagueName = getLeagueName(leagueID);
-
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
 
         // handle differently - separate API
-        if(leagueID === "_RugbyViz")
+        if(leagueID.indexOf("_RugbyViz") !== -1)
         {
             const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/'+ eventID +'?provider=rugbyviz';
 
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = getMatchInfoRugbyViz(matchDetails)
             setMatchInfoArray(matchInfo)
+            setLeagueName(leagueID.replace("_RugbyViz", ""))
             return;
         }
 
@@ -193,12 +182,14 @@ const MatchSummary = () => {
         const matchDetails = await fetch( apiString,).then((res) => res.json())
         const matchInfo = getMatchInfo(matchDetails)
         setMatchInfoArray(matchInfo)
+        setLeagueName(getLeagueName(leagueID));
     }
 
     return(
         <View style={defaultStyles.container}>
             <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
             <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
+            <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -212,6 +203,7 @@ const MatchSummary = () => {
                 <GameInfoPanel
                     matchInfoArray={matchInfoArray}
                     matchID={id}
+                    leagueName={leagueName}
                 />
             </ScrollView>
 
@@ -222,13 +214,14 @@ const MatchSummary = () => {
 type GameInfoPanelProps = {
 	matchInfoArray: MatchInfo[] | undefined,
     matchID: string | string[] | undefined,
+    leagueName: string | undefined,
 }
 
-export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) => {
+export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPanelProps) => {
 
     if(matchInfoArray == undefined) return
 
-    const homeAwayInfo = getAnyHomeAwayTeamInfo(matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
@@ -236,6 +229,33 @@ export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) =>
     const awayPossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamPossession) * 100)).toString() + ' %';
 
     const matchAttendance = new Number(matchInfoArray[0].matchAttendance).toLocaleString();
+
+    const broadcasterRender = (matchInfoArray: MatchInfo[]) => {
+
+        if(matchInfoArray[0].matchBroadcasters == undefined || matchInfoArray[0].matchBroadcasters == null)
+        {
+            return (
+                <View>
+                    <Text>No Broadcasters Found</Text>
+                </View>
+            )
+        }
+        else
+        {
+            return (
+                matchInfoArray[0].matchBroadcasters.map((item, index) => {
+                    return (
+                        <BroadcasterItem
+                            key={index}
+                            broadcasterName={item}
+                        />
+                    );
+                })
+            )
+
+        }
+
+    }
 
     return (
         <View style={[summaryPanelStyles.container]}>
@@ -255,14 +275,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID}: GameInfoPanelProps) =>
             <Text style={{fontWeight: 500, color: colors.text}}>Match Broadcasters</Text>
                 <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
-                    {matchInfoArray[0].matchBroadcasters.map((item, index) => {
-                        return (
-                            <BroadcasterItem
-                                key={index}
-                                broadcasterName={item}
-                            />
-                        );
-                    })}
+                    {broadcasterRender(matchInfoArray)}
                 </View>
                 </View>
 

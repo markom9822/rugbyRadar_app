@@ -56,7 +56,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
 
     if(matchInfoArray == undefined) return
 
-    const homeAwayInfo = getAnyHomeAwayTeamInfo(matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 

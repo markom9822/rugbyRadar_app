@@ -1,4 +1,5 @@
-import { getLeagueCodeFromDisplayName } from "./helpers";
+import { FixturesSection } from "@/app/(tabs)/fixtures";
+import { getLeagueCodeFromDisplayName, getLeagueNameFromDisplayName, isLeagueInRugbyViz } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
 
@@ -66,7 +67,7 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
 
     const todaysScores = todaysAllMatches.scores;
 
-    var sections = []
+    var sections: FixturesSection[] = []
 
     for (let index = 0; index < todaysScores.length; index++) {
 
@@ -75,7 +76,10 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
         const leagueName = todaysScores[index].leagues[0].name;
         const leagueID = todaysScores[index].leagues[0].slug;
 
-        if (getLeagueCodeFromDisplayName(leagueName) !== undefined) {
+        // check if in ESPN API
+        const apiCheck = getLeagueCodeFromDisplayName(leagueName) !== undefined && !isLeagueInRugbyViz(leagueName)
+
+        if (apiCheck) {
             console.info(leagueName)
 
             const leagueEvents = todaysScores[index].events;

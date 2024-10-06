@@ -6,6 +6,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
 import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { TeamInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
 
 
 export type LineUpInfo = {
@@ -117,12 +118,12 @@ const Lineups = () => {
     const [selectedTeam, setSelectedTeam] = useState<string>('home');
 
     const [allLineupsArray, setAllLineupsArray] = useState<AllLineUpsInfo[]>([]);
+    const [leagueName, setLeagueName] = useState<string>('');
 
 
     const {id} = useGlobalSearchParams();
     const eventID = new String(id).substring(0,6);
     const leagueID = new String(id).slice(6);
-    const leagueName = getLeagueName(leagueID);
 
     const unique = <T extends { [key: string]: unknown }>(arr: T[], key: string): T[] => [   ...new Map(arr.map((item: T) => [item[key], item])).values() ];
 
@@ -175,7 +176,7 @@ const Lineups = () => {
         console.info("Pressed Fetch Data")
 
         // handle differently - separate API
-        if(leagueID === "_RugbyViz")
+        if(leagueID.indexOf("_RugbyViz") !== -1)
         {
             const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
 
@@ -184,6 +185,7 @@ const Lineups = () => {
             const awayTeam = matchDetails.data.awayTeam.shortName;
             setHomeTeamName(homeTeam)
             setAwayTeamName(awayTeam)
+            setLeagueName(leagueID.replace("_RugbyViz", ""))
 
             const homeLineup = getLineupRugbyViz(matchDetails, true)
             const awayLineup = getLineupRugbyViz(matchDetails, false)
@@ -203,10 +205,8 @@ const Lineups = () => {
 
             const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
             setAllLineupsArray(combinedArray)
-
             return;
         }
-    
 
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
         const matchDetails = await fetch( apiString,).then((res) => res.json())
@@ -214,6 +214,7 @@ const Lineups = () => {
         const awayTeam = matchDetails.rosters[1].team.displayName;
         setHomeTeamName(homeTeam)
         setAwayTeamName(awayTeam)
+        setLeagueName(getLeagueName(leagueID));
 
         const homeLineup = getLineup(matchDetails, 0)
         const awayLineup = getLineup(matchDetails, 1)
@@ -235,20 +236,9 @@ const Lineups = () => {
         setAllLineupsArray(combinedArray)
     }
 
-    const homeAwayInfo = getAnyHomeAwayTeamInfo(homeTeamName, awayTeamName);
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeamName, awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
-
-    if(homeTeamInfo === null) return
-    if(awayTeamInfo === null) return
-    if(homeTeamInfo === undefined) return
-    if(awayTeamInfo === undefined) return
-
-    const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.3')
-    const homeTeamBorderRBGA = hexToRGB(homeTeamInfo.colour, '0.9')
-
-    const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.3')
-    const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.9')
 
     const findLastItem = (lineupArray: AllLineUpsInfo[], index: number) => {
 
@@ -263,10 +253,82 @@ const Lineups = () => {
 
     }
 
+    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any) => {
+
+        if (homeTeamInfo == undefined || awayTeamInfo == undefined) {
+            return (
+                <></>
+            )
+        }
+        else {
+
+            const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.3')
+            const homeTeamBorderRBGA = hexToRGB(homeTeamInfo.colour, '0.9')
+
+            const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.3')
+            const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.9')
+
+            return (
+                <>
+                    <View style={[lineupPanelStyles.container, { borderBottomColor: 'lightgrey', borderBottomWidth: 1, paddingVertical: 8 }]}>
+                        <TouchableOpacity onPress={() => setSelectedTeam('home')}
+                            style={[lineupPanelStyles.teamHeader,
+                            {
+                                backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA) : (colors.background),
+                                borderColor: (selectedTeam === "home") ? homeTeamBorderRBGA : 'grey', borderWidth: (selectedTeam === "home") ? 2 : 1, justifyContent: 'center'
+                            }]}>
+                            <View style={{ padding: 5 }}>
+                                <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo}
+                                    style={lineupPanelStyles.teamLogo} />
+                            </View>
+
+                            <Text style={[lineupPanelStyles.teamName, { color: colors.text }]}>{homeTeamInfo.abbreviation}</Text>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity onPress={() => setSelectedTeam('away')}
+                            style={[lineupPanelStyles.teamHeader, {
+                                backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA) : (colors.background),
+                                borderColor: (selectedTeam === "away") ? awayTeamBorderRBGA : 'grey', borderWidth: (selectedTeam === "away") ? 2 : 1, justifyContent: 'center'
+                            }]}>
+                            <View style={{ padding: 5 }}>
+                                <Image source={(selectedTeam === "away") ? awayTeamInfo.logo : awayTeamInfo.altLogo}
+                                    style={lineupPanelStyles.teamLogo} />
+                            </View>
+
+                            <Text style={[lineupPanelStyles.teamName, { color: colors.text }]}>{awayTeamInfo.abbreviation}</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <FlatList data={allLineupsArray}
+                        renderItem={({ item, index }) =>
+                            <LineupPlayerPanel
+                                key={index}
+                                selectedTeam={selectedTeam}
+                                hometeamPlayer={item.hometeamPlayer}
+                                hometeamPlayerPosition={item.hometeamPlayerPosition}
+                                hometeamPlayerNum={item.hometeamPlayerNum}
+                                isHomePlayerCaptain={item.isHomePlayerCaptain}
+                                awayteamPlayer={item.awayteamPlayer}
+                                awayteamPlayerPosition={item.awayteamPlayerPosition}
+                                awayteamPlayerNum={item.awayteamPlayerNum}
+                                isAwayPlayerCaptain={item.isAwayPlayerCaptain}
+                                teamColour={(selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour}
+                                isLastItem={findLastItem(allLineupsArray, index)}
+                            />}
+                    />
+                </>
+
+            )
+        }
+
+    }
+
     return(
         <View style={defaultStyles.container}>
             <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
             <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
+            <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -277,49 +339,7 @@ const Lineups = () => {
             onPressButton={handlePressFetchData}
             />
 
-            <View style={[lineupPanelStyles.container, {borderBottomColor: 'lightgrey', borderBottomWidth: 1, paddingVertical: 8}]}>
-                <TouchableOpacity onPress={() => setSelectedTeam('home')}
-                style={[lineupPanelStyles.teamHeader, 
-                {backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA):(colors.background),
-                 borderColor: (selectedTeam === "home") ? homeTeamBorderRBGA: 'grey', borderWidth: (selectedTeam === "home") ? 2: 1, justifyContent: 'center'}]}>
-                    <View style={{padding: 5}}>
-                        <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo} 
-                        style={lineupPanelStyles.teamLogo}/>
-                    </View>
-                    
-                    <Text style={[lineupPanelStyles.teamName, {color: colors.text}]}>{homeTeamInfo.abbreviation}</Text>
-                </TouchableOpacity>
-                
- 
-                <TouchableOpacity onPress={() => setSelectedTeam('away')}
-                style={[lineupPanelStyles.teamHeader, {backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA):(colors.background),
-                    borderColor: (selectedTeam === "away") ? awayTeamBorderRBGA: 'grey', borderWidth: (selectedTeam === "away") ? 2: 1, justifyContent: 'center'}]}>
-                    <View style={{padding: 5}}>
-                        <Image source={(selectedTeam === "away") ? awayTeamInfo.logo : awayTeamInfo.altLogo}  
-                        style={lineupPanelStyles.teamLogo}/>
-                    </View>
-                
-                    <Text style={[lineupPanelStyles.teamName, {color: colors.text}]}>{awayTeamInfo.abbreviation}</Text>
-                </TouchableOpacity>
-            </View>
-            
-            <FlatList data={allLineupsArray}
-            renderItem={({item, index}) =>
-            <LineupPlayerPanel
-            key={index}
-            selectedTeam={selectedTeam}
-            hometeamPlayer={item.hometeamPlayer}
-            hometeamPlayerPosition={item.hometeamPlayerPosition}
-            hometeamPlayerNum={item.hometeamPlayerNum}
-            isHomePlayerCaptain={item.isHomePlayerCaptain}
-            awayteamPlayer={item.awayteamPlayer}
-            awayteamPlayerPosition={item.awayteamPlayerPosition}
-            awayteamPlayerNum={item.awayteamPlayerNum}
-            isAwayPlayerCaptain={item.isAwayPlayerCaptain}
-            teamColour={(selectedTeam === "home") ? homeTeamInfo.colour: awayTeamInfo.colour}
-            isLastItem={findLastItem(allLineupsArray, index)}
-            />}
-            />
+            {lineupsRender(homeTeamInfo, awayTeamInfo)}
 
         </View>
     )

@@ -3,7 +3,7 @@ import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshCon
 import { colors, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, getRugbyVizLeagueCode, isLastItemInSectionList } from "@/store/utils/helpers"
+import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, isLastItemInSectionList } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
@@ -66,7 +66,7 @@ const FixturesScreen = () => {
         )
     }
 
-    const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Date) => {
+    const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
 
         const gamesCount = seasonAllMatches.data.length;
         console.info(gamesCount)
@@ -131,7 +131,7 @@ const FixturesScreen = () => {
         if (leagueArray.length > 0) {
             const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
             let leagueMatchesInfo = {
-                title: leagueName,
+                title: leagueDisplayName,
                 data: sortedLeagueArray
             }
 
@@ -143,14 +143,9 @@ const FixturesScreen = () => {
         )
     }
 
+    const fetchRugbyVizData = async (thisLeagueName: string) => {
 
-    const handlePressFetchData = async () =>{
-        console.info("Pressed Fetch Data")
-
-        const formattedDate = dateCustomFormatting(selectedDate)
-        const currentLeagueCode = getLeagueCode(leagueName)
-
-        const rugbyVizLeagueCode = getRugbyVizLeagueCode(leagueName);
+        const rugbyVizLeagueCode = getRugbyVizLeagueCode(thisLeagueName);
         // use separate API for club leagues
         if(rugbyVizLeagueCode !== undefined)
         {
@@ -162,11 +157,18 @@ const FixturesScreen = () => {
             }
             ).then((res) => res.json())
 
-            const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate)
-            setMatchesSections(allFixturesArray)
-
-            return;
+            const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate, getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode) )
+            return allFixturesArray;
         }
+
+        return []
+    }
+
+    const handlePressFetchData = async () =>{
+        console.info("Pressed Fetch Data")
+
+        const formattedDate = dateCustomFormatting(selectedDate)
+        const currentLeagueCode = getLeagueCode(leagueName)
 
         const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + formattedDate + '&lang=en&region=gb&tz=Europe/London'
         const todaysAllMatches = await fetch( apiStringAll, {
@@ -175,11 +177,41 @@ const FixturesScreen = () => {
             }
         }
         ).then((res) => res.json())
-        const allFixturesArray = getFixturesForAll(todaysAllMatches)
+        const allFixturesArray: FixturesSection[] = getFixturesForAll(todaysAllMatches)
+
+        // collection of sections for all APIs
+        const URCFixtures: FixturesSection[] = await fetchRugbyVizData('urc');
+        const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem');
+        const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup');
+
+        if(URCFixtures !== undefined && URCFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: URCFixtures[0].title,
+                data: URCFixtures[0].data,
+            })
+        }
+        if(PremFixtures !== undefined && PremFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: PremFixtures[0].title,
+                data: PremFixtures[0].data,
+            })
+        }
+        if(ChampCupFixtures !== undefined && ChampCupFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: ChampCupFixtures[0].title,
+                data: ChampCupFixtures[0].data,
+            })
+        }
+
+        const teamSectionsCollection : FixturesSection[] = allFixturesArray;
+        console.info(teamSectionsCollection)
 
         if(leagueName == 'all')
         {
-            setMatchesSections(allFixturesArray)
+            setMatchesSections(teamSectionsCollection)
         }
         else
         {
