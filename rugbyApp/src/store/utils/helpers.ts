@@ -12,7 +12,7 @@ export const leagueCodes = [
     { value: 'urc', code: "270557",
          displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo},
     { value: 'prem', code: "267979",
-         displayName: 'Premiership Rugby', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
+         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
     { value: 'top14', code: "270559",
          displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
     { value: 'superRugby', code: "242041",
@@ -32,6 +32,31 @@ export const leagueCodes = [
     { value: 'menSevens', code: "282",
          displayName: '', leagueLogo: null, leagueAltLogo: null},
 ];
+
+export const rugbyVizleagueCodes = [
+    { value: 'urc', code: "1068",
+         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo},
+    { value: 'prem', code: "1011",
+         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
+    { value: 'top14', code: "1002",
+         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+    { value: 'championsCup', code: "1008",
+         displayName: 'European Rugby Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
+    { value: 'challengeCup', code: "1026",
+         displayName: '', leagueLogo: null, leagueAltLogo: null},
+];
+
+export const getRugbyVizLeagueCode = (name: string) => {
+
+    const result = rugbyVizleagueCodes.find((element) => element.value == name)
+    return result?.code.toString()
+}
+
+export const isLeagueInRugbyViz = (displayName: string) => {
+
+    const result = rugbyVizleagueCodes.find((element) => element.displayName == displayName)
+    return result !== undefined
+}
 
 export const getLeagueCode = (name: string) => {
 

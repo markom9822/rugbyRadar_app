@@ -30,7 +30,7 @@ export const getPremTeamInfoFromName = (name: string) => {
 export const PremRugbyTeams = [
   {
     type: 'Prem Club',
-    displayName: 'Bath Rugby',
+    displayName: 'Bath',
     abbreviation: 'BATH',
     logo: BathLogo,
     altLogo: BathAltLogo,
@@ -42,7 +42,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Bristol Rugby',
+    displayName: 'Bears',
     abbreviation: 'BRIST',
     logo: BristolLogo,
     altLogo: BristolAltLogo,
@@ -54,7 +54,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Exeter Chiefs',
+    displayName: 'Chiefs',
     abbreviation: 'EXET',
     logo: ExeterLogo,
     altLogo: ExeterAltLogo,
@@ -66,7 +66,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Gloucester Rugby',
+    displayName: 'Gloucester',
     abbreviation: 'GLOUC',
     logo: GloucesterLogo,
     altLogo: GloucesterAltLogo,
@@ -78,7 +78,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Harlequins',
+    displayName: 'Quins',
     abbreviation: 'HQUINN',
     logo: HarlequinsLogo,
     altLogo: HarlequinsAltLogo,
@@ -90,7 +90,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Leicester Tigers',
+    displayName: 'Tigers',
     abbreviation: 'LEICS',
     logo: LeicesterLogo,
     altLogo: LeicesterAltLogo,
@@ -102,7 +102,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Newcastle Falcons',
+    displayName: 'Falcons',
     abbreviation: 'NEWC',
     logo: NewcastleLogo,
     altLogo: NewcastleAltLogo,
@@ -114,7 +114,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Northampton Saints',
+    displayName: 'Saints',
     abbreviation: 'NTHMP',
     logo: NorthamptonLogo,
     altLogo: NorthamptonAltLogo,
@@ -126,7 +126,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Sale Sharks',
+    displayName: 'Sharks',
     abbreviation: 'SALE',
     logo: SaleLogo,
     altLogo: SaleAltLogo,

@@ -5,7 +5,7 @@ import { colors, fontSize } from "@/constants/tokens"
 import { useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { generateSeasonList, getLeagueCode } from "@/store/utils/helpers"
-import { getAllStandingsData } from "@/store/utils/standingsGetter"
+import { getAllStandingsData, getAllStandingsDataRugbyViz } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
@@ -85,6 +85,18 @@ const StandingsScreen = () => {
 
             const worldRankings = await fetch( apiString,).then((res) => res.json())
             const newArray = getWorldRankingsData(worldRankings)
+
+            console.info(newArray)
+            setStandingsArray(newArray)
+        }
+        // uses rugbyViz API
+        else if(leagueName == "urc")
+        {
+            const seasonNumber = Number(seasonName) - 1;
+            apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/1068?provider=rugbyviz&season='+ seasonNumber +'01';
+
+            const seasonStandingsRugViz = await fetch( apiString,).then((res) => res.json())
+            const newArray = getAllStandingsDataRugbyViz(seasonStandingsRugViz)
 
             console.info(newArray)
             setStandingsArray(newArray)

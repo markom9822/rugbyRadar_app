@@ -64,6 +64,7 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
     const formGames = isHomeTeam ? matchStats.data.homeTeam.form : matchStats.data.awayTeam.form;
     const gamesLength = formGames.length;
     const currentTeam = isHomeTeam ? matchStats.data.homeTeam.shortName : matchStats.data.awayTeam.shortName;
+    const currentMatchDate = new Date(matchStats.data.date);
 
     for (let index = 0; index < gamesLength; index++) {
 
@@ -73,7 +74,9 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
         const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + matchID + '?provider=rugbyviz';
         const formMatchStats = await fetch(apiString,).then((res) => res.json())
 
-        const matchDate = formMatchStats.data.date;
+        const matchDate = new Date(formMatchStats.data.date);
+        // dont include this match
+        if(matchDate.setHours(0,0,0,0) === currentMatchDate.setHours(0,0,0,0)) continue;
 
         const homeTeamName = formMatchStats.data.homeTeam.shortName;
         const awayTeamName = formMatchStats.data.awayTeam.shortName;
@@ -87,7 +90,7 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
                 awayTeamName: awayTeamName,
                 homeTeamScore: homeTeamScore,
                 awayTeamScore: awayTeamScore,
-                matchDate: matchDate,
+                matchDate: matchDate.toString(),
         };
     
 

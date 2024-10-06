@@ -1,6 +1,18 @@
 import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams"
 import { BenettonAltLogo, BenettonLogo, BullsAltLogo, BullsLogo, CardiffAltLogo, CardiffLogo, ConnachtAltLogo, ConnachtLogo, DragonsAltLogo, DragonsLogo, EdinburghAltLogo, EdinburghLogo, GlasgowAltLogo, GlasgowLogo, LeinsterAltLogo, LeinsterLogo, LionsAltLogo, LionsLogo, MunsterAltLogo, MunsterLogo, OspreysAltLogo, OspreysLogo, ScarletsAltLogo, ScarletsLogo, SharksAltLogo, SharksLogo, StormersAltLogo, StormersLogo, UlsterAltLogo, UlsterLogo, ZebreAltLogo, ZebreLogo } from "./URCTeamLogos/URCTeams"
 
+export const getURCShortNameFromFullName = (name: string) => {
+  const match = URCRugbyTeams.find((item) => name.indexOf(item.displayName) !== -1)
+
+  if(match !== undefined)
+  {
+    return match.displayName;
+  }
+  
+  return ''
+}
+
+
 
 export const getURCTeamInfoFromName = (name: string) => {
 

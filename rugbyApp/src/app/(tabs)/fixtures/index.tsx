@@ -3,7 +3,7 @@ import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshCon
 import { colors, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, isLastItemInSectionList } from "@/store/utils/helpers"
+import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, getRugbyVizLeagueCode, isLastItemInSectionList } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
@@ -150,10 +150,11 @@ const FixturesScreen = () => {
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(leagueName)
 
-        // use separate API for URC
-        if(leagueName == 'urc')
+        const rugbyVizLeagueCode = getRugbyVizLeagueCode(leagueName);
+        // use separate API for club leagues
+        if(rugbyVizLeagueCode !== undefined)
         {
-            const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId=1068&images=true&season='+selectedDate.getFullYear()+'01'
+            const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+selectedDate.getFullYear()+'01'
             const seasonsAllMatches = await fetch( apiStringAll, {
                 headers: {
                     'Cache-control': 'no-cache'
