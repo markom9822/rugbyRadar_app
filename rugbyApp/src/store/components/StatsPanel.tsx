@@ -1,5 +1,5 @@
 import { colors, fontSize } from "@/constants/tokens"
-import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
+import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { View, Image, Text, StyleSheet } from "react-native"
 
 export type StatsInfo = {
@@ -56,7 +56,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
 
     if(matchInfoArray == undefined) return
 
-    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
+    const homeAwayInfo = getAnyHomeAwayTeamInfo(matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 

@@ -1,5 +1,5 @@
 import { defaultStyles } from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, SectionListData } from "react-native"
 import { colors, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -128,13 +128,15 @@ const FixturesScreen = () => {
 
         console.info(leagueArray)
 
-        const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-        let leagueMatchesInfo = {
-            title: leagueName,
-            data: sortedLeagueArray
+        if (leagueArray.length > 0) {
+            const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
+            let leagueMatchesInfo = {
+                title: leagueName,
+                data: sortedLeagueArray
+            }
+
+            sections.push(leagueMatchesInfo)
         }
-        
-        sections.push(leagueMatchesInfo)
 
         return (
             sections
@@ -248,6 +250,7 @@ const FixturesScreen = () => {
 
     }
 
+
     return <View style={defaultStyles.container}>
 
         <LeagueSelectDropdown
@@ -291,44 +294,46 @@ const FixturesScreen = () => {
         {notFoundHeader(matchesSections)}
 
         <SectionList
-        sections={matchesSections}
-        keyExtractor={(item, index) => item.matchID}
-        renderItem={({item, index, section}) =>
-        <ScorePanel
-            leagueDisplayName={item.matchLeague}
-            homeTeam={item.homeTeam}
-            homeScore={item.homeScore}
-            awayTeam={item.awayTeam}
-            awayScore={item.awayScore}
-            matchDate={item.matchDate}
-            matchTitle={item.matchTitle}
-            matchLeague={item.matchLeague}
-            matchVenue={item.matchVenue}
-            matchID={item.matchID}
-            currentIndex={currentIndex}
-            index={index}
-            eventState={item.eventState}
-            stateDetail={item.stateDetail}
-            eventTime={item.eventTime}
-            isLastItem={isLastItemInSectionList(index, section, matchesSections)}
-        />}
-        renderSectionHeader={({section: {title, data}}) => (
-            <View style={{marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{paddingHorizontal: 10}}>
-                    <Image
-                        style={{resizeMode: 'contain',
-                            width: 20,
-                            height: 20,
-                            minHeight:20,
-                            minWidth: 20}}
-                        source={getLeagueInfoFromDisplayName(data[0].matchLeague)?.leagueAltLogo} />
+            sections={matchesSections}
+            keyExtractor={(item, index) => item.matchID}
+            renderItem={({ item, index, section }) =>
+                <ScorePanel
+                    leagueDisplayName={item.matchLeague}
+                    homeTeam={item.homeTeam}
+                    homeScore={item.homeScore}
+                    awayTeam={item.awayTeam}
+                    awayScore={item.awayScore}
+                    matchDate={item.matchDate}
+                    matchTitle={item.matchTitle}
+                    matchLeague={item.matchLeague}
+                    matchVenue={item.matchVenue}
+                    matchID={item.matchID}
+                    currentIndex={currentIndex}
+                    index={index}
+                    eventState={item.eventState}
+                    stateDetail={item.stateDetail}
+                    eventTime={item.eventTime}
+                    isLastItem={isLastItemInSectionList(index, section, matchesSections)}
+                />}
+            renderSectionHeader={({ section: { title, data } }) => (
+                <View style={{ marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ paddingHorizontal: 10 }}>
+                        <Image
+                            style={{
+                                resizeMode: 'contain',
+                                width: 20,
+                                height: 20,
+                                minHeight: 20,
+                                minWidth: 20
+                            }}
+                            source={getLeagueInfoFromDisplayName(data[0].matchLeague)?.leagueAltLogo} />
+                    </View>
+                    <Text style={{ fontSize: 13, color: 'grey', fontWeight: 600 }}>{title.toUpperCase()}</Text>
                 </View>
-                <Text style={{fontSize: 13, color: 'grey', fontWeight: 600}}>{title.toUpperCase()}</Text>
-            </View>
-        )}
-        refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData}/>
-        }
+            )}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />
+            }
         />
 
     </View>

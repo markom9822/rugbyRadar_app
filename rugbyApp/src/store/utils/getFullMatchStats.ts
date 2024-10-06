@@ -148,3 +148,159 @@ export const getFullMatchStats = (matchStats: any) => {
         newArray
     )
 }
+
+export const getFullMatchStatsRugbyViz = (matchStats: any) => {
+
+    const homeTeamName = matchStats.data.homeTeam.shortName;
+    const awayTeamName = matchStats.data.awayTeam.shortName;
+
+    if (matchStats.data.homeTeam.stats == null || matchStats.data.awayTeam.stats == null) {
+        const blankArray = [
+            {
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamPossession: '0',
+                awayTeamPossession: '0',
+                homeTeamTerritory: '0',
+                awayTeamTerritory: '0',
+                homeTeamTries: '-',
+                awayTeamTries: '-',
+                homeTeamConversions: '-',
+                awayTeamConversions: '-',
+                homeTeamPenalties: '-',
+                awayTeamPenalties: '-',
+
+                homeTeamTackles: '-',
+                awayTeamTackles: '-',
+                homeTeamMissedTackles: '-',
+                awayTeamMissedTackles: '-',
+
+                homeTeamMetres: '-',
+                awayTeamMetres: '-',
+                homeTeamPasses: '-',
+                awayTeamPasses: '-',
+                homeTeamDefendersBeaten: '-',
+                awayTeamDefendersBeaten: '-',
+
+                homeTeamScrumsWon: '-',
+                awayTeamScrumsWon: '-',
+                homeTeamScrumsTotal: '-',
+                awayTeamScrumsTotal: '-',
+                homeTeamLineoutsWon: '-',
+                awayTeamLineoutsWon: '-',
+                homeTeamLineoutsTotal: '-',
+                awayTeamLineoutsTotal: '-',
+
+                homeTeamPensConceded: '-',
+                awayTeamPensConceded: '-',
+                homeTeamYellowCards: '-',
+                awayTeamYellowCards: '-',
+                homeTeamRedCards: '-',
+                awayTeamRedCards: '-',
+
+            }
+        ];
+    
+            return blankArray
+    
+    }
+
+    const homeTeamPossession = matchStats.data.homeTeam.stats.possession;
+    const awayTeamPossession = matchStats.data.awayTeam.stats.possession;
+
+    const homeTeamTerritory = matchStats.data.homeTeam.stats.territory;
+    const awayTeamTerritory = matchStats.data.awayTeam.stats.territory;
+
+    const homeTeamTries = matchStats.data.homeTeam.stats.tries;
+    const awayTeamTries = matchStats.data.awayTeam.stats.tries;
+
+    const homeTeamConversions = matchStats.data.homeTeam.stats.conversionGoals;
+    const awayTeamConversions = matchStats.data.awayTeam.stats.conversionGoals;
+
+    const homeTeamPenalties = matchStats.data.homeTeam.stats.penaltyGoals;
+    const awayTeamPenalties = matchStats.data.awayTeam.stats.penaltyGoals;
+
+    const homeTeamTackles = matchStats.data.homeTeam.stats.tackles;
+    const awayTeamTackles = matchStats.data.awayTeam.stats.tackles;
+    const homeTeamMissedTackles = matchStats.data.homeTeam.stats.missedTackles;
+    const awayTeamMissedTackles = matchStats.data.awayTeam.stats.missedTackles
+
+    const homeTeamMetres = matchStats.data.homeTeam.stats.metres;
+    const awayTeamMetres = matchStats.data.awayTeam.stats.metres;
+
+    const homeTeamPasses = matchStats.data.homeTeam.stats.passes;
+    const awayTeamPasses = matchStats.data.awayTeam.stats.passes;
+
+    const homeTeamDefendersBeaten = matchStats.data.homeTeam.stats.defendersBeaten;
+    const awayTeamDefendersBeaten = matchStats.data.awayTeam.stats.defendersBeaten;
+
+    const homeTeamScrumsWon = matchStats.data.homeTeam.stats.scrumsWon;
+    const awayTeamScrumsWon = matchStats.data.awayTeam.stats.scrumsWon;
+
+    const homeTeamScrumsTotal = matchStats.data.homeTeam.stats.scrumsWon + matchStats.data.homeTeam.stats.scrumsLost;
+    const awayTeamScrumsTotal = matchStats.data.awayTeam.stats.scrumsWon + matchStats.data.awayTeam.stats.scrumsLost;
+
+    const homeTeamLineoutsWon = matchStats.data.homeTeam.stats.lineoutsWon;
+    const awayTeamLineoutsWon = matchStats.data.awayTeam.stats.lineoutsWon;
+
+    const homeTeamLineoutsTotal = matchStats.data.homeTeam.stats.totalLineouts;
+    const awayTeamLineoutsTotal = matchStats.data.awayTeam.stats.totalLineouts;
+
+    const homeTeamPensConceded = matchStats.data.homeTeam.stats.penaltiesConceded;
+    const awayTeamPensConceded = matchStats.data.awayTeam.stats.penaltiesConceded;
+
+    const homeTeamYellowCards = matchStats.data.homeTeam.stats.yellowCards;
+    const awayTeamYellowCards = matchStats.data.awayTeam.stats.yellowCards;
+
+    const homeTeamRedCards = matchStats.data.homeTeam.stats.redCards;
+    const awayTeamRedCards = matchStats.data.awayTeam.stats.redCards;
+
+    const newArray = [
+        {
+            homeTeamName: homeTeamName,
+            awayTeamName: awayTeamName,
+            homeTeamPossession: homeTeamPossession,
+            awayTeamPossession: awayTeamPossession,
+            homeTeamTerritory: homeTeamTerritory,
+            awayTeamTerritory: awayTeamTerritory,
+            homeTeamTries: homeTeamTries,
+            awayTeamTries: awayTeamTries,
+            homeTeamConversions: homeTeamConversions,
+            awayTeamConversions: awayTeamConversions,
+            homeTeamPenalties: homeTeamPenalties,
+            awayTeamPenalties: awayTeamPenalties,
+
+            homeTeamTackles: homeTeamTackles,
+            awayTeamTackles: awayTeamTackles,
+            homeTeamMissedTackles: homeTeamMissedTackles,
+            awayTeamMissedTackles: awayTeamMissedTackles,
+
+            homeTeamMetres: homeTeamMetres,
+            awayTeamMetres: awayTeamMetres,
+            homeTeamPasses: homeTeamPasses,
+            awayTeamPasses: awayTeamPasses,
+            homeTeamDefendersBeaten: homeTeamDefendersBeaten,
+            awayTeamDefendersBeaten: awayTeamDefendersBeaten,
+
+            homeTeamScrumsWon: homeTeamScrumsWon,
+            awayTeamScrumsWon: awayTeamScrumsWon,
+            homeTeamScrumsTotal: homeTeamScrumsTotal,
+            awayTeamScrumsTotal: awayTeamScrumsTotal,
+            homeTeamLineoutsWon: homeTeamLineoutsWon,
+            awayTeamLineoutsWon: awayTeamLineoutsWon,
+            homeTeamLineoutsTotal: homeTeamLineoutsTotal,
+            awayTeamLineoutsTotal: awayTeamLineoutsTotal,
+
+            homeTeamPensConceded: homeTeamPensConceded,
+            awayTeamPensConceded: awayTeamPensConceded,
+            homeTeamYellowCards: homeTeamYellowCards,
+            awayTeamYellowCards: awayTeamYellowCards,
+            homeTeamRedCards: homeTeamRedCards,
+            awayTeamRedCards: awayTeamRedCards,  
+        }
+    ];
+
+    return(
+        newArray
+    )
+}
