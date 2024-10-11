@@ -4,7 +4,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode } from "@/store/utils/helpers"
+import { generateSeasonList, getLeagueCode, getRugbyVizLeagueCode } from "@/store/utils/helpers"
 import { getAllStandingsData, getAllStandingsDataRugbyViz } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
@@ -22,6 +22,7 @@ export type StandingInfo = {
     teamPoints: string
     ranking: number
     isLastItem: boolean
+    isEndOfList: boolean
 }
 
 const getWorldRankingsData = (todaysRankings: any) => {
@@ -49,7 +50,8 @@ const getWorldRankingsData = (todaysRankings: any) => {
             teamPD: '-',
             teamPoints: teamPoints,
             ranking: index,
-            isLastItem: index == rankListLength - 1
+            isLastItem: index == rankListLength - 1,
+            isEndOfList: index == rankListLength - 1
     };
 
         newArray.push(newRankingInfo)
@@ -78,6 +80,7 @@ const StandingsScreen = () => {
         const currentLeagueCode = getLeagueCode(leagueName)
 
         var apiString = '';
+        const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
 
         if(leagueName == "worldRankings")
         {
@@ -90,13 +93,13 @@ const StandingsScreen = () => {
             setStandingsArray(newArray)
         }
         // uses rugbyViz API
-        else if(leagueName == "urc")
+        else if(rugbyVizCode !== undefined)
         {
             const seasonNumber = Number(seasonName) - 1;
-            apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/1068?provider=rugbyviz&season='+ seasonNumber +'01';
+            apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/'+rugbyVizCode+'?provider=rugbyviz&season='+ seasonNumber +'01';
 
             const seasonStandingsRugViz = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsDataRugbyViz(seasonStandingsRugViz)
+            const newArray = getAllStandingsDataRugbyViz(seasonStandingsRugViz, leagueName)
 
             console.info(newArray)
             setStandingsArray(newArray)
@@ -283,7 +286,8 @@ const StandingsScreen = () => {
             teamPD={item.teamPD}
             teamPoints={item.teamPoints}
             ranking={item.ranking}
-            isLastItem={item.isLastItem} />}
+            isLastItem={item.isLastItem}
+            isEndOfList={item.isEndOfList} />}
         />
 
     </View>

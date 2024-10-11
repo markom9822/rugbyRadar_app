@@ -1,3 +1,5 @@
+import { getChampsCupShortNameFromFullName } from "../ChampionsCupRugbyTeamsDatabase";
+import { getPremShortNameFromFullName } from "../PremiershipRubyTeamsDatabase";
 import { getURCShortNameFromFullName } from "../URCRugbyTeamsDatabase";
 
 
@@ -30,6 +32,7 @@ export const getAllStandingsData = (seasonStandings: any) => {
                     teamPoints: '0',
                     ranking: index,
                     isLastItem: false,
+                    isEndOfList: false
                 };
 
                 newArray.push(headerRankingInfo)
@@ -55,7 +58,8 @@ export const getAllStandingsData = (seasonStandings: any) => {
                     teamPD: teamPD,
                     teamPoints: teamPoints,
                     ranking: index,
-                    isLastItem: index == standingsCount - 1
+                    isLastItem: index == standingsCount - 1,
+                    isEndOfList: (index == standingsCount - 1) && (j == seasonStandings.children.length - 1)
             };
 
             newArray.push(newRankingInfo)
@@ -68,13 +72,12 @@ export const getAllStandingsData = (seasonStandings: any) => {
 
 }
 
-export const getAllStandingsDataRugbyViz = (seasonStandings: any) => {
+export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: string) => {
 
     var newArray = [];
 
     const standingsChildren = seasonStandings.data.groups
-    console.info(`Children count: ${standingsChildren}`)
-
+    console.info(`Children count: ${standingsChildren.length}`)
 
     for (let j = 0; j < standingsChildren.length; j++) {
 
@@ -83,7 +86,7 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any) => {
         for (let index = 0; index < teamsCount; index++) {
 
             const teamPool = standingsChildren[j].name;
-            if(index == 0 && standingsChildren > 1)
+            if(index == 0 && standingsChildren.length > 1)
             {
                 let headerRankingInfo = {
                     isHeader: true,
@@ -97,12 +100,27 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any) => {
                     teamPoints: '0',
                     ranking: index,
                     isLastItem: false,
+                    isEndOfList: false,
                 };
 
                 newArray.push(headerRankingInfo)
             }
 
-            const teamName = getURCShortNameFromFullName(standingsChildren[j].teams[index].name);
+            var teamName = '';
+
+            if(leagueName === 'urc')
+            {
+                teamName = getURCShortNameFromFullName(standingsChildren[j].teams[index].name);
+            }
+            else if (leagueName === 'prem')
+            {
+                teamName = getPremShortNameFromFullName(standingsChildren[j].teams[index].name);
+            }
+            else if(leagueName === 'championsCup')
+            {
+                teamName = getChampsCupShortNameFromFullName(standingsChildren[j].teams[index].name);
+            }
+
             const teamGP = standingsChildren[j].teams[index].played;
             const teamWins = standingsChildren[j].teams[index].won
             const teamDraws = standingsChildren[j].teams[index].drawn;
@@ -122,7 +140,8 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any) => {
                     teamPD: teamPD,
                     teamPoints: teamPoints,
                     ranking: index,
-                    isLastItem: index == teamsCount - 1
+                    isLastItem: index == teamsCount - 1,
+                    isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
             };
 
             newArray.push(newRankingInfo)

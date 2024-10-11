@@ -83,6 +83,25 @@ export const getLineupRugbyViz = (matchDetails: any, isHome: boolean) => {
 
     const targetRoster = isHome ? matchDetails.data.homeTeam.players : matchDetails.data.awayTeam.players
 
+    if (targetRoster === null) {
+        var blankArray = [];
+
+        for (let index = 0; index < 23; index++) {
+            let blankLineupInfo = {
+                teamPlayer: '-',
+                teamPlayerPosition: '-',
+                teamPlayerNum: index + 1,
+                isPlayerCaptain: false,
+            };
+
+            blankArray.push(blankLineupInfo)
+        }
+
+        return (
+            blankArray
+        )
+    } 
+
     var newArray = [];
 
     for (let index = 0; index < targetRoster.length; index++) {

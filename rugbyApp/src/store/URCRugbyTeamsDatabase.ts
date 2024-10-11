@@ -12,8 +12,6 @@ export const getURCShortNameFromFullName = (name: string) => {
   return ''
 }
 
-
-
 export const getURCTeamInfoFromName = (name: string) => {
 
   const defaultTeam =  {

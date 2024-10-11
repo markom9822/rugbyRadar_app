@@ -25,10 +25,11 @@ type StandingPanelProps = {
     teamPoints: string
     ranking: number
     isLastItem: boolean
+    isEndOfList: boolean
 }
 
 export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool, teamName,
-     teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem}: StandingPanelProps) => {
+     teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem, isEndOfList}: StandingPanelProps) => {
 
     var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
 
@@ -140,7 +141,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     return(
         <View style={[standingsPanelStyles.container, 
         {backgroundColor: (isHeader) ? altBackgroundColour: panelBkgColour, borderBottomColor: (isHeader || isLastItem) ? 'grey': 'transparent',
-         borderBottomWidth: (isHeader || isLastItem) ? 1: 0, marginBottom: (isLastItem) ? 50: 0}]}>
+         borderBottomWidth: (isHeader || isLastItem) ? 1: 0, marginBottom: (isEndOfList) ? 50: 0}]}>
             {standingsRender(isHeader)}
         </View>
     )

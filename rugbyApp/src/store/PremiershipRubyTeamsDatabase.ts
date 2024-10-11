@@ -1,5 +1,21 @@
-import { DefaultLogo, NewZealandAltLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams";
 import { BathAltLogo, BathLogo, BristolAltLogo, BristolLogo, ExeterAltLogo, ExeterLogo, GloucesterAltLogo, GloucesterLogo, HarlequinsAltLogo, HarlequinsLogo, LeicesterAltLogo, LeicesterLogo, NewcastleAltLogo, NewcastleLogo, NorthamptonAltLogo, NorthamptonLogo, SaleAltLogo, SaleLogo, SaracensAltLogo, SaracensLogo } from "./PremiershipTeamsLogos/PremiershipTeams";
+
+export const getPremShortNameFromFullName = (name: string) => {
+  const match = PremRugbyTeams.find((item) => name.indexOf(item.displayName) !== -1)
+
+  if(match !== undefined)
+  {
+    return match.displayName;
+  }
+  
+  return name
+}
+
+export const rugbyVizPremNames = [
+  { databaseName: 'Sale', rugbyVizName: 'Sharks',},
+  { databaseName: 'Harlequins', rugbyVizName: 'Quins',},
+];
 
 export const getPremTeamInfoFromName = (name: string) => {
 
@@ -15,15 +31,28 @@ export const getPremTeamInfoFromName = (name: string) => {
     foundedYear: '',
     seasonType: '',
   }
-    const match = PremRugbyTeams.find((item) => item.displayName === name)
-    if(match !== undefined)
-    {
-        return match
-    }
-    else
-    {
-        return defaultTeam
-    }
+
+  var searchName = '';
+
+  const premNameResult = rugbyVizPremNames.find((element) => element.rugbyVizName == name)
+  if(premNameResult !== undefined)
+  {
+      searchName = premNameResult.databaseName;
+  }
+  else
+  {
+      searchName = name;
+  }
+
+  const match = PremRugbyTeams.find((item) => item.displayName === searchName)
+  if (match !== undefined) 
+  {
+    return match
+  }
+  else 
+  {
+    return defaultTeam
+  }
 }
 
 
@@ -78,7 +107,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Quins',
+    displayName: 'Harlequins',
     abbreviation: 'HQUINN',
     logo: HarlequinsLogo,
     altLogo: HarlequinsAltLogo,
@@ -126,7 +155,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Sharks',
+    displayName: 'Sale',
     abbreviation: 'SALE',
     logo: SaleLogo,
     altLogo: SaleAltLogo,
