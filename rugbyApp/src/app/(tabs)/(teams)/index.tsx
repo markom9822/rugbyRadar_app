@@ -217,7 +217,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
 
     return (
         <View style={{ backgroundColor: colors.background, marginBottom: (isLastItem) ? 50: 0 }}>
-            <Link href={`/(tabs)/(teams)/team/${teamID}`} asChild>
+            <Link href={`/(tabs)/(teams)/team/${teamID + teamName}`} asChild>
                 <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
                     onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
 

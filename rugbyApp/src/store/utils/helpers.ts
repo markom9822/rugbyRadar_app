@@ -50,6 +50,12 @@ export const getRugbyVizLeagueCode = (name: string) => {
     return result?.code.toString()
 }
 
+export const getRugbyVizLeagueCodeFromLeagueDisplayName = (leagueDisplayName: string) => {
+
+    const result = rugbyVizleagueCodes.find((element) => element.displayName == leagueDisplayName)
+    return result?.code.toString()
+}
+
 export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
 
     const result = rugbyVizleagueCodes.find((element) => element.code == code)
@@ -58,6 +64,16 @@ export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
         return ''
     }
     return result.displayName.toString()
+}
+
+export const getRugbyVizLeagueNameFromCode = (code: string) => {
+
+    const result = rugbyVizleagueCodes.find((element) => element.code == code)
+    if(result == undefined)
+    {
+        return ''
+    }
+    return result.value.toString()
 }
 
 export const isLeagueInRugbyViz = (displayName: string) => {

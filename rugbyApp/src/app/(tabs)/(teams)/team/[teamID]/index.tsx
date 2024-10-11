@@ -3,9 +3,9 @@ import { useLocalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { useState } from "react";
-import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, hexToRGB } from "@/store/utils/helpers";
+import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueCodeFromLeagueDisplayName, getRugbyVizLeagueNameFromCode, hexToRGB } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
-import { getTeamStandingsInfo } from "@/store/utils/getTeamStandingsInfo";
+import { getTeamStandingsInfo, getTeamStandingsInfoRugbyViz } from "@/store/utils/getTeamStandingsInfo";
 import { TeamSummaryPanel } from "@/store/components/TeamSummaryPanel";
 import { StandingInfo, TeamStandingPanel } from "@/store/components/TeamStandingPanel";
 import { TeamPlayerStatsPanel } from "@/store/components/TeamPlayerStatsPanel";
@@ -73,21 +73,28 @@ const TeamSummary = () => {
 
     const {teamID} = useLocalSearchParams();
 
+    const regex = new RegExp('([0-9]+)|([a-zA-Z]+)','g');
+    const splittedArray = new String(teamID).match(regex);
+    if(splittedArray == null) return
+    const teamIDNum = splittedArray[0];
+    const teamIDName = new String(teamID).replace(teamIDNum, '');
+
     const currentYear = new Date().getFullYear().valueOf();
 
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch WIKI")
 
         // getting basic team info
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/'+ teamID;
+        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/'+ teamIDNum;
 
         const teamDetails = await fetch(apiString,).then((res) => res.json())
         const basicTeamInfo = getTeamBasicInfo(teamDetails)
-        const teamName = basicTeamInfo.teamName;
+        const teamName = teamIDName;
         setTeamInfo(basicTeamInfo)
 
-        const thisTeamLeague = getAnyTeamInfoFromName(teamName).defaultLeague;
-        const thisTeamSeasonType = getAnyTeamInfoFromName(teamName).seasonType;
+        const teamInfo = getAnyTeamInfoFromName(teamName);
+        const thisTeamLeague = teamInfo.defaultLeague;
+        const thisTeamSeasonType = teamInfo.seasonType;
         console.info(thisTeamSeasonType)
         setTeamLeagueName(thisTeamLeague)
         const thisLeagueCode = getLeagueCodeFromDisplayName(thisTeamLeague)
@@ -121,6 +128,25 @@ const TeamSummary = () => {
             }
         }
 
+        const rugbyVizLeagueCodes = [
+            { teamType: 'URC Club', leagueCode: '1068',},
+            { teamType: 'Prem Club', leagueCode: '1011',},
+        ];
+
+        // use RugbyViz API
+        if(teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club')   
+        {
+            const rugVizLeagueCode = rugbyVizLeagueCodes.find((element) => element.teamType == teamInfo.type)?.leagueCode;
+            if(rugVizLeagueCode === undefined) return;
+            const rugVizLeagueName = getRugbyVizLeagueNameFromCode(rugVizLeagueCode)
+
+            const rugVizApiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/'+rugVizLeagueCode+'?provider=rugbyviz&season='+ targetYear +'01';
+            const rugVizSeasonStandings = await fetch( rugVizApiString,).then((res) => res.json())
+            const rugVizStandingsInfo = getTeamStandingsInfoRugbyViz(rugVizSeasonStandings, rugVizLeagueName)
+            setStandingsArray(rugVizStandingsInfo)
+            return;
+        }
+
         // getting this teams standings table
         const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
              + targetYear + '&seasontype=1&sort=rank:asc&type=0';
@@ -130,13 +156,14 @@ const TeamSummary = () => {
         setStandingsArray(standingsInfo)
 
         // getting season stats
-        const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamID, thisTeamLeague, getAnyTeamInfoFromName(teamName).seasonType)
+        const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamIDNum, thisTeamLeague, getAnyTeamInfoFromName(teamName).seasonType)
         setPlayerStatsArray(playerSeasonStats)
     }
 
     return(
         <View style={defaultStyles.container}>
-            <Text style={{color: colors.text}}>Team ID {teamID}</Text>
+            <Text style={{color: colors.text}}>Team ID {teamIDNum}</Text>
+            <Text style={{color: colors.text}}>Team Name {teamIDName}</Text>
 
             <FetchDataButton 
             iconSize={24} 
@@ -149,7 +176,7 @@ const TeamSummary = () => {
             <ScrollView>
         
             <TeamSummaryPanel 
-            teamName={teamInfo?.teamName}
+            teamName={teamIDName}
             homeVenue={teamInfo?.homeVenue}
             homeLocation={teamInfo?.homeLocation}
             teamForm={teamInfo?.teamForm}
@@ -158,7 +185,7 @@ const TeamSummary = () => {
             <TeamStandingPanel
             standingsArray={standingsArray}
             teamLeagueName={teamLeagueName}
-            currentTeamName={teamInfo?.teamName}
+            currentTeamName={teamIDName}
             currentYear={teamInfoYear.toString()}
             />
 

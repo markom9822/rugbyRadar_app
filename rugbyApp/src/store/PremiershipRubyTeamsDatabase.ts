@@ -65,7 +65,7 @@ export const PremRugbyTeams = [
     altLogo: BathAltLogo,
     colour: '#1e3b84',
     id: '25898',
-    defaultLeague: 'Premiership Rugby',
+    defaultLeague: 'Gallagher Premiership',
     foundedYear: '1865',
     seasonType: 'north',
   },

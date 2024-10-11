@@ -2,12 +2,13 @@ import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image } from "react-native";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { generateSeasonList, getAnyTeamInfoFromName } from "@/store/utils/helpers";
+import { generateSeasonList, getAnyTeamInfoFromName, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
 import { colors, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown";
 import { getTeamSeasonFixtures } from "@/store/utils/getTeamSeasonFixtures";
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
+import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
 
 export type TeamEvent = {
     eventDate: string,
@@ -26,11 +27,16 @@ const TeamResults = () => {
     const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
 
     const {teamID} = useGlobalSearchParams();
+    const regex = new RegExp('([0-9]+)|([a-zA-Z]+)','g');
+    const splittedArray = new String(teamID).match(regex);
+    if(splittedArray == null) return
+    const teamIDNum = splittedArray[0];
+    const teamIDName = new String(teamID).replace(teamIDNum, '');
 
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch Team Results")
         
-        const teamSeasonFixtures = await getTeamSeasonFixtures(teamID, seasonYear)
+        const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, seasonYear)
         setTeamEventsArray(teamSeasonFixtures)
     }
 
@@ -121,8 +127,14 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     const formattedDate  = new Date(eventDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'})
     const eventTime = new Date(eventDate).toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 
-    const homeTeamInfo = getAnyTeamInfoFromName(homeTeamName)
-    const awayTeamInfo = getAnyTeamInfoFromName(awayTeamName)
+    const leagueValue = getLeagueInfoFromDisplayName(leagueName)?.value;
+
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueValue, homeTeamName, awayTeamName);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
+
+    if(homeTeamInfo == null) return
+    if(awayTeamInfo == null) return
 
     const panelBackgroundColour = (eventState === "pre") ? (colors.altBackground):(colors.background);
 
