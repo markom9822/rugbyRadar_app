@@ -7,7 +7,7 @@ import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getL
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { ChampionsCupAltLogo, InternationalLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { ChallengeCupAltLogo, ChampionsCupAltLogo, InternationalLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { getFixturesForAll } from "@/store/utils/fixturesGetter"
 
 export type MatchInfo = {
@@ -183,6 +183,7 @@ const FixturesScreen = () => {
         const URCFixtures: FixturesSection[] = await fetchRugbyVizData('urc');
         const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem');
         const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup');
+        const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup');
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
         {
@@ -203,6 +204,13 @@ const FixturesScreen = () => {
             allFixturesArray.push({
                 title: ChampCupFixtures[0].title,
                 data: ChampCupFixtures[0].data,
+            })
+        }
+        if(ChallengeCupFixtures !== undefined && ChallengeCupFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: ChallengeCupFixtures[0].title,
+                data: ChallengeCupFixtures[0].data,
             })
         }
 
@@ -246,6 +254,7 @@ const FixturesScreen = () => {
         { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
         { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
+        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
 

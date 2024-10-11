@@ -1,7 +1,7 @@
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
-import { ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
+import { ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
@@ -24,7 +24,7 @@ export const leagueCodes = [
     { value: 'championsCup', code: "271937",
          displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
     { value: 'challengeCup', code: "272073",
-         displayName: '', leagueLogo: null, leagueAltLogo: null},
+         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo},
     { value: 'sixNations', code: "180659",
          displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
     { value: 'inter', code: "289234",
@@ -41,7 +41,7 @@ export const rugbyVizleagueCodes = [
     { value: 'championsCup', code: "1008",
          displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
     { value: 'challengeCup', code: "1026",
-         displayName: '', leagueLogo: null, leagueAltLogo: null},
+         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo},
 ];
 
 export const getRugbyVizLeagueCode = (name: string) => {
@@ -187,7 +187,7 @@ export const broadcasters = [
     { name: 'S4C', logo: S4CLogo},
     { name: 'Prem', logo: PremierSportsLogo},
     { name: 'DISC', logo: DiscoveryPlusLogo},
-    { name: 'bein', logo: BEINSportsLogo},
+    { name: 'beIN', logo: BEINSportsLogo},
     { name: 'TG4', logo: TG4Logo},
     { name: 'TNT', logo: TNTSportsLogo},
 ];

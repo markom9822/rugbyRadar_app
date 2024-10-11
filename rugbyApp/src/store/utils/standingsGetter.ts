@@ -116,7 +116,7 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
             {
                 teamName = getPremShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
-            else if(leagueName === 'championsCup')
+            else if(leagueName === 'championsCup' || leagueName === 'challengeCup')
             {
                 teamName = getChampsCupShortNameFromFullName(standingsChildren[j].teams[index].name);
             }

@@ -48,7 +48,7 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
         homeInfo = getSuperRugbyTeamInfoFromName(homeTeam)
         awayInfo = getSuperRugbyTeamInfoFromName(awayTeam)
     }
-    else if(league === "championsCup")
+    else if(league === "championsCup" || league === "challengeCup")
     {
         homeInfo = getChampionsCupTeamInfoFromName(homeTeam)
         awayInfo = getChampionsCupTeamInfoFromName(awayTeam)
