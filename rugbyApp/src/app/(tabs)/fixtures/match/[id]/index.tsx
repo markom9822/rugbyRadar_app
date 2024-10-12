@@ -228,15 +228,19 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
     const homePossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamPossession) * 100)).toString() + ' %';
     const awayPossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamPossession) * 100)).toString() + ' %';
 
-    const matchAttendance = new Number(matchInfoArray[0].matchAttendance).toLocaleString();
+    var matchAttendance = 'NA'
+    if(matchInfoArray[0].matchAttendance !== undefined)
+    {
+        matchAttendance = new Number(matchInfoArray[0].matchAttendance).toLocaleString();
+    }
 
     const broadcasterRender = (matchInfoArray: MatchInfo[]) => {
 
-        if(matchInfoArray[0].matchBroadcasters == undefined || matchInfoArray[0].matchBroadcasters == null)
+        if(matchInfoArray[0].matchBroadcasters == undefined || matchInfoArray[0].matchBroadcasters == null || matchInfoArray[0].matchBroadcasters.length == 0)
         {
             return (
                 <View>
-                    <Text>No Broadcasters Found</Text>
+                    <Text style={{color: 'lightgrey'}}>No Broadcasters Found</Text>
                 </View>
             )
         }

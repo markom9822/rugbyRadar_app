@@ -247,14 +247,13 @@ const FixturesScreen = () => {
 
     const leagueData = [
         { label: 'All Leagues', value: 'all', logo: null },
-        { label: 'International Test Match', value: 'inter', logo: InternationalLogo },
-        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
         { label: 'URC', value: 'urc', logo: URCAltLogo },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
         { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
         { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
+        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
 
