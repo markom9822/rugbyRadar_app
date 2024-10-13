@@ -1,6 +1,6 @@
 import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image } from "react-native";
+import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ActivityIndicator } from "react-native";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { generateSeasonList, getAnyTeamInfoFromName, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
 import { colors, fontSize } from "@/constants/tokens";
@@ -25,6 +25,7 @@ const TeamResults = () => {
     const [teamEventsArray, setTeamEventsArray] = useState<TeamEvent[] | undefined>();
     const [seasonYear, setSeasonYear] = useState<string>('');
     const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
+    const [isLoading, setIsLoading] = useState(false);
 
     const {teamID} = useGlobalSearchParams();
     const regex = new RegExp('([0-9]+)|([a-zA-Z]+)','g');
@@ -35,9 +36,12 @@ const TeamResults = () => {
 
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch Team Results")
+        setTeamEventsArray([])
         
+        setIsLoading(true)
         const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, seasonYear)
         setTeamEventsArray(teamSeasonFixtures)
+        setIsLoading(false)
     }
 
     const handleOnChangeSeason = (item: DropdownData) => {
@@ -47,11 +51,11 @@ const TeamResults = () => {
 
     const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
 
-        if(eventsArray == undefined || eventsArray.length == 0)
+        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Events Found</Text>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Results / Fixtures Found</Text>
                 </View>
             )
         }
@@ -69,7 +73,20 @@ const TeamResults = () => {
         {
             return index === eventsArray.length - 1;
         }
+    }
 
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
     }
 
     return(
@@ -91,6 +108,7 @@ const TeamResults = () => {
             onPressButton={handlePressFetchData}
             />
 
+            {activityIndicatorHeader()}
             {notFoundHeader(teamEventsArray)}
 
             <FlatList

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ViewStyle, FlatList, Image } from "react-native"
+import { View, Text, TouchableOpacity, ViewStyle, FlatList, Image, ActivityIndicator } from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { useState } from "react";
 import { colors, fontSize } from "@/constants/tokens";
@@ -138,6 +138,7 @@ const Lineups = () => {
 
     const [allLineupsArray, setAllLineupsArray] = useState<AllLineUpsInfo[]>([]);
     const [leagueName, setLeagueName] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const {id} = useGlobalSearchParams();
@@ -193,6 +194,7 @@ const Lineups = () => {
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
+        setIsLoading(true)
 
         // handle differently - separate API
         if(leagueID.indexOf("_RugbyViz") !== -1)
@@ -224,6 +226,7 @@ const Lineups = () => {
 
             const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
             setAllLineupsArray(combinedArray)
+            setIsLoading(false)
             return;
         }
 
@@ -253,6 +256,7 @@ const Lineups = () => {
         
         const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
         setAllLineupsArray(combinedArray)
+        setIsLoading(false)
     }
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeamName, awayTeamName);
@@ -343,6 +347,20 @@ const Lineups = () => {
 
     }
 
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
+    }
+
     return(
         <View style={defaultStyles.container}>
             <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
@@ -357,6 +375,8 @@ const Lineups = () => {
             }}
             onPressButton={handlePressFetchData}
             />
+
+            {activityIndicatorHeader()}
 
             {lineupsRender(homeTeamInfo, awayTeamInfo)}
 

@@ -92,12 +92,14 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
                 awayTeamScore: awayTeamScore,
                 matchDate: matchDate.toString(),
         };
-    
 
         teamFormArray.push(newArray)
     }
 
+
+    const sortedTeamFormArray = teamFormArray.sort((a, b) =>  new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime())
+
     return(
-        teamFormArray
+        sortedTeamFormArray
     )
 }

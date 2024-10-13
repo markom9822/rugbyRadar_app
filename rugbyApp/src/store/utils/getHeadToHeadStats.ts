@@ -1,3 +1,4 @@
+import { StatsInfo } from "../components/StatsPanel";
 
 export const getHeadToHeadStats = (matchStats: any) => {
 
@@ -55,53 +56,43 @@ export const getHeadToHeadStats = (matchStats: any) => {
     )
 }
 
-export const getHeadToHeadStatsRugbyViz = (matchStats: any) => {
+export const getHeadToHeadStatsRugbyViz = async (matchStats: any) => {
 
     var headToHeadArray = [];
 
-    //const gamesLength = matchStats.headToHeadGames[0].events.length;
+    const homeTeamID = matchStats.data.homeTeam.id;
+    const awayTeamID = matchStats.data.awayTeam.id;
+    const compID = matchStats.data.compId;
+    const thisMatchDate = new Date(matchStats.data.date);
 
-    //for (let index = 0; index < gamesLength; index++) {
+    const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/head-to-head?compId='+compID+'&team1Id='+homeTeamID+'&team2Id='+awayTeamID;
+    const headToHeadStats = await fetch(apiString,).then((res) => res.json())
 
-        /*const eventScore = matchStats.headToHeadGames[0].events[index].score;
-        const matchDate = matchStats.headToHeadGames[0].events[index].gameDate;
+    const previousMatches = headToHeadStats.data.previousMatches
 
-        const mainTeam = matchStats.headToHeadGames[0].team.displayName;
-        const mainTeamID = matchStats.headToHeadGames[0].team.id;
+    for (let index = 0; index < previousMatches.length; index++) {
 
-        const opponentTeam = matchStats.headToHeadGames[0].events[index].opponent.displayName;
-        const opponentID = matchStats.headToHeadGames[0].events[index].opponent.id;
+        const matchDate = new Date(previousMatches[index].date);
+        // dont include this match
+        if(matchDate.setHours(0,0,0,0) === thisMatchDate.setHours(0,0,0,0)) continue;
 
-        const homeTeamID = matchStats.headToHeadGames[0].events[index].homeTeamId;
-        const homeTeamScore = matchStats.headToHeadGames[0].events[index].homeTeamScore;
-        const awayTeamScore = matchStats.headToHeadGames[0].events[index].awayTeamScore;
+        const homeTeamName = previousMatches[index].homeTeam.shortName;
+        const awayTeamName = previousMatches[index].awayTeam.shortName;
 
-        var homeTeam;
-        var awayTeam;
-
-        if(homeTeamID === mainTeamID)
-        {
-            homeTeam = mainTeam;
-            awayTeam = opponentTeam;
-        }
-        else
-        {
-            homeTeam = opponentTeam;
-            awayTeam = mainTeam;
-        }
-        console.info(eventScore)*/
+        const homeTeamScore = previousMatches[index].homeTeam.score;
+        const awayTeamScore = previousMatches[index].awayTeam.score;
 
         const newArray = {
-                currentTeam: '-',
-                homeTeamName: '-',
-                awayTeamName: '-',
-                homeTeamScore: '-',
-                awayTeamScore: '-',
-                matchDate: '-',
+                currentTeam: homeTeamName,
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamScore: homeTeamScore,
+                awayTeamScore: awayTeamScore,
+                matchDate: matchDate.toDateString(),
         };
 
         headToHeadArray.push(newArray)
-    //}
+    }
 
     return(
         headToHeadArray

@@ -23,6 +23,7 @@ export default function TeamLayout() {
         }}>
 
         <TopTabs.Screen name="index" options={{title: 'Summary'}}/>
+        <TopTabs.Screen name="results" options={{title: 'Results / Fixtures'}}/>
 
         </TopTabs>
         </> 

@@ -1,5 +1,5 @@
 import { defaultStyles } from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, SectionListData } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, SectionListData, ActivityIndicator } from "react-native"
 import { colors, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -8,7 +8,7 @@ import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, InternationalLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-import { getFixturesForAll } from "@/store/utils/fixturesGetter"
+import { fetchRugbyVizData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -35,6 +35,7 @@ const FixturesScreen = () => {
     const [matchesSections, setMatchesSections] = useState<FixturesSection[]>([]);
     const [currentIndex, setCurrentIndex] = useState<Number | null>(null);
     const [refreshing, setRefreshing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [selectedDate, setDate] = useState(new Date())
@@ -66,106 +67,10 @@ const FixturesScreen = () => {
         )
     }
 
-    const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
-
-        const gamesCount = seasonAllMatches.data.length;
-        console.info(gamesCount)
-
-        var sections = []
-
-        var leagueArray = []
-
-        for (let index = 0; index < gamesCount; index++) {
-            
-            const matchDate = new Date(seasonAllMatches.data[index].date);
-
-            if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
-            {
-                const homeTeamName = seasonAllMatches.data[index].homeTeam.shortName;
-                const awayTeamName = seasonAllMatches.data[index].awayTeam.shortName;
-                const homeTeamScore = seasonAllMatches.data[index].homeTeam.score;
-                const awayTeamScore = seasonAllMatches.data[index].awayTeam.score;
-                const matchVenue = seasonAllMatches.data[index].venue.name;
-                const matchID = seasonAllMatches.data[index].id;
-                const compName = seasonAllMatches.data[index].compName;
-
-                const eventTime = seasonAllMatches.data[index].minute;
-
-                var eventState;
-                const matchStatus = seasonAllMatches.data[index].status;
-                if(matchStatus === "result")
-                {
-                    eventState = "post"
-                }
-                else if(matchStatus === "fixture")
-                {
-                    eventState = "pre"
-                }
-                else
-                {
-                    eventState = "ongoing"
-                }
-
-                let newMatchInfo = {
-                    homeTeam: homeTeamName,
-                    awayTeam: awayTeamName,
-                    homeScore: homeTeamScore,
-                    awayScore: awayTeamScore,
-                    matchDate: matchDate,
-                    matchTitle: '',
-                    matchVenue: matchVenue,
-                    matchLeague: compName,
-                    matchID: matchID,
-                    eventState: eventState,
-                    stateDetail: 'FT',
-                    eventTime: eventTime,
-                };
-
-                leagueArray.push(newMatchInfo)
-            }
-            
-        }
-
-        console.info(leagueArray)
-
-        if (leagueArray.length > 0) {
-            const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-            let leagueMatchesInfo = {
-                title: leagueDisplayName,
-                data: sortedLeagueArray
-            }
-
-            sections.push(leagueMatchesInfo)
-        }
-
-        return (
-            sections
-        )
-    }
-
-    const fetchRugbyVizData = async (thisLeagueName: string) => {
-
-        const rugbyVizLeagueCode = getRugbyVizLeagueCode(thisLeagueName);
-        // use separate API for club leagues
-        if(rugbyVizLeagueCode !== undefined)
-        {
-            const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+selectedDate.getFullYear()+'01'
-            const seasonsAllMatches = await fetch( apiStringAll, {
-                headers: {
-                    'Cache-control': 'no-cache'
-                }
-            }
-            ).then((res) => res.json())
-
-            const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate, getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode) )
-            return allFixturesArray;
-        }
-
-        return []
-    }
-
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
+        setMatchesSections([])
+        setIsLoading(true)
 
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(leagueName)
@@ -180,10 +85,10 @@ const FixturesScreen = () => {
         const allFixturesArray: FixturesSection[] = getFixturesForAll(todaysAllMatches)
 
         // collection of sections for all APIs
-        const URCFixtures: FixturesSection[] = await fetchRugbyVizData('urc');
-        const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem');
-        const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup');
-        const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup');
+        const URCFixtures: FixturesSection[] = await fetchRugbyVizData('urc', selectedDate);
+        const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem', selectedDate);
+        const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup', selectedDate);
+        const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
         {
@@ -230,6 +135,8 @@ const FixturesScreen = () => {
             const leagueFixtures = filterSectionList(allFixturesArray, leagueDisplayName)
             setMatchesSections(leagueFixtures)
         }
+
+        setIsLoading(false)
     }
 
     const handlePressDatePicker = () => {
@@ -259,7 +166,7 @@ const FixturesScreen = () => {
 
     const notFoundHeader = (eventsArray: FixturesSection[]) => {
 
-        if(eventsArray == undefined || eventsArray.length == 0)
+        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
@@ -271,26 +178,31 @@ const FixturesScreen = () => {
         return null
     }
 
-    const dateHeader = (eventsArray: FixturesSection[]) => {
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
+    }
+
+    const dateHeader = () => {
 
         const dateString = new Date(selectedDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'})
 
-        if(eventsArray == undefined || eventsArray.length == 0)
-        {
-            return null
-        }
-        else
-        {
-            return (
-                <View style={{ marginBottom: 2, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'left' }}>{dateString}</Text>
-                </View>
-            )
-
-        }
-
+        return (
+            <View style={{ marginBottom: 2, marginHorizontal: 5 }}>
+                <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'left' }}>{dateString}</Text>
+            </View>
+        )
+        
     }
-
 
     return <View style={defaultStyles.container}>
 
@@ -310,7 +222,7 @@ const FixturesScreen = () => {
             onPressButton={handlePressFetchData}
         />
 
-        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
             <TouchableOpacity onPress={handlePressDatePicker} 
             style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 4, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
                 <View style={{paddingHorizontal: 5}}>
@@ -329,10 +241,11 @@ const FixturesScreen = () => {
                 )
             }
 
-            {dateHeader(matchesSections)}
+            {dateHeader()}
         </View>
 
         {notFoundHeader(matchesSections)}
+        {activityIndicatorHeader()}
 
         <SectionList
             sections={matchesSections}

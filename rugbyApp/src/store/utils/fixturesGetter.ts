@@ -1,5 +1,5 @@
 import { FixturesSection } from "@/app/(tabs)/fixtures";
-import { getLeagueCodeFromDisplayName, getLeagueNameFromDisplayName, isLeagueInRugbyViz } from "./helpers";
+import { getLeagueCodeFromDisplayName, getLeagueNameFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, isLeagueInRugbyViz } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
 
@@ -150,4 +150,102 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
     return (
         sections
     )
+}
+
+export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
+
+    const gamesCount = seasonAllMatches.data.length;
+    console.info(gamesCount)
+
+    var sections = []
+
+    var leagueArray = []
+
+    for (let index = 0; index < gamesCount; index++) {
+        
+        const matchDate = new Date(seasonAllMatches.data[index].date);
+
+        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
+        {
+            const homeTeamName = seasonAllMatches.data[index].homeTeam.shortName;
+            const awayTeamName = seasonAllMatches.data[index].awayTeam.shortName;
+            const homeTeamScore = seasonAllMatches.data[index].homeTeam.score;
+            const awayTeamScore = seasonAllMatches.data[index].awayTeam.score;
+            const matchVenue = seasonAllMatches.data[index].venue.name;
+            const matchID = seasonAllMatches.data[index].id;
+            const compName = seasonAllMatches.data[index].compName;
+
+            const eventTime = seasonAllMatches.data[index].minute;
+
+            var eventState;
+            const matchStatus = seasonAllMatches.data[index].status;
+            if(matchStatus === "result")
+            {
+                eventState = "post"
+            }
+            else if(matchStatus === "fixture")
+            {
+                eventState = "pre"
+            }
+            else
+            {
+                eventState = "ongoing"
+            }
+
+            let newMatchInfo = {
+                homeTeam: homeTeamName,
+                awayTeam: awayTeamName,
+                homeScore: homeTeamScore,
+                awayScore: awayTeamScore,
+                matchDate: matchDate,
+                matchTitle: '',
+                matchVenue: matchVenue,
+                matchLeague: compName,
+                matchID: matchID,
+                eventState: eventState,
+                stateDetail: 'FT',
+                eventTime: eventTime,
+            };
+
+            leagueArray.push(newMatchInfo)
+        }
+        
+    }
+
+    console.info(leagueArray)
+
+    if (leagueArray.length > 0) {
+        const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
+        let leagueMatchesInfo = {
+            title: leagueDisplayName,
+            data: sortedLeagueArray
+        }
+
+        sections.push(leagueMatchesInfo)
+    }
+
+    return (
+        sections
+    )
+}
+
+export const fetchRugbyVizData = async (thisLeagueName: string, selectedDate: Date) => {
+
+    const rugbyVizLeagueCode = getRugbyVizLeagueCode(thisLeagueName);
+    // use separate API for club leagues
+    if(rugbyVizLeagueCode !== undefined)
+    {
+        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+selectedDate.getFullYear()+'01'
+        const seasonsAllMatches = await fetch( apiStringAll, {
+            headers: {
+                'Cache-control': 'no-cache'
+            }
+        }
+        ).then((res) => res.json())
+
+        const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate, getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode) )
+        return allFixturesArray;
+    }
+
+    return []
 }

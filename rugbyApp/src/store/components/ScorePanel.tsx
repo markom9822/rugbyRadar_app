@@ -116,7 +116,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     }
 
     return(
-        <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 50: 0}]}>
+        <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 55: 0}]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
                  {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
 

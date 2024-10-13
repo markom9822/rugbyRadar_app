@@ -1,6 +1,6 @@
 import { colors, fontSize } from "@/constants/tokens";
 import { Link, useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { useState } from "react";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
@@ -157,6 +157,7 @@ const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const {id} = useLocalSearchParams();
     const eventID = new String(id).substring(0,6);
@@ -164,6 +165,7 @@ const MatchSummary = () => {
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
+        setIsLoading(true)
 
         // handle differently - separate API
         if(leagueID.indexOf("_RugbyViz") !== -1)
@@ -174,6 +176,7 @@ const MatchSummary = () => {
             const matchInfo = getMatchInfoRugbyViz(matchDetails)
             setMatchInfoArray(matchInfo)
             setLeagueName(leagueID.replace("_RugbyViz", ""))
+            setIsLoading(false)
             return;
         }
 
@@ -183,6 +186,21 @@ const MatchSummary = () => {
         const matchInfo = getMatchInfo(matchDetails)
         setMatchInfoArray(matchInfo)
         setLeagueName(getLeagueName(leagueID));
+        setIsLoading(false)
+    }
+
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
     }
 
     return(
@@ -198,6 +216,8 @@ const MatchSummary = () => {
             }}
             onPressButton={handlePressFetchData}
             />
+
+            {activityIndicatorHeader()}
 
             <ScrollView>
                 <GameInfoPanel

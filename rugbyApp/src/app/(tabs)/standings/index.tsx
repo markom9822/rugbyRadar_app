@@ -1,5 +1,5 @@
 import { defaultStyles} from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, StyleSheet, LogBox, ImageBackground } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, StyleSheet, LogBox, ImageBackground, ActivityIndicator } from "react-native"
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens"
 import { useState } from "react"
@@ -73,9 +73,11 @@ const StandingsScreen = () => {
     const [leagueName, setLeagueName] = useState<string>('');
     const [seasonName, setSeasonName] = useState<string>('');
     const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
+    const [isLoading, setIsLoading] = useState(false);
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Standings")
+        setIsLoading(true)
 
         const currentLeagueCode = getLeagueCode(leagueName)
 
@@ -115,6 +117,7 @@ const StandingsScreen = () => {
             console.info(newArray)
             setStandingsArray(newArray)
         }
+        setIsLoading(false)
     }
 
     const handleOnChangeLeague = (item: DropdownData) => {
@@ -227,7 +230,7 @@ const StandingsScreen = () => {
 
     const notFoundHeader = (eventsArray: StandingInfo[]) => {
 
-        if(eventsArray == undefined || eventsArray.length == 0)
+        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
@@ -239,6 +242,19 @@ const StandingsScreen = () => {
         return null
     }
 
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
+    }
 
     return <View style={defaultStyles.container}>
 
@@ -266,8 +282,8 @@ const StandingsScreen = () => {
             onPressButton={handlePressFetchData}
         />
 
+        {activityIndicatorHeader()}
         {headerRender(leagueName == "worldRankings", standingsArray)}
-
         {notFoundHeader(standingsArray)}
         
         <FlatList 

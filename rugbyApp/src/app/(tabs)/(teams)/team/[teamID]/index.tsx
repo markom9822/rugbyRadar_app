@@ -1,6 +1,6 @@
 import { colors, fontSize, fontWeight } from "@/constants/tokens";
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView } from "react-native";
+import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView, ActivityIndicator } from "react-native";
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { useState } from "react";
 import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueCodeFromLeagueDisplayName, getRugbyVizLeagueNameFromCode, hexToRGB } from "@/store/utils/helpers";
@@ -70,6 +70,7 @@ const TeamSummary = () => {
 
     const [teamLeagueName, setTeamLeagueName] = useState<string>('');
     const [teamInfoYear, setTeamInfoYear] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const {teamID} = useLocalSearchParams();
 
@@ -82,7 +83,8 @@ const TeamSummary = () => {
     const currentYear = new Date().getFullYear().valueOf();
 
     const handlePressFetchData = async () => {
-        console.info("Pressed Fetch WIKI")
+        console.info("Pressed Fetch Team Info")
+        setIsLoading(true)
 
         // getting basic team info
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/'+ teamIDNum;
@@ -144,6 +146,7 @@ const TeamSummary = () => {
             const rugVizSeasonStandings = await fetch( rugVizApiString,).then((res) => res.json())
             const rugVizStandingsInfo = getTeamStandingsInfoRugbyViz(rugVizSeasonStandings, rugVizLeagueName)
             setStandingsArray(rugVizStandingsInfo)
+            setIsLoading(false)
             return;
         }
 
@@ -158,6 +161,21 @@ const TeamSummary = () => {
         // getting season stats
         const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamIDNum, thisTeamLeague, getAnyTeamInfoFromName(teamName).seasonType)
         setPlayerStatsArray(playerSeasonStats)
+        setIsLoading(false)
+    }
+
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
     }
 
     return(
@@ -172,6 +190,8 @@ const TeamSummary = () => {
             }}
             onPressButton={handlePressFetchData}
             />
+
+            {activityIndicatorHeader()}
 
             <ScrollView>
         

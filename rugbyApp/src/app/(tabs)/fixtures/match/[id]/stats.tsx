@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image, ScrollView} from "react-native"
+import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image, ScrollView, ActivityIndicator} from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
@@ -25,6 +25,7 @@ const MatchSummary = () => {
     const [mainTeamName, setMainTeamName] = useState<string | undefined>();
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const {id} = useGlobalSearchParams();
@@ -34,6 +35,7 @@ const MatchSummary = () => {
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
+        setIsLoading(true)
 
         // handle differently - separate API
         if(leagueID.indexOf("_RugbyViz") !== -1){
@@ -47,7 +49,7 @@ const MatchSummary = () => {
             setOpponentTeamName(awayTeam)
 
             const fullMatchStats = getFullMatchStatsRugbyViz(matchStats)
-            const headToHeadStats = getHeadToHeadStatsRugbyViz(matchStats)
+            const headToHeadStats = await getHeadToHeadStatsRugbyViz(matchStats)
             const mainTeamFormStats = await getTeamFormStatsRugbyViz(matchStats, true)
             const opponentTeamFormStats = await getTeamFormStatsRugbyViz(matchStats, false)
             const keyEvents = getKeyEventsRugbyViz(matchStats)
@@ -58,6 +60,8 @@ const MatchSummary = () => {
             setOpponentTeamFormStatsArray(opponentTeamFormStats)
             setKeyEventsArray(keyEvents)
             setLeagueName(leagueID.replace("_RugbyViz", ""))
+
+            setIsLoading(false)
             return;
         }
 
@@ -78,6 +82,21 @@ const MatchSummary = () => {
         setMainTeamFormStatsArray(mainTeamFormStats)
         setOpponentTeamFormStatsArray(opponentTeamFormStats)
         setKeyEventsArray(keyEvents)
+        setIsLoading(false)
+    }
+
+    const activityIndicatorHeader = () => {
+
+        if(isLoading)
+        {
+            return (
+                <View style={{marginVertical: 20}}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            )
+        }
+        
+        return null
     }
 
     return(
@@ -93,6 +112,8 @@ const MatchSummary = () => {
             }}
             onPressButton={handlePressFetchData}
             />
+
+            {activityIndicatorHeader()}
 
             <ScrollView >
                 <StatsPanel
