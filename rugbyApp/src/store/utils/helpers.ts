@@ -6,7 +6,7 @@ import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
-import { BEINSportsLogo, DiscoveryPlusLogo, PremierSportsLogo, RTELogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, PremierSportsLogo, RTELogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
@@ -190,6 +190,9 @@ export const broadcasters = [
     { name: 'beIN', logo: BEINSportsLogo},
     { name: 'TG4', logo: TG4Logo},
     { name: 'TNT', logo: TNTSportsLogo},
+    { name: 'BBCW', logo: BBCWalesLogo},
+    { name: 'BBCN', logo: BBCNILogo},
+
 ];
 
 

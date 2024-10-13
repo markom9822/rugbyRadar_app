@@ -126,7 +126,7 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
     const awayTeamTackles = handleGetMatchStat(matchDetails.data.awayTeam.stats?.tackles);
 
     const homeTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
-    const awayTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
+    const awayTeamMetres = handleGetMatchStat(matchDetails.data.awayTeam.stats?.metres);
 
 
     const newArray = [
@@ -385,7 +385,7 @@ export const BroadcasterItem = ({broadcasterName}: BroadcasterItemProps ) => {
     
     return (
         <View style={{paddingHorizontal: 4}}>
-            <Image style={[{resizeMode: 'contain',width: 35,height: 35,minHeight: 35, minWidth: 35}]} 
+            <Image style={[{resizeMode: 'contain',width: 40,height: 40,minHeight: 40, minWidth: 40}]} 
                 source={logo}/>
         </View>
     )
