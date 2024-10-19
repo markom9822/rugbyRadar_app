@@ -2,7 +2,7 @@ import { colors, fontSize, fontWeight } from "@/constants/tokens";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView, ActivityIndicator } from "react-native";
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueCodeFromLeagueDisplayName, getRugbyVizLeagueNameFromCode, hexToRGB } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
 import { getTeamStandingsInfo, getTeamStandingsInfoRugbyViz } from "@/store/utils/getTeamStandingsInfo";
@@ -66,7 +66,6 @@ const TeamSummary = () => {
 
     const [teamInfo, setTeamInfo] = useState<TeamInfo | undefined>();
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
-    const [playerStatsArray, setPlayerStatsArray] = useState<SeasonStatsInfo[]>([]);
 
     const [teamLeagueName, setTeamLeagueName] = useState<string>('');
     const [teamInfoYear, setTeamInfoYear] = useState<number>(0);
@@ -133,11 +132,14 @@ const TeamSummary = () => {
         const rugbyVizLeagueCodes = [
             { teamType: 'URC Club', leagueCode: '1068',},
             { teamType: 'Prem Club', leagueCode: '1011',},
+            { teamType: 'Top14 Club', leagueCode: '1002',},
+
         ];
 
         // use RugbyViz API
-        if(teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club')   
+        if(teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club' || teamInfo.type === 'Top14 Club')   
         {
+            // getting standings info
             const rugVizLeagueCode = rugbyVizLeagueCodes.find((element) => element.teamType == teamInfo.type)?.leagueCode;
             if(rugVizLeagueCode === undefined) return;
             const rugVizLeagueName = getRugbyVizLeagueNameFromCode(rugVizLeagueCode)
@@ -146,6 +148,7 @@ const TeamSummary = () => {
             const rugVizSeasonStandings = await fetch( rugVizApiString,).then((res) => res.json())
             const rugVizStandingsInfo = getTeamStandingsInfoRugbyViz(rugVizSeasonStandings, rugVizLeagueName)
             setStandingsArray(rugVizStandingsInfo)
+
             setIsLoading(false)
             return;
         }
@@ -158,11 +161,13 @@ const TeamSummary = () => {
         const standingsInfo = getTeamStandingsInfo(seasonStandings)
         setStandingsArray(standingsInfo)
 
-        // getting season stats
-        const playerSeasonStats = await getPlayerSeasonStats(targetYear, teamIDNum, thisTeamLeague, getAnyTeamInfoFromName(teamName).seasonType)
-        setPlayerStatsArray(playerSeasonStats)
         setIsLoading(false)
     }
+
+    // call only once on load
+    useEffect(() => {
+        handlePressFetchData()
+      }, []);
 
     const activityIndicatorHeader = () => {
 
@@ -183,14 +188,6 @@ const TeamSummary = () => {
             <Text style={{color: colors.text}}>Team ID {teamIDNum}</Text>
             <Text style={{color: colors.text}}>Team Name {teamIDName}</Text>
 
-            <FetchDataButton 
-            iconSize={24} 
-            style={{
-             backgroundColor: '#4287f5'
-            }}
-            onPressButton={handlePressFetchData}
-            />
-
             {activityIndicatorHeader()}
 
             <ScrollView>
@@ -209,11 +206,6 @@ const TeamSummary = () => {
             currentYear={teamInfoYear.toString()}
             />
 
-            <TeamPlayerStatsPanel 
-            playerStatsArray={playerStatsArray}
-            teamLeagueName={teamLeagueName}
-            currentYear={teamInfoYear.toString()}
-            />
             </ScrollView>
 
         </View>

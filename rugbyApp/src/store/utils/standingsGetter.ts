@@ -1,5 +1,6 @@
 import { getChampsCupShortNameFromFullName } from "../ChampionsCupRugbyTeamsDatabase";
 import { getPremShortNameFromFullName } from "../PremiershipRubyTeamsDatabase";
+import { getTop14ShortNameFromFullName } from "../Top14RugbyTeamsDatabase";
 import { getURCShortNameFromFullName } from "../URCRugbyTeamsDatabase";
 
 
@@ -77,7 +78,6 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
     var newArray = [];
 
     const standingsChildren = seasonStandings.data.groups
-    console.info(`Children count: ${standingsChildren.length}`)
 
     for (let j = 0; j < standingsChildren.length; j++) {
 
@@ -119,6 +119,10 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
             else if(leagueName === 'championsCup' || leagueName === 'challengeCup')
             {
                 teamName = getChampsCupShortNameFromFullName(standingsChildren[j].teams[index].name);
+            }
+            else if(leagueName === 'top14')
+            {
+                teamName = getTop14ShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
 
             const teamGP = standingsChildren[j].teams[index].played;

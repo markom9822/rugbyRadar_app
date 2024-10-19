@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, ViewStyle, FlatList, Image, ActivityIndicator } from "react-native"
 import { useGlobalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { colors, fontSize } from "@/constants/tokens";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
@@ -139,7 +139,6 @@ const Lineups = () => {
     const [allLineupsArray, setAllLineupsArray] = useState<AllLineUpsInfo[]>([]);
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-
 
     const {id} = useGlobalSearchParams();
     const eventID = new String(id).substring(0,6);
@@ -347,6 +346,11 @@ const Lineups = () => {
 
     }
 
+    // call only once on load
+    useEffect(() => {
+        handlePressFetchData()
+      }, []);
+
     const activityIndicatorHeader = () => {
 
         if(isLoading)
@@ -367,17 +371,7 @@ const Lineups = () => {
             <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
             <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
 
-            <FetchDataButton 
-            iconSize={24} 
-            style={{
-             backgroundColor: '#4287f5',
-             height: 60
-            }}
-            onPressButton={handlePressFetchData}
-            />
-
             {activityIndicatorHeader()}
-
             {lineupsRender(homeTeamInfo, awayTeamInfo)}
 
         </View>

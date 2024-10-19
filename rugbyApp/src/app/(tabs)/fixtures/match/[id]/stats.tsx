@@ -5,7 +5,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors, fontSize } from "@/constants/tokens";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
 import { getFullMatchStats, getFullMatchStatsRugbyViz } from "@/store/utils/getFullMatchStats";
 import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
@@ -26,7 +26,6 @@ const MatchSummary = () => {
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-
 
     const {id} = useGlobalSearchParams();
 
@@ -85,6 +84,11 @@ const MatchSummary = () => {
         setIsLoading(false)
     }
 
+    // call only once on load
+    useEffect(() => {
+        handlePressFetchData()
+      }, []);
+
     const activityIndicatorHeader = () => {
 
         if(isLoading)
@@ -104,14 +108,6 @@ const MatchSummary = () => {
             <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
             <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
             <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
-
-            <FetchDataButton 
-            iconSize={24} 
-            style={{
-             backgroundColor: '#4287f5'
-            }}
-            onPressButton={handlePressFetchData}
-            />
 
             {activityIndicatorHeader()}
 

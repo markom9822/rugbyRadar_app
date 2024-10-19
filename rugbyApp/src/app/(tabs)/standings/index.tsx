@@ -75,8 +75,12 @@ const StandingsScreen = () => {
     const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
     const [isLoading, setIsLoading] = useState(false);
 
-    const handlePressFetchData = async () =>{
+    const handlePressFetchData = async (targetSeasonName: string) =>{
         console.info("Pressed Fetch Standings")
+        if(leagueName === '' || targetSeasonName === '')
+        {
+            return;
+        }
         setIsLoading(true)
 
         const currentLeagueCode = getLeagueCode(leagueName)
@@ -97,10 +101,16 @@ const StandingsScreen = () => {
         // uses rugbyViz API
         else if(rugbyVizCode !== undefined)
         {
-            const seasonNumber = Number(seasonName) - 1;
+            const seasonNumber = Number(targetSeasonName) - 1;
             apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/'+rugbyVizCode+'?provider=rugbyviz&season='+ seasonNumber +'01';
 
             const seasonStandingsRugViz = await fetch( apiString,).then((res) => res.json())
+            if(seasonStandingsRugViz.data == undefined)
+            {
+                setIsLoading(false)
+                return;
+            }
+
             const newArray = getAllStandingsDataRugbyViz(seasonStandingsRugViz, leagueName)
 
             console.info(newArray)
@@ -109,7 +119,7 @@ const StandingsScreen = () => {
         else
         {
             apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season='
-             + seasonName + '&seasontype=1&sort=rank:asc&type=0';
+             + targetSeasonName + '&seasontype=1&sort=rank:asc&type=0';
             
             const seasonStandings = await fetch( apiString,).then((res) => res.json())
             const newArray = getAllStandingsData(seasonStandings)
@@ -129,6 +139,7 @@ const StandingsScreen = () => {
     const handleOnChangeSeason = (item: DropdownData) => {
         setSeasonName(item.value)
         setStandingsArray([])
+        handlePressFetchData(item.value)
     }
 
     const leagueData = [
@@ -273,14 +284,6 @@ const StandingsScreen = () => {
         isDisabled={isSeasonDropdownDisabled}
         value={seasonName}
         iconName="calendar-range"/>
-
-        <FetchDataButton 
-            iconSize={24} 
-            style={{
-             backgroundColor: '#4287f5'
-            }}
-            onPressButton={handlePressFetchData}
-        />
 
         {activityIndicatorHeader()}
         {headerRender(leagueName == "worldRankings", standingsArray)}

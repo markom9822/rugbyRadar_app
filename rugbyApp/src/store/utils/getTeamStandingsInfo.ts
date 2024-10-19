@@ -1,4 +1,5 @@
 import { getPremShortNameFromFullName } from "../PremiershipRubyTeamsDatabase";
+import { getTop14ShortNameFromFullName } from "../Top14RugbyTeamsDatabase";
 import { getURCShortNameFromFullName } from "../URCRugbyTeamsDatabase";
 
 export const getTeamStandingsInfo = (seasonStandings: any) => {
@@ -91,6 +92,10 @@ export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: s
             else if (leagueName === 'prem')
             {
                 teamName = getPremShortNameFromFullName(standingsChildren[j].teams[index].name);
+            }
+            else if (leagueName === 'top14')
+            {
+                teamName = getTop14ShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
 
             const teamGP = standingsChildren[j].teams[index].played;

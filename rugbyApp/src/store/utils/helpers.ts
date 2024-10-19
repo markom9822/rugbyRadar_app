@@ -42,6 +42,8 @@ export const rugbyVizleagueCodes = [
          displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
     { value: 'challengeCup', code: "1026",
          displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo},
+    { value: 'top14', code: "1002",
+        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
 ];
 
 export const getRugbyVizLeagueCode = (name: string) => {

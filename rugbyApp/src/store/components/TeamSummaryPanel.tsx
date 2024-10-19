@@ -17,7 +17,6 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
     if(teamName == undefined) return
     if(homeVenue == undefined) return
 
-
     const teamInfo = getAnyTeamInfoFromName(teamName)
 
     const foundedYear = Number(teamInfo.foundedYear);
@@ -36,8 +35,8 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                         minWidth: 60,}}/>
                 </View>
                 
-                <View style={{flexDirection: 'column', paddingHorizontal: 5}}>
-                    <Text style={{fontSize: fontSize.lg, fontWeight: 600, color: colors.text}}>{teamName.toUpperCase()}</Text>
+                <View style={{flexDirection: 'column', paddingHorizontal: 5, width: "80%"}}>
+                    <Text style={{fontSize: fontSize.lg, fontWeight: 600, color: colors.text, width: "100%"}}>{teamName.toUpperCase()}</Text>
                     <Text style={{color: 'lightgrey'}}>{teamForm}</Text>
                 </View>
                 

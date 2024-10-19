@@ -34,19 +34,19 @@ const TeamResults = () => {
     const teamIDNum = splittedArray[0];
     const teamIDName = new String(teamID).replace(teamIDNum, '');
 
-    const handlePressFetchData = async () => {
+    const handlePressFetchData = async (targetSeasonYear: string) => {
         console.info("Pressed Fetch Team Results")
         setTeamEventsArray([])
         
         setIsLoading(true)
-        const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, seasonYear)
+        const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, targetSeasonYear)
         setTeamEventsArray(teamSeasonFixtures)
         setIsLoading(false)
     }
 
     const handleOnChangeSeason = (item: DropdownData) => {
         setSeasonYear(item.value)
-        setTeamEventsArray([])
+        handlePressFetchData(item.value)
     }
 
     const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
@@ -99,14 +99,6 @@ const TeamResults = () => {
                 isDisabled={false}
                 value={seasonYear}
                 iconName="calendar-range" />
-
-            <FetchDataButton 
-            iconSize={24} 
-            style={{
-             backgroundColor: '#4287f5'
-            }}
-            onPressButton={handlePressFetchData}
-            />
 
             {activityIndicatorHeader()}
             {notFoundHeader(teamEventsArray)}

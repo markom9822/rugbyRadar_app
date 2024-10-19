@@ -40,7 +40,7 @@ const FixturesScreen = () => {
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [selectedDate, setDate] = useState(new Date())
 
-    const [leagueName, setLeagueName] = useState<string>('');
+    const [leagueName, setLeagueName] = useState<string>('all');
     
     const filterSectionList = (fixturesSections: FixturesSection[], leagueName: string) => {
     
@@ -89,6 +89,7 @@ const FixturesScreen = () => {
         const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem', selectedDate);
         const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup', selectedDate);
         const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
+        const Top14Fixtures: FixturesSection[] = await fetchRugbyVizData('top14', selectedDate);
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
         {
@@ -116,6 +117,13 @@ const FixturesScreen = () => {
             allFixturesArray.push({
                 title: ChallengeCupFixtures[0].title,
                 data: ChallengeCupFixtures[0].data,
+            })
+        }
+        if(Top14Fixtures !== undefined && Top14Fixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: Top14Fixtures[0].title,
+                data: Top14Fixtures[0].data,
             })
         }
 
