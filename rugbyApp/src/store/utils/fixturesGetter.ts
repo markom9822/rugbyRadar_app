@@ -1,5 +1,5 @@
 import { FixturesSection } from "@/app/(tabs)/fixtures";
-import { getLeagueCodeFromDisplayName, getLeagueNameFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, isLeagueInRugbyViz } from "./helpers";
+import { getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, isLeagueInRugbyViz } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
 

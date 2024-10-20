@@ -1,14 +1,13 @@
 import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ActivityIndicator } from "react-native";
-import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { generateSeasonList, getAnyTeamInfoFromName, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
+import { View, Text, FlatList, Image, ActivityIndicator } from "react-native";
+import { generateSeasonList, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
 import { colors, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown";
 import { getTeamSeasonFixtures } from "@/store/utils/getTeamSeasonFixtures";
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
-import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
+import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 
 export type TeamEvent = {
     eventDate: string,
@@ -223,32 +222,6 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
 
         </View>
         </View>  
-    )
-}
-
-
-type FetchDataButtonProps = {
-	style?: ViewStyle
-	iconSize?: number
-    onPressButton: () => void
-}
-
-export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDataButtonProps) => {
-
-    return (
-    <View style={[{ height: 50}, style]}>
-        <TouchableOpacity
-            activeOpacity={0.85}
-            onPress={onPressButton}
-        >
-            <MaterialCommunityIcons name="rugby" size={iconSize} color={colors.text} />
-            <Text style={{
-                fontSize: fontSize.base,
-                color: colors.text,
-                backgroundColor: '#4287f5',
-            }}>Fetch Wiki Data</Text>
-        </TouchableOpacity>
-    </View>
     )
 }
 

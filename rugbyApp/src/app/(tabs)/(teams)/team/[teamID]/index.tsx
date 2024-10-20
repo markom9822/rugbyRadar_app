@@ -213,30 +213,4 @@ const TeamSummary = () => {
 }
 
 
-type FetchDataButtonProps = {
-	style?: ViewStyle
-	iconSize?: number
-    onPressButton: () => void
-}
-
-export const FetchDataButton = ({ style, iconSize = 48, onPressButton}: FetchDataButtonProps) => {
-
-    return (
-    <View style={[{ height: 50}, style]}>
-        <TouchableOpacity
-            activeOpacity={0.85}
-            onPress={onPressButton}
-        >
-            <MaterialCommunityIcons name="rugby" size={iconSize} color={colors.text} />
-            <Text style={{
-                fontSize: fontSize.base,
-                color: colors.text,
-                backgroundColor: '#4287f5',
-            }}>Fetch Wiki Data</Text>
-        </TouchableOpacity>
-    </View>
-    )
-}
-
-
 export default TeamSummary;

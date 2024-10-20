@@ -1,13 +1,13 @@
 import { defaultStyles } from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, SectionListData, ActivityIndicator } from "react-native"
+import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, ActivityIndicator } from "react-native"
 import { colors, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, isLastItemInSectionList } from "@/store/utils/helpers"
+import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, isLastItemInSectionList } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { ChallengeCupAltLogo, ChampionsCupAltLogo, InternationalLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchRugbyVizData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 
 export type MatchInfo = {
