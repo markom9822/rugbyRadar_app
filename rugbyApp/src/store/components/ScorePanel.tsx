@@ -5,7 +5,7 @@ import { Link } from "expo-router"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInRugbyViz } from "../utils/helpers";
 import { useState } from "react";
-import { colors, fontSize } from "@/constants/tokens";
+import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 
 
 type ScorePanelProps = {
@@ -44,6 +44,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
     const homeScoreWeight = (new Number(homeScore) > new Number(awayScore)) ? ('600'):('300');
     const awayScoreWeight = (new Number(awayScore) > new Number(homeScore)) ? ('600'):('300');
+    const homeFontFamily = (new Number(homeScore) > new Number(awayScore)) ? (fontFamilies.bold):(fontFamilies.light);
+    const awayFontFamily = (new Number(awayScore) > new Number(homeScore)) ? (fontFamilies.bold):(fontFamilies.light);
 
     const matchTime = matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 
@@ -58,7 +60,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         if (eventState === "pre") {
             return (
                 <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
-                        <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center'}}>{matchTime}</Text>
+                        <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light}}>{matchTime}</Text>
                 </View>  
             )
         }
@@ -68,10 +70,10 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             return (
             <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text }]}>{homeScore}</Text>
-                        <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text}]}>{awayScore}</Text>
+                        <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
+                        <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
                     </View>
-                    <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{stateDetail}</Text>
+                    <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>{stateDetail}</Text>
             </View> 
             )
         }
@@ -80,10 +82,10 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             return (
                 <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text }]}>{homeScore}</Text>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text}]}>{awayScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
+                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
                         </View>
-                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text}}>{eventTime}'</Text>
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>{eventTime}'</Text>
                 </View> 
             )
         }
@@ -94,7 +96,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         if (eventNotStarted) {
             return (
                 <View style={{paddingVertical: 1}}>
-                    <Text style={{textAlign: 'center', fontSize: fontSize.xs, fontWeight: 300, color: colors.text}}>{matchVenue}</Text>
+                    <Text style={{textAlign: 'center', fontSize: fontSize.xs, fontWeight: 300, color: colors.text, fontFamily: fontFamilies.light}}>{matchVenue}</Text>
                 </View>  
             )
         }
@@ -126,7 +128,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text}]}>{homeTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold}]}>{homeTeamInfo.abbreviation}</Text>
                         <View style={{paddingHorizontal: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
@@ -143,7 +145,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                             style={[fixtureStyles.teamLogo]}
                             source={currentAwayTeamLogo} />
                         </View>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text}]}>{awayTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold}]}>{awayTeamInfo.abbreviation}</Text>
                     </View>
 
                 </View>

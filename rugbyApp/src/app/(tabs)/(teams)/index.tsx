@@ -1,4 +1,4 @@
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { InternationalRugbyTeams } from "@/store/InternationalRugbyTeamsDatabase"
 import { PremRugbyTeams } from "@/store/PremiershipRubyTeamsDatabase"
 import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
@@ -136,7 +136,7 @@ const TeamsScreen = () => {
                             minWidth: 20}}
                         source={getLeagueLogoFromDisplayName(title)?.leagueLogo} />
                 </View>
-                <Text style={{fontSize: 13, color: 'grey', fontWeight: 600}}>{title.toUpperCase()}</Text>
+                <Text style={{fontSize: 13, color: 'grey', fontWeight: 600, fontFamily: fontFamilies.bold}}>{title.toUpperCase()}</Text>
             </View>
             )
         }
@@ -150,7 +150,7 @@ const TeamsScreen = () => {
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Matching Team</Text>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Matching Team</Text>
                 </View>
             )
         }
@@ -164,7 +164,7 @@ const TeamsScreen = () => {
 
                 <TextInput
                     style={{ height: 40, margin: 12, borderRadius: 4 , 
-                        borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text }}
+                        borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text, fontFamily: fontFamilies.light }}
                     returnKeyType="search"
                     placeholder="Search teams"
                     placeholderTextColor={colors.text}
@@ -260,7 +260,8 @@ export const teamInfoPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         textAlign: 'left',
         fontWeight: 600,
-        fontSize: 18
+        fontSize: 18, 
+        fontFamily: fontFamilies.bold
     },
 })
 

@@ -1,10 +1,9 @@
-import { colors, fontSize } from "@/constants/tokens";
-import { Link, useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native"
-import {MaterialCommunityIcons} from '@expo/vector-icons'
+import { colors, fontFamilies, fontSize } from "@/constants/tokens";
+import { Link, useLocalSearchParams, Href } from "expo-router";
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native"
 import { useEffect, useState } from "react";
-import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
-import { getBroadcasterLogo, getLeagueDisplayNameFromCode, getLeagueName } from "@/store/utils/helpers";
+import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 
 export type MatchInfo = {
@@ -257,7 +256,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
         {
             return (
                 <View>
-                    <Text style={{color: 'lightgrey'}}>No Broadcasters Found</Text>
+                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light}}>No Broadcasters Found</Text>
                 </View>
             )
         }
@@ -284,24 +283,24 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                 {matchInfoArray[0].homeTeamName} v {matchInfoArray[0].awayTeamName}
             </Text>
 
-            <Text style={{fontWeight: 500, color: colors.text}}>Game Info</Text>
+            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Game Info</Text>
                 <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
                     <View style={{alignItems: 'center', flexDirection: 'column'}}>
-                        <Text style={{fontWeight: 500, color: colors.text}}>Venue</Text>
-                        <Text style={{marginBottom: 10, color: colors.text}}>{matchInfoArray[0].matchVenue}</Text>
-                        <Text style={{color: colors.text}}>Attendance: {matchAttendance}</Text>
+                        <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>Venue</Text>
+                        <Text style={{marginBottom: 10, color: colors.text, fontFamily: fontFamilies.regular}}>{matchInfoArray[0].matchVenue}</Text>
+                        <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Attendance: {matchAttendance}</Text>
                     </View>
                 </View>
             
-            <Text style={{fontWeight: 500, color: colors.text}}>Match Broadcasters</Text>
+            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Broadcasters</Text>
                 <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
                     {broadcasterRender(matchInfoArray)}
                 </View>
                 </View>
 
-            <Text style={{fontWeight: 500, color: colors.text}}>Match Stats</Text>
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 50}}>
+            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Stats</Text>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 55}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>
@@ -338,10 +337,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                 homeStat={matchInfoArray[0].homeTeamMetres}
                 awayStat={matchInfoArray[0].awayTeamMetres}
                 statTitle="Metres Run"/>
-            </View>
-
-            <Link style={[summaryPanelStyles.statsLink]} href={`/(tabs)/fixtures/match/${matchID}/stats`}>Full Match Stats</Link>
-            
+            </View>            
         </View>
     )
 }
@@ -402,7 +398,8 @@ export const summaryPanelStyles = StyleSheet.create({
         color: colors.text,
         fontWeight: 600,
         marginBottom: 15,
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: fontFamilies.bold
     },
     teamLogo: {
       resizeMode: 'contain',
@@ -415,7 +412,8 @@ export const summaryPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
-        color: colors.text
+        color: colors.text,
+        fontFamily: fontFamilies.regular
     },
     teamName: {
         paddingHorizontal: 10,
@@ -423,6 +421,7 @@ export const summaryPanelStyles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 500,
         color: colors.text,
+        fontFamily: fontFamilies.bold
     },
     teamInfoContainer:{
         width: "25%",

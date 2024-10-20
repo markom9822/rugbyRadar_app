@@ -1,4 +1,4 @@
-import { colors, fontSize } from "@/constants/tokens";
+import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { StyleSheet } from "react-native";
 
 export const defaultStyles = StyleSheet.create({
@@ -38,13 +38,15 @@ export const standingsPanelStyles = StyleSheet.create({
   teamText: {
       fontSize: 13,
       color: colors.text,
-      fontWeight: 500
+      fontWeight: 500,
+      fontFamily: fontFamilies.bold
   },
   teamStat: {
       fontSize: fontSize.xs,
       color: colors.text,
       padding: 5,
-      textAlign: 'center'
+      textAlign: 'center',
+      fontFamily: fontFamilies.regular
   },
 })
 
@@ -79,11 +81,10 @@ export const fixtureStyles = StyleSheet.create({
     teamName: {
         paddingHorizontal: 6,
         fontSize: 15,
-        fontWeight: 'bold',
     },
     teamScore: {
         fontSize: fontSize.lg,
-        paddingHorizontal: 8
+        paddingHorizontal: 8,
     },
     teamLogo: {
         resizeMode: 'contain',
@@ -134,7 +135,8 @@ export const lineupPanelStyles = StyleSheet.create({
     },
     teamName: {
         fontSize: fontSize.base, 
-        fontWeight: 600     
+        fontWeight: 600,
+        fontFamily: fontFamilies.bold 
     },
     teamLogo: {
       resizeMode: 'contain',
@@ -162,7 +164,8 @@ export const lineupPanelStyles = StyleSheet.create({
       paddingTop: 10,
       fontWeight: 600,
       color: 'lightgrey',
-      fontSize: 11
+      fontSize: 11,
+      fontFamily: fontFamilies.bold
     },
 })
 

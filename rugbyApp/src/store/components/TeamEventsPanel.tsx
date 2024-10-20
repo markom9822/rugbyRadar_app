@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native"
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInfo"
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 
 export type TeamEventStatsInfo = {
     currentTeam: string,
@@ -30,7 +30,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
         {
             return (
                 <View style={{ margin: 10 }}>
-                    <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'center' }}>No Events Found</Text>
+                    <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Events Found</Text>
                 </View>
             )
         }
@@ -41,7 +41,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
     return (
         <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 50: 0}]}>
-            <Text style={{color: colors.text}}>{panelTitle}</Text>
+            <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>{panelTitle}</Text>
 
             <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>
 
@@ -112,7 +112,7 @@ export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, hom
             
             {(showWinLoss)  && 
                 <View style={{flexDirection: 'row', width: "5%", justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: winLossColour, paddingHorizontal: 1, fontSize: 10, fontWeight: 600}}>{winOrLoseText}</Text>
+                    <Text style={{color: winLossColour, paddingHorizontal: 1, fontSize: 10, fontWeight: 600, fontFamily: fontFamilies.regular}}>{winOrLoseText}</Text>
                 </View>
             }
 
@@ -159,22 +159,25 @@ export const teamEventsPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
-        color: colors.text
+        color: colors.text,
+        fontFamily: fontFamilies.regular
     },
     matchDate: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontSize: fontSize.xs,
-        color: colors.text
+        color: colors.text,
+        fontFamily: fontFamilies.light
     },
     teamName: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
         fontWeight: 500,
-        fontSize: 11,
-        color: colors.text
+        fontSize: 10,
+        color: colors.text,
+        fontFamily: fontFamilies.regular
     },
     teamInfoContainer:{
         width: "20%",

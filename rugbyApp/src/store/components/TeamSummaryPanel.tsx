@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native"
 import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 
 
@@ -36,8 +36,8 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                 </View>
                 
                 <View style={{flexDirection: 'column', paddingHorizontal: 5, width: "80%"}}>
-                    <Text style={{fontSize: fontSize.lg, fontWeight: 600, color: colors.text, width: "100%"}}>{teamName.toUpperCase()}</Text>
-                    <Text style={{color: 'lightgrey'}}>{teamForm}</Text>
+                    <Text style={{fontSize: fontSize.lg, fontWeight: 600, color: colors.text, width: "100%", fontFamily: fontFamilies.bold}}>{teamName.toUpperCase()}</Text>
+                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light}}>{teamForm}</Text>
                 </View>
                 
             </View>
@@ -48,7 +48,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                         <MaterialIcons name="stadium" size={20} color={'lightgrey'} />
                     </View>
                     
-                    <Text style={{ paddingHorizontal: 8, color: colors.text }}>{homeVenue}</Text>
+                    <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.light }}>{homeVenue}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', marginVertical: 4 }}>
@@ -56,7 +56,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                         <MaterialIcons name="location-pin" size={20} color={'lightgrey'} />
                     </View>
                     
-                    <Text style={{ paddingHorizontal: 8, color: colors.text }}>{homeLocation}</Text>
+                    <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.light }}>{homeLocation}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', marginVertical: 4 }}>
@@ -64,7 +64,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                         <MaterialCommunityIcons name="timer-sand" size={20} color={'lightgrey'} />
                     </View>
                     
-                    <Text style={{ paddingHorizontal: 8, color: colors.text }}>{teamInfo.foundedYear} ({yearDiff} years ago)</Text>
+                    <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.light }}>{teamInfo.foundedYear} ({yearDiff} years ago)</Text>
                 </View>
 
             </View>

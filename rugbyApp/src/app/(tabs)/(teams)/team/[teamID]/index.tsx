@@ -1,15 +1,12 @@
-import { colors, fontSize, fontWeight } from "@/constants/tokens";
+import { colors} from "@/constants/tokens";
 import { useLocalSearchParams } from "expo-router";
-import { View, Text, ViewStyle, TouchableOpacity, FlatList, Image, ScrollView, ActivityIndicator } from "react-native";
-import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
-import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueCodeFromLeagueDisplayName, getRugbyVizLeagueNameFromCode, hexToRGB } from "@/store/utils/helpers";
+import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getRugbyVizLeagueNameFromCode } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
 import { getTeamStandingsInfo, getTeamStandingsInfoRugbyViz } from "@/store/utils/getTeamStandingsInfo";
 import { TeamSummaryPanel } from "@/store/components/TeamSummaryPanel";
 import { StandingInfo, TeamStandingPanel } from "@/store/components/TeamStandingPanel";
-import { TeamPlayerStatsPanel } from "@/store/components/TeamPlayerStatsPanel";
-import { getPlayerSeasonStats } from "@/store/utils/getPlayerSeasonStats";
 
 
 export const getTeamBasicInfo = (teamDetails: any) => {

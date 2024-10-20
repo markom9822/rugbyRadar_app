@@ -1,6 +1,6 @@
 import { defaultStyles } from "@/styles"
 import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, ActivityIndicator } from "react-native"
-import { colors, fontSize} from "@/constants/tokens"
+import { colors, fontFamilies, fontSize} from "@/constants/tokens"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, isLastItemInSectionList } from "@/store/utils/helpers"
@@ -9,6 +9,7 @@ import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDro
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchRugbyVizData, getFixturesForAll } from "@/store/utils/fixturesGetter"
+import { useFonts } from "expo-font"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -41,6 +42,7 @@ const FixturesScreen = () => {
     const [selectedDate, setDate] = useState(new Date())
 
     const [leagueName, setLeagueName] = useState<string>('all');
+
     
     const filterSectionList = (fixturesSections: FixturesSection[], leagueName: string) => {
     
@@ -178,7 +180,7 @@ const FixturesScreen = () => {
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Fixtures Found</Text>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
                 </View>
             )
         }
@@ -206,7 +208,7 @@ const FixturesScreen = () => {
 
         return (
             <View style={{ marginBottom: 2, marginHorizontal: 5 }}>
-                <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'left' }}>{dateString}</Text>
+                <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'left', fontFamily: fontFamilies.light }}>{dateString}</Text>
             </View>
         )
         
@@ -236,7 +238,7 @@ const FixturesScreen = () => {
                 <View style={{paddingHorizontal: 5}}>
                     <MaterialIcons name="date-range" size={20} color={colors.icon} />
                 </View>
-                <Text style={{fontSize: fontSize.sm, color: colors.text}}>{selectedDate.toLocaleDateString()}</Text>
+                <Text style={{fontSize: fontSize.sm, color: colors.text, fontFamily: fontFamilies.regular}}>{selectedDate.toLocaleDateString()}</Text>
             </TouchableOpacity>
             {
                 datePickerOpen && (
@@ -290,7 +292,7 @@ const FixturesScreen = () => {
                             }}
                             source={getLeagueInfoFromDisplayName(data[0].matchLeague)?.leagueAltLogo} />
                     </View>
-                    <Text style={{ fontSize: 13, color: 'grey', fontWeight: 600 }}>{title.toUpperCase()}</Text>
+                    <Text style={{ fontSize: 13, color: 'grey', fontWeight: 600, fontFamily: fontFamilies.bold }}>{title.toUpperCase()}</Text>
                 </View>
             )}
             refreshControl={

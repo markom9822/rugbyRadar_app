@@ -1,9 +1,8 @@
-import { View, Text, TouchableOpacity, ViewStyle, StyleSheet, Image, ScrollView, ActivityIndicator} from "react-native"
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator} from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName } from "@/store/utils/helpers";
-import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { colors, fontSize } from "@/constants/tokens";
-import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
+import { colors, fontFamilies, fontSize } from "@/constants/tokens";
+import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
 import { useEffect, useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
@@ -187,10 +186,10 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
     {
         return(
         <View style={[keyEventsPanelStyles.container]}>
-            <Text style={{color: colors.text}}>Key Events</Text>
+            <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Key Events</Text>
 
             <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey'}}>
-                <Text style={{color:'lightgrey'}}>Currently no key events</Text>
+                <Text style={{color:'lightgrey', fontFamily: fontFamilies.light}}>Currently no key events</Text>
             </View>
         </View>
         )
@@ -198,7 +197,7 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
 
     return (
         <View style={[keyEventsPanelStyles.container]}>
-            <Text style={{color: colors.text}}>Key Events</Text>
+            <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Key Events</Text>
 
             <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey', width: "80%"}}>
 
@@ -256,10 +255,10 @@ export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eve
                 <View style={{ flexDirection: 'row', marginVertical: 5, justifyContent: 'flex-end', alignItems: 'center' }}>
 
                     <View style={{width: "40%", flexDirection: 'column', paddingVertical: 2, borderBottomColor: 'grey', borderBottomWidth: 1}}>
-                        <Text style={{ color: colors.text }}>{eventPlayer}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{eventPlayer}</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: 500, color: colors.text }}>{eventTime}'</Text>
-                            <Text style={{ marginHorizontal: 10, color: colors.text }}>{eventScore}</Text>
+                            <Text style={{ fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular }}>{eventTime}'</Text>
+                            <Text style={{ marginHorizontal: 10, color: colors.text, fontFamily: fontFamilies.regular }}>{eventScore}</Text>
                         </View>
                     </View>
 
@@ -290,10 +289,10 @@ export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eve
                     </View>
 
                     <View style={{width: "40%", flexDirection: 'column', borderBottomColor: 'grey', borderBottomWidth: 1}}>
-                        <Text style={{ color: colors.text }}>{eventPlayer}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{eventPlayer}</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: 500, color: colors.text }}>{eventTime}'</Text>
-                            <Text style={{ marginHorizontal: 10, color: colors.text }}>{eventScore}</Text>
+                            <Text style={{ fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular }}>{eventTime}'</Text>
+                            <Text style={{ marginHorizontal: 10, color: colors.text, fontFamily: fontFamilies.regular}}>{eventScore}</Text>
                         </View>
                     </View>
 

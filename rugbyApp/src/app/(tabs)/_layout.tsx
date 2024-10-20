@@ -1,4 +1,4 @@
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { Tabs } from "expo-router"
 import {MaterialCommunityIcons, FontAwesome6} from '@expo/vector-icons'
 import * as SystemUI from 'expo-system-ui';
@@ -13,6 +13,7 @@ const TabsNavigation = () => {
             tabBarLabelStyle: {
                 fontSize: fontSize.xs,
                 fontWeight: '500',
+                fontFamily: fontFamilies.regular,
             },
             headerShown: false,
            
@@ -26,6 +27,7 @@ const TabsNavigation = () => {
                 left: 0,
                 bottom: 0,
                 right: 0,
+                height: 55
             },
 
         }}>

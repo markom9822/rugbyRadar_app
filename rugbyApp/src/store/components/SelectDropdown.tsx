@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Image, StatusBar} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { colors } from "@/constants/tokens";
+import { colors, fontFamilies } from "@/constants/tokens";
 
 export type DropdownData = {
     label: string
@@ -35,12 +35,12 @@ export const CustomSelectDropdown = ({
     return(
         <Dropdown
         style={styles.dropdown}
-        placeholderStyle={[styles.placeholderStyle, {color: textColour, opacity: textOpacity}]}
-        selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity}]}
+        placeholderStyle={[styles.placeholderStyle, {color: textColour, opacity: textOpacity, fontFamily: fontFamilies.regular}]}
+        selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity, fontFamily: fontFamilies.regular}]}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={[styles.iconStyle]}
         itemContainerStyle={{backgroundColor: colors.background}}
-        itemTextStyle={{color: colors.text}}
+        itemTextStyle={{color: colors.text, fontFamily: fontFamilies.regular}}
         containerStyle={{backgroundColor: colors.background, borderColor: 'lightgrey', borderRadius: 1}}
         activeColor={colors.altBackground}
 
@@ -102,12 +102,12 @@ export const LeagueSelectDropdown = ({
   return(
       <Dropdown
       style={styles.dropdown}
-      placeholderStyle={[styles.placeholderStyle, {color: textColour, opacity: textOpacity}]}
-      selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity}]}
+      placeholderStyle={[styles.placeholderStyle, {color: textColour, opacity: textOpacity, fontFamily: fontFamilies.regular}]}
+      selectedTextStyle={[styles.selectedTextStyle, {color: textColour, opacity: textOpacity, fontFamily: fontFamilies.regular}]}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={[styles.iconStyle]}
       itemContainerStyle={{backgroundColor: colors.background}}
-      itemTextStyle={{color: colors.text}}
+      itemTextStyle={{color: colors.text, fontFamily: fontFamilies.regular}}
       containerStyle={{backgroundColor: colors.background, borderColor: 'lightgrey', borderRadius: 1}}
       activeColor={colors.altBackground}
 
@@ -137,7 +137,7 @@ export const LeagueSelectDropdown = ({
                 style={[styles.leagueLogo]}
                 source={item.logo} />
             </View>
-            <Text style={{color: colors.text, paddingHorizontal: 3}}>{item.label}</Text>
+            <Text style={{color: colors.text, paddingHorizontal: 3, fontFamily: fontFamilies.regular}}>{item.label}</Text>
           </View>
         )
       }}

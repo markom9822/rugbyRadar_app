@@ -1,4 +1,4 @@
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { View, Image, Text, StyleSheet } from "react-native"
 
@@ -236,7 +236,8 @@ export const statsPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         textAlign: 'center',
-        color: colors.text
+        color: colors.text,
+        fontFamily: fontFamilies.regular
     },
     statsTitle: {
         paddingHorizontal: 10,
@@ -246,7 +247,8 @@ export const statsPanelStyles = StyleSheet.create({
         borderBottomColor: 'lightgrey',
         borderBottomWidth: 2,
         width : "90%",
-        color: colors.text
+        color: colors.text,
+        fontFamily: fontFamilies.regular
     },
     teamName: {
         paddingHorizontal: 10,
@@ -254,7 +256,8 @@ export const statsPanelStyles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 500,
         fontSize: 18,
-        color: colors.text
+        color: colors.text,
+        fontFamily: fontFamilies.bold
     },
     teamInfoContainer:{
         width: "30%",

@@ -1,7 +1,6 @@
 import { defaultStyles} from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, FlatList, StyleSheet, LogBox, ImageBackground, ActivityIndicator } from "react-native"
-import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { colors, fontSize } from "@/constants/tokens"
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native"
+import { fontFamilies, fontSize } from "@/constants/tokens"
 import { useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { generateSeasonList, getLeagueCode, getRugbyVizLeagueCode } from "@/store/utils/helpers"
@@ -245,7 +244,7 @@ const StandingsScreen = () => {
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Standings Found</Text>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Standings Found</Text>
                 </View>
             )
         }
@@ -319,12 +318,14 @@ export const standingsHeadingStyles = StyleSheet.create({
         fontSize: 13,
         fontWeight: 500,
         color: 'grey',
+        fontFamily: fontFamilies.bold
     },
     headerStat: {
         textAlign: 'center',
         fontSize: 13,
         fontWeight: 500,
         color: 'grey',
+        fontFamily: fontFamilies.bold
     },
   })
 

@@ -2,7 +2,7 @@ import { defaultStyles } from "@/styles";
 import { useGlobalSearchParams } from "expo-router";
 import { View, Text, FlatList, Image, ActivityIndicator } from "react-native";
 import { generateSeasonList, getLeagueInfoFromDisplayName } from "@/store/utils/helpers";
-import { colors, fontSize } from "@/constants/tokens";
+import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { CustomSelectDropdown, DropdownData } from "@/store/components/SelectDropdown";
 import { getTeamSeasonFixtures } from "@/store/utils/getTeamSeasonFixtures";
@@ -54,7 +54,7 @@ const TeamResults = () => {
         {
             return (
                 <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center' }}>No Results / Fixtures Found</Text>
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Results / Fixtures Found</Text>
                 </View>
             )
         }
@@ -149,24 +149,27 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
 
     const homeScoreWeight = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? ('500'):('300');
     const awayScoreWeight = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? ('500'):('300');
+    const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold):(fontFamilies.light);
+    const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold):(fontFamilies.light);
 
 
     const scoreRender = (eventNotStarted: boolean) => {
 
+        // event has started
         if (!eventNotStarted) {
             return (
                 <View style={{width: "30%", flexDirection:'row', justifyContent: 'center'}}>
                     <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontWeight: homeScoreWeight,
-                        fontSize: fontSize.lg, textAlign: 'center', width: "50%", color: colors.text}}>{homeTeamScore}</Text>
+                        fontSize: fontSize.lg, textAlign: 'center', width: "50%", color: colors.text, fontFamily: homeFontFamily}}>{homeTeamScore}</Text>
                     <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontWeight: awayScoreWeight,
-                        fontSize: fontSize.lg, textAlign: 'center', width: "50%", color: colors.text}}>{awayTeamScore}</Text>
+                        fontSize: fontSize.lg, textAlign: 'center', width: "50%", color: colors.text, fontFamily: awayFontFamily}}>{awayTeamScore}</Text>
                 </View>
             )
         }
         else {
             return (
                 <View style={{width: "30%"}}>
-                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', color: colors.text}}>{eventTime}</Text>
+                    <Text style={{paddingHorizontal: 5, paddingVertical: 3, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', color: colors.text, fontFamily: fontFamilies.light}}>{eventTime}</Text>
                 </View>
             )
         }
@@ -177,12 +180,12 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
          marginVertical: 5, borderColor: 'lightgrey', borderWidth: 1, backgroundColor: panelBackgroundColour, marginHorizontal: 4, borderRadius: 4}}>
 
-            <Text style={{fontSize: fontSize.xs, color: colors.text}}>{formattedDate}</Text>
+            <Text style={{fontSize: fontSize.xs, color: colors.text, fontFamily: fontFamilies.light}}>{formattedDate}</Text>
 
             <View style={{ flexDirection: 'row', padding: 5, justifyContent: 'space-evenly', alignItems: 'center'}}>
                 <View style={{width: "35%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
 
-                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text}}>{homeTeamInfo.abbreviation}</Text>
+                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>{homeTeamInfo.abbreviation}</Text>
 
                     <View style={{paddingHorizontal: 5}}>
                         <Image source={homeTeamInfo.altLogo}
@@ -212,13 +215,13 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
                             }} />
                     </View>
                     
-                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text}}>{awayTeamInfo.abbreviation}</Text>
+                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>{awayTeamInfo.abbreviation}</Text>
 
                 </View>
 
             </View>
 
-            <Text style={{fontSize: fontSize.xs, color: 'lightgrey'}}>{leagueName}</Text>
+            <Text style={{fontSize: fontSize.xs, color: 'lightgrey', fontFamily: fontFamilies.light}}>{leagueName}</Text>
 
         </View>
         </View>  

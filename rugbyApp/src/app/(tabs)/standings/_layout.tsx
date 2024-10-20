@@ -1,4 +1,4 @@
-import { colors } from "@/constants/tokens"
+import { colors, fontFamilies } from "@/constants/tokens"
 import { defaultStyles } from "@/styles"
 import { Stack } from "expo-router"
 import { View } from "react-native"
@@ -10,7 +10,8 @@ const StandingsScreenLayout = () => {
             backgroundColor: colors.background
             },
             headerTitleStyle: {
-                color: colors.text
+                color: colors.text,
+                fontFamily: fontFamilies.bold
             },
             headerTintColor: colors.text
         }}>

@@ -6,7 +6,7 @@ import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
 import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase"
-import { colors } from "@/constants/tokens"
+import { colors, fontFamilies } from "@/constants/tokens"
 import { hexToRGB } from "../utils/helpers"
 
 
@@ -128,7 +128,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamDraws}</Text>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamLosses}</Text>
                         <Text style={[standingsPanelStyles.teamStat, {width: '15%', color: teamPDTextColour}]}>{teamPD}</Text>
-                        <Text style={[standingsPanelStyles.teamStat, {width: '9%', fontWeight: 600}]}>{teamPoints}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, {width: '9%', fontWeight: 600, fontFamily: fontFamilies.bold}]}>{teamPoints}</Text>
     
                     </>
                 )

@@ -1,4 +1,4 @@
-import { colors, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { View, Text, Image} from "react-native"
 import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens"
 
@@ -26,14 +26,14 @@ export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamN
     return (
         <View style={{marginVertical: 20, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
          paddingHorizontal: 10, paddingBottom: 15, paddingTop: 8, marginBottom: 55}}>
-            <Text style={{fontWeight: 500, color: colors.text}}>{currentYear} {teamLeagueName} Table</Text>
+            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>{currentYear} {teamLeagueName} Table</Text>
 
             <View style={{ flexDirection: 'row', paddingVertical: 2, borderTopColor: 'grey', borderTopWidth: 1, borderBottomColor: 'grey', borderBottomWidth: 1}}>
-                <Text style={{ width: "10%", fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey' }}>R</Text>
-                <Text style={{ width: "40%", fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey' }}>TEAM</Text>
-                <Text style={{ width: "15%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey' }}>GP</Text>
-                <Text style={{ width: "20%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey' }}>PD</Text>
-                <Text style={{ width: "15%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey' }}>P</Text>
+                <Text style={{ width: "10%", fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey', fontFamily: fontFamilies.bold }}>R</Text>
+                <Text style={{ width: "40%", fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey', fontFamily: fontFamilies.bold }}>TEAM</Text>
+                <Text style={{ width: "15%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey', fontFamily: fontFamilies.bold }}>GP</Text>
+                <Text style={{ width: "20%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey', fontFamily: fontFamilies.bold }}>PD</Text>
+                <Text style={{ width: "15%", textAlign: 'right', fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey', fontFamily: fontFamilies.bold }}>P</Text>
             </View>
 
             <View>
@@ -74,6 +74,8 @@ export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, in
 
     const ranking = index + 1;
     const textWeight = (isCurrentTeam) ? ('600'):('300');
+    const textFontFamily = (isCurrentTeam) ? (fontFamilies.bold):(fontFamilies.light);
+
 
     const itemBottomBorderColour = (isLastItem) ? ('grey'):('lightgrey');
 
@@ -83,7 +85,7 @@ export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, in
         {
             return (
                 <View style={{width: "100%", flexDirection: 'row', paddingTop: 8, paddingLeft: 3, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
-                    <Text style={[{fontWeight: 600, color: 'lightgrey', fontSize: 11}]}>{teamPool.toUpperCase()}</Text>
+                    <Text style={[{fontWeight: 600, color: 'lightgrey', fontSize: 11, fontFamily: fontFamilies.bold}]}>{teamPool.toUpperCase()}</Text>
                 </View>
             )
         }
@@ -91,11 +93,11 @@ export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, in
         {
             return (
                 <View style={{ flexDirection: 'row', paddingVertical: 2, borderBottomColor: itemBottomBorderColour, borderBottomWidth: 1 }}>
-                    <Text style={{ width: "10%", fontWeight: textWeight, fontSize: 13, color: colors.text }}>{ranking}</Text>
-                    <Text style={{ width: "40%", fontWeight: textWeight, fontSize: 13, color: colors.text }}>{teamName}</Text>
-                    <Text style={{ width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text }}>{gamesPlayed}</Text>
-                    <Text style={{ width: "20%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text }}>{pointsDiff}</Text>
-                    <Text style={{ width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text }}>{points}</Text>
+                    <Text style={{ width: "10%", fontWeight: textWeight, fontSize: 13, color: colors.text, fontFamily: textFontFamily }}>{ranking}</Text>
+                    <Text style={{ width: "40%", fontWeight: textWeight, fontSize: 13, color: colors.text, fontFamily: textFontFamily}}>{teamName}</Text>
+                    <Text style={{ width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text, fontFamily: textFontFamily }}>{gamesPlayed}</Text>
+                    <Text style={{ width: "20%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text, fontFamily: textFontFamily }}>{pointsDiff}</Text>
+                    <Text style={{ width: "15%", fontWeight: textWeight, fontSize: 13, textAlign: 'right', color: colors.text, fontFamily: textFontFamily }}>{points}</Text>
                 </View>
             )
         }

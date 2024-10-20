@@ -1,6 +1,6 @@
 import { Stack, withLayoutContext } from "expo-router";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { colors } from "@/constants/tokens";
+import { colors, fontFamilies } from "@/constants/tokens";
 
 const Tab = createMaterialTopTabNavigator();
 const TopTabs = withLayoutContext(Tab.Navigator)
@@ -11,6 +11,7 @@ export default function MatchLayout() {
         <Stack.Screen options={{title: 'Match Details'}} />
         <TopTabs screenOptions={{
             tabBarLabelStyle: {
+                fontFamily: fontFamilies.bold
 
             },
             tabBarStyle: { backgroundColor: colors.altBackground  },

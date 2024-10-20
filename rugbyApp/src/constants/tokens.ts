@@ -24,6 +24,12 @@ export const fontWeight = {
 	heavy: '800',
 }
 
+export const fontFamilies = {
+	light: 'WorkSans-Light',
+	regular: 'WorkSans-Regular',
+	bold: 'WorkSans-SemiBold',
+}
+
 
 export const screenPadding = {
 	horizontal: 24,
