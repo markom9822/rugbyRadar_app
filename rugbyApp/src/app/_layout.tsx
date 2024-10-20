@@ -21,7 +21,7 @@ const RootNavigation = () => {
 	return(
 		<Stack>
 			<Stack.Screen  name='(tabs)' options={{headerShown: false, statusBarColor: colors.background,
-				 navigationBarColor: colors.background}}/>
+				 navigationBarColor: 'black'}}/>
 		</Stack>
 	)
 }

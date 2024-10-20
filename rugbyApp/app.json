@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/rugbyAdaptive-icon.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "userInterfaceStyle": "dark"
     },
     "web": {
       "favicon": "./assets/favicon.png"

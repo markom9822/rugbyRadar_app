@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image} from "react-native";
+import { StyleSheet, View, Text, Image, StatusBar} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { colors } from "@/constants/tokens";
@@ -96,6 +96,8 @@ export const LeagueSelectDropdown = ({
 
   const iconColour = (isDisabled) ? ('grey'):(colors.icon);
   const iconOpacity = (isDisabled) ? (0.5):(1);
+
+
 
   return(
       <Dropdown
