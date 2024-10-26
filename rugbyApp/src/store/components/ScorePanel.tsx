@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, Pressable, Modal } from 
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from "expo-router"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInRugbyViz } from "../utils/helpers";
+import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
 import { useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 
@@ -112,13 +112,17 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     {
         linkID = matchID + leagueName + "_RugbyViz"
     }
+    else if(isLeagueInWorldRugbyAPI(leagueDisplayName))
+    {
+        linkID = matchID + leagueName + "_WorldRugbyAPI"
+    }
     else
     {
         linkID = matchID;
     }
 
     return(
-        <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 55: 0}]}>
+        <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 60: 0}]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
                  {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
 

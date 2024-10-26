@@ -8,8 +8,7 @@ import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-import { fetchRugbyVizData, getFixturesForAll } from "@/store/utils/fixturesGetter"
-import { useFonts } from "expo-font"
+import { fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -92,6 +91,8 @@ const FixturesScreen = () => {
         const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup', selectedDate);
         const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
         const Top14Fixtures: FixturesSection[] = await fetchRugbyVizData('top14', selectedDate);
+        const AutumnNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('autumnNations', selectedDate);
+
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
         {
@@ -126,6 +127,13 @@ const FixturesScreen = () => {
             allFixturesArray.push({
                 title: Top14Fixtures[0].title,
                 data: Top14Fixtures[0].data,
+            })
+        }
+        if(AutumnNationsFixtures !== undefined && AutumnNationsFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: AutumnNationsFixtures[0].title,
+                data: AutumnNationsFixtures[0].data,
             })
         }
 
@@ -171,6 +179,7 @@ const FixturesScreen = () => {
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
+        { label: 'Autumn Nations Series', value: 'autumnNations', logo: null },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
 

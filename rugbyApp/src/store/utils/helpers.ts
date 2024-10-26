@@ -31,6 +31,8 @@ export const leagueCodes = [
          displayName: 'International Test Match', leagueLogo: null, leagueAltLogo: null},
     { value: 'menSevens', code: "282",
          displayName: '', leagueLogo: null, leagueAltLogo: null},
+    { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
+        displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
 ];
 
 export const rugbyVizleagueCodes = [
@@ -45,6 +47,7 @@ export const rugbyVizleagueCodes = [
     { value: 'top14', code: "1002",
         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
 ];
+
 
 export const getRugbyVizLeagueCode = (name: string) => {
 
@@ -83,6 +86,38 @@ export const isLeagueInRugbyViz = (displayName: string) => {
     const result = rugbyVizleagueCodes.find((element) => element.displayName == displayName)
     return result !== undefined
 }
+
+//--------------------------------------------------------------------------------------------------
+
+export const worldRugbyAPILeagueCodes = [
+    { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
+         displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
+    
+];
+
+export const isLeagueInWorldRugbyAPI = (displayName: string) => {
+
+    const result = worldRugbyAPILeagueCodes.find((element) => element.displayName == displayName)
+    return result !== undefined
+}
+
+export const getWorldRugbyAPILeagueCode = (name: string) => {
+
+    const result = worldRugbyAPILeagueCodes.find((element) => element.value == name)
+    return result?.code.toString()
+}
+
+export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
+
+    const result = worldRugbyAPILeagueCodes.find((element) => element.code == code)
+    if(result == undefined)
+    {
+        return ''
+    }
+    return result.displayName.toString()
+}
+
+//-----------------------------------------------------------------------------------------------------
 
 export const getLeagueCode = (name: string) => {
 
