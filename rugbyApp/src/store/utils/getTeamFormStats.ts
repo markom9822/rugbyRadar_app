@@ -103,3 +103,25 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
         sortedTeamFormArray
     )
 }
+
+
+export const getTeamFormStatsWorldRugbyAPI = (matchStats: any, isHomeTeam: boolean) => {
+
+    var teamFormArray = [];
+
+    const newArray = {
+        currentTeam: '',
+        homeTeamName: '',
+        awayTeamName: '',
+        homeTeamScore: '',
+        awayTeamScore: '',
+        matchDate: '',
+    };
+
+    teamFormArray.push(newArray)
+
+    
+    return(
+        teamFormArray
+    )
+}

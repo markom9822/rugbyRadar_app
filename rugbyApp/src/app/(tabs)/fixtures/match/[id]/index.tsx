@@ -226,8 +226,11 @@ const MatchSummary = () => {
         // use world rugby API
         if(id.indexOf("_WorldRugbyAPI") !== -1)
         {
-            const worldRugbyAPIEventID = new String(id).substring(0,36);
-            const worldRugbyAPILeagueName = new String(id).slice(36).replace("_WorldRugbyAPI", "")
+            const separatedArray = id.toString().split("_");
+            const worldRugbyAPIEventID = separatedArray[0];
+            const worldRugbyAPILeagueName = separatedArray[1]
+
+            console.info(worldRugbyAPIEventID)
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/stats?language=en';
 
             const matchDetails = await fetch( apiString,).then((res) => res.json())
@@ -360,7 +363,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                 </View>
 
             <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Stats</Text>
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 55}}>
+            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 60}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>

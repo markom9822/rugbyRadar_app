@@ -98,3 +98,23 @@ export const getHeadToHeadStatsRugbyViz = async (matchStats: any) => {
         headToHeadArray
     )
 }
+
+
+export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
+
+    var headToHeadArray = [];
+    const newArray = {
+        currentTeam: '',
+        homeTeamName: '',
+        awayTeamName: '',
+        homeTeamScore: '',
+        awayTeamScore: '',
+        matchDate: '',
+    };
+
+    headToHeadArray.push(newArray)
+
+    return(
+        headToHeadArray
+    )
+}

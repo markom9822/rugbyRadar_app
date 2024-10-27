@@ -91,7 +91,9 @@ export const isLeagueInRugbyViz = (displayName: string) => {
 
 export const worldRugbyAPILeagueCodes = [
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
-         displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
+        displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
+    { value: 'sixNations', code: "2171",
+        displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
     
 ];
 

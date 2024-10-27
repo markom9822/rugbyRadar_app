@@ -6,11 +6,11 @@ import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
 import { useEffect, useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
-import { getFullMatchStats, getFullMatchStatsRugbyViz } from "@/store/utils/getFullMatchStats";
+import { getFullMatchStats, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "@/store/utils/getFullMatchStats";
 import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
-import { getHeadToHeadStats, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
-import { getTeamFormStats, getTeamFormStatsRugbyViz } from "@/store/utils/getTeamFormStats";
-import { getKeyEvents, getKeyEventsRugbyViz } from "@/store/utils/getKeyEvents";
+import { getHeadToHeadStats, getHeadToHeadStatsRugbyViz, getHeadToHeadStatsWorldRugbyAPI } from "@/store/utils/getHeadToHeadStats";
+import { getTeamFormStats, getTeamFormStatsRugbyViz, getTeamFormStatsWorldRugbyAPI } from "@/store/utils/getTeamFormStats";
+import { getKeyEvents, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "@/store/utils/getKeyEvents";
 
 
 const MatchSummary = () => {
@@ -59,6 +59,43 @@ const MatchSummary = () => {
             setKeyEventsArray(keyEvents)
             setLeagueName(leagueID.replace("_RugbyViz", ""))
 
+            setIsLoading(false)
+            return;
+        }
+
+        // use world rugby API
+        if(id.indexOf("_WorldRugbyAPI") !== -1)
+        {
+            const separatedArray = id.toString().split("_");
+            const worldRugbyAPIEventID = separatedArray[0];
+            const worldRugbyAPILeagueName = separatedArray[1]
+
+            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/stats?language=en';
+    
+            const matchStats = await fetch( apiString,).then((res) => res.json())
+            const homeTeam = matchStats.match.teams[0].name;
+            const awayTeam = matchStats.match.teams[1].name;
+
+            setMainTeamName(homeTeam)
+            setOpponentTeamName(awayTeam)
+
+            const fullMatchStats = getFullMatchStatsWorldRugbyAPI(matchStats)
+            const headToHeadStats = getHeadToHeadStatsWorldRugbyAPI(matchStats)
+            const mainTeamFormStats = getTeamFormStatsWorldRugbyAPI(matchStats, true)
+            const opponentTeamFormStats = getTeamFormStatsWorldRugbyAPI(matchStats, false)
+
+            const timelineApiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/timeline?language=en';
+            const timelineStats = await fetch( timelineApiString,).then((res) => res.json())
+            const keyEvents = await getKeyEventsWorldRugbyAPI(timelineStats)
+
+            setMatchStatsArray(fullMatchStats)
+            setHeadToHeadStatsArray(headToHeadStats)
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
+            setKeyEventsArray(keyEvents)
+
+            setLeagueName(worldRugbyAPILeagueName)
+            
             setIsLoading(false)
             return;
         }

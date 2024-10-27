@@ -87,7 +87,7 @@ export const PremRugbyTeams = [
     abbreviation: 'EXET',
     logo: ExeterLogo,
     altLogo: ExeterAltLogo,
-    colour: '#1a1a1a',
+    colour: '#FFCD00',
     id: '116227',
     defaultLeague: 'Premiership Rugby',
     foundedYear: '1871',
@@ -108,7 +108,7 @@ export const PremRugbyTeams = [
   {
     type: 'Prem Club',
     displayName: 'Harlequins',
-    abbreviation: 'HQUINN',
+    abbreviation: 'HQUIN',
     logo: HarlequinsLogo,
     altLogo: HarlequinsAltLogo,
     colour: '#b6234a',

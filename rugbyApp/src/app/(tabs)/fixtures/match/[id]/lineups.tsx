@@ -7,6 +7,7 @@ import { defaultStyles, lineupPanelStyles } from "@/styles";
 import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { TeamInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
+import { getLineup, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
 
 
 export type LineUpInfo = {
@@ -26,107 +27,6 @@ export type AllLineUpsInfo = {
     awayteamPlayerPosition: string,
     awayteamPlayerNum: string,
     isAwayPlayerCaptain: boolean,
-}
-
-export const getLineup = (matchDetails: any, rosterIndex: number) => {
-
-    if(matchDetails.rosters[rosterIndex].roster === undefined)
-    {
-        var blankArray = [];
-
-        for (let index = 0; index < 23; index++) {
-            let blankLineupInfo = {
-                teamPlayer: '-',
-                teamPlayerPosition: '-',
-                teamPlayerNum: index + 1,
-                isPlayerCaptain: false,
-                };
-    
-            blankArray.push(blankLineupInfo)
-        }
-
-        return(
-            blankArray
-        )
-    } 
-
-    const rosterLength = matchDetails.rosters[rosterIndex].roster.length;
-
-    var newArray = [];
-
-    for (let index = 0; index < rosterLength; index++) {
-
-        const playerName = matchDetails.rosters[rosterIndex].roster[index].athlete.displayName;
-        const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");
-
-        const playerPosition = matchDetails.rosters[rosterIndex].roster[index].position.displayName;
-        const isPlayerCaptain = matchDetails.rosters[rosterIndex].roster[index].captain;
-
-        let newLineupInfo = {
-            teamPlayer: playerName,
-            teamPlayerPosition: playerPosition,
-            teamPlayerNum: playerNumber,
-            isPlayerCaptain: isPlayerCaptain,
-            };
-
-        newArray.push(newLineupInfo)
-    }
-
-    console.info(newArray)
-
-    return(
-        newArray
-    )
-}
-
-export const getLineupRugbyViz = (matchDetails: any, isHome: boolean) => {
-
-    const targetRoster = isHome ? matchDetails.data.homeTeam.players : matchDetails.data.awayTeam.players
-
-    if (targetRoster === null) {
-        var blankArray = [];
-
-        for (let index = 0; index < 23; index++) {
-            let blankLineupInfo = {
-                teamPlayer: '-',
-                teamPlayerPosition: '-',
-                teamPlayerNum: index + 1,
-                isPlayerCaptain: false,
-            };
-
-            blankArray.push(blankLineupInfo)
-        }
-
-        return (
-            blankArray
-        )
-    } 
-
-    var newArray = [];
-
-    for (let index = 0; index < targetRoster.length; index++) {
-
-        const playerName = targetRoster[index].name;
-        const playerNumber = targetRoster[index].positionId;
-
-        const playerPosition = targetRoster[index].position;
-        const isPlayerCaptain = targetRoster[index].captain;
-
-        let newLineupInfo = {
-            teamPlayer: playerName,
-            teamPlayerPosition: playerPosition,
-            teamPlayerNum: playerNumber,
-            isPlayerCaptain: isPlayerCaptain,
-            };
-
-        newArray.push(newLineupInfo)
-    }
-
-    console.info(newArray)
-
-    return(
-        newArray
-    )
 }
 
 
@@ -209,6 +109,44 @@ const Lineups = () => {
 
             const homeLineup = getLineupRugbyViz(matchDetails, true)
             const awayLineup = getLineupRugbyViz(matchDetails, false)
+
+            console.info('Home Team Lineup')
+            console.info(homeLineup)
+
+            // need to remove duplicates
+            const homeUniqueArray = unique(homeLineup, 'teamPlayerNum')
+            // sort in jersey number order
+            const homeSortedArray = homeUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
+
+            // need to remove duplicates
+            const awayUniqueArray = unique(awayLineup, 'teamPlayerNum')
+            // sort in jersey number order
+            const awaySortedArray = awayUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
+
+            const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
+            setAllLineupsArray(combinedArray)
+            setIsLoading(false)
+            return;
+        }
+
+        // use world rugby API
+        if(id.indexOf("_WorldRugbyAPI") !== -1)
+        {
+            const separatedArray = id.toString().split("_");
+            const worldRugbyAPIEventID = separatedArray[0];
+            const worldRugbyAPILeagueName = separatedArray[1]
+            
+            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
+
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const homeTeam = matchDetails.match.teams[0].name;
+            const awayTeam = matchDetails.match.teams[1].name;
+            setHomeTeamName(homeTeam)
+            setAwayTeamName(awayTeam)
+            setLeagueName(worldRugbyAPILeagueName)
+
+            const homeLineup = getLineupWorldRugbyAPI(matchDetails, true)
+            const awayLineup = getLineupWorldRugbyAPI(matchDetails, false)
 
             console.info('Home Team Lineup')
             console.info(homeLineup)
@@ -424,7 +362,7 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
     }
     else {
         return (
-            <View style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 4, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 50: 0}]}>
+            <View style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 4, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 60: 0}]}>
                 <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 12, color: colors.text, width: "8%", textAlign: 'right', fontFamily: fontFamilies.bold}}>
                     {playerNumber}
                 </Text>

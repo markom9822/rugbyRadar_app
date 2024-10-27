@@ -114,7 +114,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     }
     else if(isLeagueInWorldRugbyAPI(leagueDisplayName))
     {
-        linkID = matchID + leagueName + "_WorldRugbyAPI"
+        linkID = matchID + "_" + leagueName + "_WorldRugbyAPI"
     }
     else
     {

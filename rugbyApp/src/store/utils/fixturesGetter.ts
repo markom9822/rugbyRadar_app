@@ -1,5 +1,5 @@
 import { FixturesSection } from "@/app/(tabs)/fixtures";
-import { getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode, isLeagueInRugbyViz } from "./helpers";
+import { getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
 
@@ -77,7 +77,7 @@ export const getFixturesForAll = (todaysAllMatches: any) => {
         const leagueID = todaysScores[index].leagues[0].slug;
 
         // check if in ESPN API
-        const apiCheck = getLeagueCodeFromDisplayName(leagueName) !== undefined && !isLeagueInRugbyViz(leagueName)
+        const apiCheck = getLeagueCodeFromDisplayName(leagueName) !== undefined && !isLeagueInRugbyViz(leagueName) && !isLeagueInWorldRugbyAPI(leagueName)
 
         if (apiCheck) {
             console.info(leagueName)
@@ -300,6 +300,7 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
         
         // need to get date
         const matchDate = new Date(seasonAllMatches.content[index].time.millis);
+        const currentYear = new Date().getFullYear()
 
         if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
         {
@@ -309,14 +310,14 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
             const awayTeamScore = seasonAllMatches.content[index].scores[1];
             const matchVenue = seasonAllMatches.content[index].venue.name;
             const matchID = seasonAllMatches.content[index].matchId;
-            const compName = 'Autumn Nations Series';
+            const compName = (seasonAllMatches.content[index].competition).replace(" " + currentYear, "");
 
             // time in seconds need to convert to mins
             const eventTime = seasonAllMatches.content[index].clock.secs;
 
             var eventState;
             const matchStatus = seasonAllMatches.content[index].status;
-            if(matchStatus === "result")
+            if(matchStatus === "C")
             {
                 eventState = "post"
             }

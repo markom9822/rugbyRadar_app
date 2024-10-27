@@ -92,6 +92,7 @@ const FixturesScreen = () => {
         const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
         const Top14Fixtures: FixturesSection[] = await fetchRugbyVizData('top14', selectedDate);
         const AutumnNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('autumnNations', selectedDate);
+        const SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('sixNations', selectedDate);
 
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
@@ -134,6 +135,13 @@ const FixturesScreen = () => {
             allFixturesArray.push({
                 title: AutumnNationsFixtures[0].title,
                 data: AutumnNationsFixtures[0].data,
+            })
+        }
+        if(SixNationsFixtures !== undefined && SixNationsFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: SixNationsFixtures[0].title,
+                data: SixNationsFixtures[0].data,
             })
         }
 

@@ -198,3 +198,109 @@ export const getKeyEventsRugbyViz = (matchStats: any) => {
     )
 
 }
+
+export const getKeyEventIconWorldRugbyAPI = (eventType: string) => {
+    switch(eventType) { 
+        case 'Conversion': return RugbyPostsIcon
+        case 'Penalty': return RugbyPostsIcon
+        case 'Penalty Try': return RugbyTryIcon
+        case 'Try': return RugbyTryIcon
+        case 'Yellow Card': return YellowCardIcon
+        case 'Red Card': return RedCardIcon
+        case 'Drop goal': return DropGoalIcon
+
+
+        default: { 
+           break; 
+        } 
+     } 
+}
+
+export const getPlayersListWorldRugbyAPI = async (matchID: string, isHome: boolean) =>
+{
+    const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+matchID+'/summary?language=en';
+    const teamDetails = await fetch( apiString,).then((res) => res.json())
+
+    const playersList = isHome ? teamDetails.teams[0].teamList.list: teamDetails.teams[1].teamList.list
+
+    return playersList;
+}
+
+
+export const getKeyEventsWorldRugbyAPI = async (matchStats: any) => {
+
+    var keyEventsArray = [];
+
+    const keyEvents= matchStats.timeline;
+    if(keyEvents == null || keyEvents.length == 0) return []
+
+    const homePlayersList = await getPlayersListWorldRugbyAPI(matchStats.match.matchId, true)
+    const awayPlayersList = await getPlayersListWorldRugbyAPI(matchStats.match.matchId, false)
+
+    var homeScore = 0;
+    var awayScore = 0;
+
+    const addScoreToTeam = (isHomeTeam: boolean, eventScore: number) => {
+
+        if(isHomeTeam)
+        {
+           homeScore += eventScore;
+        }
+        else
+        {
+            awayScore += eventScore;
+        }
+    }
+
+    for (let index = 0; index < keyEvents.length; index++) {
+
+        const eventTime = Math.floor(keyEvents[index].time.secs / 60);
+        const eventType = keyEvents[index].typeLabel;
+        const eventScore = keyEvents[index].points;
+        const eventPlayerID = keyEvents[index].playerId;
+
+        var eventTeam = ''
+        var eventPlayer = ''
+        const isHomeTeam = keyEvents[index].teamIndex == 0;
+
+        addScoreToTeam(isHomeTeam, eventScore)
+
+        if(isHomeTeam)
+        {
+            eventTeam = matchStats.match.teams[0].name;
+            eventPlayer = homePlayersList.find((element: any) => element.player.id == eventPlayerID).player.name.display;
+        }
+        else
+        {
+            eventTeam = matchStats.match.teams[1].name;;
+            eventPlayer = awayPlayersList.find((element: any) => element.player.id == eventPlayerID).player.name.display;
+        }
+
+        const eventIcon = getKeyEventIconWorldRugbyAPI(eventType);
+
+        const typeCheck = eventType === "Try" || eventType === "Conversion"
+         || eventType === "Penalty" || eventType === "Penalty Try" || eventType === "Drop goal" || 
+         eventType === "Yellow Card" || eventType === "Red Card"
+
+        if (typeCheck) {
+
+            const newArray = {
+                eventTime: eventTime.toString(),
+                eventType: eventType,
+                eventPlayer: eventPlayer,
+                eventScore: `${homeScore} - ${awayScore}`,
+                eventTeam: eventTeam,
+                eventIcon: eventIcon,
+            };
+
+            keyEventsArray.push(newArray)
+        }
+
+    }
+
+
+    return(
+        keyEventsArray
+    )
+
+}
