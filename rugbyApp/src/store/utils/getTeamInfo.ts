@@ -13,6 +13,8 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     var homeInfo;
     var awayInfo;
 
+
+
     if(league === "urc")
     {
         homeInfo = getURCTeamInfoFromName(homeTeam)
@@ -22,6 +24,14 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     {
         homeInfo = getInternationalTeamInfoFromName(homeTeam)
         awayInfo = getInternationalTeamInfoFromName(awayTeam)
+    }
+    else if(league === "u20SixNations")
+    {
+        const u20HomeTeam = homeTeam.replace(" U20", "");
+        const u20AwayTeam = awayTeam.replace(" U20", "");
+
+        homeInfo = getInternationalTeamInfoFromName(u20HomeTeam)
+        awayInfo = getInternationalTeamInfoFromName(u20AwayTeam)
     }
     else if(league === "prem") 
     {

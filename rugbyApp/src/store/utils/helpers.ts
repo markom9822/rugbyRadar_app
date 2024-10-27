@@ -17,8 +17,8 @@ export const leagueCodes = [
          displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
     { value: 'superRugby', code: "242041",
          displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
-    { value: 'rugbyChamp', code: "244293",
-         displayName: 'Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
+    { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
+         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
     { value: 'rugbyWorldCup', code: "164205",
          displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
     { value: 'championsCup', code: "271937",
@@ -33,6 +33,8 @@ export const leagueCodes = [
          displayName: '', leagueLogo: null, leagueAltLogo: null},
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
         displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
+    { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
+        displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
 ];
 
 export const rugbyVizleagueCodes = [
@@ -94,6 +96,10 @@ export const worldRugbyAPILeagueCodes = [
         displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
     { value: 'sixNations', code: "2171",
         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
+    { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
+        displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
+    { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
+        displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
     
 ];
 
