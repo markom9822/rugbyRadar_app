@@ -1,7 +1,7 @@
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
-import { ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
+import { AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
@@ -32,9 +32,9 @@ export const leagueCodes = [
     { value: 'menSevens', code: "282",
          displayName: '', leagueLogo: null, leagueAltLogo: null},
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
-        displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
+        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo},
     { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
-        displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
+        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsLogo},
 ];
 
 export const rugbyVizleagueCodes = [

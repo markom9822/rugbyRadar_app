@@ -7,7 +7,7 @@ import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getL
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 
 export type MatchInfo = {
@@ -202,8 +202,8 @@ const FixturesScreen = () => {
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-        { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo },
-        { label: 'Autumn Nations Series', value: 'autumnNations', logo: null },
+        { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsLogo },
+        { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
 
