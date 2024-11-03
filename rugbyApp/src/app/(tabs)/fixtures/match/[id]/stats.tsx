@@ -6,11 +6,11 @@ import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
 import { useEffect, useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
-import { getFullMatchStats, getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "@/store/utils/getFullMatchStats";
+import { getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "@/store/utils/getFullMatchStats";
 import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
-import { getHeadToHeadStats, getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz, getHeadToHeadStatsWorldRugbyAPI } from "@/store/utils/getHeadToHeadStats";
-import { getTeamFormStats, getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz, getTeamFormStatsWorldRugbyAPI } from "@/store/utils/getTeamFormStats";
-import { getKeyEvents, getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "@/store/utils/getKeyEvents";
+import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz, getHeadToHeadStatsWorldRugbyAPI } from "@/store/utils/getHeadToHeadStats";
+import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz, getTeamFormStatsWorldRugbyAPI } from "@/store/utils/getTeamFormStats";
+import { getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "@/store/utils/getKeyEvents";
 
 
 const MatchSummary = () => {
@@ -135,26 +135,6 @@ const MatchSummary = () => {
             setIsLoading(false)
             return;
         }
-
-        // can probably remove this now
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
-        const statsDetails = await fetch( apiString,).then((res) => res.json())
-        setMainTeamName(statsDetails.boxscore.teams[0].team.displayName)
-        setOpponentTeamName(statsDetails.boxscore.teams[1].team.displayName)
-        setLeagueName(getLeagueName(leagueID));
-
-        const matchStats = getFullMatchStats(statsDetails)
-        const headToHeadStats = getHeadToHeadStats(statsDetails)
-        const mainTeamFormStats = getTeamFormStats(statsDetails, 0)
-        const opponentTeamFormStats = getTeamFormStats(statsDetails, 1)
-        const keyEvents = getKeyEvents(statsDetails)
-
-        setMatchStatsArray(matchStats)
-        setHeadToHeadStatsArray(headToHeadStats)
-        setMainTeamFormStatsArray(mainTeamFormStats)
-        setOpponentTeamFormStatsArray(opponentTeamFormStats)
-        setKeyEventsArray(keyEvents)
-        setIsLoading(false)
     }
 
     // call only once on load

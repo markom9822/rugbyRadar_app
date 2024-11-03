@@ -304,15 +304,6 @@ const MatchSummary = () => {
             setIsLoading(false)
             return;
         }
-
-        // this can probably be removed, no longer using ESPN API
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
-
-        const matchDetails = await fetch( apiString,).then((res) => res.json())
-        const matchInfo = getMatchInfo(matchDetails)
-        setMatchInfoArray(matchInfo)
-        setLeagueName(getLeagueName(leagueID));
-        setIsLoading(false)
     }
 
      // call only once on load

@@ -203,36 +203,6 @@ const Lineups = () => {
             setIsLoading(false)
             return;
         }
-
-
-        // can probably remove this
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
-        const matchDetails = await fetch( apiString,).then((res) => res.json())
-        const homeTeam = matchDetails.rosters[0].team.displayName;
-        const awayTeam = matchDetails.rosters[1].team.displayName;
-        setHomeTeamName(homeTeam)
-        setAwayTeamName(awayTeam)
-        setLeagueName(getLeagueName(leagueID));
-
-        const homeLineup = getLineup(matchDetails, 0)
-        const awayLineup = getLineup(matchDetails, 1)
-
-        console.info('Home Team Lineup')
-        console.info(homeLineup)
-
-        // need to remove duplicates
-        const homeUniqueArray = unique(homeLineup, 'teamPlayerNum')
-        // sort in jersey number order
-        const homeSortedArray = homeUniqueArray.sort((a,b) => a.teamPlayerNum - b.teamPlayerNum);
-
-        // need to remove duplicates
-        const awayUniqueArray = unique(awayLineup, 'teamPlayerNum')
-        // sort in jersey number order
-        const awaySortedArray = awayUniqueArray.sort((a,b) => a.teamPlayerNum - b.teamPlayerNum);
-        
-        const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
-        setAllLineupsArray(combinedArray)
-        setIsLoading(false)
     }
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeamName, awayTeamName);
@@ -281,7 +251,7 @@ const Lineups = () => {
                                     style={lineupPanelStyles.teamLogo} />
                             </View>
 
-                            <Text style={[lineupPanelStyles.teamName, { color: colors.text }]}>{homeTeamInfo.abbreviation}</Text>
+                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "home") ? colors.text : 'lightgrey' }]}>{homeTeamInfo.abbreviation}</Text>
                         </TouchableOpacity>
 
 
@@ -295,7 +265,7 @@ const Lineups = () => {
                                     style={lineupPanelStyles.teamLogo} />
                             </View>
 
-                            <Text style={[lineupPanelStyles.teamName, { color: colors.text }]}>{awayTeamInfo.abbreviation}</Text>
+                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "away") ? colors.text : 'lightgrey' }]}>{awayTeamInfo.abbreviation}</Text>
                         </TouchableOpacity>
                     </View>
 
