@@ -46,8 +46,7 @@ export const rugbyVizleagueCodes = [
          displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
     { value: 'challengeCup', code: "1026",
          displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo},
-    { value: 'top14', code: "1002",
-        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+
 ];
 
 
@@ -126,6 +125,36 @@ export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 }
 
 //-----------------------------------------------------------------------------------------------------
+
+
+export const planetRugbyAPILeagueCodes = [
+    { value: 'top14', code: "1310036262",
+        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+];
+
+export const isLeagueInPlanetRugbyAPI = (displayName: string) => {
+
+    const result = planetRugbyAPILeagueCodes.find((element) => element.displayName == displayName)
+    return result !== undefined
+}
+
+export const getPlanetRugbyAPILeagueCode = (name: string) => {
+
+    const result = planetRugbyAPILeagueCodes.find((element) => element.value == name)
+    return result?.code.toString()
+}
+
+export const getPlanetRugbyAPILeagueDisplayNameFromCode = (code: string) => {
+
+    const result = planetRugbyAPILeagueCodes.find((element) => element.code == code)
+    if(result == undefined)
+    {
+        return ''
+    }
+    return result.displayName.toString()
+}
+
+//---------------------------------------------------------------------------------------------------
 
 export const getLeagueCode = (name: string) => {
 

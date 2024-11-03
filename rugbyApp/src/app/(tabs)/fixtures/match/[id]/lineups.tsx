@@ -7,7 +7,7 @@ import { defaultStyles, lineupPanelStyles } from "@/styles";
 import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { TeamInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
-import { getLineup, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
+import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
 
 
 export type LineUpInfo = {
@@ -167,6 +167,45 @@ const Lineups = () => {
             return;
         }
 
+        // use planet rugby API
+        if (id.indexOf("_PlanetRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const planetRugbyAPIEventID = separatedArray[0];
+            const planetRugbyAPILeagueName = separatedArray[1]
+
+            const apiString = 'https://rugbylivecenter.yormedia.com/api/match-lineups/'+planetRugbyAPIEventID;
+
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const [homeTeam, awayTeam] = matchDetails.data.matchDetails.teams.split(';');
+
+            setHomeTeamName(homeTeam)
+            setAwayTeamName(awayTeam)
+            setLeagueName(planetRugbyAPILeagueName)
+
+            const homeLineup = getLineupPlanetRugbyAPI(matchDetails, 1)
+            const awayLineup = getLineupPlanetRugbyAPI(matchDetails, 0)
+
+            console.info('Home Team Lineup')
+            console.info(homeLineup)
+
+            // need to remove duplicates
+            const homeUniqueArray = unique(homeLineup, 'teamPlayerNum')
+            // sort in jersey number order
+            const homeSortedArray = homeUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
+
+            // need to remove duplicates
+            const awayUniqueArray = unique(awayLineup, 'teamPlayerNum')
+            // sort in jersey number order
+            const awaySortedArray = awayUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
+
+            const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
+            setAllLineupsArray(combinedArray)
+            setIsLoading(false)
+            return;
+        }
+
+
+        // can probably remove this
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
         const matchDetails = await fetch( apiString,).then((res) => res.json())
         const homeTeam = matchDetails.rosters[0].team.displayName;

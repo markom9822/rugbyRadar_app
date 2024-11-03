@@ -65,7 +65,7 @@ export const getTop14TeamInfoFromName = (name: string) => {
 export const Top14RugbyTeams = [
   {
     type: 'Top14 Club',
-    displayName: 'Aviron Bayonnais',
+    displayName: 'Bayonnais',
     abbreviation: 'BAY',
     logo: BayonneLogo,
     altLogo: BayonneAltLogo,
@@ -77,7 +77,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Bordeaux-Bègles',
+    displayName: 'Bordeaux Begles',
     abbreviation: 'BEG',
     logo: BordeauxLogo,
     altLogo: BordeauxAltLogo,
@@ -113,7 +113,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Clermont Auvergne',
+    displayName: 'Clermont',
     abbreviation: 'CLER',
     logo: ClermontLogo,
     altLogo: ClermontAltLogo,
@@ -125,7 +125,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Stade Rochelais',
+    displayName: 'La Rochelle',
     abbreviation: 'LA RO',
     logo: LaRochelleLogo,
     altLogo: LaRochelleAltLogo,
@@ -149,7 +149,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Montpellier Hérault',
+    displayName: 'Montpellier',
     abbreviation: 'MONTP',
     logo: MontpellierLogo,
     altLogo: MontpellierAltLogo,
@@ -185,7 +185,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'USAP',
+    displayName: 'USA Perpignan',
     abbreviation: 'PERP',
     logo: PerpignanLogo,
     altLogo: PerpignanAltLogo,
@@ -209,7 +209,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Stade Francais Paris',
+    displayName: 'Stade Francais',
     abbreviation: 'SFRAN',
     logo: StadeFrancaisLogo,
     altLogo: StadeFrancaisAltLogo,
@@ -221,7 +221,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'RC Toulon',
+    displayName: 'Toulon',
     abbreviation: 'TOUL',
     logo: ToulonLogo,
     altLogo: ToulonAltLogo,

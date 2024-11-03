@@ -118,3 +118,40 @@ export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
         headToHeadArray
     )
 }
+
+export const getHeadToHeadStatsPlanetRugbyAPI = (matchStats: any) => {
+
+    var headToHeadArray = [];
+    const thisMatchDate = new Date(matchStats.data.matchDetails.datetime);
+
+    const previousMatches = matchStats.data.match;
+
+    for (let index = 0; index < previousMatches.length; index++) {
+
+        if(index > 4) continue;
+
+        const matchDate = new Date(previousMatches[index].datetime);
+        // dont include this match
+        if(matchDate.setHours(0,0,0,0) === thisMatchDate.setHours(0,0,0,0)) continue;
+
+        const homeTeamName = previousMatches[index].team1;
+        const awayTeamName = previousMatches[index].team2;
+
+        const [homeTeamScore, awayTeamScore] = previousMatches[index].ft.split('-');
+
+        const newArray = {
+                currentTeam: homeTeamName,
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamScore: homeTeamScore,
+                awayTeamScore: awayTeamScore,
+                matchDate: matchDate.toDateString(),
+        };
+
+        headToHeadArray.push(newArray)
+    }
+
+    return(
+        headToHeadArray
+    )
+}

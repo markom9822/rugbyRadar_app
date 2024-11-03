@@ -196,6 +196,50 @@ export const getMatchInfoWorldRugbyAPI = (matchDetails: any) => {
     )
 }
 
+export const getMatchInfoPlanetRugbyAPI = (matchDetails: any) => {
+
+    const [homeTeamName, awayTeamName] = matchDetails.data.matchDetails.teams.split(';');
+    
+    const matchVenue = matchDetails.data.match.venue_name;
+    const matchAttendance = matchDetails.data.match.attendance;
+
+    const homeTeamPossession = '-'
+    const awayTeamPossession = '-'
+
+    const homeTeamTries = '-'
+    const awayTeamTries = '-'
+
+    const homeTeamTackles = '-'
+    const awayTeamTackles = '-'
+
+    const homeTeamMetres = '-'
+    const awayTeamMetres = '-'
+
+
+    const newArray = [
+        {
+            homeTeamName: homeTeamName,
+            awayTeamName: awayTeamName,
+            homeTeamPossession: homeTeamPossession,
+            awayTeamPossession: awayTeamPossession,
+            homeTeamTries: homeTeamTries,
+            awayTeamTries: awayTeamTries,
+            homeTeamTackles: homeTeamTackles,
+            awayTeamTackles: awayTeamTackles,
+            homeTeamMetres: homeTeamMetres,
+            awayTeamMetres: awayTeamMetres,
+
+            matchVenue: matchVenue,
+            matchAttendance: matchAttendance,
+            matchBroadcasters: [],
+        }
+    ];
+
+    return(
+        newArray
+    )
+}
+
 const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
@@ -242,6 +286,26 @@ const MatchSummary = () => {
             return;
         }
 
+        // use world rugby API
+        if(id.indexOf("_PlanetRugbyAPI") !== -1)
+        {
+            const separatedArray = id.toString().split("_");
+            const planetRugbyAPIEventID = separatedArray[0];
+            const planetRugbyAPILeagueName = separatedArray[1]
+    
+            console.info(planetRugbyAPIEventID)
+            const apiString = 'https://rugbylivecenter.yormedia.com/api/match-overview/'+planetRugbyAPIEventID;
+    
+            const matchDetails = await fetch( apiString,).then((res) => res.json())
+            const matchInfo = getMatchInfoPlanetRugbyAPI(matchDetails)
+            setMatchInfoArray(matchInfo)
+    
+            setLeagueName(planetRugbyAPILeagueName)
+            setIsLoading(false)
+            return;
+        }
+
+        // this can probably be removed, no longer using ESPN API
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
 
         const matchDetails = await fetch( apiString,).then((res) => res.json())

@@ -473,3 +473,58 @@ export const getFullMatchStatsWorldRugbyAPI = (matchStats: any) => {
         newArray
     )
 }
+
+
+export const getFullMatchStatsPlanetRugbyAPI = (matchStats: any) => {
+
+    const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
+
+    const blankArray = [
+        {
+            homeTeamName: homeTeam,
+            awayTeamName: awayTeam,
+            homeTeamPossession: '0',
+            awayTeamPossession: '0',
+            homeTeamTerritory: '0',
+            awayTeamTerritory: '0',
+            homeTeamTries: '-',
+            awayTeamTries: '-',
+            homeTeamConversions: '-',
+            awayTeamConversions: '-',
+            homeTeamPenalties: '-',
+            awayTeamPenalties: '-',
+
+            homeTeamTackles: '-',
+            awayTeamTackles: '-',
+            homeTeamMissedTackles: '-',
+            awayTeamMissedTackles: '-',
+
+            homeTeamMetres: '-',
+            awayTeamMetres: '-',
+            homeTeamPasses: '-',
+            awayTeamPasses: '-',
+            homeTeamDefendersBeaten: '-',
+            awayTeamDefendersBeaten: '-',
+
+            homeTeamScrumsWon: '-',
+            awayTeamScrumsWon: '-',
+            homeTeamScrumsTotal: '-',
+            awayTeamScrumsTotal: '-',
+            homeTeamLineoutsWon: '-',
+            awayTeamLineoutsWon: '-',
+            homeTeamLineoutsTotal: '-',
+            awayTeamLineoutsTotal: '-',
+
+            homeTeamPensConceded: '-',
+            awayTeamPensConceded: '-',
+            homeTeamYellowCards: '-',
+            awayTeamYellowCards: '-',
+            homeTeamRedCards: '-',
+            awayTeamRedCards: '-',
+
+        }
+    ];
+
+    return blankArray
+
+}

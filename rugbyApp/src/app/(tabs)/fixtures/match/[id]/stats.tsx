@@ -6,11 +6,11 @@ import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
 import { useEffect, useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
-import { getFullMatchStats, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "@/store/utils/getFullMatchStats";
+import { getFullMatchStats, getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "@/store/utils/getFullMatchStats";
 import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
-import { getHeadToHeadStats, getHeadToHeadStatsRugbyViz, getHeadToHeadStatsWorldRugbyAPI } from "@/store/utils/getHeadToHeadStats";
-import { getTeamFormStats, getTeamFormStatsRugbyViz, getTeamFormStatsWorldRugbyAPI } from "@/store/utils/getTeamFormStats";
-import { getKeyEvents, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "@/store/utils/getKeyEvents";
+import { getHeadToHeadStats, getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz, getHeadToHeadStatsWorldRugbyAPI } from "@/store/utils/getHeadToHeadStats";
+import { getTeamFormStats, getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz, getTeamFormStatsWorldRugbyAPI } from "@/store/utils/getTeamFormStats";
+import { getKeyEvents, getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "@/store/utils/getKeyEvents";
 
 
 const MatchSummary = () => {
@@ -100,6 +100,43 @@ const MatchSummary = () => {
             return;
         }
 
+        // use planet rugby API
+        if (id.indexOf("_PlanetRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const planetRugbyAPIEventID = separatedArray[0];
+            const planetRugbyAPILeagueName = separatedArray[1]
+
+            const apiString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/'+planetRugbyAPIEventID;
+
+            const matchStats = await fetch(apiString,).then((res) => res.json())
+            const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
+            const [homeTeamID, awayTeamID] = matchStats.data.matchDetails.team_ids.split(';');
+
+            setMainTeamName(homeTeam)
+            setOpponentTeamName(awayTeam)
+
+            const fullMatchStats = getFullMatchStatsPlanetRugbyAPI(matchStats)
+            const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchStats)
+            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchStats, true)
+            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchStats, false)
+
+            const timelineApiString = 'https://rugbylivecenter.yormedia.com/api/match-detail/'+planetRugbyAPIEventID;
+            const timelineStats = await fetch(timelineApiString,).then((res) => res.json())
+            const keyEvents = getKeyEventsPlanetRugbyAPI(timelineStats, homeTeam, awayTeam, homeTeamID, awayTeamID)
+
+            setMatchStatsArray(fullMatchStats)
+            setHeadToHeadStatsArray(headToHeadStats)
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
+            setKeyEventsArray(keyEvents)
+
+            setLeagueName(planetRugbyAPILeagueName)
+
+            setIsLoading(false)
+            return;
+        }
+
+        // can probably remove this now
         const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + leagueID + '/summary?contentorigin=espn&event=' + eventID + '&lang=en&region=gb';
         const statsDetails = await fetch( apiString,).then((res) => res.json())
         setMainTeamName(statsDetails.boxscore.teams[0].team.displayName)

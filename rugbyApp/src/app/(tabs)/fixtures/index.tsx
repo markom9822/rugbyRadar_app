@@ -8,7 +8,7 @@ import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-import { fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
+import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -76,21 +76,16 @@ const FixturesScreen = () => {
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(leagueName)
 
-        const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + formattedDate + '&lang=en&region=gb&tz=Europe/London'
-        const todaysAllMatches = await fetch( apiStringAll, {
-            headers: {
-                'Cache-control': 'no-cache'
-            }
-        }
-        ).then((res) => res.json())
-        const allFixturesArray: FixturesSection[] = getFixturesForAll(todaysAllMatches)
+        const allFixturesArray: FixturesSection[] = [];
 
         // collection of sections for all APIs
         const URCFixtures: FixturesSection[] = await fetchRugbyVizData('urc', selectedDate);
         const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem', selectedDate);
         const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup', selectedDate);
         const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
-        const Top14Fixtures: FixturesSection[] = await fetchRugbyVizData('top14', selectedDate);
+
+        const Top14Fixtures: FixturesSection[] = await fetchPlanetRugbyAPIData('top14', selectedDate);
+
         const AutumnNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('autumnNations', selectedDate);
         const SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('sixNations', selectedDate);
         const RugbyChampFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyChamp', selectedDate);

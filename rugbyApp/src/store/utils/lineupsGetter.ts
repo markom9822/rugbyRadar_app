@@ -156,3 +156,60 @@ export const getLineupWorldRugbyAPI = (matchDetails: any, isHome: boolean) => {
         newArray
     )
 }
+
+
+export const getLineupPlanetRugbyAPI = (matchDetails: any, homeIndex: number) => {
+
+    const rosterList = matchDetails.data.match;
+
+    if (rosterList === null || rosterList.length == 0) {
+        var blankArray = [];
+
+        for (let index = 0; index < 23; index++) {
+            let blankLineupInfo = {
+                teamPlayer: '-',
+                teamPlayerPosition: '-',
+                teamPlayerNum: index + 1,
+                isPlayerCaptain: false,
+            };
+
+            blankArray.push(blankLineupInfo)
+        }
+
+        return (
+            blankArray
+        )
+    } 
+
+    var newArray = [];
+
+    for (let index = 0; index < rosterList.length; index++) {
+
+        if(rosterList[index].is_home !== homeIndex)
+        {
+            continue;
+        }
+
+        const playerName = rosterList[index].forename + " " + rosterList[index].surname;
+        const playerNumber = rosterList[index].shirt_no;
+
+        const playerPosition = rosterList[index].position;
+
+        const isPlayerCaptain = false;
+
+        let newLineupInfo = {
+            teamPlayer: playerName,
+            teamPlayerPosition: playerPosition,
+            teamPlayerNum: playerNumber,
+            isPlayerCaptain: isPlayerCaptain,
+            };
+
+        newArray.push(newLineupInfo)
+    }
+
+    console.info(newArray)
+
+    return(
+        newArray
+    )
+}

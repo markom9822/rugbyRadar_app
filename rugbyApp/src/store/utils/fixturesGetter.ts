@@ -1,5 +1,5 @@
 import { FixturesSection } from "@/app/(tabs)/fixtures";
-import { getLeagueCodeFromDisplayName, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "./helpers";
+import { getLeagueCodeFromDisplayName, getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
 
@@ -269,7 +269,7 @@ export const fetchWorldRugbyAPIData = async (thisLeagueName: string, selectedDat
     const endDate = formatDate(addDays(selectedDate, 1))
 
     const worldRugbyAPILeagueCode = getWorldRugbyAPILeagueCode(thisLeagueName);
-    // use separate API for Autumn Nations
+    // use separate API for some matches
     if(worldRugbyAPILeagueCode !== undefined)
     {
         const apiStringAll = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match?states=U,UP,L,CC,C&pageSize=100&sort=asc&events='+worldRugbyAPILeagueCode+'&startDate='+startDate+'&endDate='+endDate
@@ -313,7 +313,8 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
             const compName = (seasonAllMatches.content[index].competition).replace(" " + currentYear, "");
 
             // time in seconds need to convert to mins
-            const eventTime = seasonAllMatches.content[index].clock.secs;
+            const eventTimeSeconds = Number(seasonAllMatches.content[index].clock.secs);
+            const eventTime = Math.floor(eventTimeSeconds/60);
 
             var eventState;
             const matchStatus = seasonAllMatches.content[index].status;
@@ -342,7 +343,137 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
                 matchID: matchID,
                 eventState: eventState,
                 stateDetail: 'FT',
-                eventTime: eventTime,
+                eventTime: eventTime.toString(),
+            };
+
+            leagueArray.push(newMatchInfo)
+        }
+        
+    }
+
+    console.info(leagueArray)
+
+    if (leagueArray.length > 0) {
+        const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
+        let leagueMatchesInfo = {
+            title: leagueDisplayName,
+            data: sortedLeagueArray
+        }
+
+        sections.push(leagueMatchesInfo)
+    }
+
+    return (
+        sections
+    )
+}
+
+
+export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDate: Date) => {
+
+    function formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    const startDate = formatDate(selectedDate);
+
+    const planetRugbyAPILeagueCode = getPlanetRugbyAPILeagueCode(thisLeagueName);
+    // use separate API for some matches
+    if(planetRugbyAPILeagueCode !== undefined)
+    {
+        const apiStringAll = 'https://rugbylivecenter.yormedia.com/api/matches/all/'+startDate+'/1'
+        const seasonsAllMatches = await fetch( apiStringAll, {
+            headers: {
+                'Cache-control': 'no-cache'
+            }
+        }
+        ).then((res) => res.json())
+
+        const allFixturesArray = await getFixturesForAllPlanetRugbyAPI(seasonsAllMatches, selectedDate, getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode) )
+        return allFixturesArray;
+    }
+
+    return []
+}
+
+export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
+
+    var matchIDs = []
+
+    for (let compIndex = 0; compIndex < seasonAllMatches.data.length; compIndex++) {
+
+        if(seasonAllMatches.data[compIndex].ContestGroupName === leagueDisplayName)
+        {
+            const matchesArray = seasonAllMatches.data[compIndex].matches;
+
+            for (let matchIndex = 0; matchIndex < matchesArray.length; matchIndex++) 
+            {
+                matchIDs.push(matchesArray[matchIndex].id)
+            }
+        } 
+    }
+
+
+    console.info(matchIDs)
+
+    var sections = []
+
+    var leagueArray = []
+
+    for (let index = 0; index < matchIDs.length; index++) {
+
+        // fetch match info
+        const apiString = 'https://rugbylivecenter.yormedia.com/api/match-overview/'+ matchIDs[index];
+        const matchInfo = await fetch(apiString,).then((res) => res.json())
+        console.info(matchInfo)
+        
+        // need to get date
+        const matchDate = new Date(matchInfo.data.match.datetime);
+        const currentYear = new Date().getFullYear()
+
+        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
+        {
+            const [homeTeamName, awayTeamName] = matchInfo.data.matchDetails.teams.split(';');
+            const [homeTeamScore, awayTeamScore] = matchInfo.data.matchDetails.ft.split('-');
+
+            const matchVenue = matchInfo.data.match.venue_name;
+            const matchID = matchInfo.data.match.id;
+            const compName = matchInfo.data.match.contest_group_name;
+            
+            const eventTime = matchInfo.data.matchDetails.minutes;
+
+            var eventState;
+            const matchStatus = matchInfo.data.matchDetails.status;
+
+            if(matchStatus === "Finished")
+            {
+                eventState = "post"
+            }
+            else if(matchStatus === "KO")
+            {
+                eventState = "pre"
+            }
+            else
+            {
+                eventState = "ongoing"
+            }
+
+            let newMatchInfo = {
+                homeTeam: homeTeamName,
+                awayTeam: awayTeamName,
+                homeScore: homeTeamScore,
+                awayScore: awayTeamScore,
+                matchDate: matchDate,
+                matchTitle: '',
+                matchVenue: matchVenue,
+                matchLeague: compName,
+                matchID: matchID,
+                eventState: eventState,
+                stateDetail: 'FT',
+                eventTime: eventTime.toString(),
             };
 
             leagueArray.push(newMatchInfo)

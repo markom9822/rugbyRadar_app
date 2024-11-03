@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, Pressable, Modal } from 
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from "expo-router"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
+import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
 import { useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 
@@ -115,6 +115,10 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     else if(isLeagueInWorldRugbyAPI(leagueDisplayName))
     {
         linkID = matchID + "_" + leagueName + "_WorldRugbyAPI"
+    }
+    else if(isLeagueInPlanetRugbyAPI(leagueDisplayName))
+    {
+        linkID = matchID + "_" + leagueName + "_PlanetRugbyAPI"
     }
     else
     {

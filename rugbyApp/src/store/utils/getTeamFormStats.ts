@@ -125,3 +125,43 @@ export const getTeamFormStatsWorldRugbyAPI = (matchStats: any, isHomeTeam: boole
         teamFormArray
     )
 }
+
+export const getTeamFormStatsPlanetRugbyAPI = (matchStats: any, isHomeTeam: boolean) => {
+
+    var teamFormArray = [];
+
+    const formGames = isHomeTeam ? matchStats.data.lastFiveMatches.home.matches : matchStats.data.lastFiveMatches.away.matches;
+    const gamesLength = formGames.length;
+    const currentTeam = isHomeTeam ? matchStats.data.lastFiveMatches.home.teamName : matchStats.data.lastFiveMatches.home.teamName;
+    const currentMatchDate = new Date(matchStats.data.matchDetails.datetime);
+
+    for (let index = 0; index < gamesLength; index++) {
+
+        const matchDate = new Date(formGames[index].datetime);
+        // dont include this match
+        if(matchDate.setHours(0,0,0,0) === currentMatchDate.setHours(0,0,0,0)) continue;
+
+        const homeTeamName = formGames[index].homeTeam;
+        const awayTeamName = formGames[index].awayTeam;
+
+        const [homeTeamScore, awayTeamScore] = formGames[index].ft.split('-');
+
+        const newArray = {
+                currentTeam: currentTeam,
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamScore: homeTeamScore,
+                awayTeamScore: awayTeamScore,
+                matchDate: matchDate.toString(),
+        };
+
+        teamFormArray.push(newArray)
+    }
+
+
+    const sortedTeamFormArray = teamFormArray.sort((a, b) =>  new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime())
+
+    return(
+        sortedTeamFormArray
+    )
+}
