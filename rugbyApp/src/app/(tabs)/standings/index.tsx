@@ -3,8 +3,8 @@ import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-nativ
 import { fontFamilies, fontSize } from "@/constants/tokens"
 import { useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode, getRugbyVizLeagueCode } from "@/store/utils/helpers"
-import { getAllStandingsData, getAllStandingsDataRugbyViz } from "@/store/utils/standingsGetter"
+import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName } from "@/store/utils/helpers"
+import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
@@ -97,6 +97,7 @@ const StandingsScreen = () => {
             console.info(newArray)
             setStandingsArray(newArray)
         }
+
         // uses rugbyViz API
         else if(rugbyVizCode !== undefined)
         {
@@ -114,6 +115,20 @@ const StandingsScreen = () => {
 
             console.info(newArray)
             setStandingsArray(newArray)
+        }
+        else if(isLeagueInPlanetRugbyAPIFromLeagueName(leagueName))
+        {
+            const planetRugbyAPILeagueCode = getPlanetRugbyAPILeagueCode(leagueName)
+            apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCode;
+
+            const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
+
+            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName)
+
+            console.info(newArray)
+            setStandingsArray(newArray)
+
+            setIsLoading(false)
         }
         else
         {

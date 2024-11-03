@@ -90,6 +90,7 @@ const FixturesScreen = () => {
         const SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('sixNations', selectedDate);
         const RugbyChampFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyChamp', selectedDate);
         const U20SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('u20SixNations', selectedDate);
+        const WorldCupFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyWorldCup', selectedDate);
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
         {
@@ -138,6 +139,13 @@ const FixturesScreen = () => {
             allFixturesArray.push({
                 title: SixNationsFixtures[0].title,
                 data: SixNationsFixtures[0].data,
+            })
+        }
+        if(WorldCupFixtures !== undefined && WorldCupFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: WorldCupFixtures[0].title,
+                data: WorldCupFixtures[0].data,
             })
         }
         if(RugbyChampFixtures !== undefined && RugbyChampFixtures.length > 0)

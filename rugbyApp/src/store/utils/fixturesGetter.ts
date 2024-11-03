@@ -300,7 +300,7 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
         
         // need to get date
         const matchDate = new Date(seasonAllMatches.content[index].time.millis);
-        const currentYear = new Date().getFullYear()
+        const matchYear = matchDate.getFullYear()
 
         if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
         {
@@ -310,7 +310,7 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
             const awayTeamScore = seasonAllMatches.content[index].scores[1];
             const matchVenue = seasonAllMatches.content[index].venue.name;
             const matchID = seasonAllMatches.content[index].matchId;
-            const compName = (seasonAllMatches.content[index].competition).replace(" " + currentYear, "");
+            const compName = (seasonAllMatches.content[index].competition).replace(" " + matchYear, "");
 
             // time in seconds need to convert to mins
             const eventTimeSeconds = Number(seasonAllMatches.content[index].clock.secs);

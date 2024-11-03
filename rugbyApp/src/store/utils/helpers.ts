@@ -99,8 +99,16 @@ export const worldRugbyAPILeagueCodes = [
         displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
     { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
+    { value: 'rugbyWorldCup', code: "1893",
+        displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
     
 ];
+
+export const isLeagueInWorldRugbyAPIFromLeagueName = (name: string) => {
+
+    const result = worldRugbyAPILeagueCodes.find((element) => element.value == name)
+    return result !== undefined
+}
 
 export const isLeagueInWorldRugbyAPI = (displayName: string) => {
 
@@ -131,6 +139,12 @@ export const planetRugbyAPILeagueCodes = [
     { value: 'top14', code: "1310036262",
         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
 ];
+
+export const isLeagueInPlanetRugbyAPIFromLeagueName = (name: string) => {
+
+    const result = planetRugbyAPILeagueCodes.find((element) => element.value == name)
+    return result !== undefined
+}
 
 export const isLeagueInPlanetRugbyAPI = (displayName: string) => {
 

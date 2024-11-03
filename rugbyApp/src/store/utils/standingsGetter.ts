@@ -120,10 +120,6 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
             {
                 teamName = getChampsCupShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
-            else if(leagueName === 'top14')
-            {
-                teamName = getTop14ShortNameFromFullName(standingsChildren[j].teams[index].name);
-            }
 
             const teamGP = standingsChildren[j].teams[index].played;
             const teamWins = standingsChildren[j].teams[index].won
@@ -131,6 +127,74 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
             const teamLosses = standingsChildren[j].teams[index].lost;
             const teamPD = standingsChildren[j].teams[index].pointsDiff;
             const teamPoints = standingsChildren[j].teams[index].points;
+
+
+            let newRankingInfo = {
+                    isHeader: false,
+                    teamPool: teamPool,
+                    teamName: teamName,
+                    teamGP: teamGP,
+                    teamWins: teamWins,
+                    teamDraws: teamDraws,
+                    teamLosses: teamLosses,
+                    teamPD: teamPD,
+                    teamPoints: teamPoints,
+                    ranking: index,
+                    isLastItem: index == teamsCount - 1,
+                    isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
+            };
+
+            newArray.push(newRankingInfo)
+        }
+    }
+
+    return(
+        newArray
+    )
+
+}
+
+export const getAllStandingsDataPlanetRugby = (seasonStandings: any, leagueName: string) => {
+
+    var newArray = [];
+
+    const standingsChildren = seasonStandings.data
+
+    for (let j = 0; j < standingsChildren.length; j++) {
+
+        const teamsCount = standingsChildren[j].table.length
+        
+        for (let index = 0; index < teamsCount; index++) {
+
+            const teamPool = standingsChildren[j].name;
+            if(index == 0 && standingsChildren.length > 1)
+            {
+                let headerRankingInfo = {
+                    isHeader: true,
+                    teamPool: teamPool,
+                    teamName: 'Pool',
+                    teamGP: '0',
+                    teamWins: '0',
+                    teamDraws: '0',
+                    teamLosses: '0',
+                    teamPD: '0',
+                    teamPoints: '0',
+                    ranking: index,
+                    isLastItem: false,
+                    isEndOfList: false,
+                };
+
+                newArray.push(headerRankingInfo)
+            }
+
+            const teamName = standingsChildren[j].table[index].name;
+
+            const teamGP = standingsChildren[j].table[index].played;
+            const teamWins = standingsChildren[j].table[index].won
+            const teamDraws = standingsChildren[j].table[index].draws;
+            const teamLosses = standingsChildren[j].table[index].lost;
+            const teamPD = standingsChildren[j].table[index].difference;
+            const teamPoints = standingsChildren[j].table[index].points;
 
 
             let newRankingInfo = {
