@@ -3,6 +3,7 @@ import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInf
 import { View, Image, Text, StyleSheet } from "react-native"
 
 export type StatsInfo = {
+    statsAvailable: boolean,
     homeTeamName: string,
     awayTeamName: string,
     homeTeamPossession: string,
@@ -66,28 +67,20 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     const homeTerritoryPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
     const awayTerritoryPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
 
+    const statsPanelRender = (statsAvailable: boolean) => {
 
-    return (
-        <View style={[statsPanelStyles.container]}>
-
-            <View style={{backgroundColor: colors.altBackground, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5}}>
-
-                <View style={{ alignItems: 'center' }}>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 2 }}>
-                        <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Image style={[statsPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.altLogo}/>
-                            <Text style={[statsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
-                        </View>
-                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
-                        <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Text style={[statsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
-                            <Image style={[statsPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.altLogo}/>
-                        </View>
-                    </View>
+        if(!statsAvailable)
+        {
+            return (
+                <View>
+                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', marginVertical: 10}}>Stats Not Available</Text>
                 </View>
-
+            )
+        }
+        else
+        {
+            return (
+                <>
                 <GameStatsTitlePanel 
                 statTitle="Match Events"/>
 
@@ -177,6 +170,34 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                 homeStat={matchInfoArray[0].homeTeamRedCards}
                 awayStat={matchInfoArray[0].awayTeamRedCards}
                 statTitle="Red Cards"/>
+                </>
+            )
+        }
+    }
+
+
+    return (
+        <View style={[statsPanelStyles.container]}>
+
+            <View style={{backgroundColor: colors.altBackground, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5}}>
+
+                <View style={{ alignItems: 'center' }}>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 2 }}>
+                        <View style={[statsPanelStyles.teamInfoContainer]}>
+                            <Image style={[statsPanelStyles.teamLogo]} 
+                            source={homeTeamInfo?.altLogo}/>
+                            <Text style={[statsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
+                        </View>
+                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
+                        <View style={[statsPanelStyles.teamInfoContainer]}>
+                            <Text style={[statsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
+                            <Image style={[statsPanelStyles.teamLogo]} 
+                            source={awayTeamInfo?.altLogo}/>
+                        </View>
+                    </View>
+                </View>
+
+                {statsPanelRender(matchInfoArray[0].statsAvailable)}
 
             </View>
             

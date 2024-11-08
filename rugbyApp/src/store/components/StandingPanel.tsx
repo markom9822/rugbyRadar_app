@@ -37,9 +37,14 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     {
         teamInfo = getURCTeamInfoFromName(teamName)
     }
-    else if(league === "sixNations")
+    else if(league === "sixNations" || league === "rugbyChamp" || league === "rugbyWorldCup" || league === "worldRankings")
     {
         teamInfo = getInternationalTeamInfoFromName(teamName)
+    }
+    else if(league === "u20SixNations" || league === "u20Championship")
+    {
+        const u20Team = teamName.replace(" U20", "");
+        teamInfo = getInternationalTeamInfoFromName(u20Team)
     }
     else if(league === "prem") 
     {
@@ -56,14 +61,6 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     else if(league === "championsCup" || league === "challengeCup")
     {
         teamInfo = getChampionsCupTeamInfoFromName(teamName)
-    }
-    else if(league === "rugbyWorldCup")
-    {
-        teamInfo = getInternationalTeamInfoFromName(teamName)
-    }
-    else if(league === "worldRankings")
-    {
-        teamInfo = getInternationalTeamInfoFromName(teamName)
     }
     else
     {

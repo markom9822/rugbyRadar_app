@@ -1,12 +1,12 @@
 import { defaultStyles} from "@/styles"
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native"
 import { fontFamilies, fontSize } from "@/constants/tokens"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
-import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
 
 export type StandingInfo = {
@@ -87,6 +87,17 @@ const StandingsScreen = () => {
         var apiString = '';
         const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
 
+        const planetRugbyStandingsLeagueCodes = [
+            { leagueName: 'top14', leagueCode: '1310036262',},
+            { leagueName: 'sixNations', leagueCode: '1310031041',},
+            { leagueName: 'u20SixNations', leagueCode: '1310031586',},
+            { leagueName: 'rugbyChamp', leagueCode: '1310034091',},
+            // need to fix pooled standings
+            { leagueName: 'u20Championship', leagueCode: '1310035680',},
+            { leagueName: 'rugbyWorldCup', leagueCode: '1310029544',},
+
+        ];
+
         if(leagueName == "worldRankings")
         {
             apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/rankings/mru?language=en';
@@ -115,13 +126,13 @@ const StandingsScreen = () => {
             console.info(newArray)
             setStandingsArray(newArray)
         }
-        else if(isLeagueInPlanetRugbyAPIFromLeagueName(leagueName))
+        // use planet rugby API for standings
+        else if(planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
         {
-            const planetRugbyAPILeagueCode = getPlanetRugbyAPILeagueCode(leagueName)
+            const planetRugbyAPILeagueCode = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCode;
             apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCode;
 
             const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-
             const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName)
 
             console.info(newArray)
@@ -133,8 +144,8 @@ const StandingsScreen = () => {
         {
             const worldRugbyAPILeagueCode = getWorldRugbyAPILeagueCode(leagueName)
             apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=' + worldRugbyAPILeagueCode;
-            const seasonMatches = await fetch(apiString,).then((res) => res.json())
 
+            const seasonMatches = await fetch(apiString,).then((res) => res.json())
             const newArray = await getAllStandingsDataWorldRugbyAPI(seasonMatches, leagueName)
 
             console.info(newArray)
@@ -142,21 +153,11 @@ const StandingsScreen = () => {
 
             setIsLoading(false)
         }
-        else
-        {
-            apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + currentLeagueCode + '/standings?lang=en&region=gb&season='
-             + targetSeasonName + '&seasontype=1&sort=rank:asc&type=0';
-            
-            const seasonStandings = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsData(seasonStandings)
-
-            console.info(newArray)
-            setStandingsArray(newArray)
-        }
+        
         setIsLoading(false)
     }
 
-    const handleOnChangeLeague = (item: DropdownData) => {
+    const handleOnChangeLeague = async (item: DropdownData) => {
         setLeagueName(item.value)
         setSeasonName('')
         setStandingsArray([])
@@ -174,9 +175,12 @@ const StandingsScreen = () => {
         { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
+        //{ label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
+        { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo },
+        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
         { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
+        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
         { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo}
     ];
 
@@ -235,6 +239,15 @@ const StandingsScreen = () => {
     } 
 
     const isSeasonDropdownDisabled = leagueName == "worldRankings"
+
+    useEffect(() => {
+
+        if(leagueName == "worldRankings")
+        {
+            handlePressFetchData('2024')
+        }
+        
+    }, [leagueName]);
 
     const headerRender = (isWorldRanking: boolean, eventsArray: StandingInfo[]) => {
 

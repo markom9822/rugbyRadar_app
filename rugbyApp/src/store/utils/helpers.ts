@@ -142,6 +142,7 @@ export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 export const planetRugbyAPILeagueCodes = [
     { value: 'top14', code: "1310036262",
         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+    // need to add super rugby here
 ];
 
 export const isLeagueInPlanetRugbyAPIFromLeagueName = (name: string) => {
@@ -350,7 +351,7 @@ export const getClosestWorldCupYear = (year: number) => {
 export const generateSeasonList = () =>{
 
     const currentYear = new Date().getFullYear().valueOf();
-    const startYear = "2009"
+    const startYear = "2021"
 
     var seasonArray: SeasonDateInfo[] = []
 

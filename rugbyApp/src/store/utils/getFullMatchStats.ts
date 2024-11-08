@@ -157,6 +157,7 @@ export const getFullMatchStatsRugbyViz = (matchStats: any) => {
     if (matchStats.data.homeTeam.stats == null || matchStats.data.awayTeam.stats == null) {
         const blankArray = [
             {
+                statsAvailable: false,
                 homeTeamName: homeTeamName,
                 awayTeamName: awayTeamName,
                 homeTeamPossession: '0',
@@ -257,6 +258,7 @@ export const getFullMatchStatsRugbyViz = (matchStats: any) => {
 
     const newArray = [
         {
+            statsAvailable: true,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
@@ -315,7 +317,6 @@ export const handleGetWorldRugbyAPIStat = (stat: any) => {
     return stat
 }
 
-
 export const getFullMatchStatsWorldRugbyAPI = (matchStats: any) => {
 
     const homeTeamName = matchStats.match.teams[0].name;
@@ -323,9 +324,10 @@ export const getFullMatchStatsWorldRugbyAPI = (matchStats: any) => {
 
     console.info(matchStats.teamStats[0].stats.Conversions)
 
-    if (matchStats.teamStats[0].stats.Conversions == undefined || matchStats.teamStats[1].stats.Conversions == undefined) {
+    if (Object.keys(matchStats.teamStats[0].stats).length === 0 ||  Object.keys(matchStats.teamStats[1].stats).length === 0) {
         const blankArray = [
             {
+                statsAvailable: false,
                 homeTeamName: homeTeamName,
                 awayTeamName: awayTeamName,
                 homeTeamPossession: '0',
@@ -426,6 +428,7 @@ export const getFullMatchStatsWorldRugbyAPI = (matchStats: any) => {
 
     const newArray = [
         {
+            statsAvailable: true,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
@@ -481,6 +484,7 @@ export const getFullMatchStatsPlanetRugbyAPI = (matchStats: any) => {
 
     const blankArray = [
         {
+            statsAvailable: false,
             homeTeamName: homeTeam,
             awayTeamName: awayTeam,
             homeTeamPossession: '0',

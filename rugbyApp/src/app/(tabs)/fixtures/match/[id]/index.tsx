@@ -7,6 +7,7 @@ import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 
 export type MatchInfo = {
+    statsAvailable: boolean,
     homeTeamName: string,
     awayTeamName: string,
     homeTeamPossession: string,
@@ -23,7 +24,7 @@ export type MatchInfo = {
     matchBroadcasters: string[]
 }
 
-export const getMatchInfo = (matchDetails: any) => {
+export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
 
     const homeTeamName = matchDetails.boxscore.teams[0].team.displayName;
     const awayTeamName = matchDetails.boxscore.teams[1].team.displayName;
@@ -34,6 +35,7 @@ export const getMatchInfo = (matchDetails: any) => {
     {
         const blankArray = [
             {
+                statsAvailable: false,
                 homeTeamName: homeTeamName,
                 awayTeamName: awayTeamName,
                 homeTeamPossession: '0',
@@ -70,6 +72,7 @@ export const getMatchInfo = (matchDetails: any) => {
 
     const newArray = [
         {
+            statsAvailable: true,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
@@ -107,7 +110,7 @@ export const handleGetMatchStat = (stat: any) => {
 
 }
 
-export const getMatchInfoRugbyViz = (matchDetails: any) => {
+export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
 
     const homeTeamName = matchDetails.data.homeTeam.shortName;
     const awayTeamName = matchDetails.data.awayTeam.shortName;
@@ -127,9 +130,11 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
     const homeTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
     const awayTeamMetres = handleGetMatchStat(matchDetails.data.awayTeam.stats?.metres);
 
+    const statsAvailable = matchDetails.data.homeTeam.stats !== null && matchDetails.data.awayTeam.stats !== null;
 
     const newArray = [
         {
+            statsAvailable: statsAvailable,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
@@ -152,7 +157,7 @@ export const getMatchInfoRugbyViz = (matchDetails: any) => {
     )
 }
 
-export const getMatchInfoWorldRugbyAPI = (matchDetails: any) => {
+export const getMatchInfoWorldRugbyAPI = (matchDetails: any): MatchInfo[] => {
 
     const homeTeamName = matchDetails.match.teams[0].name;
     const awayTeamName = matchDetails.match.teams[1].name;
@@ -171,9 +176,11 @@ export const getMatchInfoWorldRugbyAPI = (matchDetails: any) => {
     const homeTeamMetres = handleGetMatchStat(matchDetails.teamStats[0].stats?.Metres);
     const awayTeamMetres = handleGetMatchStat(matchDetails.teamStats[1].stats?.Metres);
 
+    const statsAvailable = Object.keys(matchDetails.teamStats[0].stats).length !== 0 &&  Object.keys(matchDetails.teamStats[1].stats).length !== 0;
 
     const newArray = [
         {
+            statsAvailable: statsAvailable,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
@@ -196,7 +203,7 @@ export const getMatchInfoWorldRugbyAPI = (matchDetails: any) => {
     )
 }
 
-export const getMatchInfoPlanetRugbyAPI = (matchDetails: any) => {
+export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
 
     const [homeTeamName, awayTeamName] = matchDetails.data.matchDetails.teams.split(';');
     
@@ -218,6 +225,7 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any) => {
 
     const newArray = [
         {
+            statsAvailable: false,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
@@ -395,6 +403,44 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
 
     }
 
+    const statsPanelRender = (statsAvailable: boolean) => {
+
+        if(!statsAvailable)
+        {
+            return (
+                <View>
+                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', marginVertical: 10}}>Stats Not Available</Text>
+                </View>
+            )
+        }
+        else
+        {
+            return (
+                <>
+                <SummaryStatsPanel 
+                homeStat={homePossessionPercent}
+                awayStat={awayPossessionPercent}
+                statTitle="Possession"/>
+
+                <SummaryStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamTries}
+                awayStat={matchInfoArray[0].awayTeamTries}
+                statTitle="Tries"/>
+
+                <SummaryStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamTackles}
+                awayStat={matchInfoArray[0].awayTeamTackles}
+                statTitle="Tackles"/>
+
+                <SummaryStatsPanel 
+                homeStat={matchInfoArray[0].homeTeamMetres}
+                awayStat={matchInfoArray[0].awayTeamMetres}
+                statTitle="Metres Run"/>
+                </>
+            )
+        }
+    }
+
     return (
         <View style={[summaryPanelStyles.container]}>
             <Text style={[summaryPanelStyles.matchName]}>
@@ -436,25 +482,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                     </View>
                 </View>
 
-                <SummaryStatsPanel 
-                homeStat={homePossessionPercent}
-                awayStat={awayPossessionPercent}
-                statTitle="Possession"/>
-
-                <SummaryStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTries}
-                awayStat={matchInfoArray[0].awayTeamTries}
-                statTitle="Tries"/>
-
-                <SummaryStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTackles}
-                awayStat={matchInfoArray[0].awayTeamTackles}
-                statTitle="Tackles"/>
-
-                <SummaryStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamMetres}
-                awayStat={matchInfoArray[0].awayTeamMetres}
-                statTitle="Metres Run"/>
+                {statsPanelRender(matchInfoArray[0].statsAvailable)}
             </View>            
         </View>
     )
