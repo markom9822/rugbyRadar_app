@@ -119,6 +119,7 @@ export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
     )
 }
 
+
 export const getHeadToHeadStatsPlanetRugbyAPI = (matchStats: any) => {
 
     var headToHeadArray = [];

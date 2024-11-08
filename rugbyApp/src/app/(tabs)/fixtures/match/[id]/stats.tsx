@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator} from "react-native"
 import { useGlobalSearchParams } from "expo-router";
-import { getLeagueName } from "@/store/utils/helpers";
+import { getLeagueName, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
@@ -75,14 +75,21 @@ const MatchSummary = () => {
             const matchStats = await fetch( apiString,).then((res) => res.json())
             const homeTeam = matchStats.match.teams[0].name;
             const awayTeam = matchStats.match.teams[1].name;
+            const matchDate = new Date(matchStats.match.time.millis)
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)
-
+            
             const fullMatchStats = getFullMatchStatsWorldRugbyAPI(matchStats)
-            const headToHeadStats = getHeadToHeadStatsWorldRugbyAPI(matchStats)
-            const mainTeamFormStats = getTeamFormStatsWorldRugbyAPI(matchStats, true)
-            const opponentTeamFormStats = getTeamFormStatsWorldRugbyAPI(matchStats, false)
+            
+            // use planet rugby for head to head stats
+            const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeam, awayTeam);
+            const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/'+planetRugbyMatchID;
+            const matchPlanetRugbyStats = await fetch( apiPlanetRugbyString,).then((res) => res.json())
+
+            const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchPlanetRugbyStats)
+            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, true)
+            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, false)
 
             const timelineApiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/timeline?language=en';
             const timelineStats = await fetch( timelineApiString,).then((res) => res.json())

@@ -3,8 +3,8 @@ import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-nativ
 import { fontFamilies, fontSize } from "@/constants/tokens"
 import { useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName } from "@/store/utils/helpers"
-import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz } from "@/store/utils/standingsGetter"
+import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
+import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 
@@ -97,7 +97,6 @@ const StandingsScreen = () => {
             console.info(newArray)
             setStandingsArray(newArray)
         }
-
         // uses rugbyViz API
         else if(rugbyVizCode !== undefined)
         {
@@ -124,6 +123,19 @@ const StandingsScreen = () => {
             const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
 
             const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName)
+
+            console.info(newArray)
+            setStandingsArray(newArray)
+
+            setIsLoading(false)
+        }
+        else if (isLeagueInWorldRugbyAPIFromLeagueName(leagueName)) 
+        {
+            const worldRugbyAPILeagueCode = getWorldRugbyAPILeagueCode(leagueName)
+            apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=' + worldRugbyAPILeagueCode;
+            const seasonMatches = await fetch(apiString,).then((res) => res.json())
+
+            const newArray = await getAllStandingsDataWorldRugbyAPI(seasonMatches, leagueName)
 
             console.info(newArray)
             setStandingsArray(newArray)
@@ -181,6 +193,10 @@ const StandingsScreen = () => {
         { label: '1987', value: '1987' },
     ];
 
+    const seasonSingleData = [
+        { label: '2024/25', value: '2025' },
+    ]
+
     var currentSeasonData;
 
     switch(leagueName) { 
@@ -193,7 +209,7 @@ const StandingsScreen = () => {
             break; 
         } 
         case "top14": { 
-            currentSeasonData = seasonDates; 
+            currentSeasonData = seasonSingleData; 
             break; 
         }
         case "superRugby": { 
@@ -205,7 +221,7 @@ const StandingsScreen = () => {
             break; 
         }
         case "sixNations": { 
-            currentSeasonData = seasonDates; 
+            currentSeasonData = seasonSingleData; 
             break; 
         } 
         case "rugbyWorldCup": { 

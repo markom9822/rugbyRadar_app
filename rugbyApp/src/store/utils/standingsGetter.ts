@@ -15,12 +15,11 @@ export const getAllStandingsData = (seasonStandings: any) => {
     for (let j = 0; j < seasonStandings.children.length; j++) {
 
         const standingsCount = seasonStandings.children[j].standings.entries.length;
-        
+
         for (let index = 0; index < standingsCount; index++) {
 
             const teamPool = seasonStandings.children[j].name;
-            if(index == 0 && standingsChildren > 1)
-            {
+            if (index == 0 && standingsChildren > 1) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -49,25 +48,25 @@ export const getAllStandingsData = (seasonStandings: any) => {
 
 
             let newRankingInfo = {
-                    isHeader: false,
-                    teamPool: teamPool,
-                    teamName: teamName,
-                    teamGP: teamGP,
-                    teamWins: teamWins,
-                    teamDraws: teamDraws,
-                    teamLosses: teamLosses,
-                    teamPD: teamPD,
-                    teamPoints: teamPoints,
-                    ranking: index,
-                    isLastItem: index == standingsCount - 1,
-                    isEndOfList: (index == standingsCount - 1) && (j == seasonStandings.children.length - 1)
+                isHeader: false,
+                teamPool: teamPool,
+                teamName: teamName,
+                teamGP: teamGP,
+                teamWins: teamWins,
+                teamDraws: teamDraws,
+                teamLosses: teamLosses,
+                teamPD: teamPD,
+                teamPoints: teamPoints,
+                ranking: index,
+                isLastItem: index == standingsCount - 1,
+                isEndOfList: (index == standingsCount - 1) && (j == seasonStandings.children.length - 1)
             };
 
             newArray.push(newRankingInfo)
         }
     }
 
-    return(
+    return (
         newArray
     )
 
@@ -82,12 +81,11 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
     for (let j = 0; j < standingsChildren.length; j++) {
 
         const teamsCount = standingsChildren[j].teams.length
-        
+
         for (let index = 0; index < teamsCount; index++) {
 
             const teamPool = standingsChildren[j].name;
-            if(index == 0 && standingsChildren.length > 1)
-            {
+            if (index == 0 && standingsChildren.length > 1) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -108,16 +106,13 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
 
             var teamName = '';
 
-            if(leagueName === 'urc')
-            {
+            if (leagueName === 'urc') {
                 teamName = getURCShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
-            else if (leagueName === 'prem')
-            {
+            else if (leagueName === 'prem') {
                 teamName = getPremShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
-            else if(leagueName === 'championsCup' || leagueName === 'challengeCup')
-            {
+            else if (leagueName === 'championsCup' || leagueName === 'challengeCup') {
                 teamName = getChampsCupShortNameFromFullName(standingsChildren[j].teams[index].name);
             }
 
@@ -130,25 +125,25 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
 
 
             let newRankingInfo = {
-                    isHeader: false,
-                    teamPool: teamPool,
-                    teamName: teamName,
-                    teamGP: teamGP,
-                    teamWins: teamWins,
-                    teamDraws: teamDraws,
-                    teamLosses: teamLosses,
-                    teamPD: teamPD,
-                    teamPoints: teamPoints,
-                    ranking: index,
-                    isLastItem: index == teamsCount - 1,
-                    isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
+                isHeader: false,
+                teamPool: teamPool,
+                teamName: teamName,
+                teamGP: teamGP,
+                teamWins: teamWins,
+                teamDraws: teamDraws,
+                teamLosses: teamLosses,
+                teamPD: teamPD,
+                teamPoints: teamPoints,
+                ranking: index,
+                isLastItem: index == teamsCount - 1,
+                isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
             };
 
             newArray.push(newRankingInfo)
         }
     }
 
-    return(
+    return (
         newArray
     )
 
@@ -163,12 +158,11 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, leagueName:
     for (let j = 0; j < standingsChildren.length; j++) {
 
         const teamsCount = standingsChildren[j].table.length
-        
+
         for (let index = 0; index < teamsCount; index++) {
 
             const teamPool = standingsChildren[j].name;
-            if(index == 0 && standingsChildren.length > 1)
-            {
+            if (index == 0 && standingsChildren.length > 1) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -198,26 +192,163 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, leagueName:
 
 
             let newRankingInfo = {
-                    isHeader: false,
-                    teamPool: teamPool,
-                    teamName: teamName,
-                    teamGP: teamGP,
-                    teamWins: teamWins,
-                    teamDraws: teamDraws,
-                    teamLosses: teamLosses,
-                    teamPD: teamPD,
-                    teamPoints: teamPoints,
-                    ranking: index,
-                    isLastItem: index == teamsCount - 1,
-                    isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
+                isHeader: false,
+                teamPool: teamPool,
+                teamName: teamName,
+                teamGP: teamGP,
+                teamWins: teamWins,
+                teamDraws: teamDraws,
+                teamLosses: teamLosses,
+                teamPD: teamPD,
+                teamPoints: teamPoints,
+                ranking: index,
+                isLastItem: index == teamsCount - 1,
+                isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
             };
 
             newArray.push(newRankingInfo)
         }
     }
 
-    return(
+    return (
         newArray
     )
 
+}
+
+export const getAllStandingsDataWorldRugbyAPI = async (seasonMatches: any, leagueName: string) => {
+
+    var newArray = [];
+
+    // get array of teams in competition
+
+    const teamsArray = getTeamsInCompetition(seasonMatches)
+    console.info(teamsArray)
+
+    for (let index = 0; index < teamsArray.length; index++) {
+
+        let newRankingInfo = {
+            isHeader: false,
+            teamPool: '0',
+            teamName: teamsArray[index],
+            teamGP: '0',
+            teamWins: '0',
+            teamDraws: '0',
+            teamLosses: '0',
+            teamPD: '0',
+            teamPoints: '0',
+            ranking: index,
+            isLastItem: index == teamsArray.length - 1,
+            isEndOfList: (index == teamsArray.length - 1)
+        };
+
+        newArray.push(newRankingInfo)
+    }
+
+    const seasonLeagueMatches = seasonMatches.content
+
+    for (let i = 0; i < seasonLeagueMatches.length; i++) {
+
+        for (let j = 0; j < 2; j++) {
+
+            // home team first
+            const teamResult = newArray.find((element) => element.teamName == seasonLeagueMatches[i].teams[j].name);
+            if (!teamResult) return newArray;
+
+            const firstIndex = j == 0 ? 0 : 1;
+            const secondIndex = j == 0 ? 1 : 0;
+
+            teamResult.teamGP = (Number(teamResult.teamGP) + 1).toString();
+            teamResult.teamPD = ((Number(teamResult.teamPD)) + (Number(seasonLeagueMatches[i].scores[firstIndex]) - Number(seasonLeagueMatches[i].scores[secondIndex]))).toString();
+
+            const matchTries = await getTriesInMatch(seasonLeagueMatches[i].matchId, seasonLeagueMatches[i].teams[j].name)
+
+            if(matchTries >= 4)
+            {
+                teamResult.teamPoints = (Number(teamResult.teamPoints) + 1).toString();
+            }
+
+            if (seasonLeagueMatches[i].scores[0] == seasonLeagueMatches[i].scores[1]) {
+                teamResult.teamDraws = (Number(teamResult.teamDraws) + 1).toString();
+                teamResult.teamPoints = (Number(teamResult.teamPoints) + 2).toString();
+            }
+            else if (seasonLeagueMatches[i].scores[firstIndex] > seasonLeagueMatches[i].scores[secondIndex]) {
+
+                // won game
+                teamResult.teamWins = (Number(teamResult.teamWins) + 1).toString();
+                teamResult.teamPoints = (Number(teamResult.teamPoints) + 4).toString();
+            }
+            else {
+
+                // lost game
+                teamResult.teamLosses = (Number(teamResult.teamLosses) + 1).toString();
+                if (Math.abs(seasonLeagueMatches[i].scores[0] - seasonLeagueMatches[i].scores[1]) <= 7) {
+                    teamResult.teamPoints = (Number(teamResult.teamPoints) + 1).toString();
+                }
+            }
+
+        }
+    }
+
+    // sort array
+
+    function compare( a: any, b: any ) {
+        if ( Number(a.teamPoints) > Number(b.teamPoints) ){
+          return -1;
+        }
+        if ( Number(a.teamPoints) < Number(b.teamPoints) ){
+          return 1;
+        }
+        return 0;
+      }
+      
+    newArray.sort( compare );
+
+    for (let arrayIndex = 0; arrayIndex < newArray.length; arrayIndex++) {
+
+        newArray[arrayIndex].ranking = arrayIndex;
+        newArray[arrayIndex].isLastItem = arrayIndex == newArray.length - 1;
+        newArray[arrayIndex].isEndOfList = arrayIndex == newArray.length - 1;
+    }
+
+    return (
+        newArray
+    )
+
+}
+
+export const getTeamsInCompetition = (seasonMatches: any) => {
+
+    function addUniqueToArray<T>(array: T[], element: T): void {
+        if (!array.includes(element)) {
+            array.push(element);
+        }
+    }
+
+    var teamArray: string[] = []
+
+    for (let index = 0; index < seasonMatches.content.length; index++) {
+
+        addUniqueToArray(teamArray, seasonMatches.content[index].teams[0].name)
+        addUniqueToArray(teamArray, seasonMatches.content[index].teams[1].name)
+    }
+
+    return teamArray;
+
+}
+
+
+export const getTriesInMatch = async (matchID: string, teamName: string) => {
+
+    const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/' + matchID + '/stats?language=en';
+    const matchStats = await fetch(apiString,).then((res) => res.json())
+
+    if(matchStats.match.teams[0].name == teamName)
+    {
+        return matchStats.teamStats[0].stats.Tries;
+    }
+    else
+    {
+        return matchStats.teamStats[1].stats.Tries;
+    }
 }

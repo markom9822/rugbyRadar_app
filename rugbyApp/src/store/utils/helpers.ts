@@ -101,6 +101,10 @@ export const worldRugbyAPILeagueCodes = [
         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
     { value: 'rugbyWorldCup', code: "1893",
         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+    { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
+        displayName: 'U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+    { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
+        displayName: 'Britsh & Irish Lions Tour', leagueLogo: null, leagueAltLogo: null},
     
 ];
 
@@ -166,6 +170,46 @@ export const getPlanetRugbyAPILeagueDisplayNameFromCode = (code: string) => {
         return ''
     }
     return result.displayName.toString()
+}
+
+export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeTeamName: string, awayTeamName: string) => {
+
+    function formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    const startDate = formatDate(selectedDate);
+
+    const apiString = 'https://rugbylivecenter.yormedia.com/api/matches/all/' + startDate + '/1';
+    const matchInfo = await fetch(apiString,).then((res) => res.json())
+
+    for (let index = 0; index < matchInfo.data.length; index++) {
+
+        for (let matchIndex = 0; matchIndex < matchInfo.data[index].matches.length; matchIndex++) {
+
+            const thisMatch = matchInfo.data[index].matches[matchIndex];
+
+            const parts = thisMatch.teams.split(';');
+            const homeParts = parts[0].split(':');
+            const homeTeam = homeParts[homeParts.length - 1]
+
+            const awayParts = parts[1].split(':');
+            const awayTeam = awayParts[0]
+
+            console.info(homeTeam + awayTeam)
+
+            if(homeTeam == homeTeamName && awayTeam == awayTeamName)
+            {
+                return thisMatch.id;
+            }
+
+        }
+    }
+
+    return null
 }
 
 //---------------------------------------------------------------------------------------------------

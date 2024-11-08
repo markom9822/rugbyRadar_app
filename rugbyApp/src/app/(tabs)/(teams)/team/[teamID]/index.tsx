@@ -2,11 +2,12 @@ import { colors} from "@/constants/tokens";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
-import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getRugbyVizLeagueNameFromCode } from "@/store/utils/helpers";
+import { getAnyTeamInfoFromName, getClosestWorldCupYear, getLeagueCodeFromDisplayName, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueNameFromCode } from "@/store/utils/helpers";
 import { defaultStyles } from "@/styles";
 import { getTeamStandingsInfo, getTeamStandingsInfoRugbyViz } from "@/store/utils/getTeamStandingsInfo";
 import { TeamSummaryPanel } from "@/store/components/TeamSummaryPanel";
 import { StandingInfo, TeamStandingPanel } from "@/store/components/TeamStandingPanel";
+import { getAllStandingsDataPlanetRugby } from "@/store/utils/standingsGetter";
 
 
 export const getTeamBasicInfo = (teamDetails: any) => {
@@ -129,12 +130,10 @@ const TeamSummary = () => {
         const rugbyVizLeagueCodes = [
             { teamType: 'URC Club', leagueCode: '1068',},
             { teamType: 'Prem Club', leagueCode: '1011',},
-            { teamType: 'Top14 Club', leagueCode: '1002',},
-
         ];
 
         // use RugbyViz API
-        if(teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club' || teamInfo.type === 'Top14 Club')   
+        if(teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club')   
         {
             // getting standings info
             const rugVizLeagueCode = rugbyVizLeagueCodes.find((element) => element.teamType == teamInfo.type)?.leagueCode;
@@ -150,7 +149,21 @@ const TeamSummary = () => {
             return;
         }
 
-        // getting this teams standings table
+        // use Planet Rugby API
+        if(teamInfo.type === 'Top14 Club')   
+        {
+            const planetRugbyAPILeagueCode = getPlanetRugbyAPILeagueCode('top14')
+            const apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCode;
+
+            const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
+            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, 'top14')
+
+            console.info(newArray)
+            setStandingsArray(newArray)    
+            setIsLoading(false)
+            return;
+        }
+
         const apiStringStandings = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + thisLeagueCode + '/standings?lang=en&region=gb&season='
              + targetYear + '&seasontype=1&sort=rank:asc&type=0';
             

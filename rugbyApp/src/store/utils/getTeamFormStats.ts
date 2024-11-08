@@ -132,7 +132,7 @@ export const getTeamFormStatsPlanetRugbyAPI = (matchStats: any, isHomeTeam: bool
 
     const formGames = isHomeTeam ? matchStats.data.lastFiveMatches.home.matches : matchStats.data.lastFiveMatches.away.matches;
     const gamesLength = formGames.length;
-    const currentTeam = isHomeTeam ? matchStats.data.lastFiveMatches.home.teamName : matchStats.data.lastFiveMatches.home.teamName;
+    const currentTeam = isHomeTeam ? matchStats.data.lastFiveMatches.home.teamName : matchStats.data.lastFiveMatches.away.teamName;
     const currentMatchDate = new Date(matchStats.data.matchDetails.datetime);
 
     for (let index = 0; index < gamesLength; index++) {

@@ -1,8 +1,8 @@
 import { getAnyTeamInfoFromID, getLeagueCodeFromDisplayName } from "./helpers";
 
 export const rugbyVizLeagueCodes = [
-    { teamType: 'URC Club', leagueCodes: ['1068', '1008'],},
-    { teamType: 'Prem Club', leagueCodes: ['1011', '1008'],},
+    { teamType: 'URC Club', leagueCodes: ['1068', '1008', '1026'],},
+    { teamType: 'Prem Club', leagueCodes: ['1011', '1008', '1026'],},
 ];
 
 export const getTeamSeasonFixturesRugViz = async (seasonStartDate: Date, teamInfo: any) => {

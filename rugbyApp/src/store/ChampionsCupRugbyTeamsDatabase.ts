@@ -8,11 +8,14 @@ export const rugbyVizChampsCupNames = [
   { databaseName: 'Toulon', rugbyVizName: 'RC Toulon',},
   { databaseName: 'Bordeaux Begles', rugbyVizName: 'Bordeaux-Bègles',},
   { databaseName: 'Bayonne', rugbyVizName: 'Aviron Bayonnais',},
-  { databaseName: 'Pau', rugbyVizName: 'Section Paloise',},
-  { databaseName: 'Montpellier Herault', rugbyVizName: 'Montpellier Hérault',},
+  { databaseName: 'Montpellier', rugbyVizName: 'Montpellier Hérault',},
   { databaseName: 'Stade Toulousain', rugbyVizName: 'Toulouse',},
+  { databaseName: 'Clermont', rugbyVizName: 'Clermont Auvergne',},
+  { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
+  { databaseName: 'USA Perpignan', rugbyVizName: 'USAP',},
 
   { databaseName: 'Sale', rugbyVizName: 'Sale Sharks',},
+  { databaseName: 'Sale', rugbyVizName: 'Falcons',},
 
 ];
 
