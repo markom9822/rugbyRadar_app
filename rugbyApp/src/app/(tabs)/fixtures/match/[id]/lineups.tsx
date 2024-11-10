@@ -314,13 +314,8 @@ const Lineups = () => {
 
     return(
         <View style={defaultStyles.container}>
-            <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
-            <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
-            <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
-
             {activityIndicatorHeader()}
             {lineupsRender(homeTeamInfo, awayTeamInfo)}
-
         </View>
     )
 }

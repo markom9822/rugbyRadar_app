@@ -25,10 +25,11 @@ type ScorePanelProps = {
     stateDetail: string
     eventTime: string,
     isLastItem: boolean,
+    lastRefreshTime: string
 }
 
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
-     index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem}: ScorePanelProps) => {
+     index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime}: ScorePanelProps) => {
 
     const [selected, setSelected] = useState(false);
 
@@ -119,6 +120,19 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         }
     }
 
+    const lastRefreshHeader = (time: string) => {
+
+        if (isLastItem) {
+            return (
+                <View style={{ marginVertical: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{textAlign: 'center', color: 'grey', fontSize: fontSize.xs, fontFamily: fontFamilies.light}}>Last Refresh: {time}</Text>
+                </View>
+            )
+        }
+
+        return null
+    }
+
     var linkID
     if(isLeagueInRugbyViz(leagueDisplayName))
     {
@@ -175,6 +189,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 </Pressable> 
                 </Link>
               </View>
+              {lastRefreshHeader(lastRefreshTime)}
             </View>
     )
 

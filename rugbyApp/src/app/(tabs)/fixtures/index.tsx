@@ -33,6 +33,7 @@ export type FixturesSection = {
 
 const FixturesScreen = () => {
 
+    const [lastRefresh, setLastRefresh] = useState('');
     const [matchesSections, setMatchesSections] = useState<FixturesSection[]>([]);
     const [currentIndex, setCurrentIndex] = useState<Number | null>(null);
     const [refreshing, setRefreshing] = useState(false);
@@ -181,6 +182,7 @@ const FixturesScreen = () => {
             setMatchesSections(leagueFixtures)
         }
 
+        setLastRefresh(new Date().toLocaleTimeString('en-GB', {hour: 'numeric', minute: 'numeric', second: 'numeric'}))
         setIsLoading(false)
     }
 
@@ -210,6 +212,23 @@ const FixturesScreen = () => {
         { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
+
+    const notFoundHeader = (eventsArray: FixturesSection[]) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
+        {
+            return (
+                <View style={{ marginTop: 20, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
+                        <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
+                    </View>
+                </View>
+            )
+        }
+        
+        return null
+    }
 
     const activityIndicatorHeader = () => {
 
@@ -278,18 +297,11 @@ const FixturesScreen = () => {
         </View>
 
         {activityIndicatorHeader()}
+        {notFoundHeader(matchesSections)}
 
         <SectionList
             sections={matchesSections}
             keyExtractor={(item, index) => item.matchID}
-            ListEmptyComponent={
-                <View style={{ marginTop: 20, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
-                        <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
-                    </View>
-                </View>
-            }
             renderItem={({ item, index, section }) =>
                 <ScorePanel
                     leagueDisplayName={item.matchLeague}
@@ -308,6 +320,7 @@ const FixturesScreen = () => {
                     stateDetail={item.stateDetail}
                     eventTime={item.eventTime}
                     isLastItem={isLastItemInSectionList(index, section, matchesSections)}
+                    lastRefreshTime={lastRefresh}
                 />}
             renderSectionHeader={({ section: { title, data } }) => (
                 <View style={{ marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center' }}>
@@ -329,7 +342,6 @@ const FixturesScreen = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />
             }
         />
-
     </View>
 }
 

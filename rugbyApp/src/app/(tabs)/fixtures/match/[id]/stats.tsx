@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator} from "react-native"
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, RefreshControl} from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { getLeagueName, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
@@ -25,6 +25,7 @@ const MatchSummary = () => {
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const {id} = useGlobalSearchParams();
 
@@ -165,13 +166,11 @@ const MatchSummary = () => {
 
     return(
         <View style={defaultStyles.container}>
-            <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
-            <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
-            <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
 
             {activityIndicatorHeader()}
 
-            <ScrollView >
+            <ScrollView 
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />}>
                 <StatsPanel
                 matchInfoArray={matchStatsArray}
                 matchID={id}

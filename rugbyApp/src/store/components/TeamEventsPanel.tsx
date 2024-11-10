@@ -40,7 +40,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
 
     return (
-        <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 50: 0}]}>
+        <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 55: 0}]}>
             <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>{panelTitle}</Text>
 
             <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>

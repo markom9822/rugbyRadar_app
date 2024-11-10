@@ -1,6 +1,6 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { Link, useLocalSearchParams, Href } from "expo-router";
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native"
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, RefreshControl } from "react-native"
 import { useEffect, useState } from "react";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
@@ -253,6 +253,7 @@ const MatchSummary = () => {
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const {id} = useLocalSearchParams();
     const eventID = new String(id).substring(0,6);
@@ -341,7 +342,7 @@ const MatchSummary = () => {
 
             {activityIndicatorHeader()}
 
-            <ScrollView>
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />}>
                 <GameInfoPanel
                     matchInfoArray={matchInfoArray}
                     matchID={id}
