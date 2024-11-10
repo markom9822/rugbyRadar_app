@@ -194,15 +194,19 @@ export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeT
             const thisMatch = matchInfo.data[index].matches[matchIndex];
 
             const parts = thisMatch.teams.split(';');
+            const parts2 = thisMatch.teams.split(':')
             const homeParts = parts[0].split(':');
-            const homeTeam = homeParts[homeParts.length - 1]
+            const homeTeam1 = homeParts[homeParts.length - 1]
+            const homeTeam2 = parts2[0]
 
             const awayParts = parts[1].split(':');
-            const awayTeam = awayParts[0]
+            const awayTeam1 = awayParts[0]
+            const awayTeam2 = parts2[parts2.length - 1]
 
-            console.info(homeTeam + awayTeam)
+            const homeCheck = homeTeam1 == homeTeamName || homeTeam2 == homeTeamName;
+            const awayCheck = awayTeam1 == awayTeamName || awayTeam2 == awayTeamName;
 
-            if(homeTeam == homeTeamName && awayTeam == awayTeamName)
+            if(homeCheck && awayCheck)
             {
                 return thisMatch.id;
             }
