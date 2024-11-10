@@ -3,12 +3,13 @@ import { useLinkBuilder, useTheme } from '@react-navigation/native';
 import { PlatformPressable } from '@react-navigation/elements';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { CustomTabBarButton } from './CustomTabBarButton';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
   return (
-    <View style={styles.tabbar}>
+    <LinearGradient colors={['transparent','rgba(0,0,0,0.7)']} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 0.9 }} style={styles.tabbar}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -51,7 +52,7 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
           />
         );
       })}
-    </View>
+    </LinearGradient>
   );
 }
 
