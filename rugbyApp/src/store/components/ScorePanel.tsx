@@ -73,8 +73,20 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
                         <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
                     </View>
-                    <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>{stateDetail}</Text>
+                    <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>FT</Text>
             </View> 
+            )
+        }
+        // event at halftime
+        else if (eventState === "halfTime") {
+            return (
+                <View style={{ width: "25%", flexDirection: 'column', alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={[fixtureStyles.teamScore, { fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
+                        <Text style={[fixtureStyles.teamScore, { fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily }]}>{awayScore}</Text>
+                    </View>
+                    <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular }}>HT</Text>
+                </View>
             )
         }
         // event ongoing

@@ -326,6 +326,10 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
             {
                 eventState = "pre"
             }
+            else if (matchStatus === "LHT")
+            {
+                eventState = "halfTime"
+            }
             else
             {
                 eventState = "ongoing"

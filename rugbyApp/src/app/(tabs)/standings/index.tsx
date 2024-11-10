@@ -7,7 +7,7 @@ import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugb
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-
+import {FontAwesome6} from '@expo/vector-icons'
 
 export type StandingInfo = {
     isHeader: boolean
@@ -282,20 +282,6 @@ const StandingsScreen = () => {
         }
     }
 
-    const notFoundHeader = (eventsArray: StandingInfo[]) => {
-
-        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
-        {
-            return (
-                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Standings Found</Text>
-                </View>
-            )
-        }
-        
-        return null
-    }
-
     const activityIndicatorHeader = () => {
 
         if(isLoading)
@@ -330,10 +316,17 @@ const StandingsScreen = () => {
 
         {activityIndicatorHeader()}
         {headerRender(leagueName == "worldRankings", standingsArray)}
-        {notFoundHeader(standingsArray)}
         
         <FlatList 
         data={standingsArray}
+        ListEmptyComponent={
+            <View style={{ marginTop: 20, marginHorizontal: 5 }}>
+                <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Standing Found</Text>
+                <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
+                    <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
+                </View>
+            </View>
+        }
         renderItem={({item, index}) => 
         <StandingPanel
             index={index}

@@ -9,6 +9,7 @@ import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, Image, Style
 import { hexToRGB, isLastItemInSectionList } from "@/store/utils/helpers"
 import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
 import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import {FontAwesome6} from '@expo/vector-icons'
 
 export type SearchTeamInfo = {
     type: string;
@@ -144,20 +145,6 @@ const TeamsScreen = () => {
         return null
     }
 
-    const notFoundHeader = (teamSearch: string) => {
-
-        if(teamSearch == "")
-        {
-            return (
-                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Matching Team</Text>
-                </View>
-            )
-        }
-        
-        return null
-    }
-
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={{ flex: 1, backgroundColor: colors.background}}>
@@ -173,11 +160,17 @@ const TeamsScreen = () => {
                     value={teamSearch}
                 />
 
-                {notFoundHeader(teamSearch)}
-
                 <SectionList
                     sections={searchSections}
                     keyExtractor={(item, index) => item.id + index}
+                    ListEmptyComponent={
+                        <View style={{ marginTop: 20, marginHorizontal: 5 }}>
+                            <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Matching Team</Text>
+                            <View style={{justifyContent:'center', alignItems: 'center', margin: 30}}>
+                            <FontAwesome6 name="shield-halved" size={80} color={'rgba(40,40,40,0.9)'}/>
+                            </View>  
+                        </View>
+                    }
                     renderItem={({ item, index, section }) =>
                         <TeamInfoPanel
                             teamName={item.displayName}

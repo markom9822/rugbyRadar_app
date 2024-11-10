@@ -9,6 +9,7 @@ import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDro
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
+import {FontAwesome6} from '@expo/vector-icons'
 
 export type MatchInfo = {
     homeTeam: string,
@@ -210,20 +211,6 @@ const FixturesScreen = () => {
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
     ];
 
-    const notFoundHeader = (eventsArray: FixturesSection[]) => {
-
-        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
-        {
-            return (
-                <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
-                </View>
-            )
-        }
-        
-        return null
-    }
-
     const activityIndicatorHeader = () => {
 
         if(isLoading)
@@ -290,12 +277,19 @@ const FixturesScreen = () => {
             {dateHeader()}
         </View>
 
-        {notFoundHeader(matchesSections)}
         {activityIndicatorHeader()}
 
         <SectionList
             sections={matchesSections}
             keyExtractor={(item, index) => item.matchID}
+            ListEmptyComponent={
+                <View style={{ marginTop: 20, marginHorizontal: 5 }}>
+                    <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
+                        <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
+                    </View>
+                </View>
+            }
             renderItem={({ item, index, section }) =>
                 <ScorePanel
                     leagueDisplayName={item.matchLeague}
