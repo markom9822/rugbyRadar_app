@@ -8,7 +8,7 @@ import { CustomTabBar } from "@/store/components/CustomTabBar";
 const TabsNavigation = () => {
 
     return (
-        <Tabs tabBar={props => <CustomTabBar {...props} />} screenOptions={{headerShown: false}}>
+        <Tabs tabBar={({ key, ...props }: any) => <CustomTabBar {...props} key={key} />} screenOptions={{headerShown: false}}>
             <Tabs.Screen 
             name="fixtures" 
             options={{
@@ -25,5 +25,8 @@ const TabsNavigation = () => {
         </Tabs>
     )
 }
+
+
+
 
 export default TabsNavigation

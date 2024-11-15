@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
-import { getLeagueName, hexToRGB } from "@/store/utils/helpers";
+import {getESPNMatchInfoFromDetails, getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { TeamInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
@@ -135,18 +135,22 @@ const Lineups = () => {
             const separatedArray = id.toString().split("_");
             const worldRugbyAPIEventID = separatedArray[0];
             const worldRugbyAPILeagueName = separatedArray[1]
-            
-            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
 
+            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
             const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const matchDate = new Date(matchDetails.match.time.millis);
             const homeTeam = matchDetails.match.teams[0].name;
             const awayTeam = matchDetails.match.teams[1].name;
             setHomeTeamName(homeTeam)
             setAwayTeamName(awayTeam)
             setLeagueName(worldRugbyAPILeagueName)
 
-            const homeLineup = getLineupWorldRugbyAPI(matchDetails, true)
-            const awayLineup = getLineupWorldRugbyAPI(matchDetails, false)
+            // get ESPN match ID
+            const espnMatchInfo = await getESPNMatchInfoFromDetails(matchDate, homeTeam, awayTeam)
+            const espnAPIString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+espnMatchInfo?.leagueID+'/summary?contentorigin=espn&event='+espnMatchInfo?.matchID+'&lang=en&region=gb'
+            const espnMatchDetails = await fetch(espnAPIString,).then((res) => res.json())
+            const homeLineup = getLineup(espnMatchDetails, 0)
+            const awayLineup = getLineup(espnMatchDetails, 1)
 
             console.info('Home Team Lineup')
             console.info(homeLineup)

@@ -319,6 +319,50 @@ export const getAnyTeamInfoFromID = (id: string) => {
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------
+
+export const getESPNMatchInfoFromDetails = async (selectedDate: Date, homeTeamName: string, awayTeamName: string) => {
+
+    function formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}${month}${day}`;
+    }
+
+    const startDate = formatDate(selectedDate);
+
+    const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates='+startDate+'&lang=en&region=gb&tz=Europe/London';
+    const matchInfo = await fetch(apiString,).then((res) => res.json())
+
+    for (let index = 0; index < matchInfo.scores.length; index++) {
+
+        for (let matchIndex = 0; matchIndex < matchInfo.scores[index].events.length; matchIndex++) {
+
+            const thisMatch = matchInfo.scores[index].events[matchIndex];
+
+            const homeTeam = thisMatch.competitions[0].competitors[0].team.name;
+            const awayTeam = thisMatch.competitions[0].competitors[1].team.name;
+
+            const homeCheck = homeTeam == homeTeamName;
+            const awayCheck = awayTeam == awayTeamName;
+
+            if(homeCheck && awayCheck)
+            {
+                return{
+                    matchID: thisMatch.id,
+                    leagueID: thisMatch.leagueId
+                }
+            }
+
+        }
+    }
+
+    return null
+}
+
+//----------------------------------------------------------------------------------------------------------------
+
 export const broadcasters = [
     { name: 'RTE', logo: RTELogo},
     { name: 'S4C', logo: S4CLogo},

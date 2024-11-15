@@ -40,7 +40,7 @@ const RootNavigation = () => {
 
 	return(
 		<Stack>
-			<Stack.Screen  name='(tabs)' options={{headerShown: false, statusBarColor: colors.background,
+			<Stack.Screen  name='(tabs)' options={{headerShown: false, statusBarBackgroundColor: colors.background,
 				 navigationBarColor: 'black'}}/>
 		</Stack>
 	)

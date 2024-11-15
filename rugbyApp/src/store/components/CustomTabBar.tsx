@@ -6,10 +6,10 @@ import { CustomTabBarButton } from './CustomTabBarButton';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+export function CustomTabBar({key, state, descriptors, navigation }: BottomTabBarProps & { key: string }) {
 
   return (
-    <LinearGradient colors={['transparent','rgba(0,0,0,0.7)']} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 0.9 }} style={styles.tabbar}>
+    <LinearGradient colors={['transparent','rgba(0,0,0,0.9)']} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 0.9 }} style={styles.tabbar}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -42,7 +42,7 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
 
         return (
           <CustomTabBarButton
-          key={route.name}
+          key={key + route.name}
           onPress={onPress}
           onLongPress={onLongPress}
           isFocused={isFocused}

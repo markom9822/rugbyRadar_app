@@ -3,6 +3,7 @@ import {MaterialCommunityIcons, FontAwesome6} from '@expo/vector-icons'
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
 import { useEffect } from "react"
 import { isDevelopmentBuild } from "expo-dev-client"
+import { TabBarItem } from "react-native-tab-view"
 
 
 export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, color, label} : {onPress: Function, onLongPress: Function, isFocused: boolean, routeName: string, color: string, label: string}) => {
@@ -55,6 +56,7 @@ export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, 
 
     return (
         <Pressable
+        key={routeName}
         onPress={() => onPress()}
         onLongPress={() => onLongPress()}
         style={styles.tabbarButton}>

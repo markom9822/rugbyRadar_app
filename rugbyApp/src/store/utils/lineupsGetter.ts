@@ -121,7 +121,7 @@ export const getLineupWorldRugbyAPI = (matchDetails: any, isHome: boolean) => {
         return (
             blankArray
         )
-    } 
+    }
 
     var newArray = [];
     const captainID = isHome ? matchDetails.teams[0].teamList.captainId : matchDetails.teams[1].teamList.captainId

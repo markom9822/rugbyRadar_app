@@ -7,6 +7,7 @@
     "icon": "./assets/rugbyIcon.png",
     "userInterfaceStyle": "dark",
     "scheme": "rugbyApp",
+    "newArchEnabled" :true,
     "splash": {
       "image": "./assets/rugbySplash.png",
       "resizeMode": "contain",
