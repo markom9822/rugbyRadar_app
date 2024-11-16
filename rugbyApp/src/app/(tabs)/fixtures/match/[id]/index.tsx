@@ -6,6 +6,7 @@ import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
+import {Fontisto, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 
 
 const MatchSummary = () => {
@@ -209,42 +210,72 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
     return (
         <View style={[summaryPanelStyles.container]}>
-            <Text style={[summaryPanelStyles.matchName]}>
-                {matchInfoArray[0].homeTeamName} v {matchInfoArray[0].awayTeamName}
-            </Text>
 
-            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Game Info</Text>
-                <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
-                    <View style={{alignItems: 'center', flexDirection: 'column'}}>
-                        <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>Venue</Text>
-                        <Text style={{marginBottom: 10, color: colors.text, fontFamily: fontFamilies.regular}}>{matchInfoArray[0].matchVenue}</Text>
-                        <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Referee: {refereeName}</Text>
-                        <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Attendance: {matchAttendance}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text}}>{homeTeamInfo?.abbreviation}</Text>
+                    <View style={{ margin: 5 }}>
+                        <Image style={[summaryPanelStyles.titleTeamLogo]}
+                            source={homeTeamInfo?.logo} />
                     </View>
                 </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{ margin: 5 }}>
+                        <Image style={[summaryPanelStyles.titleTeamLogo]}
+                            source={awayTeamInfo?.logo} />
+                    </View>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text}}>{awayTeamInfo?.abbreviation}</Text>
+                </View>
+            </View>
+
+            <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey' }}>
+                <View style={{ alignItems: 'center', flexDirection: 'column' }}>
+
+                    <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                        <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                            <Fontisto name="date" size={20} color={'lightgrey'} />
+                        </View>
+                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{new Date().toLocaleDateString()}</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                        <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                            <MaterialIcons name="stadium" size={20} color={'lightgrey'} />
+                        </View>
+                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchVenue}</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                        <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                            <MaterialCommunityIcons name="whistle" size={20} color={'lightgrey'} />
+                        </View>
+                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{refereeName}</Text>
+                    </View>
+
+                </View>
+            </View>
             
-            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Broadcasters</Text>
-                <View style={{ backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
+                <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
                     {broadcasterRender(matchInfoArray)}
                 </View>
                 </View>
 
             <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Stats</Text>
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 60}}>
+            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 60}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>
                         <View style={[summaryPanelStyles.teamInfoContainer]}>
                             <Image style={[summaryPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.altLogo}/>
+                            source={homeTeamInfo?.logo}/>
                             <Text style={[summaryPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
                         <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "40%"}}></Text>
                         <View style={[summaryPanelStyles.teamInfoContainer]}>
                             <Text style={[summaryPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[summaryPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.altLogo}/>
+                            source={awayTeamInfo?.logo}/>
                         </View>
                     </View>
                 </View>
@@ -267,7 +298,7 @@ export const SummaryStatsPanel = ({homeStat, statTitle, awayStat}: SummaryStatsP
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
-                <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.altBackground}]}>{statTitle}</Text>
+                <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.background}]}>{statTitle}</Text>
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
             </View>
         </View>
@@ -303,7 +334,8 @@ export const summaryPanelStyles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.background
+      backgroundColor: colors.background,
+      margin: 3
     },
     matchName: {
         textAlign: 'center',
@@ -321,6 +353,13 @@ export const summaryPanelStyles = StyleSheet.create({
       minHeight: 25,
       minWidth: 25,
     },
+    titleTeamLogo: {
+        resizeMode: 'contain',
+        width: 45,
+        height: 45,
+        minHeight: 45,
+        minWidth: 45,
+      },
     statsPanelRow: {
         paddingHorizontal: 10,
         paddingVertical: 5,

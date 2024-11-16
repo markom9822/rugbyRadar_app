@@ -157,8 +157,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                  {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
 
                 <Link href={`/(tabs)/fixtures/match/${linkID}`} asChild>
-                <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
-                    onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
+                <TouchableOpacity activeOpacity={0.9} onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)} >
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
@@ -186,7 +185,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
                 {venueRender(eventState === "pre")}
 
-                </Pressable> 
+                </TouchableOpacity> 
                 </Link>
               </View>
               {lastRefreshHeader(lastRefreshTime)}
