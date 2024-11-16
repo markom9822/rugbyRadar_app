@@ -5,253 +5,15 @@ import { useEffect, useState } from "react";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
+import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
 
-export type MatchInfo = {
-    statsAvailable: boolean,
-    homeTeamName: string,
-    awayTeamName: string,
-    homeTeamPossession: string,
-    awayTeamPossession: string,
-    homeTeamTries: string,
-    awayTeamTries: string,
-    homeTeamTackles: string,
-    awayTeamTackles: string,
-    homeTeamMetres: string,
-    awayTeamMetres: string,
-
-    matchVenue: string,
-    matchAttendance: string,
-    matchBroadcasters: string[]
-}
-
-export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
-
-    const homeTeamName = matchDetails.boxscore.teams[0].team.displayName;
-    const awayTeamName = matchDetails.boxscore.teams[1].team.displayName;
-    const matchVenue = matchDetails.gameInfo.venue.fullName;
-    const matchAttendance = matchDetails.gameInfo.attendance;
-
-    if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statistics.length == 0 )
-    {
-        const blankArray = [
-            {
-                statsAvailable: false,
-                homeTeamName: homeTeamName,
-                awayTeamName: awayTeamName,
-                homeTeamPossession: '0',
-                awayTeamPossession: '0',
-                homeTeamTries: '-',
-                awayTeamTries: '-',
-                homeTeamTackles: '-',
-                awayTeamTackles: '-',
-                homeTeamMetres: '-',
-                awayTeamMetres: '-',
-    
-                matchVenue: matchVenue,
-                matchAttendance: matchAttendance,
-                matchBroadcasters: []
-            }
-        ];
-
-        return blankArray
-
-    }
-
-    const homeTeamPossession = matchDetails.boxscore.teams[0].statistics[0].stats[20].value;
-    const awayTeamPossession = matchDetails.boxscore.teams[1].statistics[0].stats[20].value;
-
-    const homeTeamTries = matchDetails.boxscore.teams[0].statistics[0].stats[31].value
-    const awayTeamTries = matchDetails.boxscore.teams[1].statistics[0].stats[31].value
-
-    const homeTeamTackles = matchDetails.boxscore.teams[0].statistics[0].stats[27].value
-    const awayTeamTackles = matchDetails.boxscore.teams[1].statistics[0].stats[27].value
-
-    const homeTeamMetres = matchDetails.boxscore.teams[0].statistics[0].stats[10].value
-    const awayTeamMetres = matchDetails.boxscore.teams[1].statistics[0].stats[10].value
-
-
-    const newArray = [
-        {
-            statsAvailable: true,
-            homeTeamName: homeTeamName,
-            awayTeamName: awayTeamName,
-            homeTeamPossession: homeTeamPossession,
-            awayTeamPossession: awayTeamPossession,
-            homeTeamTries: homeTeamTries,
-            awayTeamTries: awayTeamTries,
-            homeTeamTackles: homeTeamTackles,
-            awayTeamTackles: awayTeamTackles,
-            homeTeamMetres: homeTeamMetres,
-            awayTeamMetres: awayTeamMetres,
-
-            matchVenue: matchVenue,
-            matchAttendance: matchAttendance,
-            matchBroadcasters: []
-        
-        }
-    ];
-
-    return(
-        newArray
-    )
-}
-
-export const handleGetMatchStat = (stat: any) => {
-
-    if(stat == null)
-    {
-        return '-'
-    }
-    else
-    {
-        return stat
-    }
-
-
-}
-
-export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
-
-    const homeTeamName = matchDetails.data.homeTeam.shortName;
-    const awayTeamName = matchDetails.data.awayTeam.shortName;
-    const matchVenue = matchDetails.data.venue.name;
-    const matchAttendance = matchDetails.data.attendance;
-    const matchBroadcasters = matchDetails.data.broadcasters;
-
-    const homeTeamPossession = handleGetMatchStat(matchDetails.data.homeTeam.stats?.possession);
-    const awayTeamPossession = handleGetMatchStat(matchDetails.data.awayTeam.stats?.possession);
-
-    const homeTeamTries = handleGetMatchStat(matchDetails.data.homeTeam.stats?.tries);
-    const awayTeamTries = handleGetMatchStat(matchDetails.data.awayTeam.stats?.tries);
-
-    const homeTeamTackles = handleGetMatchStat(matchDetails.data.homeTeam.stats?.tackles);
-    const awayTeamTackles = handleGetMatchStat(matchDetails.data.awayTeam.stats?.tackles);
-
-    const homeTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
-    const awayTeamMetres = handleGetMatchStat(matchDetails.data.awayTeam.stats?.metres);
-
-    const statsAvailable = matchDetails.data.homeTeam.stats !== null && matchDetails.data.awayTeam.stats !== null;
-
-    const newArray = [
-        {
-            statsAvailable: statsAvailable,
-            homeTeamName: homeTeamName,
-            awayTeamName: awayTeamName,
-            homeTeamPossession: homeTeamPossession,
-            awayTeamPossession: awayTeamPossession,
-            homeTeamTries: homeTeamTries,
-            awayTeamTries: awayTeamTries,
-            homeTeamTackles: homeTeamTackles,
-            awayTeamTackles: awayTeamTackles,
-            homeTeamMetres: homeTeamMetres,
-            awayTeamMetres: awayTeamMetres,
-
-            matchVenue: matchVenue,
-            matchAttendance: matchAttendance,
-            matchBroadcasters: matchBroadcasters,
-        }
-    ];
-
-    return(
-        newArray
-    )
-}
-
-export const getMatchInfoWorldRugbyAPI = (matchDetails: any): MatchInfo[] => {
-
-    const homeTeamName = matchDetails.match.teams[0].name;
-    const awayTeamName = matchDetails.match.teams[1].name;
-    const matchVenue = matchDetails.match.venue.name;
-    const matchAttendance = matchDetails.match.attendance;
-
-    const homeTeamPossession = handleGetMatchStat(matchDetails.teamStats[0].stats?.Possession);
-    const awayTeamPossession = handleGetMatchStat(matchDetails.teamStats[1].stats?.Possession);
-
-    const homeTeamTries = handleGetMatchStat(matchDetails.teamStats[0].stats?.Tries);
-    const awayTeamTries = handleGetMatchStat(matchDetails.teamStats[1].stats?.Tries);
-
-    const homeTeamTackles = handleGetMatchStat(matchDetails.teamStats[0].stats?.Tackles);
-    const awayTeamTackles = handleGetMatchStat(matchDetails.teamStats[1].stats?.Tackles);
-
-    const homeTeamMetres = handleGetMatchStat(matchDetails.teamStats[0].stats?.Metres);
-    const awayTeamMetres = handleGetMatchStat(matchDetails.teamStats[1].stats?.Metres);
-
-    const statsAvailable = Object.keys(matchDetails.teamStats[0].stats).length !== 0 &&  Object.keys(matchDetails.teamStats[1].stats).length !== 0;
-
-    const newArray = [
-        {
-            statsAvailable: statsAvailable,
-            homeTeamName: homeTeamName,
-            awayTeamName: awayTeamName,
-            homeTeamPossession: homeTeamPossession,
-            awayTeamPossession: awayTeamPossession,
-            homeTeamTries: homeTeamTries,
-            awayTeamTries: awayTeamTries,
-            homeTeamTackles: homeTeamTackles,
-            awayTeamTackles: awayTeamTackles,
-            homeTeamMetres: homeTeamMetres,
-            awayTeamMetres: awayTeamMetres,
-
-            matchVenue: matchVenue,
-            matchAttendance: matchAttendance,
-            matchBroadcasters: [],
-        }
-    ];
-
-    return(
-        newArray
-    )
-}
-
-export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
-
-    const [homeTeamName, awayTeamName] = matchDetails.data.matchDetails.teams.split(';');
-    
-    const matchVenue = matchDetails.data.match.venue_name;
-    const matchAttendance = matchDetails.data.match.attendance;
-
-    const homeTeamPossession = '-'
-    const awayTeamPossession = '-'
-
-    const homeTeamTries = '-'
-    const awayTeamTries = '-'
-
-    const homeTeamTackles = '-'
-    const awayTeamTackles = '-'
-
-    const homeTeamMetres = '-'
-    const awayTeamMetres = '-'
-
-
-    const newArray = [
-        {
-            statsAvailable: false,
-            homeTeamName: homeTeamName,
-            awayTeamName: awayTeamName,
-            homeTeamPossession: homeTeamPossession,
-            awayTeamPossession: awayTeamPossession,
-            homeTeamTries: homeTeamTries,
-            awayTeamTries: awayTeamTries,
-            homeTeamTackles: homeTeamTackles,
-            awayTeamTackles: awayTeamTackles,
-            homeTeamMetres: homeTeamMetres,
-            awayTeamMetres: awayTeamMetres,
-
-            matchVenue: matchVenue,
-            matchAttendance: matchAttendance,
-            matchBroadcasters: [],
-        }
-    ];
-
-    return(
-        newArray
-    )
-}
 
 const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
+    const [refereeName, setRefereeName] = useState<string>('');
+
     const [isLoading, setIsLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -285,12 +47,16 @@ const MatchSummary = () => {
 
             console.info(worldRugbyAPIEventID)
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/stats?language=en';
-
             const matchDetails = await fetch( apiString,).then((res) => res.json())
-            const matchInfo = getMatchInfoWorldRugbyAPI(matchDetails)
+            const matchInfo = await getMatchInfoWorldRugbyAPI(matchDetails)
             setMatchInfoArray(matchInfo)
 
+            const apiSummaryString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
+            const matchSummary = await fetch( apiSummaryString,).then((res) => res.json())
+            const refName = matchSummary.officials[0].official.name.display;
+            setRefereeName(refName)
             setLeagueName(worldRugbyAPILeagueName)
+
             setIsLoading(false)
             return;
         }
@@ -336,9 +102,6 @@ const MatchSummary = () => {
 
     return(
         <View style={defaultStyles.container}>
-            <Text style={{color: colors.text}}>Event ID: {eventID}</Text>
-            <Text style={{color: colors.text}}>League ID: {leagueID}</Text>
-            <Text style={{color: colors.text}}>League Name: {leagueName}</Text>
 
             {activityIndicatorHeader()}
 
@@ -347,6 +110,7 @@ const MatchSummary = () => {
                     matchInfoArray={matchInfoArray}
                     matchID={id}
                     leagueName={leagueName}
+                    refereeName={refereeName}
                 />
             </ScrollView>
 
@@ -358,9 +122,10 @@ type GameInfoPanelProps = {
 	matchInfoArray: MatchInfo[] | undefined,
     matchID: string | string[] | undefined,
     leagueName: string | undefined,
+    refereeName: string;
 }
 
-export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPanelProps) => {
+export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName}: GameInfoPanelProps) => {
 
     if(matchInfoArray == undefined) return
 
@@ -453,6 +218,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName}: GameInfoPa
                     <View style={{alignItems: 'center', flexDirection: 'column'}}>
                         <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular}}>Venue</Text>
                         <Text style={{marginBottom: 10, color: colors.text, fontFamily: fontFamilies.regular}}>{matchInfoArray[0].matchVenue}</Text>
+                        <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Referee: {refereeName}</Text>
                         <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Attendance: {matchAttendance}</Text>
                     </View>
                 </View>

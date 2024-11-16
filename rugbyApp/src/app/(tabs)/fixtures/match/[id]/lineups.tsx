@@ -1,12 +1,10 @@
-import { View, Text, TouchableOpacity, ViewStyle, FlatList, Image, ActivityIndicator } from "react-native"
+import { View, Text, TouchableOpacity, FlatList, Image, ActivityIndicator } from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
-import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { defaultStyles, lineupPanelStyles } from "@/styles";
 import {getESPNMatchInfoFromDetails, getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
-import { TeamInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
 
 

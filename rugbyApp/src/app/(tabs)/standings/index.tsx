@@ -140,6 +140,7 @@ const StandingsScreen = () => {
 
             setIsLoading(false)
         }
+        // world rugby API
         else if (isLeagueInWorldRugbyAPIFromLeagueName(leagueName)) 
         {
             const worldRugbyAPILeagueCode = getWorldRugbyAPILeagueCode(leagueName)

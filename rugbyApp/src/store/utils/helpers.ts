@@ -374,6 +374,12 @@ export const broadcasters = [
     { name: 'BBCW', logo: BBCWalesLogo},
     { name: 'BBCN', logo: BBCNILogo},
 
+    // channels from planet rugby API
+    { name: 'TNT Sport 1', logo: TNTSportsLogo},
+    { name: 'TNT Sport Ultimate', logo: TNTSportsLogo},
+    { name: 'discovery +', logo: DiscoveryPlusLogo},
+    { name: 'BBC Player', logo: BBCWalesLogo},
+
 ];
 
 
