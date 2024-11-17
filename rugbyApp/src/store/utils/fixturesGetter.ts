@@ -318,7 +318,7 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
 
             var eventState;
             const matchStatus = seasonAllMatches.content[index].status;
-            if(matchStatus === "C")
+            if(matchStatus === "C" || matchStatus === "LFT")
             {
                 eventState = "post"
             }

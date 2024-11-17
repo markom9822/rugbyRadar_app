@@ -84,15 +84,19 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                 <GameStatsTitlePanel 
                 statTitle="Match Events"/>
 
-                <GameStatsPanel 
-                homeStat={homePossessionPercent}
-                awayStat={awayPossessionPercent}
-                statTitle="Possession"/>
+                <GamePercentageStatsPanel 
+                homePercent={homePossessionPercent}
+                awayPercent={awayPossessionPercent}
+                statTitle="Possession"
+                homeColour={homeTeamInfo?.colour}
+                awayColour={awayTeamInfo?.colour}/>
                 
-                <GameStatsPanel 
-                homeStat={homeTerritoryPercent}
-                awayStat={awayTerritoryPercent}
-                statTitle="Territory"/>
+                <GamePercentageStatsPanel 
+                homePercent={homeTerritoryPercent}
+                awayPercent={awayTerritoryPercent}
+                statTitle="Territory"
+                homeColour={homeTeamInfo?.colour}
+                awayColour={awayTeamInfo?.colour}/>
 
                 <GameStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamTries}
@@ -179,20 +183,20 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     return (
         <View style={[statsPanelStyles.container]}>
 
-            <View style={{backgroundColor: colors.altBackground, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5}}>
+            <View style={{backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5, marginVertical: 5}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 2 }}>
                         <View style={[statsPanelStyles.teamInfoContainer]}>
                             <Image style={[statsPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.altLogo}/>
+                            source={homeTeamInfo?.logo}/>
                             <Text style={[statsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
                         <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
                         <View style={[statsPanelStyles.teamInfoContainer]}>
                             <Text style={[statsPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[statsPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.altLogo}/>
+                            source={awayTeamInfo?.logo}/>
                         </View>
                     </View>
                 </View>
@@ -217,12 +221,45 @@ export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelPr
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.altBackground}]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.background}]}>{statTitle}</Text>
                 <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
             </View>
         </View>
     )
 }
+
+type GamePercentageStatsPanelProps = {
+	homePercent: string,
+    statTitle: string,
+    awayPercent: string,
+    homeColour: string | undefined,
+    awayColour: string | undefined,
+}
+
+export const GamePercentageStatsPanel = ({homePercent, statTitle, awayPercent, homeColour, awayColour}: GamePercentageStatsPanelProps ) => {
+
+    const homePercentNum = Number(homePercent.replace("%", ""));
+    const awayPercentNum = Number(awayPercent.replace("%", ""));
+
+    return (
+        <View style={{ alignItems: 'center', flexDirection: 'column', marginVertical: 5 }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%" }]}>{homePercent}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "50%", backgroundColor: colors.background }]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%" }]}>{awayPercent}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
+                <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}>
+                    <Text></Text>
+                </View>
+                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5 }}>
+                    <Text></Text>
+                </View>
+            </View>
+        </View>
+    )
+}
+
 
 type GameStatsTitleProps = {
     statTitle: string,

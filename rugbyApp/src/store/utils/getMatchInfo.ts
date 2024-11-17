@@ -12,7 +12,11 @@ export type MatchInfo = {
     awayTeamTackles: string,
     homeTeamMetres: string,
     awayTeamMetres: string,
+    homeTeamScore: string,
+    awayTeamScore: string,
 
+    matchStatus: string,
+    matchTimeClock: string,
     matchVenue: string,
     matchAttendance: string,
     matchBroadcasters: string[]
@@ -40,7 +44,11 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
                 awayTeamTackles: '-',
                 homeTeamMetres: '-',
                 awayTeamMetres: '-',
+                homeTeamScore: '-',
+                awayTeamScore: '-',
     
+                matchStatus: '-',
+                matchTimeClock: '-',
                 matchVenue: matchVenue,
                 matchAttendance: matchAttendance,
                 matchBroadcasters: []
@@ -77,7 +85,11 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
+            homeTeamScore: '-',
+            awayTeamScore: '-',
 
+            matchStatus: '-',
+            matchTimeClock: '-',
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
             matchBroadcasters: []
@@ -139,7 +151,11 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
+            homeTeamScore: '-',
+            awayTeamScore: '-',
 
+            matchStatus: '-',
+            matchTimeClock: '-',
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
             matchBroadcasters: matchBroadcasters,
@@ -158,6 +174,27 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
     const matchVenue = matchDetails.match.venue.name;
     const matchAttendance = matchDetails.match.attendance;
     const matchDate = new Date(matchDetails.match.time.millis);
+    const homeTeamScore = matchDetails.match.scores[0];
+    const awayTeamScore = matchDetails.match.scores[1];
+    const matchStatus = matchDetails.match.status;
+
+    var eventState;
+    if (matchStatus === "C" || matchStatus === "LFT") {
+        eventState = "post"
+    }
+    else if (matchStatus === "U") {
+        eventState = "pre"
+    }
+    else if (matchStatus === "LHT") {
+        eventState = "halfTime"
+    }
+    else {
+        eventState = "ongoing"
+    }
+
+    // time in seconds need to convert to mins
+    const eventTimeSeconds = Number(matchDetails.match.clock.secs);
+    const eventTime = Math.floor(eventTimeSeconds/60);
 
     const homeTeamPossession = handleGetMatchStat(matchDetails.teamStats[0].stats?.Possession);
     const awayTeamPossession = handleGetMatchStat(matchDetails.teamStats[1].stats?.Possession);
@@ -173,18 +210,20 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
 
     const statsAvailable = Object.keys(matchDetails.teamStats[0].stats).length !== 0 &&  Object.keys(matchDetails.teamStats[1].stats).length !== 0;
 
+    var matchBroadcasters = []
 
     // get broadcasters from planet rugby
     const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeamName, awayTeamName);
-    const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-overview/'+planetRugbyMatchID;
-    const matchPlanetRugbyOverview = await fetch( apiPlanetRugbyString,).then((res) => res.json())
-    const broadcastersString = matchPlanetRugbyOverview.data.match.channel_name;
+    console.info(`Match ID: ${planetRugbyMatchID}`)
 
-    var matchBroadcasters = []
+    if (planetRugbyMatchID !== null) {
+        const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-overview/' + planetRugbyMatchID;
+        const matchPlanetRugbyOverview = await fetch(apiPlanetRugbyString,).then((res) => res.json())
+        const broadcastersString = matchPlanetRugbyOverview.data.match.channel_name;
 
-    if(broadcastersString !== null)
-    {
-        matchBroadcasters = broadcastersString.split(',')
+        if (broadcastersString !== null) {
+            matchBroadcasters = broadcastersString.split(',')
+        }
     }
 
     const newArray = [
@@ -200,7 +239,11 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
+            homeTeamScore: homeTeamScore,
+            awayTeamScore: awayTeamScore,
 
+            matchStatus: eventState,
+            matchTimeClock: eventTime.toString(),
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
             matchBroadcasters: matchBroadcasters,
@@ -245,7 +288,11 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
+            homeTeamScore: '-',
+            awayTeamScore: '-',
 
+            matchStatus: '-',
+            matchTimeClock: '-',
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
             matchBroadcasters: [],

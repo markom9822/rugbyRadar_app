@@ -6,7 +6,7 @@ import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
-import {Fontisto, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
+import {Feather, Fontisto, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 
 
 const MatchSummary = () => {
@@ -149,7 +149,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
         {
             return (
                 <View>
-                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light}}>No Broadcasters Found</Text>
+                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: fontSize.xs}}>No Broadcasters Found</Text>
                 </View>
             )
         }
@@ -184,10 +184,13 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
         {
             return (
                 <>
-                <SummaryStatsPanel 
-                homeStat={homePossessionPercent}
-                awayStat={awayPossessionPercent}
-                statTitle="Possession"/>
+                <PercentageStatsPanel 
+                homePercent={homePossessionPercent}
+                awayPercent={awayPossessionPercent}
+                statTitle="Possession"
+                homeColour={homeTeamInfo?.colour}
+                awayColour={awayTeamInfo?.colour}/>
+            
 
                 <SummaryStatsPanel 
                 homeStat={matchInfoArray[0].homeTeamTries}
@@ -208,58 +211,121 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
         }
     }
 
+    const scoreRender = (eventState: string) => {
+
+        console.info(`Event State: ${eventState}`)
+
+        // not started yet
+        if (eventState === "pre") {
+            return (
+                <View></View>
+            )
+        }
+        // event finished
+        else if (eventState === "post")
+        {
+            return (
+                <View>
+                    <View style={{ flexDirection: 'row', margin: 5 }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, fontSize: 18 }}>{matchInfoArray[0].homeTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, fontSize: 18 }}>-</Text>
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, fontSize: 18 }}>{matchInfoArray[0].awayTeamScore}</Text>
+                    </View>
+                    <View>
+                        <Text style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold }}>FT</Text>
+                    </View>
+                </View>
+            )
+        }
+        // event at halftime
+        else if (eventState === "halfTime") {
+            return (
+                <View>
+                    <View style={{ flexDirection: 'row', margin: 5 }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, fontSize: 18 }}>{matchInfoArray[0].homeTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, fontSize: 18 }}>-</Text>
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, fontSize: 18 }}>{matchInfoArray[0].awayTeamScore}</Text>
+                    </View>
+                    <View>
+                        <Text style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold }}>HT</Text>
+                    </View>
+                </View>
+            )
+        }
+        // event ongoing
+        else { 
+            return (
+                <View style={{ flexDirection: 'row', margin: 5 }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, fontSize: 18 }}>{matchInfoArray[0].homeTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, fontSize: 18 }}>-</Text>
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, fontSize: 18 }}>{matchInfoArray[0].awayTeamScore}</Text>
+                </View>
+            )
+        }
+    }
+
+    const homeFontFamily = (matchInfoArray[0].homeTeamScore > matchInfoArray[0].awayTeamScore) ? fontFamilies.bold : fontFamilies.regular;
+    const awayFontFamily = (matchInfoArray[0].awayTeamScore > matchInfoArray[0].homeTeamScore) ? fontFamilies.bold : fontFamilies.regular;
+
     return (
         <View style={[summaryPanelStyles.container]}>
 
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text}}>{homeTeamInfo?.abbreviation}</Text>
-                    <View style={{ margin: 5 }}>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 10}}>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "45%"}}>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4}}>{homeTeamInfo?.abbreviation}</Text>
+                    <View style={{ margin: 8 }}>
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={homeTeamInfo?.logo} />
                     </View>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                    <View style={{ margin: 5 }}>
+                <View style={{flexDirection: 'column', width: "10%", justifyContent: 'center', alignItems: 'center'}}>
+                    {scoreRender(matchInfoArray[0].matchStatus)}
+                </View>
+                
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "45%"}}>
+                    <View style={{ margin: 8 }}>
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={awayTeamInfo?.logo} />
                     </View>
-                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text}}>{awayTeamInfo?.abbreviation}</Text>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4}}>{awayTeamInfo?.abbreviation}</Text>
                 </View>
             </View>
 
-            <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey' }}>
-                <View style={{ alignItems: 'center', flexDirection: 'column' }}>
+            <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginVertical: 15, borderWidth: 1, borderColor: 'lightgrey' }}>
+                <View style={{ alignItems: 'flex-start', flexDirection: 'column', justifyContent: 'flex-start' }}>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                        <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <Fontisto name="date" size={20} color={'lightgrey'} />
                         </View>
                         <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{new Date().toLocaleDateString()}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                        <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <MaterialIcons name="stadium" size={20} color={'lightgrey'} />
                         </View>
                         <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchVenue}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                        <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <MaterialCommunityIcons name="whistle" size={20} color={'lightgrey'} />
                         </View>
                         <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{refereeName}</Text>
                     </View>
 
+                    <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                        <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center', marginRight: 8 }}>
+                            <Feather name="tv" size={20} color={'lightgrey'} />
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+                            {broadcasterRender(matchInfoArray)}
+                        </View>
+                    </View>
+
                 </View>
             </View>
-            
-                <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginBottom: 15, borderWidth: 1, borderColor: 'lightgrey'}}>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
-                    {broadcasterRender(matchInfoArray)}
-                </View>
-                </View>
 
             <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Stats</Text>
             <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 60}}>
@@ -300,6 +366,38 @@ export const SummaryStatsPanel = ({homeStat, statTitle, awayStat}: SummaryStatsP
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
                 <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.background}]}>{statTitle}</Text>
                 <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
+            </View>
+        </View>
+    )
+}
+
+type PercentageStatsPanelProps = {
+	homePercent: string,
+    statTitle: string,
+    awayPercent: string,
+    homeColour: string | undefined,
+    awayColour: string | undefined,
+}
+
+export const PercentageStatsPanel = ({homePercent, statTitle, awayPercent, homeColour, awayColour}: PercentageStatsPanelProps ) => {
+
+    const homePercentNum = Number(homePercent.replace("%", ""));
+    const awayPercentNum = Number(awayPercent.replace("%", ""));
+
+    return (
+        <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+            <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+                <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{homePercent}</Text>
+                <Text style={[summaryPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.background}]}>{statTitle}</Text>
+                <Text style={[summaryPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayPercent}</Text>
+            </View>
+            <View style={{flexDirection: 'row', marginHorizontal: 15}}>
+                <View style={{width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5}}>
+                    <Text></Text>
+                </View>
+                <View style={{width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5}}>
+                    <Text></Text>
+                </View>
             </View>
         </View>
     )

@@ -114,7 +114,7 @@ export const InternationalRugbyTeams = [
   {
     type: 'International',
     displayName: 'Wales',
-    abbreviation: 'WALES',
+    abbreviation: 'WAL',
     logo: WalesLogo,
     altLogo: WalesAltLogo,
     colour: '#d21034',

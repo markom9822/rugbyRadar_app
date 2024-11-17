@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, RefreshControl} from "react-native"
 import { useGlobalSearchParams } from "expo-router";
-import { getLeagueName, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
+import { getLeagueName, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { getHomeAwayTeamInfo} from "@/store/utils/getTeamInfo";
 import { defaultStyles} from "@/styles";
@@ -248,7 +248,7 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
         <View style={[keyEventsPanelStyles.container]}>
             <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Key Events</Text>
 
-            <View style={{backgroundColor: colors.altBackground, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey'}}>
+            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey'}}>
                 <Text style={{color:'lightgrey', fontFamily: fontFamilies.light}}>Currently no key events</Text>
             </View>
         </View>
@@ -264,12 +264,12 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
                 <View style={{flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'lightgrey', paddingVertical: 5}}>
                     <View style={{width: "50%", justifyContent: 'center', alignItems: 'center'}}>
                         <Image style={[keyEventsPanelStyles.teamLogo]} 
-                        source={homeAwayTeamInfo?.homeInfo.altLogo}/>
+                        source={homeAwayTeamInfo?.homeInfo.logo}/>
                     </View>
 
                     <View style={{width: "50%", justifyContent: 'center', alignItems: 'center'}}>
                         <Image style={[keyEventsPanelStyles.teamLogo]} 
-                        source={homeAwayTeamInfo?.awayInfo.altLogo}/>
+                        source={homeAwayTeamInfo?.awayInfo.logo}/>
                     </View>
                     
                 </View>
@@ -286,6 +286,7 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
                     eventTeam={match.eventTeam}
                     eventIcon={match.eventIcon}
                     isHomeTeam={match.eventTeam == homeTeam}
+                    teamColour={match.eventTeam == homeTeam ? homeAwayTeamInfo?.homeInfo.colour : homeAwayTeamInfo?.awayInfo.colour}
                      />
                 );
             })}
@@ -304,9 +305,14 @@ type KeyEventItemProps = {
     eventTeam: string,
     eventIcon: any,
     isHomeTeam: boolean,
+    teamColour: string | undefined
 }
 
-export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventScore, eventTeam, eventIcon, isHomeTeam}: KeyEventItemProps) => {
+export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eventScore, eventTeam, eventIcon, isHomeTeam, teamColour}: KeyEventItemProps) => {
+
+    if(teamColour == undefined) return;
+
+    const borderColour = hexToRGB(teamColour, "0.6")
 
     const eventRender = (isHome: boolean) => {
 
@@ -314,7 +320,7 @@ export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eve
             return (
                 <View style={{ flexDirection: 'row', marginVertical: 5, justifyContent: 'flex-end', alignItems: 'center' }}>
 
-                    <View style={{width: "40%", flexDirection: 'column', paddingVertical: 2, borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                    <View style={{width: "40%", flexDirection: 'column', paddingVertical: 2, borderBottomColor: borderColour, borderBottomWidth: 1}}>
                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{eventPlayer}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular }}>{eventTime}'</Text>
@@ -348,7 +354,7 @@ export const KeyEventItem = ({leagueName, eventTime, eventType, eventPlayer, eve
                             source={eventIcon} />
                     </View>
 
-                    <View style={{width: "40%", flexDirection: 'column', borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                    <View style={{width: "40%", flexDirection: 'column', borderBottomColor: borderColour, borderBottomWidth: 1}}>
                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{eventPlayer}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular }}>{eventTime}'</Text>
