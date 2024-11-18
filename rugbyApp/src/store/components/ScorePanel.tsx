@@ -1,12 +1,9 @@
 import { fixtureStyles } from "@/styles"
-import { View, Text, TouchableOpacity, Image, FlatList, Pressable, Modal } from "react-native"
-import Entypo from '@expo/vector-icons/Entypo';
+import { View, Text, TouchableOpacity, Image } from "react-native"
 import { Link } from "expo-router"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
-import { useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
-
 
 type ScorePanelProps = {
     leagueDisplayName: string
@@ -31,8 +28,6 @@ type ScorePanelProps = {
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
      index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime}: ScorePanelProps) => {
 
-    const [selected, setSelected] = useState(false);
-
     const leagueName = getLeagueNameFromDisplayName(leagueDisplayName)
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -49,11 +44,6 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     const awayFontFamily = (new Number(awayScore) > new Number(homeScore)) ? (fontFamilies.bold):(fontFamilies.light);
 
     const matchTime = matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
-
-    const currentHomeTeamLogo = selected ? homeTeamInfo.logo : homeTeamInfo.altLogo;
-    const currentAwayTeamLogo = selected ? awayTeamInfo.logo : awayTeamInfo.altLogo;
-
-    const panelBackgroundColour = (eventState === "pre") ? (colors.altBackground):(colors.altBackground);
 
     const scoreRender = (eventState: string) => {
 
@@ -154,10 +144,10 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     return(
         <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 60: 0}]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
-                 {backgroundColor: selected ? colors.background : panelBackgroundColour, borderColor: selected ? 'lightgrey' : 'grey', borderWidth: 2, borderRadius: 4}]}>
+                 {backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 2, borderRadius: 4}]}>
 
                 <Link href={`/(tabs)/fixtures/match/${linkID}`} asChild>
-                <TouchableOpacity activeOpacity={0.9} onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)} >
+                <TouchableOpacity activeOpacity={0.5} >
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
@@ -165,7 +155,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         <View style={{paddingHorizontal: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
-                            source={currentHomeTeamLogo} />
+                            source={homeTeamInfo.logo} />
                         </View>
                         
                     </View>
@@ -176,7 +166,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         <View style={{paddingHorizontal: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
-                            source={currentAwayTeamLogo} />
+                            source={awayTeamInfo.logo} />
                         </View>
                         <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold}]}>{awayTeamInfo.abbreviation}</Text>
                     </View>

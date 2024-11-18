@@ -5,7 +5,7 @@ import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
 import { useState } from "react"
 import { Link } from "expo-router"
-import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, Image, StyleSheet, Pressable, SectionList } from "react-native"
+import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, Image, StyleSheet, Pressable, SectionList, TouchableOpacity } from "react-native"
 import { hexToRGB, isLastItemInSectionList } from "@/store/utils/helpers"
 import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
 import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
@@ -201,32 +201,27 @@ type TeamInfoPanelProps = {
 
 export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, teamID, isLastItem }: TeamInfoPanelProps) => {
 
-    const [selected, setSelected] = useState(false);
-
-    const teamBkgRBGA = hexToRGB(teamColour, '0.3')
-    const teamBorderRBGA = hexToRGB(teamColour, '0.9')
-
-    const currentTeamLogo = selected ? teamLogo : teamAltLogo;
+    const teamBkgRBGA = hexToRGB(teamColour, '0.05')
+    const teamBorderRBGA = hexToRGB(teamColour, '0.4')
 
     return (
         <View style={{ backgroundColor: colors.background, marginBottom: (isLastItem) ? 50: 0 }}>
             <Link href={`/(tabs)/(teams)/team/${teamID + teamName}`} asChild>
-                <Pressable onPressIn={() => setSelected(true)} onPressOut={() => setSelected(false)}
-                    onBlur={() => setSelected(false)} onHoverOut={() => setSelected(false)}>
+                <TouchableOpacity activeOpacity={0.5}>
 
                     <View style={[teamInfoPanelStyles.container,
-                    { backgroundColor: selected ? teamBkgRBGA : colors.altBackground, borderColor: selected ? teamBorderRBGA : 'lightgrey', borderWidth: 2 }]}>
+                    { backgroundColor: teamBkgRBGA, borderColor: teamBorderRBGA, borderWidth: 2 }]}>
                         <View style={{ padding: 5, width: "20%", alignItems: 'center' }}>
                             <Image
                                 style={[teamInfoPanelStyles.teamLogo]}
-                                source={currentTeamLogo} />
+                                source={teamLogo} />
                         </View>
                         <View style={{width: "80%"}}>
-                            <Text style={[teamInfoPanelStyles.teamName, { color: selected ? 'lightgrey' : colors.text,}]}>{teamName.toLocaleUpperCase()}</Text>
+                            <Text style={[teamInfoPanelStyles.teamName, { color: colors.text,}]}>{teamName.toLocaleUpperCase()}</Text>
                         </View>
                     </View>
 
-                </Pressable>
+                </TouchableOpacity>
             </Link>
 
         </View>

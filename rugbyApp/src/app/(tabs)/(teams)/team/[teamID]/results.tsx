@@ -145,7 +145,6 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     if(homeTeamInfo == null) return
     if(awayTeamInfo == null) return
 
-    const panelBackgroundColour = (eventState === "pre") ? (colors.altBackground):(colors.background);
 
     const homeScoreWeight = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? ('500'):('300');
     const awayScoreWeight = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? ('500'):('300');
@@ -178,7 +177,8 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     return (
         <View style={{marginBottom: (isLastItem) ? 50: 0}}>
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-         marginVertical: 5, borderColor: 'lightgrey', borderWidth: 1, backgroundColor: panelBackgroundColour, marginHorizontal: 4, borderRadius: 4}}>
+         marginVertical: 5, borderColor: (eventState === "pre") ? 'lightgrey' : 'grey', borderWidth: 1, backgroundColor: colors.background, marginHorizontal: 4, borderRadius: 4, 
+         opacity: (eventState === "pre") ? 1 : 0.5}}>
 
             <Text style={{fontSize: fontSize.xs, color: colors.text, fontFamily: fontFamilies.light}}>{formattedDate}</Text>
 
@@ -188,7 +188,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
                     <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>{homeTeamInfo.abbreviation}</Text>
 
                     <View style={{paddingHorizontal: 5}}>
-                        <Image source={homeTeamInfo.altLogo}
+                        <Image source={homeTeamInfo.logo}
                             style={{
                                 resizeMode: 'contain',
                                 width: 40,
@@ -205,7 +205,7 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
                 <View style={{width: "35%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
 
                     <View style={{paddingHorizontal: 5}}>
-                        <Image source={awayTeamInfo.altLogo}
+                        <Image source={awayTeamInfo.logo}
                             style={{
                                 resizeMode: 'contain',
                                 width: 40,

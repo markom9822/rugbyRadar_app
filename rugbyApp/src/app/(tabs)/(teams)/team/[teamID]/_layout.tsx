@@ -8,7 +8,7 @@ const TopTabs = withLayoutContext(Tab.Navigator)
 export default function TeamLayout() {
     return (
         <>
-        <Stack.Screen options={{title: 'Team Details', animation: 'slide_from_right', animationDuration: 30, presentation: 'transparentModal'}} />
+        <Stack.Screen options={{title: 'Team Details', presentation: 'transparentModal'}} />
         <TopTabs screenOptions={{
             tabBarLabelStyle: {
                 fontFamily: fontFamilies.bold

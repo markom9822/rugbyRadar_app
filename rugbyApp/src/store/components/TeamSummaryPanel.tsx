@@ -3,14 +3,12 @@ import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 
-
 type TeamSummaryPanelProps = {
     teamName: string | undefined
     homeVenue: string | undefined
     homeLocation: string | undefined
     teamForm: string | undefined
 }
-
 
 export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}: TeamSummaryPanelProps) => {
 
@@ -27,7 +25,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
         <View style={{justifyContent: 'center', marginHorizontal: 5}}>
             <View style={{flexDirection: 'row', paddingVertical: 10}}>
                 <View style={{marginHorizontal: 4}}>
-                    <Image source={teamInfo.altLogo} 
+                    <Image source={teamInfo.logo} 
                     style={{resizeMode: 'contain',
                         width: 60,
                         height: 60,
@@ -42,9 +40,9 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                 
             </View>
 
-            <View style={{backgroundColor: colors.altBackground, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1}}>
+            <View style={{backgroundColor: colors.background, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1}}>
                 <View style={{ flexDirection: 'row', marginVertical: 4}}>
-                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
+                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'lightgrey', borderRightWidth: 1}}>
                         <MaterialIcons name="stadium" size={20} color={'lightgrey'} />
                     </View>
                     
@@ -52,7 +50,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                 </View>
 
                 <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
+                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'lightgrey', borderRightWidth: 1}}>
                         <MaterialIcons name="location-pin" size={20} color={'lightgrey'} />
                     </View>
                     
@@ -60,7 +58,7 @@ export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}:
                 </View>
 
                 <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'grey', borderRightWidth: 1}}>
+                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'lightgrey', borderRightWidth: 1}}>
                         <MaterialCommunityIcons name="timer-sand" size={20} color={'lightgrey'} />
                     </View>
                     

@@ -24,9 +24,9 @@ export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamN
     if(standingsArray == undefined || standingsArray.length == 0) return
 
     return (
-        <View style={{marginVertical: 20, marginHorizontal: 5, backgroundColor: colors.altBackground, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
+        <View style={{marginVertical: 20, marginHorizontal: 5, backgroundColor: colors.background, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1,
          paddingHorizontal: 10, paddingBottom: 15, paddingTop: 8, marginBottom: 55}}>
-            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>{currentYear} {teamLeagueName} Table</Text>
+            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, marginBottom: 5}}>{currentYear} {teamLeagueName} Table</Text>
 
             <View style={{ flexDirection: 'row', paddingVertical: 2, borderTopColor: 'grey', borderTopWidth: 1, borderBottomColor: 'grey', borderBottomWidth: 1}}>
                 <Text style={{ width: "10%", fontSize: fontSize.xs, fontWeight: 500, color: 'lightgrey', fontFamily: fontFamilies.bold }}>R</Text>

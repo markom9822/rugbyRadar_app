@@ -15,6 +15,7 @@ export type MatchInfo = {
     homeTeamScore: string,
     awayTeamScore: string,
 
+    matchDate: Date,
     matchStatus: string,
     matchTimeClock: string,
     matchVenue: string,
@@ -47,6 +48,7 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
                 homeTeamScore: '-',
                 awayTeamScore: '-',
     
+                matchDate: new Date(),
                 matchStatus: '-',
                 matchTimeClock: '-',
                 matchVenue: matchVenue,
@@ -88,6 +90,7 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
             homeTeamScore: '-',
             awayTeamScore: '-',
 
+            matchDate: new Date(),
             matchStatus: '-',
             matchTimeClock: '-',
             matchVenue: matchVenue,
@@ -154,6 +157,7 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
             homeTeamScore: '-',
             awayTeamScore: '-',
 
+            matchDate: new Date(),
             matchStatus: '-',
             matchTimeClock: '-',
             matchVenue: matchVenue,
@@ -214,7 +218,6 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
 
     // get broadcasters from planet rugby
     const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeamName, awayTeamName);
-    console.info(`Match ID: ${planetRugbyMatchID}`)
 
     if (planetRugbyMatchID !== null) {
         const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-overview/' + planetRugbyMatchID;
@@ -242,6 +245,7 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
             homeTeamScore: homeTeamScore,
             awayTeamScore: awayTeamScore,
 
+            matchDate: matchDate,
             matchStatus: eventState,
             matchTimeClock: eventTime.toString(),
             matchVenue: matchVenue,
@@ -291,6 +295,7 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
             homeTeamScore: '-',
             awayTeamScore: '-',
 
+            matchDate: new Date(),
             matchStatus: '-',
             matchTimeClock: '-',
             matchVenue: matchVenue,

@@ -70,7 +70,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     if(teamInfo === null) return
     if(teamInfo === undefined) return
 
-    const altBackgroundColour = hexToRGB(colors.altBackground, "0.5")
+    const altBackgroundColour = hexToRGB(colors.altBackground, "0.2")
     const teamPDTextColour = (new Number(teamPD) >= new Number(0)) ? ('#31ad35'):('#c22727');
     const panelBkgColour = (ranking % 2 == 0) ? (altBackgroundColour): (colors.background);
 
@@ -99,7 +99,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                             <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{ranking + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
-                                source={teamInfo.altLogo} />
+                                source={teamInfo.logo} />
                             <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '40%', fontWeight: 600}]}>{teamPoints}</Text>
@@ -117,7 +117,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                             <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{ranking + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
-                                source={teamInfo.altLogo} />
+                                source={teamInfo.logo} />
                             <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamGP}</Text>

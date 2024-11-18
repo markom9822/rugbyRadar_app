@@ -213,8 +213,6 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
     const scoreRender = (eventState: string) => {
 
-        console.info(`Event State: ${eventState}`)
-
         // not started yet
         if (eventState === "pre") {
             return (
@@ -298,7 +296,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                         <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <Fontisto name="date" size={20} color={'lightgrey'} />
                         </View>
-                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{new Date().toLocaleDateString()}</Text>
+                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchDate.toLocaleDateString()}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
