@@ -233,11 +233,11 @@ const Lineups = () => {
         }
         else {
 
-            const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.3')
-            const homeTeamBorderRBGA = hexToRGB(homeTeamInfo.colour, '0.9')
+            const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.2')
+            const homeTeamBorderRBGA = hexToRGB(homeTeamInfo.colour, '0.8')
 
-            const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.3')
-            const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.9')
+            const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.2')
+            const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.8')
 
             return (
                 <>

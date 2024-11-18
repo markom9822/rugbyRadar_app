@@ -7,7 +7,7 @@ import { defaultStyles} from "@/styles";
 import { useEffect, useState } from "react";
 import { StatsPanel, StatsInfo } from "@/store/components/StatsPanel";
 import { getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "@/store/utils/getFullMatchStats";
-import { TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
+import { HeadToHeadEventsPanel, TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz, getHeadToHeadStatsWorldRugbyAPI } from "@/store/utils/getHeadToHeadStats";
 import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz, getTeamFormStatsWorldRugbyAPI } from "@/store/utils/getTeamFormStats";
 import { getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "@/store/utils/getKeyEvents";
@@ -184,13 +184,15 @@ const MatchSummary = () => {
                 leagueName={leagueName}
                 />
 
-                <TeamEventsPanel
+                <HeadToHeadEventsPanel
                 teamEventArray={headToHeadStatsArray}
                 matchID={id}
                 leagueName={leagueName}
                 panelTitle="Head to Head Matches"
                 showWinLoss={false}
                 isLastItem={false}
+                teamName1={mainTeamName}
+                teamName2={opponentTeamName}
                 />
 
                 <TeamEventsPanel 
@@ -200,6 +202,7 @@ const MatchSummary = () => {
                 panelTitle={`${mainTeamName} Form`}
                 showWinLoss={true}
                 isLastItem={false}
+                teamName={mainTeamName}
                 />
 
                 <TeamEventsPanel 
@@ -209,6 +212,7 @@ const MatchSummary = () => {
                 panelTitle={`${opponentTeamName} Form`}
                 showWinLoss={true}
                 isLastItem={true}
+                teamName={opponentTeamName}
                 />
 
             </ScrollView>
