@@ -13,7 +13,7 @@ const MatchSummary = () => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
-    const [refereeName, setRefereeName] = useState<string>('');
+    const [refereeName, setRefereeName] = useState<string>('-');
 
     const [isLoading, setIsLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -30,10 +30,18 @@ const MatchSummary = () => {
         if(leagueID.indexOf("_RugbyViz") !== -1)
         {
             const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/'+ eventID +'?provider=rugbyviz';
+            console.info(apiString)
 
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = getMatchInfoRugbyViz(matchDetails)
             setMatchInfoArray(matchInfo)
+
+            if(matchDetails.data.officials.length > 0)
+            {
+                const refName = matchDetails.data.officials[0].name;
+                setRefereeName(refName)
+            }
+            
             setLeagueName(leagueID.replace("_RugbyViz", ""))
             setIsLoading(false)
             return;
@@ -71,10 +79,14 @@ const MatchSummary = () => {
     
             console.info(planetRugbyAPIEventID)
             const apiString = 'https://rugbylivecenter.yormedia.com/api/match-overview/'+planetRugbyAPIEventID;
-    
+            console.info(apiString)
+
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = getMatchInfoPlanetRugbyAPI(matchDetails)
             setMatchInfoArray(matchInfo)
+
+            const refName = matchDetails.data.match.official_name;
+            setRefereeName(refName === null ? "-" : refName)
     
             setLeagueName(planetRugbyAPILeagueName)
             setIsLoading(false)
@@ -215,8 +227,11 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
         // not started yet
         if (eventState === "pre") {
+            const matchTime = matchInfoArray[0].matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
             return (
-                <View></View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{color: colors.text, textAlign: 'center', fontFamily: fontFamilies.light, fontSize: fontSize.sm}}>{matchTime}</Text>
+                </View>
             )
         }
         // event finished
@@ -265,22 +280,23 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
     const homeFontFamily = (matchInfoArray[0].homeTeamScore > matchInfoArray[0].awayTeamScore) ? fontFamilies.bold : fontFamilies.regular;
     const awayFontFamily = (matchInfoArray[0].awayTeamScore > matchInfoArray[0].homeTeamScore) ? fontFamilies.bold : fontFamilies.regular;
 
+
     return (
         <View style={[summaryPanelStyles.container]}>
 
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 10}}>
-                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "45%"}}>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "44%"}}>
                     <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4}}>{homeTeamInfo?.abbreviation}</Text>
                     <View style={{ margin: 8 }}>
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={homeTeamInfo?.logo} />
                     </View>
                 </View>
-                <View style={{flexDirection: 'column', width: "10%", justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{flexDirection: 'column', width: "12%", justifyContent: 'center', alignItems: 'center'}}>
                     {scoreRender(matchInfoArray[0].matchStatus)}
                 </View>
                 
-                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "45%"}}>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "44%"}}>
                     <View style={{ margin: 8 }}>
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={awayTeamInfo?.logo} />
@@ -296,21 +312,21 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                         <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <Fontisto name="date" size={20} color={'lightgrey'} />
                         </View>
-                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchDate.toLocaleDateString()}</Text>
+                        <Text style={{ width: "75%", paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchDate.toLocaleDateString()}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
                         <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <MaterialIcons name="stadium" size={20} color={'lightgrey'} />
                         </View>
-                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchVenue}</Text>
+                        <Text style={{ width: "75%", paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{matchInfoArray[0].matchVenue}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
                         <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center' }}>
                             <MaterialCommunityIcons name="whistle" size={20} color={'lightgrey'} />
                         </View>
-                        <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{refereeName}</Text>
+                        <Text style={{ width: "75%", paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{refereeName}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>

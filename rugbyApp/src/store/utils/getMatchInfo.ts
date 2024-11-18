@@ -126,6 +126,10 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
     const matchVenue = matchDetails.data.venue.name;
     const matchAttendance = matchDetails.data.attendance;
     const matchBroadcasters = matchDetails.data.broadcasters;
+    const matchDate = new Date(matchDetails.data.date);
+
+    const homeTeamScore = matchDetails.data.homeTeam.score;
+    const awayTeamScore = matchDetails.data.awayTeam.score;
 
     const homeTeamPossession = handleGetMatchStat(matchDetails.data.homeTeam.stats?.possession);
     const awayTeamPossession = handleGetMatchStat(matchDetails.data.awayTeam.stats?.possession);
@@ -141,6 +145,18 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
 
     const statsAvailable = matchDetails.data.homeTeam.stats !== null && matchDetails.data.awayTeam.stats !== null;
 
+    var eventState;
+    const matchStatus = matchDetails.data.status;
+    if (matchStatus === "result") {
+        eventState = "post"
+    }
+    else if (matchStatus === "fixture") {
+        eventState = "pre"
+    }
+    else {
+        eventState = "ongoing"
+    }
+
     const newArray = [
         {
             statsAvailable: statsAvailable,
@@ -154,11 +170,11 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
-            homeTeamScore: '-',
-            awayTeamScore: '-',
+            homeTeamScore: homeTeamScore,
+            awayTeamScore: awayTeamScore,
 
-            matchDate: new Date(),
-            matchStatus: '-',
+            matchDate: matchDate,
+            matchStatus: eventState,
             matchTimeClock: '-',
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
@@ -265,6 +281,24 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
     
     const matchVenue = matchDetails.data.match.venue_name;
     const matchAttendance = matchDetails.data.match.attendance;
+    const matchDate = new Date(matchDetails.data.match.datetime);
+
+    const scoresArray = matchDetails.data.matchDetails.ft.split('-')
+    const homeTeamScore = scoresArray[0]
+    const awayTeamScore = scoresArray[1]
+
+    var eventState;
+    const matchStatus = matchDetails.data.matchDetails.status;
+
+    if (matchStatus === "Finished") {
+        eventState = "post"
+    }
+    else if (matchStatus === "KO") {
+        eventState = "pre"
+    }
+    else {
+        eventState = "ongoing"
+    }
 
     const homeTeamPossession = '-'
     const awayTeamPossession = '-'
@@ -292,11 +326,11 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
-            homeTeamScore: '-',
-            awayTeamScore: '-',
+            homeTeamScore: homeTeamScore,
+            awayTeamScore: awayTeamScore,
 
-            matchDate: new Date(),
-            matchStatus: '-',
+            matchDate: matchDate,
+            matchStatus: eventState,
             matchTimeClock: '-',
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
