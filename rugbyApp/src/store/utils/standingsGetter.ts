@@ -72,7 +72,7 @@ export const getAllStandingsData = (seasonStandings: any) => {
 
 }
 
-export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: string) => {
+export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: string, playoffCutoffIndex: number | undefined) => {
 
     var newArray = [];
 
@@ -99,9 +99,31 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
                     ranking: index,
                     isLastItem: false,
                     isEndOfList: false,
+                    isPlayoffCutoff: false,
                 };
 
                 newArray.push(headerRankingInfo)
+            }
+
+            // playoff cutoff
+            if (index === playoffCutoffIndex) {
+                let playoffsCutoffRankingInfo = {
+                    isHeader: false,
+                    teamPool: teamPool,
+                    teamName: 'Pool',
+                    teamGP: '0',
+                    teamWins: '0',
+                    teamDraws: '0',
+                    teamLosses: '0',
+                    teamPD: '0',
+                    teamPoints: '0',
+                    ranking: index,
+                    isLastItem: false,
+                    isEndOfList: false,
+                    isPlayoffCutoff: true,
+                };
+
+                newArray.push(playoffsCutoffRankingInfo)
             }
 
             var teamName = '';
@@ -136,7 +158,8 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
                 teamPoints: teamPoints,
                 ranking: index,
                 isLastItem: index == teamsCount - 1,
-                isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
+                isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1),
+                isPlayoffCutoff: false,
             };
 
             newArray.push(newRankingInfo)
@@ -149,7 +172,104 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
 
 }
 
-export const getAllStandingsDataPlanetRugby = (seasonStandings: any, leagueName: string) => {
+export const getAllStandingsDataPlanetRugby = (seasonStandings: any, leagueName: string, isPooled: boolean, isEndOfList: boolean, playoffCutoffIndex: number | undefined) => {
+
+    var newArray = [];
+
+    function extractPool(text: string): string {
+        const match = text.match(/pool\s+[A-Z]/i);
+        return match ? match[0] : '';
+      }
+
+    const standingsChildren = seasonStandings.data
+
+    for (let j = 0; j < standingsChildren.length; j++) {
+
+        const teamsCount = standingsChildren[j].table.length
+
+        for (let index = 0; index < teamsCount; index++) {
+
+            const teamPool = extractPool(standingsChildren[j].name);
+
+
+            if (index == 0 && isPooled) {
+                let headerRankingInfo = {
+                    isHeader: true,
+                    teamPool: teamPool,
+                    teamName: 'Pool',
+                    teamGP: '0',
+                    teamWins: '0',
+                    teamDraws: '0',
+                    teamLosses: '0',
+                    teamPD: '0',
+                    teamPoints: '0',
+                    ranking: index,
+                    isLastItem: false,
+                    isEndOfList: false,
+                    isPlayoffCutoff: false,
+                };
+
+                newArray.push(headerRankingInfo)
+            }
+
+            if (index === playoffCutoffIndex) {
+                let headerRankingInfo = {
+                    isHeader: false,
+                    teamPool: teamPool,
+                    teamName: 'Pool',
+                    teamGP: '0',
+                    teamWins: '0',
+                    teamDraws: '0',
+                    teamLosses: '0',
+                    teamPD: '0',
+                    teamPoints: '0',
+                    ranking: index,
+                    isLastItem: false,
+                    isEndOfList: false,
+                    isPlayoffCutoff: true,
+                };
+
+                newArray.push(headerRankingInfo)
+            }
+
+            const teamName = standingsChildren[j].table[index].name;
+
+            const teamGP = standingsChildren[j].table[index].played;
+            const teamWins = standingsChildren[j].table[index].won
+            const teamDraws = standingsChildren[j].table[index].draws;
+            const teamLosses = standingsChildren[j].table[index].lost;
+            const teamPD = standingsChildren[j].table[index].difference;
+            const teamPoints = standingsChildren[j].table[index].points;
+
+
+            let newRankingInfo = {
+                isHeader: false,
+                teamPool: teamPool,
+                teamName: teamName,
+                teamGP: teamGP,
+                teamWins: teamWins,
+                teamDraws: teamDraws,
+                teamLosses: teamLosses,
+                teamPD: teamPD,
+                teamPoints: teamPoints,
+                ranking: index,
+                isLastItem: index == teamsCount - 1,
+                isEndOfList: isEndOfList && index == teamsCount - 1,
+                isPlayoffCutoff: false,
+            };
+
+            newArray.push(newRankingInfo)
+        }
+    }
+
+    return (
+        newArray
+    )
+
+}
+
+
+export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolCodes: string[]) => {
 
     var newArray = [];
 

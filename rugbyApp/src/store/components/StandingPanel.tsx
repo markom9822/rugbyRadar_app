@@ -26,10 +26,11 @@ type StandingPanelProps = {
     ranking: number
     isLastItem: boolean
     isEndOfList: boolean
+    isPlayoffCutoff: boolean,
 }
 
 export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool, teamName,
-     teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem, isEndOfList}: StandingPanelProps) => {
+     teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem, isEndOfList, isPlayoffCutoff}: StandingPanelProps) => {
 
     var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
 
@@ -74,7 +75,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
     const teamPDTextColour = (new Number(teamPD) >= new Number(0)) ? ('#31ad35'):('#c22727');
     const panelBkgColour = (ranking % 2 == 0) ? (altBackgroundColour): (colors.background);
 
-    const standingsRender = (isHeader: boolean) => {
+    const standingsRender = (isHeader: boolean, isPlayoffCutoff: boolean) => {
 
         if(teamInfo === null) return
         if(teamInfo === undefined) return
@@ -84,6 +85,16 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
             return (
                 <View style={{width: "50%", flexDirection: 'row', paddingTop: 10, paddingLeft: 3}}>
                     <Text style={[standingsPanelStyles.teamText, {fontWeight: 600, color: 'lightgrey', fontSize: 11}]}>{teamPool.toUpperCase()}</Text>
+                </View>
+            )
+        }
+        else if (isPlayoffCutoff)
+        {
+            return (
+                <View style={{width: "100%", flexDirection: 'row', backgroundColor: colors.background}}>
+                    <View style={{width: "40%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed'}} />
+                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 600, color: 'grey', fontSize: 10, textAlign: 'center', width: "20%"}]}>Playoffs</Text>
+                    <View style={{width: "40%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed'}} />
                 </View>
             )
         }
@@ -139,7 +150,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
         <View style={[standingsPanelStyles.container, 
         {backgroundColor: (isHeader) ? altBackgroundColour: panelBkgColour, borderBottomColor: (isHeader || isLastItem) ? 'grey': 'transparent',
          borderBottomWidth: (isHeader || isLastItem) ? 1: 0, marginBottom: (isEndOfList) ? 50: 0}]}>
-            {standingsRender(isHeader)}
+            {standingsRender(isHeader, isPlayoffCutoff)}
         </View>
     )
 

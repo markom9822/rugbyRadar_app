@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-nativ
 import { fontFamilies, fontSize } from "@/constants/tokens"
 import { useEffect, useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
+import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
@@ -22,9 +22,10 @@ export type StandingInfo = {
     ranking: number
     isLastItem: boolean
     isEndOfList: boolean
+    isPlayoffCutoff: boolean,
 }
 
-const getWorldRankingsData = (todaysRankings: any) => {
+const getWorldRankingsData = (todaysRankings: any): StandingInfo[] => {
 
     const rankListLength = 15;
 
@@ -50,7 +51,8 @@ const getWorldRankingsData = (todaysRankings: any) => {
             teamPoints: teamPoints,
             ranking: index,
             isLastItem: index == rankListLength - 1,
-            isEndOfList: index == rankListLength - 1
+            isEndOfList: index == rankListLength - 1,
+            isPlayoffCutoff: false,
     };
 
         newArray.push(newRankingInfo)
@@ -88,15 +90,13 @@ const StandingsScreen = () => {
         const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
 
         const planetRugbyStandingsLeagueCodes = [
-            { leagueName: 'top14', leagueCode: '1310036262',},
-            { leagueName: 'superRugby', leagueCode: '1310032187',},
-            { leagueName: 'sixNations', leagueCode: '1310031041',},
-            { leagueName: 'u20SixNations', leagueCode: '1310031586',},
-            { leagueName: 'rugbyChamp', leagueCode: '1310034091',},
-            // need to fix pooled standings
-            { leagueName: 'u20Championship', leagueCode: '1310035680',},
-            { leagueName: 'rugbyWorldCup', leagueCode: '1310029544',},
-
+            { leagueName: 'top14', leagueCodes: ['1310036262'], playoffCutoffIndex: 6},
+            { leagueName: 'superRugby', leagueCodes: ['1310032187'], playoffCutoffIndex: 8},
+            { leagueName: 'sixNations', leagueCodes: ['1310031041'], playoffCutoffIndex: -1},
+            { leagueName: 'u20SixNations', leagueCodes: ['1310031586'], playoffCutoffIndex: -1},
+            { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1},
+            { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2},
+            { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2},
         ];
 
         if(leagueName == "worldRankings")
@@ -122,7 +122,8 @@ const StandingsScreen = () => {
                 return;
             }
 
-            const newArray = getAllStandingsDataRugbyViz(seasonStandingsRugViz, leagueName)
+            const playoffIndex = getRugbyVizPlayoffCutoffFromLeagueName(leagueName)
+            const newArray = getAllStandingsDataRugbyViz(seasonStandingsRugViz, leagueName, playoffIndex)
 
             console.info(newArray)
             setStandingsArray(newArray)
@@ -130,25 +131,34 @@ const StandingsScreen = () => {
         // use planet rugby API for standings
         else if(planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
         {
-            const planetRugbyAPILeagueCode = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCode;
-            apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCode;
+            const planetRugbyAPILeagueCodes = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCodes;
+            const planetRugbyAPIPlayoffCutoffIndex = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.playoffCutoffIndex;
+
+            if(planetRugbyAPILeagueCodes == undefined) return;
+
+            if(planetRugbyAPILeagueCodes.length > 1)
+            {
+                var pooledArray:StandingInfo[] = [];
+
+                for (let index = 0; index < planetRugbyAPILeagueCodes.length; index++) {
+
+                    apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCodes[index];
+
+                    const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
+                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName, true, index == planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex) 
+                    pooledArray.push(...newArray)
+                }
+
+                console.info(pooledArray)
+                setStandingsArray(pooledArray)
+                setIsLoading(false)
+                return;
+            }
+
+            apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCodes[0];
 
             const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName)
-
-            console.info(newArray)
-            setStandingsArray(newArray)
-
-            setIsLoading(false)
-        }
-        // world rugby API
-        else if (isLeagueInWorldRugbyAPIFromLeagueName(leagueName)) 
-        {
-            const worldRugbyAPILeagueCode = getWorldRugbyAPILeagueCode(leagueName)
-            apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=' + worldRugbyAPILeagueCode;
-
-            const seasonMatches = await fetch(apiString,).then((res) => res.json())
-            const newArray = await getAllStandingsDataWorldRugbyAPI(seasonMatches, leagueName)
+            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName, false, true, planetRugbyAPIPlayoffCutoffIndex)
 
             console.info(newArray)
             setStandingsArray(newArray)
@@ -240,8 +250,8 @@ const StandingsScreen = () => {
         }
     } 
 
-    const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "sixNations" 
-    || leagueName == "u20SixNations"  || leagueName == "top14" || leagueName == "rugbyChamp" || leagueName == "superRugby"
+    const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "sixNations" || leagueName == "u20SixNations"
+     || leagueName == "top14" || leagueName == "rugbyChamp" || leagueName == "superRugby" || leagueName == "u20Championship" || leagueName == "rugbyWorldCup"
 
     useEffect(() => {
 
@@ -346,7 +356,8 @@ const StandingsScreen = () => {
             teamPoints={item.teamPoints}
             ranking={item.ranking}
             isLastItem={item.isLastItem}
-            isEndOfList={item.isEndOfList} />}
+            isEndOfList={item.isEndOfList}
+            isPlayoffCutoff={item.isPlayoffCutoff} />}
         />
 
     </View>

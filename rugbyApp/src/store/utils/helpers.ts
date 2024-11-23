@@ -39,13 +39,13 @@ export const leagueCodes = [
 
 export const rugbyVizleagueCodes = [
     { value: 'urc', code: "1068",
-         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo},
+         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, playoffCutoffIndex: 8},
     { value: 'prem', code: "1011",
-         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
+         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4},
     { value: 'championsCup', code: "1008",
-         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
+         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 2},
     { value: 'challengeCup', code: "1026",
-         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo},
+         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, playoffCutoffIndex: 2},
 
 ];
 
@@ -60,6 +60,12 @@ export const getRugbyVizLeagueCodeFromLeagueDisplayName = (leagueDisplayName: st
 
     const result = rugbyVizleagueCodes.find((element) => element.displayName == leagueDisplayName)
     return result?.code.toString()
+}
+
+export const getRugbyVizPlayoffCutoffFromLeagueName = (leagueName: string) => {
+
+    const result = rugbyVizleagueCodes.find((element) => element.value == leagueName)
+    return result?.playoffCutoffIndex;
 }
 
 export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
