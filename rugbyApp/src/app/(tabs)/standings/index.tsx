@@ -89,6 +89,7 @@ const StandingsScreen = () => {
 
         const planetRugbyStandingsLeagueCodes = [
             { leagueName: 'top14', leagueCode: '1310036262',},
+            { leagueName: 'superRugby', leagueCode: '1310032187',},
             { leagueName: 'sixNations', leagueCode: '1310031041',},
             { leagueName: 'u20SixNations', leagueCode: '1310031586',},
             { leagueName: 'rugbyChamp', leagueCode: '1310034091',},
@@ -176,7 +177,7 @@ const StandingsScreen = () => {
         { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
-        //{ label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
@@ -240,7 +241,7 @@ const StandingsScreen = () => {
     } 
 
     const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "sixNations" 
-    || leagueName == "u20SixNations"  || leagueName == "top14" || leagueName == "rugbyChamp"
+    || leagueName == "u20SixNations"  || leagueName == "top14" || leagueName == "rugbyChamp" || leagueName == "superRugby"
 
     useEffect(() => {
 

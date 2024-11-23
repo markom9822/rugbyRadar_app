@@ -13,7 +13,6 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     var homeInfo;
     var awayInfo;
 
-
     if(league === "urc")
     {
         homeInfo = getURCTeamInfoFromName(homeTeam)

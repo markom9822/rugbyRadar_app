@@ -36,13 +36,13 @@ export const standingsPanelStyles = StyleSheet.create({
       alignItems: 'center'
   },
   teamText: {
-      fontSize: 13,
+      fontSize: 12,
       color: colors.text,
       fontWeight: 500,
       fontFamily: fontFamilies.bold
   },
   teamStat: {
-      fontSize: fontSize.xs,
+      fontSize: 12,
       color: colors.text,
       padding: 5,
       textAlign: 'center',

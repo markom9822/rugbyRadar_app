@@ -12,7 +12,7 @@ export default function MatchLayout() {
 
     return (
         <>
-        <Stack.Screen options={{title: 'Match Details', presentation: 'transparentModal'}} />
+        <Stack.Screen options={{title: 'Match Details'}} />
         <TopTabs screenOptions={{
             tabBarLabelStyle: {
                 fontFamily: fontFamilies.bold

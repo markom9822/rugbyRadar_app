@@ -87,6 +87,7 @@ const FixturesScreen = () => {
         const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
 
         const Top14Fixtures: FixturesSection[] = await fetchPlanetRugbyAPIData('top14', selectedDate);
+        const SuperRugbyFixtures: FixturesSection[] = await fetchPlanetRugbyAPIData('superRugby', selectedDate);
 
         const AutumnNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('autumnNations', selectedDate);
         const SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('sixNations', selectedDate);
@@ -127,6 +128,13 @@ const FixturesScreen = () => {
             allFixturesArray.push({
                 title: Top14Fixtures[0].title,
                 data: Top14Fixtures[0].data,
+            })
+        }
+        if(SuperRugbyFixtures !== undefined && SuperRugbyFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: SuperRugbyFixtures[0].title,
+                data: SuperRugbyFixtures[0].data,
             })
         }
         if(AutumnNationsFixtures !== undefined && AutumnNationsFixtures.length > 0)
@@ -204,7 +212,7 @@ const FixturesScreen = () => {
         { label: 'URC', value: 'urc', logo: URCAltLogo },
         { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
         { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
-        //{ label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },

@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native"
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native"
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
@@ -36,6 +36,8 @@ export type HeadToHeadTeamEventPanelProps = {
 }
 
 export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle, showWinLoss, isLastItem, teamName}: TeamEventPanelProps) => {
+
+    const [isTabOpen, setIsTabOpen] = useState(false);
 
     if(teamEventArray === undefined) return
 
@@ -91,16 +93,21 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
     if(teamName === undefined) return;
 
+    const toggleFormTab = () => {
+        setIsTabOpen(!isTabOpen)
+    }
+
     const teamInfo = getAnyTeamInfoFromName(teamName)
     const teamBackgroundColour = hexToRGB(teamInfo.colour, "0.5")
 
     return (
         <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 55: 0}]}>
 
-            <View style={{backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>
+            <View style={{backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', width: "95%"}}>
 
             {notFoundHeader(teamEventArray)}
 
+                <TouchableOpacity onPress={toggleFormTab}>
                 <View style={{flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: teamBackgroundColour,
                     borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
                     <View style={{margin: 4, padding: 4,  justifyContent: 'center', alignItems: 'center'}}>
@@ -110,29 +117,36 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                             height: 25,
                             minHeight: 25,
                             minWidth: 25,}}
-                        source={teamInfo.altLogo} />
+                            source={teamInfo.altLogo} />
                     </View>
                     
                     <Text style={{color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4}}>{teamName.toUpperCase()} FORM</Text>
 
                     {teamFormDisplay(teamEventArray)}
                 </View>
+                </TouchableOpacity>
 
-            {teamEventArray.map((match, index) => {
-                return (
-                    <TeamEventsItem
-                    key={index}
-                    leagueName={leagueName}
-                    currentTeam={match.currentTeam}
-                    homeTeam={match.homeTeamName}
-                    awayTeam={match.awayTeamName}
-                    homeTeamScore={match.homeTeamScore}
-                    awayTeamScore={match.awayTeamScore}
-                    matchDate={match.matchDate}
-                    showWinLoss={showWinLoss}
-                     />
-                );
-            })}
+                {isTabOpen && (<>
+
+                    {teamEventArray.map((match, index) => {
+                        return (
+                            <TeamEventsItem
+                                key={index}
+                                leagueName={leagueName}
+                                currentTeam={match.currentTeam}
+                                homeTeam={match.homeTeamName}
+                                awayTeam={match.awayTeamName}
+                                homeTeamScore={match.homeTeamScore}
+                                awayTeamScore={match.awayTeamScore}
+                                matchDate={match.matchDate}
+                                showWinLoss={showWinLoss}
+                            />
+                        );
+                    })}
+
+                </>)}  
+
+            
 
             </View>
         </View>

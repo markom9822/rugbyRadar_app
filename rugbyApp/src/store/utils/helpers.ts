@@ -142,7 +142,8 @@ export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 export const planetRugbyAPILeagueCodes = [
     { value: 'top14', code: "1310036262",
         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
-    // need to add super rugby here
+    { value: 'superRugby', code: "1310032187",
+         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
 ];
 
 export const isLeagueInPlanetRugbyAPIFromLeagueName = (name: string) => {
@@ -379,6 +380,7 @@ export const broadcasters = [
     { name: 'TNT Sport Ultimate', logo: TNTSportsLogo},
     { name: 'discovery +', logo: DiscoveryPlusLogo},
     { name: 'BBC Player', logo: BBCWalesLogo},
+    { name: 'Premier Sports 2', logo: PremierSportsLogo},
 
 ];
 

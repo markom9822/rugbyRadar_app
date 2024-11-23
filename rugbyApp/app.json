@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Rugby Radar",
+    "name": "Rugby Radar [BETA]",
     "slug": "rugbyApp",
-    "version": "1.0.0",
+    "version": "0.8.0",
     "orientation": "portrait",
     "icon": "./assets/rugbyIcon.png",
     "userInterfaceStyle": "dark",

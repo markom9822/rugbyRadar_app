@@ -78,7 +78,7 @@ export const SuperRugbyTeams = [
     },
     {
         type: 'Super Rugby Club',
-        displayName: 'Queensland Reds',
+        displayName: 'Reds',
         abbreviation: 'REDS',
         logo: RedsLogo,
         altLogo: RedsAltLogo,
@@ -114,7 +114,7 @@ export const SuperRugbyTeams = [
     },
     {
         type: 'Super Rugby Club',
-        displayName: 'Melbourne Rebels',
+        displayName: 'Rebels',
         abbreviation: 'REBEL',
         logo: RebelsLogo,
         altLogo: RebelsAltLogo,
@@ -162,7 +162,7 @@ export const SuperRugbyTeams = [
     },
     {
         type: 'Super Rugby Club',
-        displayName: 'New South Wales Waratahs',
+        displayName: 'Waratahs',
         abbreviation: 'WARAT',
         logo: WaratahsLogo,
         altLogo: WaratahsAltLogo,

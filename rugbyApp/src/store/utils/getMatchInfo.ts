@@ -283,21 +283,31 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
     const matchAttendance = matchDetails.data.match.attendance;
     const matchDate = new Date(matchDetails.data.match.datetime);
 
-    const scoresArray = matchDetails.data.matchDetails.ft.split('-')
-    const homeTeamScore = scoresArray[0]
-    const awayTeamScore = scoresArray[1]
-
     var eventState;
+    var homeScore;
+    var awayScore;
+
     const matchStatus = matchDetails.data.matchDetails.status;
 
     if (matchStatus === "Finished") {
+        homeScore = matchDetails.data.matchDetails.ft.split('-')[0];
+        awayScore = matchDetails.data.matchDetails.ft.split('-')[1];
         eventState = "post"
     }
     else if (matchStatus === "KO") {
         eventState = "pre"
     }
     else {
+        homeScore = matchDetails.data.matchDetails.cfs.split('-')[0];
+        awayScore = matchDetails.data.matchDetails.cfs.split('-')[1];
         eventState = "ongoing"
+    }
+
+    var matchBroadcasters = []
+    const broadcastersString = matchDetails.data.match.channel_name;
+
+    if (broadcastersString !== null) {
+        matchBroadcasters = broadcastersString.split(',')
     }
 
     const homeTeamPossession = '-'
@@ -326,15 +336,15 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
             awayTeamTackles: awayTeamTackles,
             homeTeamMetres: homeTeamMetres,
             awayTeamMetres: awayTeamMetres,
-            homeTeamScore: homeTeamScore,
-            awayTeamScore: awayTeamScore,
+            homeTeamScore: homeScore,
+            awayTeamScore: awayScore,
 
             matchDate: matchDate,
             matchStatus: eventState,
             matchTimeClock: '-',
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
-            matchBroadcasters: [],
+            matchBroadcasters: matchBroadcasters,
         }
     ];
 

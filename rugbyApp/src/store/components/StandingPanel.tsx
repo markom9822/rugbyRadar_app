@@ -114,11 +114,11 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
                     <>
                         <View style={{ width: "40%", flexDirection: 'row', padding: 7,
                              justifyContent: 'space-evenly', alignItems: 'center'}}>
-                            <Text style={[standingsPanelStyles.teamText, {width: "15%"}]}>{ranking + 1}</Text>
+                            <Text style={[standingsPanelStyles.teamText, {width: "10%", fontSize: 10}]}>{ranking + 1}</Text>
                             <Image
                                 style={{ resizeMode: 'contain', width: 25, height: 25, minHeight: 25, minWidth: 25 }}
                                 source={teamInfo.logo} />
-                            <Text style={[standingsPanelStyles.teamText, {width: "60%", paddingLeft: 5}]}>{teamName}</Text>
+                            <Text style={[standingsPanelStyles.teamText, {width: "65%", paddingLeft: 5}]}>{teamName}</Text>
                         </View>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamGP}</Text>
                         <Text style={[standingsPanelStyles.teamStat, {width: '9%'}]}>{teamWins}</Text>

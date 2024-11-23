@@ -409,7 +409,7 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
 
     for (let compIndex = 0; compIndex < seasonAllMatches.data.length; compIndex++) {
 
-        if(seasonAllMatches.data[compIndex].ContestGroupName === leagueDisplayName)
+        if(seasonAllMatches.data[compIndex].ContestGroupName.replace(" Playoff", "") === leagueDisplayName)
         {
             const matchesArray = seasonAllMatches.data[compIndex].matches;
 
@@ -441,35 +441,47 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
         if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
         {
             const [homeTeamName, awayTeamName] = matchInfo.data.matchDetails.teams.split(';');
-            const [homeTeamScore, awayTeamScore] = matchInfo.data.matchDetails.ft.split('-');
-
+            
             const matchVenue = matchInfo.data.match.venue_name;
             const matchID = matchInfo.data.match.id;
-            const compName = matchInfo.data.match.contest_group_name;
+            const compName = matchInfo.data.match.contest_group_name.replace(" Playoff", "");
             
             const eventTime = matchInfo.data.matchDetails.minutes;
-
+            
             var eventState;
+            var homeScore;
+            var awayScore;
             const matchStatus = matchInfo.data.matchDetails.status;
-
+            
             if(matchStatus === "Finished")
             {
+                homeScore = matchInfo.data.matchDetails.ft.split('-')[0];
+                awayScore = matchInfo.data.matchDetails.ft.split('-')[1];
+
                 eventState = "post"
             }
             else if(matchStatus === "KO")
             {
                 eventState = "pre"
             }
+            else if(eventTime == "HT")
+            {
+                homeScore = matchInfo.data.matchDetails.ht.split('-')[0];
+                awayScore = matchInfo.data.matchDetails.ht.split('-')[1];
+                eventState = "halfTime"
+            }
             else
             {
+                homeScore = matchInfo.data.matchDetails.cfs.split('-')[0];
+                awayScore = matchInfo.data.matchDetails.cfs.split('-')[1];
                 eventState = "ongoing"
             }
 
             let newMatchInfo = {
                 homeTeam: homeTeamName,
                 awayTeam: awayTeamName,
-                homeScore: homeTeamScore,
-                awayScore: awayTeamScore,
+                homeScore: homeScore,
+                awayScore: awayScore,
                 matchDate: matchDate,
                 matchTitle: '',
                 matchVenue: matchVenue,
