@@ -5,8 +5,8 @@ import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, isLastItemInSectionList } from "@/store/utils/helpers"
 import { ScorePanel } from "@/store/components/ScorePanel"
-import { DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
+import { DropdownData, LeagueSelectDropdown, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
+import {AntDesign, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 import {FontAwesome6} from '@expo/vector-icons'
@@ -246,11 +246,11 @@ const FixturesScreen = () => {
 
     const dateHeader = () => {
 
-        const dateString = new Date(selectedDate).toLocaleDateString('en-GB', {weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'})
+        const dateString = new Date(selectedDate).toLocaleDateString('en-GB', {weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'})
 
         return (
-            <View style={{ marginBottom: 2, marginHorizontal: 5 }}>
-                <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'left', fontFamily: fontFamilies.light }}>{dateString}</Text>
+            <View style={{ marginBottom: 2, paddingBottom: 4, marginHorizontal: 5, justifyContent: 'center', alignContent: 'center', borderBottomColor: '#363434', borderBottomWidth: 1}}>
+                <Text style={{ fontSize: fontSize.sm, color: 'lightgrey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.bold }}>{dateString}</Text>
             </View>
         )
         
@@ -258,43 +258,48 @@ const FixturesScreen = () => {
 
     return <View style={defaultStyles.container}>
 
-        <LeagueSelectDropdown
-        placeholder="Select League" 
-        data={leagueData}
-        onChangeSelection={handleOnChangeLeague}
-        value={leagueName}
-        isDisabled={false}
-        iconName="trophy-outline"/>
+        <View style={{flexDirection: 'row'}}>
+            <TestLeagueSelectDropdown
+                placeholder="Select League"
+                data={leagueData}
+                onChangeSelection={handleOnChangeLeague}
+                value={leagueName}
+                isDisabled={false}
+                iconName="trophy-outline" />
 
-        <FetchDataButton 
-            iconSize={24} 
-            style={{
-             backgroundColor: '#4287f5'
-            }}
-            onPressButton={handlePressFetchData}
-        />
+            <View style={{ justifyContent: 'center', alignContent: 'center', width: "45%"}}>
+                <TouchableOpacity onPress={handlePressDatePicker}
+                    style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'grey', padding: 4, borderWidth: 1, borderRadius: 4, marginHorizontal: 6}}>
+                    <View style={{ paddingHorizontal: 5, justifyContent: 'center' }}>
+                        <MaterialIcons name="date-range" size={20} color={colors.icon} />
+                    </View>
+                    <Text style={{ fontSize: 15, color: colors.text, fontFamily: fontFamilies.regular }}>{selectedDate.toLocaleDateString()}</Text>
+                </TouchableOpacity>
+                {
+                    datePickerOpen && (
+                        <DateTimePicker
+                            value={selectedDate}
+                            mode="date"
+                            onChange={handleSelectedDate}
 
-        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
-            <TouchableOpacity onPress={handlePressDatePicker} 
-            style={{flexDirection: 'row', alignItems: 'center', padding: 5, margin: 4, borderColor: 'grey', borderWidth: 1, borderRadius: 4, width: "40%"}}>
-                <View style={{paddingHorizontal: 5}}>
-                    <MaterialIcons name="date-range" size={20} color={colors.icon} />
-                </View>
-                <Text style={{fontSize: fontSize.sm, color: colors.text, fontFamily: fontFamilies.regular}}>{selectedDate.toLocaleDateString()}</Text>
-            </TouchableOpacity>
-            {
-                datePickerOpen && (
-                    <DateTimePicker
-                        value={selectedDate}
-                        mode="date"
-                        onChange={handleSelectedDate}
-                    
-                    />
-                )
-            }
+                        />
+                    )
+                }
+            </View>
 
-            {dateHeader()}
         </View>
+
+        <View style={{borderBottomColor: 'grey', borderBottomWidth: 1, paddingBottom: 10, marginBottom: 20}}>
+            <TouchableOpacity onPress={handlePressFetchData} style={{
+                backgroundColor: '#3d3d3d', justifyContent: 'center', alignItems: 'center',
+                paddingVertical: 10, margin: 4, borderRadius: 5
+            }}>
+                <AntDesign name="search1" size={24} color="lightgrey" />
+            </TouchableOpacity>
+        </View>
+        
+
+        {dateHeader()}
 
         {activityIndicatorHeader()}
         {notFoundHeader(matchesSections)}

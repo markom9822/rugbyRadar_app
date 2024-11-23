@@ -197,7 +197,7 @@ export const InternationalRugbyTeams = [
   },
   {
     type: 'International',
-    displayName: 'United States of America',
+    displayName: 'USA',
     abbreviation: 'USA',
     logo: USALogo,
     altLogo: USAAltLogo,

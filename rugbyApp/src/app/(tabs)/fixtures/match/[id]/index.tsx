@@ -94,10 +94,13 @@ const MatchSummary = () => {
         }
     }
 
-     // call only once on load
-     useEffect(() => {
-        handlePressFetchData()
-      }, []);
+    useEffect(() => {
+        async function fetchMyAPI() {
+            await handlePressFetchData()
+        }
+        fetchMyAPI()
+    }, [])
+
 
     const activityIndicatorHeader = () => {
 
@@ -230,7 +233,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
             const matchTime = matchInfoArray[0].matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
             return (
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: colors.text, textAlign: 'center', fontFamily: fontFamilies.light, fontSize: fontSize.sm}}>{matchTime}</Text>
+                    <Text style={{color: colors.text, textAlign: 'center', fontFamily: fontFamilies.light, fontSize: 15}}>{matchTime}</Text>
                 </View>
             )
         }
@@ -276,6 +279,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
             )
         }
     }
+
 
     const homeFontFamily = (matchInfoArray[0].homeTeamScore > matchInfoArray[0].awayTeamScore) ? fontFamilies.bold : fontFamilies.regular;
     const awayFontFamily = (matchInfoArray[0].awayTeamScore > matchInfoArray[0].homeTeamScore) ? fontFamilies.bold : fontFamilies.regular;

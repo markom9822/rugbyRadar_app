@@ -145,10 +145,12 @@ const MatchSummary = () => {
         }
     }
 
-    // call only once on load
     useEffect(() => {
-        handlePressFetchData()
-      }, []);
+        async function fetchMyAPI() {
+            await handlePressFetchData()
+        }
+        fetchMyAPI()
+    }, [])
 
     const activityIndicatorHeader = () => {
 

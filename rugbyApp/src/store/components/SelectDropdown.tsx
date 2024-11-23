@@ -148,6 +148,70 @@ export const LeagueSelectDropdown = ({
 
 }
 
+export const TestLeagueSelectDropdown = ({
+  data,
+  onChangeSelection,
+  placeholder,
+  isDisabled,
+  value,
+  iconName,
+}: LeagueSelectDropdownProps) => {
+
+  const textColour = (isDisabled) ? ('grey'):(colors.text);
+  const textOpacity = (isDisabled) ? (0.5):(1);
+
+  const iconColour = (isDisabled) ? ('grey'):(colors.icon);
+  const iconOpacity = (isDisabled) ? (0.5):(1);
+
+  return(
+      <Dropdown
+      style={[{margin: 10, height: 50, borderBottomColor: 'grey', borderBottomWidth: 0.5, width: "50%"
+      }]}
+      placeholderStyle={[{color: textColour, opacity: textOpacity, fontFamily: fontFamilies.regular, fontSize: 14}]}
+      selectedTextStyle={[{color: textColour, opacity: textOpacity, fontFamily: fontFamilies.regular, fontSize: 14}]}
+      inputSearchStyle={[{height: 40, fontSize: 13, color: colors.text, borderColor: 'grey', borderRadius: 3,}]}
+      iconStyle={[{width: 20,height: 20,}]}
+      itemContainerStyle={{backgroundColor: colors.background}}
+      itemTextStyle={{color: colors.text, fontFamily: fontFamilies.regular, fontSize: 14}}
+      containerStyle={{backgroundColor: colors.background, borderColor: 'lightgrey', borderRadius: 1}}
+      activeColor={colors.altBackground}
+
+      data={data}
+      search
+      maxHeight={300}
+      labelField="label"
+      valueField="value"
+      placeholder={placeholder}
+      searchPlaceholder="Search..."
+      value={value}
+      disable={isDisabled}
+      onChange={item => {
+        onChangeSelection(item)
+      }}
+      renderLeftIcon={() => (
+        <View style={{paddingHorizontal: 3}}>
+          <MaterialCommunityIcons name={iconName} style={[styles.icon, {opacity: iconOpacity}]} color={iconColour} size={15} />
+        </View>  
+      )}
+
+      renderItem={(item) => {
+        return(
+          <View style={{flexDirection: 'row', marginVertical: 10, marginHorizontal: 5}}>
+           <View style={{paddingHorizontal: 10}}>
+              <Image
+                style={[styles.leagueLogo]}
+                source={item.logo} />
+            </View>
+            <Text style={{color: colors.text, paddingHorizontal: 3, fontFamily: fontFamilies.regular, fontSize: 13, width: 150}}>{item.label}</Text>
+          </View>
+        )
+      }}
+      
+    />
+  )
+
+}
+
 const styles = StyleSheet.create({
     dropdown: {
       margin: 10,

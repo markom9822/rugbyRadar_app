@@ -239,11 +239,12 @@ const StandingsScreen = () => {
         }
     } 
 
-    const isSeasonDropdownDisabled = leagueName == "worldRankings"
+    const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "sixNations" 
+    || leagueName == "u20SixNations"  || leagueName == "top14" || leagueName == "rugbyChamp"
 
     useEffect(() => {
 
-        if(leagueName == "worldRankings")
+        if(isSeasonDropdownDisabled)
         {
             handlePressFetchData('2024')
         }
