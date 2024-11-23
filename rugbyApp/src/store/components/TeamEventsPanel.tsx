@@ -3,6 +3,7 @@ import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInf
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
 import { LinearGradient } from "expo-linear-gradient"
+import { useState } from "react"
 
 export type TeamEventStatsInfo = {
     currentTeam: string,
@@ -52,6 +53,42 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
         return null
     }
 
+    const teamFormDisplay = (eventsArray: TeamEventStatsInfo[]) => {
+
+        if(eventsArray == undefined || eventsArray.length == 0)
+        {
+            return null
+        }
+
+        const teamForm = []
+
+        for (let index = 0; index < eventsArray.length; index++) {
+
+            const homeWinner = new Number(eventsArray[index].homeTeamScore) > new Number(eventsArray[index].awayTeamScore);
+            const homeCurrentTeam = eventsArray[index].currentTeam === eventsArray[index].homeTeamName;
+
+            var winOrLoseText = '';
+
+            if (homeCurrentTeam) {
+                winOrLoseText = (homeWinner) ? ('W') : ('L');
+            }
+            else {
+                winOrLoseText = (!homeWinner) ? ('W') : ('L');
+            }
+            teamForm.push(winOrLoseText)
+        }
+        
+        return (
+            <View style={{flexDirection: 'row', marginHorizontal: 8}}>
+                {teamForm.map((item, index) => (
+                    <View key={index} style={{paddingHorizontal: 0.5}}>
+                        <Text style={{color: colors.text, fontFamily: fontFamilies.light, fontSize: fontSize.xs, textAlign: 'left'}}>{item}</Text>
+                    </View>
+                ))}
+            </View>
+        )
+    }
+
     if(teamName === undefined) return;
 
     const teamInfo = getAnyTeamInfoFromName(teamName)
@@ -77,6 +114,8 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                     </View>
                     
                     <Text style={{color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4}}>{teamName.toUpperCase()} FORM</Text>
+
+                    {teamFormDisplay(teamEventArray)}
                 </View>
 
             {teamEventArray.map((match, index) => {
@@ -189,10 +228,9 @@ type TeamEventsItemProps = {
     awayTeamScore: string,
     matchDate: string,
     showWinLoss: boolean,
-
 }
 
-export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate, showWinLoss}: TeamEventsItemProps) => {
+export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate, showWinLoss,}: TeamEventsItemProps) => {
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -219,7 +257,7 @@ export const TeamEventsItem = ({leagueName, currentTeam, homeTeam, awayTeam, hom
     if(awayTeamInfo == undefined) return
 
     return (
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 3}}>
             
             {(showWinLoss)  && 
                 <View style={{flexDirection: 'row', width: "5%", justifyContent: 'center', alignItems: 'center'}}>
