@@ -7,9 +7,11 @@ import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getL
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, LeagueSelectDropdown, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import {AntDesign, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
 import {FontAwesome6} from '@expo/vector-icons'
+import { LionsAltLogo } from "@/store/URCTeamLogos/URCTeams"
+import { BALionsAltLogo } from "@/store/InternationalTeamLogos/InternationalTeams"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -94,6 +96,8 @@ const FixturesScreen = () => {
         const RugbyChampFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyChamp', selectedDate);
         const U20SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('u20SixNations', selectedDate);
         const WorldCupFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyWorldCup', selectedDate);
+        const U20ChampFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('u20Championship', selectedDate);
+        const LionsTourFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('BILTour', selectedDate);
 
         if(URCFixtures !== undefined && URCFixtures.length > 0)
         {
@@ -172,6 +176,20 @@ const FixturesScreen = () => {
                 data: U20SixNationsFixtures[0].data,
             })
         }
+        if(U20ChampFixtures !== undefined && U20ChampFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: U20ChampFixtures[0].title,
+                data: U20ChampFixtures[0].data,
+            })
+        }
+        if(LionsTourFixtures !== undefined && LionsTourFixtures.length > 0)
+        {
+            allFixturesArray.push({
+                title: LionsTourFixtures[0].title,
+                data: LionsTourFixtures[0].data,
+            })
+        }
 
         const teamSectionsCollection : FixturesSection[] = allFixturesArray;
         console.info(teamSectionsCollection)
@@ -219,6 +237,9 @@ const FixturesScreen = () => {
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsLogo },
         { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
+        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
+        { label: 'Lions Tour', value: 'BILTour', logo: BALionsAltLogo },
     ];
 
     const notFoundHeader = (eventsArray: FixturesSection[]) => {

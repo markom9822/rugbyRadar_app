@@ -14,3 +14,8 @@ export const TNTSportsLogo = require('@/store/BroadcasterLogos/tnt_sports_logo.p
 
 export const BBCWalesLogo = require('@/store/BroadcasterLogos/bbc_wales_logo.png')
 export const BBCNILogo = require('@/store/BroadcasterLogos/bbc_northernIreland_logo.png')
+
+export const BBCIPlayerLogo = require('@/store/BroadcasterLogos/bbc_iplayer_logo.png')
+
+export const ITVXLogo = require('@/store/BroadcasterLogos/itvx_logo.png')
+export const ITVLogo = require('@/store/BroadcasterLogos/itv_logo.png')

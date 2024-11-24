@@ -1,9 +1,7 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { defaultStyles } from "@/styles"
 import { Stack } from "expo-router"
-import { Button, View, ViewStyle, TouchableOpacity, StyleSheet } from "react-native"
-import {FontAwesome6} from '@expo/vector-icons'
-import { useFonts } from "expo-font"
+import { View, } from "react-native"
 
 
 const FavouritesScreenLayout = () => {

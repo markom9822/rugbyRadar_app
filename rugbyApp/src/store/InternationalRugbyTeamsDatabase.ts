@@ -305,7 +305,7 @@ export const InternationalRugbyTeams = [
   },
   {
     type: 'International',
-    displayName: 'British and Irish Lions',
+    displayName: 'British & Irish Lions',
     abbreviation: 'LIONS',
     logo: BALionsLogo,
     altLogo: BALionsAltLogo,

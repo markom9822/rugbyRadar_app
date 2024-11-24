@@ -1,12 +1,13 @@
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
-import { DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
+import { BALionsAltLogo, DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
 import { AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
-import { BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, PremierSportsLogo, RTELogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
@@ -35,6 +36,10 @@ export const leagueCodes = [
         displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo},
     { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
         displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsLogo},
+    { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
+        displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+    { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
+        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo},
 ];
 
 export const rugbyVizleagueCodes = [
@@ -98,7 +103,7 @@ export const isLeagueInRugbyViz = (displayName: string) => {
 
 export const worldRugbyAPILeagueCodes = [
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
-        displayName: 'Autumn Nations Series', leagueLogo: null, leagueAltLogo: null},
+        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo},
     { value: 'sixNations', code: "2171",
         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
     { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
@@ -108,9 +113,9 @@ export const worldRugbyAPILeagueCodes = [
     { value: 'rugbyWorldCup', code: "1893",
         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
     { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
-        displayName: 'U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+        displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
     { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
-        displayName: 'Britsh & Irish Lions Tour', leagueLogo: null, leagueAltLogo: null},
+        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo},
     
 ];
 
@@ -383,10 +388,14 @@ export const broadcasters = [
 
     // channels from planet rugby API
     { name: 'TNT Sport 1', logo: TNTSportsLogo},
+    { name: 'TNT Sport 2', logo: TNTSportsLogo},
     { name: 'TNT Sport Ultimate', logo: TNTSportsLogo},
     { name: 'discovery +', logo: DiscoveryPlusLogo},
-    { name: 'BBC Player', logo: BBCWalesLogo},
+    { name: 'BBC iPlayer', logo: BBCIPlayerLogo},
+    { name: 'Premier Sports 1', logo: PremierSportsLogo},
     { name: 'Premier Sports 2', logo: PremierSportsLogo},
+    { name: 'ITV 1', logo: ITVLogo},
+    { name: 'ITV X', logo: ITVXLogo},
 
 ];
 

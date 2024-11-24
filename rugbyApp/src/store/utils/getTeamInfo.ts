@@ -18,12 +18,12 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
         homeInfo = getURCTeamInfoFromName(homeTeam)
         awayInfo = getURCTeamInfoFromName(awayTeam)
     }
-    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup")
+    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup" || league === "BILTour")
     {
         homeInfo = getInternationalTeamInfoFromName(homeTeam)
         awayInfo = getInternationalTeamInfoFromName(awayTeam)
     }
-    else if(league === "u20SixNations")
+    else if(league === "u20SixNations" || league === "u20Championship")
     {
         const u20HomeTeam = homeTeam.replace(" U20", "");
         const u20AwayTeam = awayTeam.replace(" U20", "");

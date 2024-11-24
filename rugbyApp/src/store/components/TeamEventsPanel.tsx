@@ -4,6 +4,8 @@ import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
 import { LinearGradient } from "expo-linear-gradient"
 import { useState } from "react"
+import Entypo from '@expo/vector-icons/Entypo';
+
 
 export type TeamEventStatsInfo = {
     currentTeam: string,
@@ -84,7 +86,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
             <View style={{flexDirection: 'row', marginHorizontal: 8}}>
                 {teamForm.map((item, index) => (
                     <View key={index} style={{paddingHorizontal: 0.5}}>
-                        <Text style={{color: colors.text, fontFamily: fontFamilies.light, fontSize: fontSize.xs, textAlign: 'left'}}>{item}</Text>
+                        <Text style={{color: colors.text, fontFamily: fontFamilies.light, fontSize: fontSize.xs, textAlign: 'center'}}>{item}</Text>
                     </View>
                 ))}
             </View>
@@ -110,7 +112,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                 <TouchableOpacity onPress={toggleFormTab}>
                 <View style={{flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: teamBackgroundColour,
                     borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
-                    <View style={{margin: 4, padding: 4,  justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{margin: 4, padding: 4,  justifyContent: 'center', alignItems: 'center', width: "10%"}}>
                         <Image
                         style={{ resizeMode: 'contain',
                             width: 25,
@@ -120,13 +122,22 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                             source={teamInfo.altLogo} />
                     </View>
                     
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4}}>{teamName.toUpperCase()} FORM</Text>
+                    <View style={{width: "55%"}}>
+                        <Text style={{color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4}}>{teamName.toUpperCase()} FORM</Text>
+                    </View>
 
-                    {teamFormDisplay(teamEventArray)}
+                    <View style={{width: "25%"}}>
+                        {teamFormDisplay(teamEventArray)}
+                    </View>
+
+                    <View style={{width: "7%", justifyContent: 'center', alignItems: 'center'}}>
+                        <Entypo name= {isTabOpen ? "chevron-thin-up": "chevron-thin-down"} size={12} color="white" />
+                    </View>
                 </View>
                 </TouchableOpacity>
 
                 {isTabOpen && (<>
+                
 
                     {teamEventArray.map((match, index) => {
                         return (

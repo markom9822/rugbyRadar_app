@@ -170,8 +170,28 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
         }
         else
         {
+
+            var logosArray = [];
+            var namesArray = [];
+
+            console.info(matchInfoArray[0].matchBroadcasters)
+
+
+            // need to remove dupes
+            for (let index = 0; index < matchInfoArray[0].matchBroadcasters.length; index++) {
+
+                const logo = getBroadcasterLogo(matchInfoArray[0].matchBroadcasters[index])
+
+                if (logosArray.indexOf(logo) === -1) {
+                    logosArray.push(logo)
+                    namesArray.push(matchInfoArray[0].matchBroadcasters[index])
+                }  
+            }
+
+            console.info(namesArray)
+
             return (
-                matchInfoArray[0].matchBroadcasters.map((item, index) => {
+                namesArray.map((item, index) => {
                     return (
                         <BroadcasterItem
                             key={index}
@@ -350,14 +370,13 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>
-                        <View style={[summaryPanelStyles.teamInfoContainer]}>
+                        <View style={[summaryPanelStyles.teamInfoContainer, {width: "45%", justifyContent: 'flex-start'}]}>
                             <Image style={[summaryPanelStyles.teamLogo]} 
                             source={homeTeamInfo?.logo}/>
-                            <Text style={[summaryPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
+                            <Text style={[summaryPanelStyles.teamName,]}>{homeTeamInfo?.abbreviation}</Text>
                         </View>
-                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "40%"}}></Text>
-                        <View style={[summaryPanelStyles.teamInfoContainer]}>
-                            <Text style={[summaryPanelStyles.teamName]}>{awayTeamInfo?.abbreviation}</Text>
+                        <View style={[summaryPanelStyles.teamInfoContainer, {width: "45%", justifyContent: 'flex-end'}]}>
+                            <Text style={[summaryPanelStyles.teamName,]}>{awayTeamInfo?.abbreviation}</Text>
                             <Image style={[summaryPanelStyles.teamLogo]} 
                             source={awayTeamInfo?.logo}/>
                         </View>
