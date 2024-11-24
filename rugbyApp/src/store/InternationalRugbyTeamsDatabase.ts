@@ -1,4 +1,6 @@
 import { ArgentinaAltLogo, ArgentinaLogo, AustraliaAltLogo, AustraliaLogo, BALionsAltLogo, BALionsLogo, CanadaAltLogo, CanadaLogo, ChileAltLogo, ChileLogo, DefaultLogo, EnglandAltLogo, EnglandLogo, FijiAltLogo, FijiLogo, FranceAltLogo, FranceLogo, GeorgiaAltLogo, GeorgiaLogo, IrelandAltLogo, IrelandLogo, ItalyAltLogo, ItalyLogo, JapanAltLogo, JapanLogo, NamibiaAltLogo, NamibiaLogo, NewZealandAltLogo, NewZealandLogo, PortugalAltLogo, PortugalLogo, RomaniaAltLogo, RomaniaLogo, SamoaAltLogo, SamoaLogo, ScotlandAltLogo, ScotlandLogo, SouthAfricaAltLogo, SouthAfricaLogo, SpainAltLogo, SpainLogo, TongaAltLogo, TongaLogo, UruguayAltLogo, UruguayLogo, USAAltLogo, USALogo, WalesAltLogo, WalesLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { SuperRugbyTeams } from "./SuperRugbyPacificRugbyTeamsDatabase";
+import { URCRugbyTeams } from "./URCRugbyTeamsDatabase";
 
 export const getInternationalTeamInfoFromName = (name: string) => {
 
@@ -24,6 +26,34 @@ export const getInternationalTeamInfoFromName = (name: string) => {
     {
         return defaultTeam
     }
+}
+
+export const getLionsTourTeamInfoFromName = (name: string) => {
+
+  const defaultTeam =  {
+    type: 'Lions Tour',
+    displayName: 'Default',
+    abbreviation: 'DEF',
+    logo: DefaultLogo,
+    altLogo: DefaultLogo,
+    colour: '#000000',
+    id: '0',
+    defaultLeague: '',
+    foundedYear: '',
+    seasonType: '',
+  }
+
+  const lionsTourTeamsArray = [...URCRugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams];
+
+  const match = lionsTourTeamsArray.find((item) => item.displayName === name)
+  if(match !== undefined)
+  {
+      return match
+  }
+  else
+  {
+      return defaultTeam
+  }
 }
 
 export const InternationalRugbyTeams = [

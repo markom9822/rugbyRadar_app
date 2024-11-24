@@ -2,7 +2,7 @@ import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
 import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
 import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
 import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
-import { getInternationalTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
+import { getInternationalTeamInfoFromName, getLionsTourTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase";
 import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { getAnyTeamInfoFromName } from "./helpers";
@@ -18,7 +18,7 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
         homeInfo = getURCTeamInfoFromName(homeTeam)
         awayInfo = getURCTeamInfoFromName(awayTeam)
     }
-    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup" || league === "BILTour")
+    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup")
     {
         homeInfo = getInternationalTeamInfoFromName(homeTeam)
         awayInfo = getInternationalTeamInfoFromName(awayTeam)
@@ -50,6 +50,11 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
     {
         homeInfo = getChampionsCupTeamInfoFromName(homeTeam)
         awayInfo = getChampionsCupTeamInfoFromName(awayTeam)
+    }
+    else if (league === "BILTour")
+    {
+        homeInfo = getLionsTourTeamInfoFromName(homeTeam)
+        awayInfo = getLionsTourTeamInfoFromName(awayTeam)
     }
     else
     {

@@ -107,8 +107,6 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
             <View style={{backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', width: "95%"}}>
 
-            {notFoundHeader(teamEventArray)}
-
                 <TouchableOpacity onPress={toggleFormTab}>
                 <View style={{flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: teamBackgroundColour,
                     borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
@@ -136,8 +134,10 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                 </View>
                 </TouchableOpacity>
 
+                {notFoundHeader(teamEventArray)}
+
                 {isTabOpen && (<>
-                
+
 
                     {teamEventArray.map((match, index) => {
                         return (
@@ -194,8 +194,6 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
 
             <View style={{backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey'}}>
 
-            {notFoundHeader(teamEventArray)}
-
                 <LinearGradient colors={[teamBackgroundColour1, teamBackgroundColour2]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} locations={[0.4, 0.6]}
                  style={{flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: 'transparent',
                     borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignContent: 'center'}}>
@@ -217,10 +215,11 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
                             height: 25,
                             minHeight: 25,
                             minWidth: 25,}}
-                        source={teamInfo2.altLogo} />
+                            source={teamInfo2.altLogo} />
                     </View>
                     
                 </LinearGradient>
+                {notFoundHeader(teamEventArray)}
 
             {teamEventArray.map((match, index) => {
                 return (

@@ -54,16 +54,21 @@ const MatchSummary = () => {
             const worldRugbyAPIEventID = separatedArray[0];
             const worldRugbyAPILeagueName = separatedArray[1]
 
-            console.info(worldRugbyAPIEventID)
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/stats?language=en';
+            console.info(apiString)
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = await getMatchInfoWorldRugbyAPI(matchDetails)
             setMatchInfoArray(matchInfo)
 
             const apiSummaryString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
             const matchSummary = await fetch( apiSummaryString,).then((res) => res.json())
-            const refName = matchSummary.officials[0].official.name.display;
-            setRefereeName(refName)
+
+            if(matchSummary.officials.length > 0)
+            {
+                const refName = matchSummary.officials[0].official.name.display;
+                setRefereeName(refName)
+            }
+            
             setLeagueName(worldRugbyAPILeagueName)
 
             setIsLoading(false)
