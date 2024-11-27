@@ -167,8 +167,8 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
 
         if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
         {
-            const homeTeamName = seasonAllMatches.data[index].homeTeam.shortName;
-            const awayTeamName = seasonAllMatches.data[index].awayTeam.shortName;
+            const homeTeamName = seasonAllMatches.data[index].homeTeam.name;
+            const awayTeamName = seasonAllMatches.data[index].awayTeam.name;
             const homeTeamScore = seasonAllMatches.data[index].homeTeam.score;
             const awayTeamScore = seasonAllMatches.data[index].awayTeam.score;
             const matchVenue = seasonAllMatches.data[index].venue.name;
@@ -232,10 +232,24 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
 export const fetchRugbyVizData = async (thisLeagueName: string, selectedDate: Date) => {
 
     const rugbyVizLeagueCode = getRugbyVizLeagueCode(thisLeagueName);
+
+    // northern hemisphere season year    
+    function getCurrentRugbySeason(date: Date): string {
+        const month: number = date.getMonth() + 1;
+        const year: number = date.getFullYear();
+
+        return month >= 8
+            ? `${year}`
+            : `${year - 1}`;
+    }
+
+    console.info(getCurrentRugbySeason(selectedDate))
+    const seasonYear = getCurrentRugbySeason(selectedDate)
+
     // use separate API for club leagues
     if(rugbyVizLeagueCode !== undefined)
     {
-        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+selectedDate.getFullYear()+'01'
+        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+seasonYear+'01'
         const seasonsAllMatches = await fetch( apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
@@ -272,7 +286,7 @@ export const fetchWorldRugbyAPIData = async (thisLeagueName: string, selectedDat
     // use separate API for some matches
     if(worldRugbyAPILeagueCode !== undefined)
     {
-        const apiStringAll = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match?states=U,UP,L,CC,C&pageSize=100&sort=asc&events='+worldRugbyAPILeagueCode+'&startDate='+startDate+'&endDate='+endDate
+        const apiStringAll = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match?states=U,UP,L,CC,C&pageSize=100&sort=asc&startDate='+startDate+'&endDate='+endDate
         const seasonsAllMatches = await fetch( apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
@@ -296,19 +310,23 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
 
     var leagueArray = []
 
+    console.info(leagueDisplayName)
+
     for (let index = 0; index < gamesCount; index++) {
         
         // need to get date
         const matchDate = new Date(seasonAllMatches.content[index].time.millis);
         const matchYear = matchDate.getFullYear()
 
-        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
+        const matchCompetition = seasonAllMatches.content[index].competition.replace(` ${matchYear}`, "");
+
+        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0) && matchCompetition === leagueDisplayName)
         {
             const homeTeamName = seasonAllMatches.content[index].teams[0].name;
             const awayTeamName = seasonAllMatches.content[index].teams[1].name;
             const homeTeamScore = seasonAllMatches.content[index].scores[0];
             const awayTeamScore = seasonAllMatches.content[index].scores[1];
-            const matchVenue = seasonAllMatches.content[index].venue.name;
+            const matchVenue =  seasonAllMatches.content[index].venue !== null ? seasonAllMatches.content[index].venue.name : "-";
             const matchID = seasonAllMatches.content[index].matchId;
             const compName = (seasonAllMatches.content[index].competition).replace(" " + matchYear, "");
 

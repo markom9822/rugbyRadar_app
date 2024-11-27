@@ -99,8 +99,8 @@ const Lineups = () => {
             const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
 
             const matchDetails = await fetch(apiString,).then((res) => res.json())
-            const homeTeam = matchDetails.data.homeTeam.shortName;
-            const awayTeam = matchDetails.data.awayTeam.shortName;
+            const homeTeam = matchDetails.data.homeTeam.name;
+            const awayTeam = matchDetails.data.awayTeam.name;
             setHomeTeamName(homeTeam)
             setAwayTeamName(awayTeam)
             setLeagueName(leagueID.replace("_RugbyViz", ""))

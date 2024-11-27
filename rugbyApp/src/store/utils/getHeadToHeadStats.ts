@@ -76,8 +76,8 @@ export const getHeadToHeadStatsRugbyViz = async (matchStats: any) => {
         // dont include this match
         if(matchDate.setHours(0,0,0,0) === thisMatchDate.setHours(0,0,0,0)) continue;
 
-        const homeTeamName = previousMatches[index].homeTeam.shortName;
-        const awayTeamName = previousMatches[index].awayTeam.shortName;
+        const homeTeamName = previousMatches[index].homeTeam.name;
+        const awayTeamName = previousMatches[index].awayTeam.name;
 
         const homeTeamScore = previousMatches[index].homeTeam.score;
         const awayTeamScore = previousMatches[index].awayTeam.score;

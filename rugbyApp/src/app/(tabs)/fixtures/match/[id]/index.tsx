@@ -334,7 +334,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                 </View>
             </View>
 
-            <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginVertical: 15, borderWidth: 1, borderColor: 'lightgrey' }}>
+            <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, marginVertical: 15, borderWidth: 1, borderColor: 'lightgrey', flex: 1 }}>
                 <View style={{ alignItems: 'flex-start', flexDirection: 'column', justifyContent: 'flex-start' }}>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>
@@ -358,7 +358,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                         <Text style={{ width: "75%", paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.regular }}>{refereeName}</Text>
                     </View>
 
-                    <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                    <View style={{ flexDirection: 'row', marginVertical: 10, }}>
                         <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center', marginRight: 8 }}>
                             <Feather name="tv" size={20} color={'lightgrey'} />
                         </View>

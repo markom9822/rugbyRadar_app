@@ -151,8 +151,8 @@ export const getFullMatchStats = (matchStats: any) => {
 
 export const getFullMatchStatsRugbyViz = (matchStats: any) => {
 
-    const homeTeamName = matchStats.data.homeTeam.shortName;
-    const awayTeamName = matchStats.data.awayTeam.shortName;
+    const homeTeamName = matchStats.data.homeTeam.name;
+    const awayTeamName = matchStats.data.awayTeam.name;
 
     if (matchStats.data.homeTeam.stats == null || matchStats.data.awayTeam.stats == null) {
         const blankArray = [

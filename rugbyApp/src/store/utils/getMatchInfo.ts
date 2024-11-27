@@ -121,8 +121,8 @@ export const handleGetMatchStat = (stat: any) => {
 
 export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
 
-    const homeTeamName = matchDetails.data.homeTeam.shortName;
-    const awayTeamName = matchDetails.data.awayTeam.shortName;
+    const homeTeamName = matchDetails.data.homeTeam.name;
+    const awayTeamName = matchDetails.data.awayTeam.name;
     const matchVenue = matchDetails.data.venue.name;
     const matchAttendance = matchDetails.data.attendance;
     const matchBroadcasters = matchDetails.data.broadcasters;

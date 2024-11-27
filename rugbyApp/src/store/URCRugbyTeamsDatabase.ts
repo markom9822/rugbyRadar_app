@@ -26,7 +26,11 @@ export const getURCTeamInfoFromName = (name: string) => {
     foundedYear: '',
     seasonType: '',
   }
-    const match = URCRugbyTeams.find((item) => item.displayName === name)
+
+  // remove not needed parts of name
+  const searchName = name.replace(" Rugby", "")
+
+    const match = URCRugbyTeams.find((item) => item.displayName === searchName)
     if(match !== undefined)
     {
         return match
@@ -101,7 +105,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Glasgow',
+    displayName: 'Glasgow Warriors',
     abbreviation: 'GLASG',
     logo: GlasgowLogo,
     altLogo: GlasgowAltLogo,
@@ -173,7 +177,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Zebre',
+    displayName: 'Zebre Parma',
     abbreviation: 'ZEB',
     logo: ZebreLogo,
     altLogo: ZebreAltLogo,
@@ -185,7 +189,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Stormers',
+    displayName: 'DHL Stormers',
     abbreviation: 'STORM',
     logo: StormersLogo,
     altLogo: StormersAltLogo,
@@ -197,7 +201,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Bulls',
+    displayName: 'Vodacom Bulls',
     abbreviation: 'BULLS',
     logo: BullsLogo,
     altLogo: BullsAltLogo,
@@ -209,7 +213,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Lions',
+    displayName: 'Emirates Lions',
     abbreviation: 'LIONS',
     logo: LionsLogo,
     altLogo: LionsAltLogo,
@@ -221,7 +225,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Sharks',
+    displayName: 'Hollywoodbets Sharks',
     abbreviation: 'SHARK',
     logo: SharksLogo,
     altLogo: SharksAltLogo,

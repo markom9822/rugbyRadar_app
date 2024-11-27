@@ -6,16 +6,14 @@ import { URCRugbyTeams } from "./URCRugbyTeamsDatabase";
 export const rugbyVizChampsCupNames = [
   { databaseName: 'La Rochelle', rugbyVizName: 'Stade Rochelais',},
   { databaseName: 'Toulon', rugbyVizName: 'RC Toulon',},
-  { databaseName: 'Bordeaux Begles', rugbyVizName: 'Bordeaux-Bègles',},
-  { databaseName: 'Bayonne', rugbyVizName: 'Aviron Bayonnais',},
+  { databaseName: 'Bordeaux Begles', rugbyVizName: 'Bordeaux-Begles',},
+  { databaseName: 'Bayonnais', rugbyVizName: 'Bayonne',},
   { databaseName: 'Montpellier', rugbyVizName: 'Montpellier Hérault',},
   { databaseName: 'Stade Toulousain', rugbyVizName: 'Toulouse',},
   { databaseName: 'Clermont', rugbyVizName: 'Clermont Auvergne',},
   { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
-  { databaseName: 'USA Perpignan', rugbyVizName: 'USAP',},
-
-  { databaseName: 'Sale', rugbyVizName: 'Sale Sharks',},
-  { databaseName: 'Sale', rugbyVizName: 'Falcons',},
+  { databaseName: 'USA Perpignan', rugbyVizName: 'Perpignan',},
+  { databaseName: 'Section Paloise', rugbyVizName: 'Pau',},
 
 ];
 
@@ -33,6 +31,8 @@ export const getChampsCupShortNameFromFullName = (name: string) => {
   {
       searchName = name;
   }
+
+  searchName = searchName.replace(" Rugby", "")
   
   const match = champsCupTeamsArray.find((item) => searchName.replace('-', ' ').indexOf(item.displayName) !== -1)
 
@@ -72,6 +72,8 @@ export const getChampionsCupTeamInfoFromName = (name: string) => {
     {
         searchName = name;
     }
+
+    searchName = searchName.replace(" Rugby", "")
 
     const match = champsCupTeamsArray.find((item) => item.displayName === searchName)
     if(match !== undefined)

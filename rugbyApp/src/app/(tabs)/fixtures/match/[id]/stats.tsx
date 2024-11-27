@@ -41,8 +41,8 @@ const MatchSummary = () => {
 
             const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
             const matchStats = await fetch(apiString,).then((res) => res.json())
-            const homeTeam = matchStats.data.homeTeam.shortName;
-            const awayTeam = matchStats.data.awayTeam.shortName;
+            const homeTeam = matchStats.data.homeTeam.name;
+            const awayTeam = matchStats.data.awayTeam.name;
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)

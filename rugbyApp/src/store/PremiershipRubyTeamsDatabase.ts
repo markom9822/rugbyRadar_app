@@ -44,7 +44,8 @@ export const getPremTeamInfoFromName = (name: string) => {
       searchName = name;
   }
 
-  const match = PremRugbyTeams.find((item) => item.displayName === searchName)
+
+  const match = PremRugbyTeams.find((item) => item.displayName === searchName.replace(" Rugby", ""))
   if (match !== undefined) 
   {
     return match
@@ -71,7 +72,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Bears',
+    displayName: 'Bristol Bears',
     abbreviation: 'BRIST',
     logo: BristolLogo,
     altLogo: BristolAltLogo,
@@ -83,7 +84,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Chiefs',
+    displayName: 'Exeter Chiefs',
     abbreviation: 'EXET',
     logo: ExeterLogo,
     altLogo: ExeterAltLogo,
@@ -119,7 +120,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Tigers',
+    displayName: 'Leicester Tigers',
     abbreviation: 'LEICS',
     logo: LeicesterLogo,
     altLogo: LeicesterAltLogo,
@@ -131,7 +132,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Falcons',
+    displayName: 'Newcastle Falcons',
     abbreviation: 'NEWC',
     logo: NewcastleLogo,
     altLogo: NewcastleAltLogo,
@@ -143,7 +144,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Saints',
+    displayName: 'Northampton Saints',
     abbreviation: 'NTHMP',
     logo: NorthamptonLogo,
     altLogo: NorthamptonAltLogo,
@@ -155,7 +156,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Sale',
+    displayName: 'Sale Sharks',
     abbreviation: 'SALE',
     logo: SaleLogo,
     altLogo: SaleAltLogo,

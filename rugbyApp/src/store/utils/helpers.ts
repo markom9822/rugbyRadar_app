@@ -292,7 +292,10 @@ export const getAnyTeamInfoFromName = (name: string) => {
 
     const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams];
 
-    const match = allTeamsArray.find((item) => item.displayName === name)
+    // remove not needed parts of name
+    const searchName = name.replace(" Rugby", "")
+
+    const match = allTeamsArray.find((item) => item.displayName === searchName)
     if(match !== undefined)
     {
         return match
