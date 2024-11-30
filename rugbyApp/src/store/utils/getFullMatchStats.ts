@@ -256,9 +256,21 @@ export const getFullMatchStatsRugbyViz = (matchStats: any) => {
     const homeTeamRedCards = matchStats.data.homeTeam.stats.redCards;
     const awayTeamRedCards = matchStats.data.awayTeam.stats.redCards;
 
+    var eventState;
+    const matchStatus = matchStats.data.status;
+    if (matchStatus === "result") {
+        eventState = "post"
+    }
+    else if (matchStatus === "fixture") {
+        eventState = "pre"
+    }
+    else {
+        eventState = "ongoing"
+    }
+
     const newArray = [
         {
-            statsAvailable: true,
+            statsAvailable: eventState !== "pre",
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,

@@ -162,12 +162,12 @@ export const getKeyEventsRugbyViz = (matchStats: any) => {
 
         if(isHomeTeam)
         {
-            eventTeam = matchStats.data.homeTeam.shortName;
+            eventTeam = matchStats.data.homeTeam.name;
             eventPlayer = getKeyEventPlayerRugbyViz(matchStats, eventPlayerID, true)
         }
         else
         {
-            eventTeam = matchStats.data.awayTeam.shortName;
+            eventTeam = matchStats.data.awayTeam.name;
             eventPlayer = getKeyEventPlayerRugbyViz(matchStats, eventPlayerID, false)
         }
 

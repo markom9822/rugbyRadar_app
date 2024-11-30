@@ -143,8 +143,6 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
     const homeTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
     const awayTeamMetres = handleGetMatchStat(matchDetails.data.awayTeam.stats?.metres);
 
-    const statsAvailable = matchDetails.data.homeTeam.stats !== null && matchDetails.data.awayTeam.stats !== null;
-
     var eventState;
     const matchStatus = matchDetails.data.status;
     if (matchStatus === "result") {
@@ -156,6 +154,8 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
     else {
         eventState = "ongoing"
     }
+
+    const statsAvailable = matchDetails.data.homeTeam.stats !== null && matchDetails.data.awayTeam.stats !== null && eventState !== "pre";
 
     const newArray = [
         {

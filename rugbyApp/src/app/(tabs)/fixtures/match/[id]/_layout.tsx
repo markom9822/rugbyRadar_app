@@ -15,7 +15,8 @@ export default function MatchLayout() {
         <Stack.Screen options={{title: 'Match Details'}} />
         <TopTabs screenOptions={{
             tabBarLabelStyle: {
-                fontFamily: fontFamilies.bold
+                fontFamily: fontFamilies.bold,
+                fontSize: 10
 
             },
             tabBarStyle: { backgroundColor: "#363434"  },

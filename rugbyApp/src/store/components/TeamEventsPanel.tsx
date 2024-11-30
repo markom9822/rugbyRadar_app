@@ -107,7 +107,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
             <View style={{backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', width: "95%"}}>
 
-                <TouchableOpacity onPress={toggleFormTab}>
+                <TouchableOpacity onPress={toggleFormTab} activeOpacity={0.8}>
                 <View style={{flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: teamBackgroundColour,
                     borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5}}>
                     <View style={{margin: 4, padding: 4,  justifyContent: 'center', alignItems: 'center', width: "10%"}}>
