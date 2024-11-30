@@ -1,5 +1,5 @@
 import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams";
-import { BayonneAltLogo, BayonneLogo, BordeauxAltLogo, BordeauxLogo, BriveAltLogo, BriveLogo, CastresAltLogo, CastresLogo, ClermontAltLogo, ClermontLogo, LaRochelleAltLogo, LaRochelleLogo, LyonAltLogo, LyonLogo, MontpellierAltLogo, MontpellierLogo, PauAltLogo, PauLogo, PerpignanAltLogo, PerpignanLogo, Racing92AltLogo, Racing92Logo, StadeFrancaisAltLogo, StadeFrancaisLogo, ToulonAltLogo, ToulonLogo, ToulouseAltLogo, ToulouseLogo, VannesAltLogo, VannesLogo } from "./Top14TeamLogos/Top14Teams";
+import { BayonneAltLogo, BayonneLogo, BordeauxAltLogo, BordeauxLogo, BriveAltLogo, BriveLogo, CastresAltLogo, CastresLogo, ClermontAltLogo, ClermontLogo, LaRochelleAltLogo, LaRochelleLogo, LyonAltLogo, LyonLogo, MontpellierAltLogo, MontpellierLogo, OyonnaxAltLogo, OyonnaxLogo, PauAltLogo, PauLogo, PerpignanAltLogo, PerpignanLogo, Racing92AltLogo, Racing92Logo, StadeFrancaisAltLogo, StadeFrancaisLogo, ToulonAltLogo, ToulonLogo, ToulouseAltLogo, ToulouseLogo, VannesAltLogo, VannesLogo } from "./Top14TeamLogos/Top14Teams";
 
 export const rugbyVizTop14Names = [
   { databaseName: 'Stade Toulousain', rugbyVizName: 'Toulouse',},
@@ -252,6 +252,18 @@ export const Top14RugbyTeams = [
     id: '25922',
     defaultLeague: 'Top 14',
     foundedYear: '1907',
+    seasonType: 'north',
+  },
+  {
+    type: 'Top14 Club',
+    displayName: 'Oyonnax',
+    abbreviation: 'OYON',
+    logo: OyonnaxLogo,
+    altLogo: OyonnaxAltLogo,
+    colour: '#c40e0e',
+    id: '',
+    defaultLeague: 'Top 14',
+    foundedYear: '1942',
     seasonType: 'north',
   },
 ];
