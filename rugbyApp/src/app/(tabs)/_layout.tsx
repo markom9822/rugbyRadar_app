@@ -19,12 +19,8 @@ const TabsNavigation = () => {
             <Tabs.Screen name="(teams)" 
                 options={{
                     title: "Teams",
-
                 }}
-                listeners={{tabPress: e => {
-                    // Prevent default action
-                    e.preventDefault();
-                  },}} />
+                />
             <Tabs.Screen name="standings" 
                 options={{
                     title: "Standings",

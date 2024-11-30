@@ -127,7 +127,7 @@ const TeamsScreen = () => {
         if(data.length !== 0)
         {
             return (
-                <View style={{marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{marginTop: 12, marginBottom: 3,  marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>
                 <View style={{paddingHorizontal: 10}}>
                     <Image
                         style={{resizeMode: 'contain',
@@ -210,7 +210,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
                 <TouchableOpacity activeOpacity={0.5}>
 
                     <View style={[teamInfoPanelStyles.container,
-                    { backgroundColor: teamBkgRBGA, borderColor: teamBorderRBGA, borderWidth: 2 }]}>
+                    { backgroundColor: teamBkgRBGA, borderColor: 'lightgrey', borderWidth: 2 }]}>
                         <View style={{ padding: 5, width: "20%", alignItems: 'center' }}>
                             <Image
                                 style={[teamInfoPanelStyles.teamLogo]}

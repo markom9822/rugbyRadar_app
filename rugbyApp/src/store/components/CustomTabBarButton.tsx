@@ -39,7 +39,7 @@ export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, 
         else if (tabName === "(teams)")
         {
             return (
-                <FontAwesome6 name="shield-halved" size={22} color={'#363434'}/>
+                <FontAwesome6 name="shield-halved" size={22} color={isFocused ? "white": "grey"}/>
             )
         }
         else if (tabName === "standings")
@@ -65,7 +65,7 @@ export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, 
                 {iconRender(routeName, isFocused)}
             </Animated.View>
             
-            <Text style={{color: routeName=="(teams)" ? "#363434" : (isFocused ? "white": "grey"), textAlign: 'center'}}>
+            <Text style={{color: (isFocused ? "white": "grey"), textAlign: 'center'}}>
                 {label}
             </Text>
             

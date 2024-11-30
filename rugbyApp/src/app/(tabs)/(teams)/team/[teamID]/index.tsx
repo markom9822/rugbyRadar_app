@@ -156,7 +156,7 @@ const TeamSummary = () => {
             const apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCode;
 
             const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, 'top14')
+            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, 'top14', false, false, -1)
 
             console.info(newArray)
             setStandingsArray(newArray)    

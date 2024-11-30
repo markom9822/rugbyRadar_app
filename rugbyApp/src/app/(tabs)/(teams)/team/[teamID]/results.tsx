@@ -39,6 +39,7 @@ const TeamResults = () => {
         
         setIsLoading(true)
         const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, targetSeasonYear)
+        console.info(teamSeasonFixtures)
         setTeamEventsArray(teamSeasonFixtures)
         setIsLoading(false)
     }

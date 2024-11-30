@@ -3,13 +3,12 @@ import { BayonneAltLogo, BayonneLogo, BordeauxAltLogo, BordeauxLogo, BriveAltLog
 
 export const rugbyVizTop14Names = [
   { databaseName: 'Stade Toulousain', rugbyVizName: 'Toulouse',},
-  { databaseName: 'Montpellier Hérault', rugbyVizName: 'Montpellier',},
-  { databaseName: 'Bordeaux-Bègles', rugbyVizName: 'Bordeaux-Begles',},
-  { databaseName: 'Stade Rochelais', rugbyVizName: 'La Rochelle',},
-  { databaseName: 'RC Toulon', rugbyVizName: 'Toulon',},
+  { databaseName: 'Bordeaux Begles', rugbyVizName: 'Bordeaux-Begles',},
   { databaseName: 'Section Paloise', rugbyVizName: 'Pau',},
-  { databaseName: 'USAP', rugbyVizName: 'Perpignan',},
-  { databaseName: 'Aviron Bayonnais', rugbyVizName: 'Bayonne',},
+  { databaseName: 'USA Perpignan', rugbyVizName: 'Perpignan',},
+  { databaseName: 'Bayonnais', rugbyVizName: 'Bayonne',},
+  { databaseName: 'Lyon', rugbyVizName: 'Lyon O.U.',},
+  { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
 ];
 
 export const getTop14ShortNameFromFullName = (name: string) => {
@@ -50,7 +49,19 @@ export const getTop14TeamInfoFromName = (name: string) => {
     foundedYear: '',
     seasonType: '',
   }
-    const match = Top14RugbyTeams.find((item) => item.displayName === name)
+
+  var searchName = '';
+  const top14NameResult = rugbyVizTop14Names.find((element) => element.rugbyVizName == name)
+  if(top14NameResult !== undefined)
+  {
+      searchName = top14NameResult.databaseName;
+  }
+  else
+  {
+      searchName = name;
+  }
+
+    const match = Top14RugbyTeams.find((item) => item.displayName === searchName)
     if(match !== undefined)
     {
         return match
