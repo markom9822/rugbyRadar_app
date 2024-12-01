@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native"
-import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInfo"
+import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
 import { LinearGradient } from "expo-linear-gradient"
@@ -99,8 +99,11 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
         setIsTabOpen(!isTabOpen)
     }
 
-    const teamInfo = getAnyTeamInfoFromName(teamName)
-    const teamBackgroundColour = hexToRGB(teamInfo.colour, "0.5")
+    
+    const teamInfo = getTeamInfo(leagueName, teamName);
+    if(teamInfo === null) return;
+
+    const teamBackgroundColour = hexToRGB(teamInfo.teamInfo.colour, "0.5")
 
     return (
         <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 55: 0}]}>
@@ -117,7 +120,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                             height: 25,
                             minHeight: 25,
                             minWidth: 25,}}
-                            source={teamInfo.altLogo} />
+                            source={teamInfo.teamInfo.altLogo} />
                     </View>
                     
                     <View style={{width: "55%"}}>
@@ -184,10 +187,14 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
 
     if(teamName1 === undefined || teamName2 === undefined) return;
 
-    const teamInfo1 = getAnyTeamInfoFromName(teamName1)
-    const teamBackgroundColour1 = hexToRGB(teamInfo1.colour, "0.5")
-    const teamInfo2 = getAnyTeamInfoFromName(teamName2)
-    const teamBackgroundColour2 = hexToRGB(teamInfo2.colour, "0.5")
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, teamName1, teamName2);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
+
+    if(homeTeamInfo === undefined || awayTeamInfo === undefined) return;
+
+    const teamBackgroundColour1 = hexToRGB(homeTeamInfo.colour, "0.5")
+    const teamBackgroundColour2 = hexToRGB(awayTeamInfo.colour, "0.5")
 
     return (
         <View style={[teamEventsPanelStyles.container, {marginBottom: isLastItem ? 55: 0}]}>
@@ -205,7 +212,7 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
                             height: 25,
                             minHeight: 25,
                             minWidth: 25,}}
-                        source={teamInfo1.altLogo} />
+                        source={homeTeamInfo.altLogo} />
                     </View>
                         <Text style={{color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4}}>HEAD TO HEAD</Text>
                     <View style={{margin: 4, padding: 4,  justifyContent: 'center', alignItems: 'center'}}>
@@ -215,7 +222,7 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
                             height: 25,
                             minHeight: 25,
                             minWidth: 25,}}
-                            source={teamInfo2.altLogo} />
+                            source={awayTeamInfo.altLogo} />
                     </View>
                     
                 </LinearGradient>

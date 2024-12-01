@@ -258,7 +258,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
             const matchTime = matchInfoArray[0].matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
             return (
                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: colors.text, textAlign: 'center', fontFamily: fontFamilies.light, fontSize: 15}}>{matchTime}</Text>
+                    <Text style={{color: colors.text, textAlign: 'center', fontFamily: fontFamilies.light, fontSize: 14}}>{matchTime}</Text>
                 </View>
             )
         }

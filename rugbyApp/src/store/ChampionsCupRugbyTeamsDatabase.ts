@@ -15,6 +15,7 @@ export const rugbyVizChampsCupNames = [
   { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
   { databaseName: 'USA Perpignan', rugbyVizName: 'Perpignan',},
   { databaseName: 'Section Paloise', rugbyVizName: 'Pau',},
+  { databaseName: 'Lyon', rugbyVizName: 'Lyon O.U.',},
 
 ];
 

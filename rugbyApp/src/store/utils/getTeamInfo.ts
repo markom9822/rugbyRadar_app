@@ -83,36 +83,33 @@ export const getTeamInfo = (league: string | undefined, teamName: string) => {
 
     var teamInfo;
 
-    if(league === "urc")
-    {
+    if (league === "urc") {
         teamInfo = getURCTeamInfoFromName(teamName)
     }
-    else if(league === "inter")
-    {
+    else if (league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup") {
         teamInfo = getInternationalTeamInfoFromName(teamName)
     }
-    else if(league === "rugbyChamp")
-    {
-        teamInfo = getInternationalTeamInfoFromName(teamName)
+    else if (league === "u20SixNations" || league === "u20Championship") {
+        const u20Team = teamName.replace(" U20", "");
+
+        teamInfo = getInternationalTeamInfoFromName(u20Team)
     }
-    else if(league === "sixNations")
-    {
-        teamInfo = getInternationalTeamInfoFromName(teamName)
-    }
-    else if(league === "prem") 
-    {
+    else if (league === "prem") {
         teamInfo = getPremTeamInfoFromName(teamName)
     }
-    else if(league === "top14")
-    {
+    else if (league === "top14") {
         teamInfo = getTop14TeamInfoFromName(teamName)
     }
-    else if(league === "menSevens")
-    {
-        teamInfo = getWorldFlagTeamInfoFromName(teamName)
+    else if (league === "superRugby") {
+        teamInfo = getSuperRugbyTeamInfoFromName(teamName)
     }
-    else
-    {
+    else if (league === "championsCup" || league === "challengeCup") {
+        teamInfo = getChampionsCupTeamInfoFromName(teamName)
+    }
+    else if (league === "BILTour") {
+        teamInfo = getLionsTourTeamInfoFromName(teamName)
+    }
+    else {
         return null
     }
 

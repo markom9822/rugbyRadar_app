@@ -6,8 +6,9 @@ import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
-import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
+import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
@@ -290,7 +291,7 @@ export const getAnyTeamInfoFromName = (name: string) => {
       seasonType: '',
     }
 
-    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams];
+    const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams, ...MiscRugbyTeams];
 
     // remove not needed parts of name
     const searchName = name.replace(" Rugby", "")
@@ -382,12 +383,16 @@ export const broadcasters = [
     { name: 'RTE', logo: RTELogo},
     { name: 'S4C', logo: S4CLogo},
     { name: 'Prem', logo: PremierSportsLogo},
+    { name: 'premier', logo: PremierSportsLogo},
     { name: 'DISC', logo: DiscoveryPlusLogo},
     { name: 'beIN', logo: BEINSportsLogo},
     { name: 'TG4', logo: TG4Logo},
     { name: 'TNT', logo: TNTSportsLogo},
     { name: 'BBCW', logo: BBCWalesLogo},
     { name: 'BBCN', logo: BBCNILogo},
+    { name: 'FloRugby', logo: FloRugbyLogo},
+    { name: 'RUGBYTV', logo: RugbyTVLogo},
+    { name: 'epcrtv', logo: EPCRTVLogo},
 
     // channels from planet rugby API
     { name: 'TNT Sport 1', logo: TNTSportsLogo},

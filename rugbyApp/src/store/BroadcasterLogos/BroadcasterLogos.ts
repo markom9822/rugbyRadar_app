@@ -19,3 +19,9 @@ export const BBCIPlayerLogo = require('@/store/BroadcasterLogos/bbc_iplayer_logo
 
 export const ITVXLogo = require('@/store/BroadcasterLogos/itvx_logo.png')
 export const ITVLogo = require('@/store/BroadcasterLogos/itv_logo.png')
+
+export const FloRugbyLogo = require('@/store/BroadcasterLogos/flo_sports_rugby_logo.png')
+
+export const RugbyTVLogo = require('@/store/BroadcasterLogos/rugby_tv_europe_logo.png')
+
+export const EPCRTVLogo = require('@/store/BroadcasterLogos/epcr_tv_logo.png')
