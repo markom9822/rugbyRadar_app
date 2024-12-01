@@ -172,7 +172,7 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
 
 }
 
-export const getAllStandingsDataPlanetRugby = (seasonStandings: any, leagueName: string, isPooled: boolean, isEndOfList: boolean, playoffCutoffIndex: number | undefined) => {
+export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: boolean, isEndOfList: boolean, playoffCutoffIndex: number | undefined) => {
 
     var newArray = [];
 

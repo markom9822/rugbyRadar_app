@@ -14,7 +14,7 @@ export default function TeamLayout() {
                 fontFamily: fontFamilies.bold
 
             },
-            tabBarStyle: { backgroundColor: colors.altBackground },
+            tabBarStyle: { backgroundColor: '#363434' },
             tabBarInactiveTintColor: 'lightgrey',
             tabBarActiveTintColor: colors.text,
             tabBarIndicatorStyle: {

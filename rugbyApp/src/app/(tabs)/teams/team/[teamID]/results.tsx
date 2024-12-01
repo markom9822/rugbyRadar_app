@@ -146,7 +146,6 @@ export const TeamResultsPanel = ({eventDate, homeTeamName, awayTeamName, homeTea
     if(homeTeamInfo == null) return
     if(awayTeamInfo == null) return
 
-
     const homeScoreWeight = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? ('500'):('300');
     const awayScoreWeight = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? ('500'):('300');
     const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold):(fontFamilies.light);

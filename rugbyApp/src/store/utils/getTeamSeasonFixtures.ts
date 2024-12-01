@@ -73,6 +73,130 @@ export const getTeamSeasonFixturesRugViz = async (seasonStartDate: Date, teamInf
     )
 }
 
+export const getTeamSeasonFixturesWorldRugbyAPI = async (seasonStartDate: Date, seasonEndDate: Date, teamInfo: any) => {
+
+    function formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function generateMonthlyDates(startDate: Date, endDate: Date): string[] {
+        const dates: string[] = [];
+        const currentDate = new Date(startDate);
+
+        while (currentDate <= endDate) {
+            dates.push(formatDate(new Date(currentDate)));
+            currentDate.setDate(currentDate.getDate() + 15);
+        }
+
+        return dates;
+    }
+
+    const monthDatesArray = generateMonthlyDates(seasonStartDate, seasonEndDate);
+
+    var teamMatchesArray = [];
+
+    for (let monthIndex = 1; monthIndex < monthDatesArray.length; monthIndex++) {
+
+        var startDate = '';
+        if(monthIndex > 1)
+        {
+            const date = new Date(monthDatesArray[monthIndex - 1]);
+            date.setDate(date.getDate() + 1)
+            startDate = formatDate(date);
+        }
+        else
+        {
+            startDate = monthDatesArray[monthIndex - 1]
+        }
+        const endDate = monthDatesArray[monthIndex]
+
+        console.info(startDate + " " + endDate)
+
+        const worldRugbyApiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match?states=U,UP,L,CC,C&pageSize=100&sort=asc&' +
+            'startDate=' + startDate + '&endDate=' + endDate
+        console.info(worldRugbyApiString)
+
+        const teamResultsWorldRugby = await fetch(worldRugbyApiString,).then((res) => res.json())
+
+        const gamesData = teamResultsWorldRugby.content;
+
+        for (let index = 0; index < gamesData.length; index++) {
+
+            const eventDate = new Date(gamesData[index].time.millis);
+
+            if (gamesData[index].teams[0].name.replace(" Rugby", "") !== teamInfo.displayName && gamesData[index].teams[1].name.replace(" Rugby", "") !== teamInfo.displayName) {
+                // not target team
+                continue;
+            }
+
+            if (gamesData[index].sport !== "MRU") {
+                // not mens rugby
+                continue;
+            }
+
+            const homeTeamName = gamesData[index].teams[0].name;
+            const awayTeamName = gamesData[index].teams[1].name;
+
+            const homeTeamScore = gamesData[index].scores[0];
+            const awayTeamScore = gamesData[index].scores[1];
+
+            var eventState;
+            const matchStatus = gamesData[index].status;
+            if (matchStatus === "C" || matchStatus === "LFT") {
+                eventState = "post"
+            }
+            else if (matchStatus === "U") {
+                eventState = "pre"
+            }
+            else if (matchStatus === "LHT") {
+                eventState = "halfTime"
+            }
+            else {
+                eventState = "ongoing"
+            }
+            const compName = gamesData[index].competition.replace(` ${eventDate.getFullYear()}`, "");
+
+            const newArray = {
+                eventDate: eventDate.toString(),
+                homeTeamName: homeTeamName,
+                awayTeamName: awayTeamName,
+                homeTeamScore: homeTeamScore,
+                awayTeamScore: awayTeamScore,
+                leagueName: compName,
+                eventState: eventState,
+            };
+
+            teamMatchesArray.push(newArray)
+        }
+
+    }
+
+    console.info(teamMatchesArray)
+    const sortedArray = teamMatchesArray.sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
+
+    const removeDuplicateDates = (array: any[]) =>  {
+        const seen = new Set();
+        return array.filter(item => {
+            const dateStr = item.eventDate
+            if (seen.has(dateStr)) {
+                return false;
+            }
+            seen.add(dateStr);
+            return true;
+        });
+    }
+
+    const filteredArray = removeDuplicateDates(sortedArray)
+
+    return (
+        filteredArray
+    )
+}
+
+
 export const getTeamSeasonFixtures = async (teamID: string | string[] | undefined, seasonYear: string) => {
 
     if (teamID == undefined) return
@@ -104,11 +228,19 @@ export const getTeamSeasonFixtures = async (teamID: string | string[] | undefine
     for (let seasonIndex = 0; seasonIndex < seasonsArray.length; seasonIndex++) {
 
         // use RugbyViz API
-        if(teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club' || teamInfo.type === 'Top14 Club')
-        {
+        if (teamInfo.type === 'URC Club' || teamInfo.type === 'Prem Club' || teamInfo.type === 'Top14 Club') {
             const rugVizArray = await getTeamSeasonFixturesRugViz(seasonStartDate, teamInfo)
-            return(
+            return (
                 rugVizArray
+            )
+        }
+
+        // use World Rugby API
+        if (teamInfo.type === "International") {
+
+            const worldRugbyArray = await getTeamSeasonFixturesWorldRugbyAPI(seasonStartDate, seasonEndDate, teamInfo)
+            return (
+                worldRugbyArray
             )
         }
 
@@ -170,68 +302,3 @@ export const getTeamSeasonFixtures = async (teamID: string | string[] | undefine
 
 }
 
-export const getTeamSeasonFixturesPlanetRugby = async (seasonStartDate: Date, teamInfo: any) => {
-
-    var teamMatchesArray = [];
-
-    //const leagueIDsResult = rugbyVizLeagueCodes.find((element) => element.teamType == teamInfo.type)
-    const teamLeagueIDs = [0]
-    if(teamLeagueIDs === undefined) return
-
-    for (let IDIndex = 0; IDIndex < teamLeagueIDs.length; IDIndex++) {
-
-        const rugVizApiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId=' + teamLeagueIDs[IDIndex] + '&season=' + seasonStartDate.getFullYear() + '01'
-        const teamResultsRugViz = await fetch(rugVizApiString,).then((res) => res.json())
-
-        const gamesData = teamResultsRugViz.data;
-
-        for (let index = 0; index < gamesData.length; index++) {
-
-            const eventDate = gamesData[index].date;
-
-            if (gamesData[index].homeTeam.name.replace(" Rugby", "") !== teamInfo.displayName && gamesData[index].awayTeam.name.replace(" Rugby", "") !== teamInfo.displayName) {
-                // not target team
-                continue;
-            }
-
-            const homeTeamName = gamesData[index].homeTeam.name;
-            const awayTeamName = gamesData[index].awayTeam.name;
-
-            const homeTeamScore = gamesData[index].homeTeam.score;
-            const awayTeamScore = gamesData[index].awayTeam.score;
-            const matchStatus = gamesData[index].status;
-
-            var eventState = ''
-
-            if (matchStatus === "result") {
-                eventState = "post"
-            }
-            else if (matchStatus === "fixture") {
-                eventState = "pre"
-            }
-            else {
-                eventState = "ongoing"
-            }
-            const compName = gamesData[index].compName;
-
-            const newArray = {
-                eventDate: eventDate,
-                homeTeamName: homeTeamName,
-                awayTeamName: awayTeamName,
-                homeTeamScore: homeTeamScore,
-                awayTeamScore: awayTeamScore,
-                leagueName: compName,
-                eventState: eventState,
-            };
-
-            teamMatchesArray.push(newArray)
-        }
-    }
-
-    console.info(teamMatchesArray)
-    const sortedArray = teamMatchesArray.sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
-
-    return (
-        sortedArray
-    )
-}

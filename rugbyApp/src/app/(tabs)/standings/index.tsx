@@ -145,7 +145,7 @@ const StandingsScreen = () => {
                     apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCodes[index];
 
                     const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName, true, index == planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex) 
+                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, true, index == planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex) 
                     pooledArray.push(...newArray)
                 }
 
@@ -158,7 +158,7 @@ const StandingsScreen = () => {
             apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCodes[0];
 
             const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, leagueName, false, true, planetRugbyAPIPlayoffCutoffIndex)
+            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, false, true, planetRugbyAPIPlayoffCutoffIndex)
 
             console.info(newArray)
             setStandingsArray(newArray)

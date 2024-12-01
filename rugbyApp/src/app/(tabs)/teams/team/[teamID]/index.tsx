@@ -149,14 +149,20 @@ const TeamSummary = () => {
             return;
         }
 
+        const planetRugbyLeagueCodes = [
+            { teamLeague: 'Top 14', leagueCode: '1310036262',},
+            { teamLeague: 'Six Nations', leagueCode: '1310031041',},
+            { teamLeague: 'Rugby Championship', leagueCode: '1310034091',},
+        ];
+        const planetRugbyLeagueCode = planetRugbyLeagueCodes.find((element) => element.teamLeague == teamInfo.defaultLeague)?.leagueCode;
+
         // use Planet Rugby API
-        if(teamInfo.type === 'Top14 Club')   
+        if(planetRugbyLeagueCode !== undefined)   
         {
-            const planetRugbyAPILeagueCode = getPlanetRugbyAPILeagueCode('top14')
-            const apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCode;
+            const apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyLeagueCode;
 
             const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, 'top14', false, false, -1)
+            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, false, false, -1)
 
             console.info(newArray)
             setStandingsArray(newArray)    
@@ -197,8 +203,6 @@ const TeamSummary = () => {
 
     return(
         <View style={defaultStyles.container}>
-            <Text style={{color: colors.text}}>Team ID {teamIDNum}</Text>
-            <Text style={{color: colors.text}}>Team Name {teamIDName}</Text>
 
             {activityIndicatorHeader()}
 

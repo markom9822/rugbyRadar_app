@@ -30,7 +30,7 @@ export const leagueCodes = [
     { value: 'sixNations', code: "180659",
          displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
     { value: 'inter', code: "289234",
-         displayName: 'International Test Match', leagueLogo: null, leagueAltLogo: null},
+         displayName: "Men's Internationals", leagueLogo: null, leagueAltLogo: null},
     { value: 'menSevens', code: "282",
          displayName: '', leagueLogo: null, leagueAltLogo: null},
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
