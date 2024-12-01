@@ -1,4 +1,5 @@
 import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams"
+import { MiscRugbyTeams } from "./MiscRugbyTeamsDatabase";
 import { PremRugbyTeams } from "./PremiershipRubyTeamsDatabase";
 import { Top14RugbyTeams } from "./Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "./URCRugbyTeamsDatabase";
@@ -60,7 +61,7 @@ export const getChampionsCupTeamInfoFromName = (name: string) => {
       seasonType: '',
     }
 
-    const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
+    const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...MiscRugbyTeams];
     var searchName = '';
 
     const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName == name)
