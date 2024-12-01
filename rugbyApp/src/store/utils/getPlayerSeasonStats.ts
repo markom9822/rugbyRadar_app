@@ -1,4 +1,4 @@
-import { SeasonStatsInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
+import { SeasonStatsInfo } from "@/app/(tabs)/teams/team/[teamID]";
 import { getLeagueCodeFromDisplayName } from "./helpers";
 
 

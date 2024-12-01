@@ -1,4 +1,4 @@
-import { SeasonStatsInfo } from "@/app/(tabs)/(teams)/team/[teamID]";
+import { SeasonStatsInfo } from "@/app/(tabs)/teams/team/[teamID]";
 import { colors, fontSize } from "@/constants/tokens";
 import { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";

@@ -206,7 +206,7 @@ export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, tea
 
     return (
         <View style={{ backgroundColor: colors.background, marginBottom: (isLastItem) ? 50: 0 }}>
-            <Link href={`/(tabs)/(teams)/team/${teamID + teamName}`} asChild>
+            <Link href={`/(tabs)/teams/team/${teamID + teamName}`} asChild>
                 <TouchableOpacity activeOpacity={0.5}>
 
                     <View style={[teamInfoPanelStyles.container,

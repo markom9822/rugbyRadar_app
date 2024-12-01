@@ -29,14 +29,14 @@ export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, 
 
     const iconRender = (tabName: string, isFocused: boolean) => {
 
-        if(tabName === "fixtures")
+        if(tabName === "(fixtures)")
         {
             return (
                 <MaterialCommunityIcons name="rugby" size={24} color={isFocused ? "white": "grey"} />
             )
 
         }
-        else if (tabName === "(teams)")
+        else if (tabName === "teams")
         {
             return (
                 <FontAwesome6 name="shield-halved" size={22} color={isFocused ? "white": "grey"}/>

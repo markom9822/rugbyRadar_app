@@ -147,7 +147,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
               <View style={[fixtureStyles.cardHeaderAllInfo,
                  {backgroundColor: '#242323', borderColor: 'grey', borderWidth: 2, borderRadius: 4}]}>
 
-                <Link href={`/(tabs)/fixtures/match/${linkID}`} asChild>
+                <Link href={`/(tabs)/(fixtures)/match/${linkID}`} asChild>
                 <TouchableOpacity activeOpacity={0.5} >
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>

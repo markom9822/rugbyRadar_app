@@ -12,11 +12,11 @@ const TabsNavigation = () => {
     return (
         <Tabs tabBar={({ key, ...props }: any) => <CustomTabBar {...props} key={key} />} screenOptions={{headerShown: false}}>
             <Tabs.Screen 
-            name="fixtures" 
+            name="(fixtures)" 
             options={{
                 title: "Fixtures",
             }} />
-            <Tabs.Screen name="(teams)" 
+            <Tabs.Screen name="teams" 
                 options={{
                     title: "Teams",
                 }}
