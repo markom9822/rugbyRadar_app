@@ -61,11 +61,11 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
-    const homePossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamPossession) * 100)).toString() + ' %';
-    const awayPossessionPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamPossession) * 100)).toString() + ' %';
+    const homePossessionPercent = (Math.round(parseFloat(matchInfoArray[0].homeTeamPossession) * 100)).toString() + ' %';
+    const awayPossessionPercent = (Math.round(parseFloat(matchInfoArray[0].awayTeamPossession) * 100)).toString() + ' %';
 
-    const homeTerritoryPercent = (Math.floor(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
-    const awayTerritoryPercent = (Math.floor(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
+    const homeTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
+    const awayTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
 
     const statsPanelRender = (statsAvailable: boolean) => {
 
@@ -249,10 +249,10 @@ export const GamePercentageStatsPanel = ({homePercent, statTitle, awayPercent, h
                 <Text style={[statsPanelStyles.statsPanelRow, { width: "20%" }]}>{awayPercent}</Text>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
-                <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}>
+                <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 1, borderRightColor: 'lightgrey' }}>
                     <Text></Text>
                 </View>
-                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5 }}>
+                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 1, borderLeftColor: 'lightgrey'}}>
                     <Text></Text>
                 </View>
             </View>

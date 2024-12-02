@@ -176,7 +176,7 @@ export const Top14RugbyTeams = [
     abbreviation: 'VANN',
     logo: VannesLogo,
     altLogo: VannesAltLogo,
-    colour: '#24053b',
+    colour: '#62119e',
     id: '289337',
     defaultLeague: 'Top 14',
     foundedYear: '1950',

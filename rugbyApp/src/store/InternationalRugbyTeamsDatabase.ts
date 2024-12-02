@@ -183,7 +183,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'JPN',
     logo: JapanLogo,
     altLogo: JapanAltLogo,
-    colour: '#f4d5e2',
+    colour: '#eb7a81',
     id: '23',
     defaultLeague: 'Rugby World Cup',
     foundedYear: '1932',

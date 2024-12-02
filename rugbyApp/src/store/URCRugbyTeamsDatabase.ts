@@ -97,7 +97,7 @@ export const URCRugbyTeams = [
     abbreviation: 'EDINB',
     logo: EdinburghLogo,
     altLogo: EdinburghAltLogo,
-    colour: '#1e144b',
+    colour: '#e64723',
     id: '25951',
     defaultLeague: 'United Rugby Championship',
     foundedYear: '1872',

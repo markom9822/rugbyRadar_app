@@ -369,14 +369,14 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
         )
     }
     else {
-        return (
-            <View style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 4, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 60: 0}]}>
-                <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 12, color: colors.text, width: "8%", textAlign: 'right', fontFamily: fontFamilies.bold}}>
+        return ( 
+            <TouchableOpacity activeOpacity={0.6} style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 60: 0}]}>
+                <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 11, color: colors.text, width: "8%", textAlign: 'center', fontFamily: fontFamilies.bold}}>
                     {playerNumber}
                 </Text>
                 <Text style={{fontWeight: 500, paddingHorizontal: 6, fontSize: 12, color: colors.text, textAlign: 'left', width: "92%", fontFamily: fontFamilies.regular}}>
                     {playerName.toUpperCase()} {(isCaptain) ? '(c)' : ''}</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 }

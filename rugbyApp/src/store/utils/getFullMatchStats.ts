@@ -323,7 +323,7 @@ export const handleGetWorldRugbyAPIStat = (stat: any) => {
 
     if(stat == undefined)
     {
-        return "-"
+        return 0;
     }
 
     return stat
@@ -426,8 +426,11 @@ export const getFullMatchStatsWorldRugbyAPI = (matchStats: any) => {
     const homeTeamLineoutsWon = handleGetWorldRugbyAPIStat(matchStats.teamStats[0].stats.LineoutsWon);
     const awayTeamLineoutsWon = handleGetWorldRugbyAPIStat(matchStats.teamStats[1].stats.LineoutsWon);
 
-    const homeTeamLineoutsTotal = handleGetWorldRugbyAPIStat(matchStats.teamStats[0].stats.LineoutsWon + matchStats.teamStats[0].stats.LineoutsLost);
-    const awayTeamLineoutsTotal = handleGetWorldRugbyAPIStat(matchStats.teamStats[1].stats.LineoutsWon + matchStats.teamStats[1].stats.LineoutsLost);
+    const homeTeamLineoutsLost = handleGetWorldRugbyAPIStat(matchStats.teamStats[0].stats.LineoutsLost);
+    const awayTeamLineoutsLost = handleGetWorldRugbyAPIStat(matchStats.teamStats[1].stats.LineoutsLost);
+
+    const homeTeamLineoutsTotal = homeTeamLineoutsWon + homeTeamLineoutsLost;
+    const awayTeamLineoutsTotal = awayTeamLineoutsWon + awayTeamLineoutsLost;
 
     const homeTeamPensConceded = matchStats.teamStats[0].stats.PenaltiesConceded;
     const awayTeamPensConceded = matchStats.teamStats[1].stats.PenaltiesConceded;

@@ -160,7 +160,7 @@ export const PremRugbyTeams = [
     abbreviation: 'SALE',
     logo: SaleLogo,
     altLogo: SaleAltLogo,
-    colour: '#101091',
+    colour: '#2424b3',
     id: '25908',
     defaultLeague: 'Premiership Rugby',
     foundedYear: '1861',
