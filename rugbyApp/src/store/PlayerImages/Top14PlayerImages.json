@@ -1,0 +1,325 @@
+{
+    "teams": [
+        {
+            "name": "La Rochelle",
+            "players": [
+                {
+                    "name": "Grégory Alldritt",
+                    "image": "https://media-cdn.incrowdsports.com/73990f44-bf6e-4f64-a864-e116fbcc1229.png"
+                },
+                {
+                    "name": "Lucas Andjisseramatchi",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Uini Atonio",
+                    "image": "https://media-cdn.incrowdsports.com/2d5140cd-cb55-4f4d-8c6a-8b058772a152.png"
+                },
+                {
+                    "name": "Thomas Berjon",
+                    "image": "https://media-cdn.incrowdsports.com/e086cb80-cba6-4411-9c52-a164c00ae602.png"
+                },
+                {
+                    "name": "Temanatua Boichot",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Nathan Bollengier",
+                    "image": "https://media-cdn.incrowdsports.com/2d2e3ee6-0dfd-417d-82cf-60e7eece5018.png"
+                },
+                {
+                    "name": "Hoani Bosmorin",
+                    "image": "https://media-cdn.incrowdsports.com/90af1e2d-977d-4d71-8a17-d76b9d07e92a.png"
+                },
+                {
+                    "name": "Paul Boudehent",
+                    "image": "https://media-cdn.incrowdsports.com/a9a937aa-0162-4609-88b9-12b8f475ef5e.png"
+                },
+                {
+                    "name": "Pierre Bourgarit",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Oscar Boutez",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Mathis Brunet",
+                    "image": "https://media-cdn.incrowdsports.com/44b35651-5660-45c7-a7ac-04290771559c.png"
+                },
+                {
+                    "name": "Judicael Cancoriet",
+                    "image": "https://media-cdn.incrowdsports.com/d9ae4a90-4911-4e8b-97b8-06acc9a78f23.png"
+                },
+                {
+                    "name": "Georges-Henri Colombe",
+                    "image": "https://media-cdn.incrowdsports.com/f3a4dfad-01ea-4325-8283-a657ba53d133.png"
+                },
+                {
+                    "name": "Jonathan Danty",
+                    "image": "https://media-cdn.incrowdsports.com/508983c4-f4ad-4039-a8fe-25c8a14df52a.png"
+                },
+                {
+                    "name": "Simeli Daunivucu",
+                    "image": "https://media-cdn.incrowdsports.com/3b589b4f-9cc8-4497-86f5-04216241caf8.png"
+                },
+                {
+                    "name": "Ultan Dillane",
+                    "image": "https://media-cdn.incrowdsports.com/6ae0ba8e-6349-49e3-a891-d224b269eed2.png"
+                },
+                {
+                    "name": "Kane Douglas",
+                    "image": "https://media-cdn.incrowdsports.com/1fcd899d-25a1-4b61-beb9-180ba48607d2.png"
+                },
+                {
+                    "name": "Brice Dulin",
+                    "image": "https://media-cdn.incrowdsports.com/9f3b8dbf-148a-4105-b3f1-a242a5f1cc64.png"
+                },
+                {
+                    "name": "Jules Favre",
+                    "image": "https://media-cdn.incrowdsports.com/bdce2815-cdb1-4590-8071-91f0d8934751.png"
+                },
+                {
+                    "name": "Upaleto Feao",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Gabin Garault",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Matthias Haddad",
+                    "image": "https://media-cdn.incrowdsports.com/5a239070-d075-49a4-b8f1-d1baaf75b149.png"
+                },
+                {
+                    "name": "Antoine Hastoy",
+                    "image": "https://media-cdn.incrowdsports.com/af20f97c-8e59-4731-874c-472e263a5906.png"
+                },
+                {
+                    "name": "Simon Huchet",
+                    "image": "https://media-cdn.incrowdsports.com/e3dde4e1-68d8-464c-838b-7fa777900605.png"
+                },
+                {
+                    "name": "Teddy Iribaren",
+                    "image": "https://media-cdn.incrowdsports.com/76d6e090-8439-4fb2-bf77-df26c4ca2024.png"
+                },
+                {
+                    "name": "Enzo Jean",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Oscar Jegou",
+                    "image": "https://media-cdn.incrowdsports.com/6d88ceb2-b949-427e-9216-ff5274787dbd.png"
+                },
+                {
+                    "name": "Diego Jurd",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Alexandre Kaddouri",
+                    "image": "https://media-cdn.incrowdsports.com/67a31b4e-a754-4f71-8d16-78984cf6e9b0.png"
+                },
+                {
+                    "name": "Charles Kante Samba",
+                    "image": "https://media-cdn.incrowdsports.com/c2dc8dcd-7596-4dd2-a312-0137a6e5c1ca.png"
+                },
+                {
+                    "name": "Tawera Kerr-Barlow",
+                    "image": "https://media-cdn.incrowdsports.com/3dd81624-772e-4ff6-bcee-6926b4761eb4.png"
+                },
+                {
+                    "name": "Aleksandre Kuntelia",
+                    "image": "https://media-cdn.incrowdsports.com/b52fd2fb-c043-4b15-90f9-ca793a490cd7.png"
+                },
+                {
+                    "name": "Romain Lamit",
+                    "image": "https://media-cdn.incrowdsports.com/cbdf858c-19cb-4779-8333-aa51121e1975.png"
+                },
+                {
+                    "name": "Tolu Latu",
+                    "image": "https://media-cdn.incrowdsports.com/e9dea8e4-c869-41af-9ee7-9c6285f32c1c.png"
+                },
+                {
+                    "name": "Thomas Lavault",
+                    "image": "https://media-cdn.incrowdsports.com/b9368579-0f2c-4664-9555-4cde7cf70701.png"
+                },
+                {
+                    "name": "Quentin Lespiaucq-Brettes",
+                    "image": "https://media-cdn.incrowdsports.com/d77f8fcc-1000-4bfa-8f8e-fc88bea1b7da.png"
+                },
+                {
+                    "name": "Tyreese Leupolu",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Dillyn Leyds",
+                    "image": "https://media-cdn.incrowdsports.com/799fb6f7-8051-4aa0-a274-c742f74ad298.png"
+                },
+                {
+                    "name": "Christian Luaki",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Morrison Mabope",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Jack Nowell",
+                    "image": "https://media-cdn.incrowdsports.com/4ad58b46-4c4e-4ce4-9df8-521a4148cc89.png"
+                },
+                {
+                    "name": "Toine Obiang Nguema",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Thierry Paiva",
+                    "image": "https://media-cdn.incrowdsports.com/7b3cbe94-1a3b-4fc3-9d02-8f43b4582bac.png"
+                },
+                {
+                    "name": "Louis Penverne",
+                    "image": "https://media-cdn.incrowdsports.com/9f14600c-1333-431b-b0b3-f281239d4c77.png"
+                },
+                {
+                    "name": "Hugo Reus",
+                    "image": "https://media-cdn.incrowdsports.com/55e120d8-1e74-4f29-90bc-a59e93b2b5cd.png"
+                },
+                {
+                    "name": "Raymond Rhule",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Edouard Richer",
+                    "image": "https://media-cdn.incrowdsports.com/07de2c6d-426d-47e1-a226-0bff46320bc6.png"
+                },
+                {
+                    "name": "Joel Sclavi",
+                    "image": "https://media-cdn.incrowdsports.com/e21598d7-7f76-4ca1-9aa1-930d962a5fae.png"
+                },
+                {
+                    "name": "Tomasi Seru",
+                    "image": "https://media-cdn.incrowdsports.com/d4ce2e33-d399-4ef7-a653-9814c66d3929.png"
+                },
+                {
+                    "name": "UJ Seuteni",
+                    "image": "https://media-cdn.incrowdsports.com/0a84115e-d293-4547-83c8-bf6d6bc02d56.png"
+                },
+                {
+                    "name": "Will Skelton",
+                    "image": "https://media-cdn.incrowdsports.com/747f07e1-b59f-48fa-b288-4f727ed52876.png"
+                },
+                {
+                    "name": "Nikoloz Sutidze",
+                    "image": "https://media-cdn.incrowdsports.com/e73f7128-b228-468f-ad73-1620cad0da76.png"
+                },
+                {
+                    "name": "Maxime Tetlow",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Teddy Thomas",
+                    "image": "https://media-cdn.incrowdsports.com/08951497-3a08-48b7-97e7-61a9c1f8f1a8.png"
+                },
+                {
+                    "name": "Peni Vuetimaiwai",
+                    "image": "https://media-cdn.incrowdsports.com/917418fc-0de3-4ae3-a6ec-98464585f525.png"
+                },
+                {
+                    "name": "Suliasi Vunivalu",
+                    "image": "https://media-cdn.incrowdsports.com/6add81fb-c17b-4f6c-9695-4710bd171795.png"
+                },
+                {
+                    "name": "Reda Wardi",
+                    "image": "https://media-cdn.incrowdsports.com/4ce6e3d4-ab17-403c-b8ec-91f9dfd42e10.png"
+                },
+                {
+                    "name": "Ihaia West",
+                    "image": "https://media-cdn.incrowdsports.com/148054be-4ea1-4906-a5ed-e149454e0294.png"
+                }
+            ]
+        },
+        {
+            "name": "Clermont",
+            "players": [
+
+            ]
+        },
+        {
+            "name": "Castres Olympique",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Toulon",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Racing 92",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Stade Francais",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Bordeaux Begles",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Bayonnais",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Brive",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Lyon",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Montpellier",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Vannes",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Section Paloise",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "USA Perpignan",
+            "players": [
+                
+            ]
+        },
+        {
+            "name": "Stade Toulousain",
+            "players": [
+                
+            ]
+        }
+    ]
+}
