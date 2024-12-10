@@ -9,23 +9,24 @@ import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRu
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet";
 import 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
 
 
 export type LineUpInfo = {
     teamPlayer: string,
-    teamPlayerPosition: string,
+    teamPlayerID: string,
     teamPlayerNum: string,
     isPlayerCaptain: boolean
 }
 
 export type AllLineUpsInfo = {
     hometeamPlayer: string,
-    hometeamPlayerPosition: string,
+    hometeamPlayerID: string,
     hometeamPlayerNum: string,
     isHomePlayerCaptain: boolean,
 
     awayteamPlayer: string,
-    awayteamPlayerPosition: string,
+    awayteamPlayerID: string,
     awayteamPlayerNum: string,
     isAwayPlayerCaptain: boolean,
 }
@@ -35,7 +36,6 @@ const Lineups = () => {
 
     const [homeTeamName, setHomeTeamName] = useState<string>('');
     const [awayTeamName, setAwayTeamName] = useState<string>('');
-    //const [selectedTeam, setSelectedTeam] = useState<string>('home');
 
     const [allLineupsArray, setAllLineupsArray] = useState<AllLineUpsInfo[]>([]);
     const [leagueName, setLeagueName] = useState<string>('');
@@ -50,7 +50,6 @@ const Lineups = () => {
     const combineLineupArrays = (homeSortedArray: LineUpInfo[], awaySortedArray: LineUpInfo[]) => {
 
         const playerCount = Math.floor((homeSortedArray.length + awaySortedArray.length)/2)
-        console.info(playerCount)
 
         var combinedArray = [];
 
@@ -58,12 +57,12 @@ const Lineups = () => {
     
             let newCombinedInfo = {
                 hometeamPlayer: homeSortedArray[index].teamPlayer,
-                hometeamPlayerPosition: homeSortedArray[index].teamPlayerPosition,
+                hometeamPlayerID: homeSortedArray[index].teamPlayerID,
                 hometeamPlayerNum: homeSortedArray[index].teamPlayerNum,
                 isHomePlayerCaptain: homeSortedArray[index].isPlayerCaptain,
 
                 awayteamPlayer: awaySortedArray[index].teamPlayer,
-                awayteamPlayerPosition: awaySortedArray[index].teamPlayerPosition,
+                awayteamPlayerID: awaySortedArray[index].teamPlayerID,
                 awayteamPlayerNum: awaySortedArray[index].teamPlayerNum,
                 isAwayPlayerCaptain: awaySortedArray[index].isPlayerCaptain,
             };
@@ -74,12 +73,12 @@ const Lineups = () => {
         // add subs header
         const subsHeadingInfo = {
             hometeamPlayer: 'Substitutes',
-            hometeamPlayerPosition: '',
+            hometeamPlayerID: '',
             hometeamPlayerNum: '',
             isHomePlayerCaptain: false,
 
             awayteamPlayer: 'Substitutes',
-            awayteamPlayerPosition: '',
+            awayteamPlayerID: '',
             awayteamPlayerNum: '',
             isAwayPlayerCaptain: false,
         };
@@ -282,11 +281,11 @@ const Lineups = () => {
                                 key={index}
                                 selectedTeam={selectedTeam}
                                 hometeamPlayer={item.hometeamPlayer}
-                                hometeamPlayerPosition={item.hometeamPlayerPosition}
+                                hometeamPlayerID={item.hometeamPlayerID}
                                 hometeamPlayerNum={item.hometeamPlayerNum}
                                 isHomePlayerCaptain={item.isHomePlayerCaptain}
                                 awayteamPlayer={item.awayteamPlayer}
-                                awayteamPlayerPosition={item.awayteamPlayerPosition}
+                                awayteamPlayerID={item.awayteamPlayerID}
                                 awayteamPlayerNum={item.awayteamPlayerNum}
                                 isAwayPlayerCaptain={item.isAwayPlayerCaptain}
                                 teamColour={(selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour}
@@ -326,11 +325,49 @@ const Lineups = () => {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
     const [modalPlayerName, setModalPlayerName] = useState<string>('');
     const [modalPlayerPosition, setModalPlayerPosition] = useState<string>('');
+    const [modalPlayerAge, setModalPlayerAge] = useState<string>('');
+    const [modalPlayerHeight, setModalPlayerHeight] = useState<string>('');
+    const [modalPlayerWeight, setModalPlayerWeight] = useState<string>('');
+    const [modalPlayerImageSrc, setModalPlayerImageSrc] = useState<string>('');
 
-    const handlePlayerModalShown = (playerName: string, playerPosition: string) => {
+    const handlePlayerModalShown = async (playerName: string, playerID: string) => {
+
+        setModalPlayerName(playerName)
+        setModalPlayerPosition('')
+        setModalPlayerAge('')
+        setModalPlayerHeight('')
+        setModalPlayerWeight('')
+        setModalPlayerImageSrc('')
+
+        const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/players/'+playerID+'?provider=rugbyviz'
+        const playerInfo = await fetch(apiString,).then((res) => res.json())
+
+        const calculateAge = (birthDate: Date): number => {
+            const today = new Date();
+            
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        const playerPosition = playerInfo.data.position;
+        const playerDOB = new Date(playerInfo.data.dateOfBirth);
+        const playerAge = calculateAge(playerDOB).toString()
+        const playerHeight = playerInfo.data.height;
+        const playerWeight = playerInfo.data.weight;
+        const playerImageSrc = getPlayerImageSrc('urc', 'Bristol Bears', playerName)
 
         setModalPlayerName(playerName)
         setModalPlayerPosition(playerPosition)
+        setModalPlayerAge(playerAge)
+        setModalPlayerHeight(playerHeight)
+        setModalPlayerWeight(playerWeight)
+        setModalPlayerImageSrc(playerImageSrc)
     }
 
     const snapPoints = ["48%"];
@@ -347,18 +384,22 @@ const Lineups = () => {
             <BottomSheetModal 
             ref={bottomSheetModalRef}
             index={0}
-            snapPoints={snapPoints}>
-            <BottomSheetView style={{flex: 1, backgroundColor: 'grey', flexDirection: 'row'}}>
+            snapPoints={snapPoints}
+            enableDynamicSizing={false}
+            handleStyle={{backgroundColor: 'grey', borderTopLeftRadius: 10, borderTopRightRadius: 10}}
+            backgroundStyle={{backgroundColor: colors.background}}
+            >
+            <BottomSheetView style={{flex: 1, backgroundColor: '#303030', flexDirection: 'row'}}>
                 <View style={{width: "50%", padding: 5}}>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.bold}}>{modalPlayerName.toUpperCase()}</Text>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Position: {modalPlayerPosition}</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Age:</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Height:</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Weight:</Text>
+                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Age: {modalPlayerAge}</Text>
+                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Height: {modalPlayerHeight} cm</Text>
+                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Weight: {modalPlayerWeight} kg</Text>
                 </View>
                  <View style={{width: "50%", alignItems: 'center'}}>
                     <View style={{padding: 4, margin: 4}}>
-                        <Image style={{width: 200, height: 200}} src="https://media-cdn.incrowdsports.com/317f8c5d-89e5-4a65-a6d0-0eb340d64e20.png"/>
+                        <Image style={{width: 200, height: 200, opacity: 0.8}} src={modalPlayerImageSrc}/>
                     </View>
                  </View>
             </BottomSheetView>
@@ -372,39 +413,39 @@ const Lineups = () => {
 type LineupPlayerPanelProps = {
     selectedTeam: string,
     hometeamPlayer: string,
-    hometeamPlayerPosition: string,
+    hometeamPlayerID: string,
     hometeamPlayerNum: string,
     isHomePlayerCaptain: boolean,
     awayteamPlayer: string,
-    awayteamPlayerPosition: string,
+    awayteamPlayerID: string,
     awayteamPlayerNum: string,
     isAwayPlayerCaptain: boolean,
     teamColour: string,
     isLastItem: boolean,
     bottomSheetRef: any,
-    OnPlayerModalShown: (playerName: string, playerPosition: string) => void
+    OnPlayerModalShown: (playerName: string, playerID: string) => void
 }
 
 
-export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayerPosition, hometeamPlayerNum, isHomePlayerCaptain,
-     awayteamPlayer, awayteamPlayerPosition, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem, bottomSheetRef, OnPlayerModalShown }: LineupPlayerPanelProps) => {
+export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayerID, hometeamPlayerNum, isHomePlayerCaptain,
+     awayteamPlayer, awayteamPlayerID, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem, bottomSheetRef, OnPlayerModalShown }: LineupPlayerPanelProps) => {
 
     var playerName = ''
     var playerNumber = ''
-    var playerPosition = ''
+    var playerID = ''
     var isCaptain = false;
     if(selectedTeam == 'home')
     {
         playerName = hometeamPlayer;
         playerNumber = hometeamPlayerNum;
-        playerPosition = hometeamPlayerPosition;
+        playerID = hometeamPlayerID;
         isCaptain = isHomePlayerCaptain;
     }
     else
     {
         playerName = awayteamPlayer;
         playerNumber = awayteamPlayerNum;
-        playerPosition = awayteamPlayerPosition;
+        playerID = awayteamPlayerID;
         isCaptain = isAwayPlayerCaptain;
     }
 
@@ -412,7 +453,7 @@ export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayer
 
     const handlePresentModalPress = useCallback(() => {
 
-        OnPlayerModalShown(playerName, playerPosition)
+        OnPlayerModalShown(playerName, playerID)
         bottomSheetRef.current?.present();
       }, [selectedTeam]);
 

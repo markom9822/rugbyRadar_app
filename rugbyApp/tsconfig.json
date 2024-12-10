@@ -10,8 +10,9 @@
 		"noEmit": true,
 		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
-		"resolveJsonModule": true,
 		"baseUrl": ".",
+		"esModuleInterop": true,
+      	"resolveJsonModule": true,
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/assets/*": ["./assets/*"]

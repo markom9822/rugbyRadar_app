@@ -1,3 +1,4 @@
+
 export const getLineup = (matchDetails: any, rosterIndex: number) => {
 
     if(matchDetails.rosters[rosterIndex].roster === undefined)
@@ -7,7 +8,7 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
         for (let index = 0; index < 23; index++) {
             let blankLineupInfo = {
                 teamPlayer: '-',
-                teamPlayerPosition: '-',
+                teamPlayerID: '-',
                 teamPlayerNum: index + 1,
                 isPlayerCaptain: false,
                 };
@@ -34,7 +35,7 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
 
         let newLineupInfo = {
             teamPlayer: playerName,
-            teamPlayerPosition: playerPosition,
+            teamPlayerID: '',
             teamPlayerNum: playerNumber,
             isPlayerCaptain: isPlayerCaptain,
             };
@@ -59,7 +60,7 @@ export const getLineupRugbyViz = (matchDetails: any, isHome: boolean) => {
         for (let index = 0; index < 23; index++) {
             let blankLineupInfo = {
                 teamPlayer: '-',
-                teamPlayerPosition: '-',
+                teamPlayerID: '-',
                 teamPlayerNum: index + 1,
                 isPlayerCaptain: false,
             };
@@ -78,13 +79,14 @@ export const getLineupRugbyViz = (matchDetails: any, isHome: boolean) => {
 
         const playerName = targetRoster[index].name;
         const playerNumber = targetRoster[index].positionId;
+        const playerID = targetRoster[index].id;
 
         const playerPosition = targetRoster[index].position;
         const isPlayerCaptain = targetRoster[index].captain;
 
         let newLineupInfo = {
             teamPlayer: playerName,
-            teamPlayerPosition: playerPosition,
+            teamPlayerID: playerID,
             teamPlayerNum: playerNumber,
             isPlayerCaptain: isPlayerCaptain,
             };
@@ -110,7 +112,7 @@ export const getLineupWorldRugbyAPI = (matchDetails: any, isHome: boolean) => {
         for (let index = 0; index < 23; index++) {
             let blankLineupInfo = {
                 teamPlayer: '-',
-                teamPlayerPosition: '-',
+                teamPlayerID: '-',
                 teamPlayerNum: index + 1,
                 isPlayerCaptain: false,
             };
@@ -142,7 +144,7 @@ export const getLineupWorldRugbyAPI = (matchDetails: any, isHome: boolean) => {
 
         let newLineupInfo = {
             teamPlayer: playerName,
-            teamPlayerPosition: playerPosition,
+            teamPlayerID: '',
             teamPlayerNum: playerNumber,
             isPlayerCaptain: isPlayerCaptain,
             };
@@ -168,7 +170,7 @@ export const getLineupPlanetRugbyAPI = (matchDetails: any, homeIndex: number) =>
         for (let index = 0; index < 23; index++) {
             let blankLineupInfo = {
                 teamPlayer: '-',
-                teamPlayerPosition: '-',
+                teamPlayerID: '-',
                 teamPlayerNum: index + 1,
                 isPlayerCaptain: false,
             };
@@ -199,7 +201,7 @@ export const getLineupPlanetRugbyAPI = (matchDetails: any, homeIndex: number) =>
 
         let newLineupInfo = {
             teamPlayer: playerName,
-            teamPlayerPosition: playerPosition,
+            teamPlayerID: '',
             teamPlayerNum: playerNumber,
             isPlayerCaptain: isPlayerCaptain,
             };
