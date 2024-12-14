@@ -62,7 +62,7 @@ export const fixtureStyles = StyleSheet.create({
     card: {
       alignItems: 'center',
       justifyContent: 'center',
-      marginVertical: 5,
+      marginVertical: 6,
       marginHorizontal: 3,
     },
     cardHeaderAllInfo: {
@@ -70,13 +70,13 @@ export const fixtureStyles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: 4
+      paddingVertical: 6
   },
     cardHeaderGameInfo: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        padding: 3
+        padding: 4
     },
     teamName: {
         paddingHorizontal: 6,
