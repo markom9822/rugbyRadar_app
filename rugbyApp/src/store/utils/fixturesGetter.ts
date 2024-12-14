@@ -1,4 +1,4 @@
-import { FixturesSection } from "@/app/(tabs)/fixtures";
+import { FixturesSection } from "@/app/(tabs)/(fixtures)";
 import { getLeagueCodeFromDisplayName, getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {

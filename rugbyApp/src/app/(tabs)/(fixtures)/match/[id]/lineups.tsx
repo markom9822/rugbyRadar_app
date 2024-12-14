@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList, Image, ActivityIndicator, Button } from "react-native"
+import { View, Text, TouchableOpacity, FlatList, Image, ActivityIndicator, Button, ImageBackground } from "react-native"
 import { useGlobalSearchParams } from "expo-router";
 import { Ref, RefAttributes, useCallback, useEffect, useRef, useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
@@ -10,6 +10,7 @@ import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@go
 import 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
+import { LineupPlayerPanel } from "@/store/components/LineupPlayerPanel";
 
 
 export type LineUpInfo = {
@@ -39,6 +40,8 @@ const Lineups = () => {
 
     const [allLineupsArray, setAllLineupsArray] = useState<AllLineUpsInfo[]>([]);
     const [leagueName, setLeagueName] = useState<string>('');
+    const [selectedTeam, setSelectedTeam] = useState<string>('home');
+
     const [isLoading, setIsLoading] = useState(false);
 
     const {id} = useGlobalSearchParams();
@@ -226,9 +229,7 @@ const Lineups = () => {
 
     }
 
-    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any) => {
-
-        const [selectedTeam, setSelectedTeam] = useState<string>('home');
+    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any, bottomSheetRef: any) => {
 
         if (homeTeamInfo == undefined || awayTeamInfo == undefined) {
             return (
@@ -243,10 +244,19 @@ const Lineups = () => {
             const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.2')
             const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.8')
 
+            const handlePressLineupTeam = (team: string) => {
+
+                if(team !== selectedTeam)
+                {
+                    bottomSheetRef.current?.close()
+                    setSelectedTeam(team)
+                }
+            }
+
             return (
                 <>
                     <View style={[lineupPanelStyles.container, { borderBottomColor: 'lightgrey', borderBottomWidth: 1, paddingVertical: 8 }]}>
-                        <TouchableOpacity onPress={() => setSelectedTeam('home')}
+                        <TouchableOpacity onPress={() => handlePressLineupTeam('home')}
                             style={[lineupPanelStyles.teamHeader,
                             {
                                 backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA) : (colors.background),
@@ -261,7 +271,7 @@ const Lineups = () => {
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity onPress={() => setSelectedTeam('away')}
+                        <TouchableOpacity onPress={() => handlePressLineupTeam('away')}
                             style={[lineupPanelStyles.teamHeader, {
                                 backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA) : (colors.background),
                                 borderColor: (selectedTeam === "away") ? awayTeamBorderRBGA : '#363434', borderWidth: (selectedTeam === "away") ? 2 : 1, justifyContent: 'center'
@@ -280,6 +290,7 @@ const Lineups = () => {
                             <LineupPlayerPanel
                                 key={index}
                                 selectedTeam={selectedTeam}
+                                selectedTeamDisplayName={selectedTeam === "home" ? homeTeamName : awayTeamName}
                                 hometeamPlayer={item.hometeamPlayer}
                                 hometeamPlayerID={item.hometeamPlayerID}
                                 hometeamPlayerNum={item.hometeamPlayerNum}
@@ -329,8 +340,9 @@ const Lineups = () => {
     const [modalPlayerHeight, setModalPlayerHeight] = useState<string>('');
     const [modalPlayerWeight, setModalPlayerWeight] = useState<string>('');
     const [modalPlayerImageSrc, setModalPlayerImageSrc] = useState<string>('');
+    const [modalTeamColour, setModalTeamColour] = useState<string>('');
 
-    const handlePlayerModalShown = async (playerName: string, playerID: string) => {
+    const handlePlayerModalShown = async (playerName: string, playerID: string, teamName: string, teamColour: string) => {
 
         setModalPlayerName(playerName)
         setModalPlayerPosition('')
@@ -338,6 +350,7 @@ const Lineups = () => {
         setModalPlayerHeight('')
         setModalPlayerWeight('')
         setModalPlayerImageSrc('')
+        setModalTeamColour(teamColour)
 
         const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/players/'+playerID+'?provider=rugbyviz'
         const playerInfo = await fetch(apiString,).then((res) => res.json())
@@ -360,7 +373,7 @@ const Lineups = () => {
         const playerAge = calculateAge(playerDOB).toString()
         const playerHeight = playerInfo.data.height;
         const playerWeight = playerInfo.data.weight;
-        const playerImageSrc = getPlayerImageSrc('urc', 'Bristol Bears', playerName)
+        const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
 
         setModalPlayerName(playerName)
         setModalPlayerPosition(playerPosition)
@@ -372,6 +385,11 @@ const Lineups = () => {
 
     const snapPoints = ["48%"];
 
+    const teamBkgRBGA = hexToRGB(modalTeamColour, '0.25')
+    const teamBorderRBGA = hexToRGB(modalTeamColour, '0.7')
+
+    const teamHandleRBGA = hexToRGB(modalTeamColour, '0.5')
+
     return(
         <GestureHandlerRootView>
 
@@ -379,103 +397,42 @@ const Lineups = () => {
         <View style={defaultStyles.container}>
 
             {activityIndicatorHeader()}
-            {lineupsRender(homeTeamInfo, awayTeamInfo)}
+            {lineupsRender(homeTeamInfo, awayTeamInfo, bottomSheetModalRef)}
 
             <BottomSheetModal 
             ref={bottomSheetModalRef}
             index={0}
             snapPoints={snapPoints}
             enableDynamicSizing={false}
-            handleStyle={{backgroundColor: 'grey', borderTopLeftRadius: 10, borderTopRightRadius: 10}}
+            handleStyle={{backgroundColor: teamHandleRBGA, borderTopLeftRadius: 10, borderTopRightRadius: 10,
+                 borderTopWidth: 1, borderTopColor: teamBorderRBGA, borderLeftWidth: 1, borderLeftColor: teamBorderRBGA, borderRightWidth: 1, borderRightColor: teamBorderRBGA}}
+            handleIndicatorStyle={{backgroundColor: 'lightgrey'}}
             backgroundStyle={{backgroundColor: colors.background}}
             >
-            <BottomSheetView style={{flex: 1, backgroundColor: '#303030', flexDirection: 'row'}}>
+            <BottomSheetView style={{flex: 1, backgroundColor: teamBkgRBGA, flexDirection: 'row',
+                 borderLeftWidth: 1, borderLeftColor: teamBorderRBGA, borderRightWidth: 1, borderRightColor: teamBorderRBGA}}>
+                <ImageBackground resizeMode="cover" imageStyle={{opacity: 0.05}} 
+                style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}} source={selectedTeam == "home" ? homeTeamInfo?.altLogo : awayTeamInfo?.altLogo} >
                 <View style={{width: "50%", padding: 5}}>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.bold}}>{modalPlayerName.toUpperCase()}</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Position: {modalPlayerPosition}</Text>
+                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Position: {modalPlayerPosition.toUpperCase()}</Text>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Age: {modalPlayerAge}</Text>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Height: {modalPlayerHeight} cm</Text>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Weight: {modalPlayerWeight} kg</Text>
                 </View>
                  <View style={{width: "50%", alignItems: 'center'}}>
                     <View style={{padding: 4, margin: 4}}>
-                        <Image style={{width: 200, height: 200, opacity: 0.8}} src={modalPlayerImageSrc}/>
+                        <Image style={{width: 200, height: 200, opacity: 1}} src={modalPlayerImageSrc}/>
                     </View>
                  </View>
+                </ImageBackground>
+                
             </BottomSheetView>
             </BottomSheetModal>
         </View>
         </BottomSheetModalProvider>
         </GestureHandlerRootView>
     )
-}
-
-type LineupPlayerPanelProps = {
-    selectedTeam: string,
-    hometeamPlayer: string,
-    hometeamPlayerID: string,
-    hometeamPlayerNum: string,
-    isHomePlayerCaptain: boolean,
-    awayteamPlayer: string,
-    awayteamPlayerID: string,
-    awayteamPlayerNum: string,
-    isAwayPlayerCaptain: boolean,
-    teamColour: string,
-    isLastItem: boolean,
-    bottomSheetRef: any,
-    OnPlayerModalShown: (playerName: string, playerID: string) => void
-}
-
-
-export const LineupPlayerPanel = ({ selectedTeam, hometeamPlayer, hometeamPlayerID, hometeamPlayerNum, isHomePlayerCaptain,
-     awayteamPlayer, awayteamPlayerID, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem, bottomSheetRef, OnPlayerModalShown }: LineupPlayerPanelProps) => {
-
-    var playerName = ''
-    var playerNumber = ''
-    var playerID = ''
-    var isCaptain = false;
-    if(selectedTeam == 'home')
-    {
-        playerName = hometeamPlayer;
-        playerNumber = hometeamPlayerNum;
-        playerID = hometeamPlayerID;
-        isCaptain = isHomePlayerCaptain;
-    }
-    else
-    {
-        playerName = awayteamPlayer;
-        playerNumber = awayteamPlayerNum;
-        playerID = awayteamPlayerID;
-        isCaptain = isAwayPlayerCaptain;
-    }
-
-    const panelBackground = hexToRGB(teamColour, '0.1')
-
-    const handlePresentModalPress = useCallback(() => {
-
-        OnPlayerModalShown(playerName, playerID)
-        bottomSheetRef.current?.present();
-      }, [selectedTeam]);
-
-
-    if (hometeamPlayer === "Substitutes") {
-        return (
-            <View style={{flexDirection: 'row', backgroundColor: panelBackground}}>
-                <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName.toUpperCase()}</Text>
-            </View>
-        )
-    }
-    else {
-        return ( 
-            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 60: 0}]}>
-                <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 11, color: colors.text, width: "8%", textAlign: 'center', fontFamily: fontFamilies.bold}}>
-                    {playerNumber}
-                </Text>
-                <Text style={{fontWeight: 500, paddingHorizontal: 6, fontSize: 12, color: colors.text, textAlign: 'left', width: "92%", fontFamily: fontFamilies.regular}}>
-                    {playerName.toUpperCase()} {(isCaptain) ? '(c)' : ''}</Text>
-            </TouchableOpacity>
-        )
-    }
 }
 
 export default Lineups;
