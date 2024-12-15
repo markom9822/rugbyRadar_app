@@ -12,9 +12,6 @@ import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "@/stor
 
 const MatchSummary = () => {
     const [matchStatsArray, setMatchStatsArray] = useState<StatsInfo[] | undefined>();
-    const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
-    const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
-    const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
 
     const [mainTeamName, setMainTeamName] = useState<string | undefined>();
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
@@ -45,14 +42,8 @@ const MatchSummary = () => {
             setOpponentTeamName(awayTeam)
 
             const fullMatchStats = getFullMatchStatsRugbyViz(matchStats)
-            const headToHeadStats = await getHeadToHeadStatsRugbyViz(matchStats)
-            const mainTeamFormStats = await getTeamFormStatsRugbyViz(matchStats, true)
-            const opponentTeamFormStats = await getTeamFormStatsRugbyViz(matchStats, false)
 
             setMatchStatsArray(fullMatchStats)
-            setHeadToHeadStatsArray(headToHeadStats)
-            setMainTeamFormStatsArray(mainTeamFormStats)
-            setOpponentTeamFormStatsArray(opponentTeamFormStats)
             setLeagueName(leagueID.replace("_RugbyViz", ""))
 
             setIsLoading(false)
@@ -71,26 +62,13 @@ const MatchSummary = () => {
             const matchStats = await fetch( apiString,).then((res) => res.json())
             const homeTeam = matchStats.match.teams[0].name;
             const awayTeam = matchStats.match.teams[1].name;
-            const matchDate = new Date(matchStats.match.time.millis)
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)
             
             const fullMatchStats = getFullMatchStatsWorldRugbyAPI(matchStats)
-            
-            // use planet rugby for head to head stats
-            const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeam, awayTeam);
-            const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/'+planetRugbyMatchID;
-            const matchPlanetRugbyStats = await fetch( apiPlanetRugbyString,).then((res) => res.json())
-
-            const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchPlanetRugbyStats)
-            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, true)
-            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, false)
 
             setMatchStatsArray(fullMatchStats)
-            setHeadToHeadStatsArray(headToHeadStats)
-            setMainTeamFormStatsArray(mainTeamFormStats)
-            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             setLeagueName(worldRugbyAPILeagueName)
             
@@ -108,20 +86,13 @@ const MatchSummary = () => {
 
             const matchStats = await fetch(apiString,).then((res) => res.json())
             const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
-            const [homeTeamID, awayTeamID] = matchStats.data.matchDetails.team_ids.split(';');
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)
 
             const fullMatchStats = getFullMatchStatsPlanetRugbyAPI(matchStats)
-            const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchStats)
-            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchStats, true)
-            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchStats, false)
-
+        
             setMatchStatsArray(fullMatchStats)
-            setHeadToHeadStatsArray(headToHeadStats)
-            setMainTeamFormStatsArray(mainTeamFormStats)
-            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             setLeagueName(planetRugbyAPILeagueName)
 
@@ -162,37 +133,6 @@ const MatchSummary = () => {
                 matchInfoArray={matchStatsArray}
                 matchID={id}
                 leagueName={leagueName} />
-
-                <HeadToHeadEventsPanel
-                teamEventArray={headToHeadStatsArray}
-                matchID={id}
-                leagueName={leagueName}
-                panelTitle="Head to Head Matches"
-                showWinLoss={false}
-                isLastItem={false}
-                teamName1={mainTeamName}
-                teamName2={opponentTeamName}
-                />
-
-                <TeamEventsPanel 
-                teamEventArray={mainTeamFormStatsArray}
-                matchID={id}
-                leagueName={leagueName}
-                panelTitle={`${mainTeamName} Form`}
-                showWinLoss={true}
-                isLastItem={false}
-                teamName={mainTeamName}
-                />
-
-                <TeamEventsPanel 
-                teamEventArray={opponentTeamFormStatsArray}
-                matchID={id}
-                leagueName={leagueName}
-                panelTitle={`${opponentTeamName} Form`}
-                showWinLoss={true}
-                isLastItem={true}
-                teamName={opponentTeamName}
-                />
 
             </ScrollView>
             

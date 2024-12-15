@@ -233,7 +233,7 @@ export const Top14RugbyTeams = [
   {
     type: 'Top14 Club',
     displayName: 'Toulon',
-    abbreviation: 'TOUL',
+    abbreviation: 'RCT',
     logo: ToulonLogo,
     altLogo: ToulonAltLogo,
     colour: '#CC051C',

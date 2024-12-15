@@ -181,7 +181,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
 
 
     return (
-        <View style={[statsPanelStyles.container]}>
+        <View style={[statsPanelStyles.container, {marginBottom: 55}]}>
 
             <View style={{backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5, marginVertical: 5}}>
 
@@ -270,7 +270,7 @@ export const GameStatsTitlePanel = ({statTitle}: GameStatsTitleProps ) => {
     return (
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={[statsPanelStyles.statsTitle]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsTitle]}>{statTitle.toUpperCase()}</Text>
             </View>
         </View>
     )
@@ -299,14 +299,16 @@ export const statsPanelStyles = StyleSheet.create({
     },
     statsTitle: {
         paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingVertical: 7,
+        marginTop: 8,
         textAlign: 'center',
         fontWeight: 500, 
         borderBottomColor: 'lightgrey',
         borderBottomWidth: 2,
         width : "90%",
         color: colors.text,
-        fontFamily: fontFamilies.regular
+        fontFamily: fontFamilies.bold,
+        fontSize: 14
     },
     teamName: {
         paddingHorizontal: 10,

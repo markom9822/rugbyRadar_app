@@ -11,6 +11,7 @@ import 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
 import { LineupPlayerPanel } from "@/store/components/LineupPlayerPanel";
+import { LinearGradient } from "expo-linear-gradient";
 
 
 export type LineUpInfo = {
@@ -460,6 +461,11 @@ const Lineups = () => {
                  <View style={{width: "50%", alignItems: 'center'}}>
                     <View style={{padding: 4, margin: 4}}>
                         <Image style={{width: 200, height: 200, opacity: 1, resizeMode:'contain'}} src={modalPlayerImageSrc}/>
+                        <View style={{position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
+                             top: 180, bottom: 0, left: 18, right: 18, backgroundColor: modalTeamColour}}>
+                            <Text style={{textAlign: 'center', color: colors.text,
+                                 fontFamily: fontFamilies.bold, fontSize: 14}}>{modalPlayerName.toUpperCase().trim().split(" ")[1]}</Text>
+                        </View>
                     </View>
                  </View>
                 </ImageBackground>
@@ -471,5 +477,6 @@ const Lineups = () => {
         </GestureHandlerRootView>
     )
 }
+
 
 export default Lineups;

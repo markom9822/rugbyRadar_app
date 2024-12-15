@@ -3,10 +3,13 @@ import { Link, useLocalSearchParams, Href } from "expo-router";
 import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, RefreshControl } from "react-native"
 import { useEffect, useState } from "react";
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
-import { getBroadcasterLogo, getLeagueName } from "@/store/utils/helpers";
+import { getBroadcasterLogo, getLeagueName, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
 import { defaultStyles} from "@/styles";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
 import {Feather, Fontisto, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
+import { HeadToHeadEventsPanel, TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
+import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "@/store/utils/getTeamFormStats";
+import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 
 
 const MatchSummary = () => {
@@ -14,6 +17,10 @@ const MatchSummary = () => {
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
     const [refereeName, setRefereeName] = useState<string>('-');
+
+    const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+    const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+    const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
 
     const [isLoading, setIsLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -35,6 +42,14 @@ const MatchSummary = () => {
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = getMatchInfoRugbyViz(matchDetails)
             setMatchInfoArray(matchInfo)
+
+            const headToHeadStats = await getHeadToHeadStatsRugbyViz(matchDetails)
+            const mainTeamFormStats = await getTeamFormStatsRugbyViz(matchDetails, true)
+            const opponentTeamFormStats = await getTeamFormStatsRugbyViz(matchDetails, false)
+            
+            setHeadToHeadStatsArray(headToHeadStats)
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             if(matchDetails.data.officials.length > 0)
             {
@@ -58,7 +73,24 @@ const MatchSummary = () => {
             console.info(apiString)
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = await getMatchInfoWorldRugbyAPI(matchDetails)
+            const matchDate = new Date(matchInfo[0].matchDate)
+            const homeTeamName = matchInfo[0].homeTeamName
+            const awayTeamName = matchInfo[0].awayTeamName
+
             setMatchInfoArray(matchInfo)
+
+            // use planet rugby for head to head stats
+            const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeamName, awayTeamName);
+            const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/'+planetRugbyMatchID;
+            const matchPlanetRugbyStats = await fetch( apiPlanetRugbyString,).then((res) => res.json())
+            
+            const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchPlanetRugbyStats)
+            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, true)
+            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, false)
+
+            setHeadToHeadStatsArray(headToHeadStats)
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             const apiSummaryString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
             const matchSummary = await fetch( apiSummaryString,).then((res) => res.json())
@@ -89,6 +121,18 @@ const MatchSummary = () => {
             const matchDetails = await fetch( apiString,).then((res) => res.json())
             const matchInfo = getMatchInfoPlanetRugbyAPI(matchDetails)
             setMatchInfoArray(matchInfo)
+
+            const apiH2HString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/' + planetRugbyAPIEventID;
+
+            const matchH2HStats = await fetch(apiH2HString,).then((res) => res.json())
+
+            const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchH2HStats)
+            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, true)
+            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, false)
+
+            setHeadToHeadStatsArray(headToHeadStats)
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             const refName = matchDetails.data.match.official_name;
             setRefereeName(refName === null ? "-" : refName)
@@ -121,6 +165,8 @@ const MatchSummary = () => {
         return null
     }
 
+    if(matchInfoArray == undefined) return
+
     return(
         <View style={defaultStyles.container}>
 
@@ -132,6 +178,37 @@ const MatchSummary = () => {
                     matchID={id}
                     leagueName={leagueName}
                     refereeName={refereeName}
+                />
+
+                <HeadToHeadEventsPanel
+                    teamEventArray={headToHeadStatsArray}
+                    matchID={id}
+                    leagueName={leagueName}
+                    panelTitle="Head to Head Matches"
+                    showWinLoss={false}
+                    isLastItem={false}
+                    teamName1={matchInfoArray[0].homeTeamName}
+                    teamName2={matchInfoArray[0].awayTeamName}
+                />
+
+                <TeamEventsPanel
+                    teamEventArray={mainTeamFormStatsArray}
+                    matchID={id}
+                    leagueName={leagueName}
+                    panelTitle={`${matchInfoArray[0].homeTeamName} Form`}
+                    showWinLoss={true}
+                    isLastItem={false}
+                    teamName={matchInfoArray[0].homeTeamName}
+                />
+
+                <TeamEventsPanel
+                    teamEventArray={opponentTeamFormStatsArray}
+                    matchID={id}
+                    leagueName={leagueName}
+                    panelTitle={`${matchInfoArray[0].awayTeamName} Form`}
+                    showWinLoss={true}
+                    isLastItem={true}
+                    teamName={matchInfoArray[0].awayTeamName}
                 />
             </ScrollView>
 
@@ -210,47 +287,6 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
     }
 
-    const statsPanelRender = (statsAvailable: boolean) => {
-
-        if(!statsAvailable)
-        {
-            return (
-                <View>
-                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', marginVertical: 10}}>Stats Not Available</Text>
-                </View>
-            )
-        }
-        else
-        {
-            return (
-                <>
-                <PercentageStatsPanel 
-                homePercent={homePossessionPercent}
-                awayPercent={awayPossessionPercent}
-                statTitle="Possession"
-                homeColour={homeTeamInfo?.colour}
-                awayColour={awayTeamInfo?.colour}/>
-            
-
-                <SummaryStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTries}
-                awayStat={matchInfoArray[0].awayTeamTries}
-                statTitle="Tries"/>
-
-                <SummaryStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTackles}
-                awayStat={matchInfoArray[0].awayTeamTackles}
-                statTitle="Tackles"/>
-
-                <SummaryStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamMetres}
-                awayStat={matchInfoArray[0].awayTeamMetres}
-                statTitle="Metres Run"/>
-                </>
-            )
-        }
-    }
-
     const scoreRender = (eventState: string) => {
 
         // not started yet
@@ -309,11 +345,10 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
     const homeFontFamily = (matchInfoArray[0].homeTeamScore > matchInfoArray[0].awayTeamScore) ? fontFamilies.bold : fontFamilies.regular;
     const awayFontFamily = (matchInfoArray[0].awayTeamScore > matchInfoArray[0].homeTeamScore) ? fontFamilies.bold : fontFamilies.regular;
 
-
     return (
         <View style={[summaryPanelStyles.container]}>
 
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 10}}>
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 15}}>
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "44%"}}>
                     <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4}}>{homeTeamInfo?.abbreviation}</Text>
                     <View style={{ margin: 8 }}>
@@ -368,28 +403,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                     </View>
 
                 </View>
-            </View>
-
-            <Text style={{fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold}}>Match Stats</Text>
-            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', marginBottom: 60}}>
-
-                <View style={{ alignItems: 'center' }}>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'grey', borderBottomWidth: 2}}>
-                        <View style={[summaryPanelStyles.teamInfoContainer, {width: "45%", justifyContent: 'flex-start'}]}>
-                            <Image style={[summaryPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.logo}/>
-                            <Text style={[summaryPanelStyles.teamName,]}>{homeTeamInfo?.abbreviation}</Text>
-                        </View>
-                        <View style={[summaryPanelStyles.teamInfoContainer, {width: "45%", justifyContent: 'flex-end'}]}>
-                            <Text style={[summaryPanelStyles.teamName,]}>{awayTeamInfo?.abbreviation}</Text>
-                            <Image style={[summaryPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.logo}/>
-                        </View>
-                    </View>
-                </View>
-
-                {statsPanelRender(matchInfoArray[0].statsAvailable)}
-            </View>            
+            </View>         
         </View>
     )
 }

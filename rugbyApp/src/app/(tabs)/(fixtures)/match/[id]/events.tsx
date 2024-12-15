@@ -184,7 +184,6 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
     {
         return(
         <View style={[keyEventsPanelStyles.container]}>
-            <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Key Events</Text>
 
             <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey'}}>
                 <Text style={{color:'lightgrey', fontFamily: fontFamilies.light}}>Currently no key events</Text>
@@ -194,10 +193,9 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
     }
 
     return (
-        <View style={[keyEventsPanelStyles.container, {marginBottom: 55}]}>
-            <Text style={{color: colors.text, fontFamily: fontFamilies.regular}}>Key Events</Text>
+        <View style={[keyEventsPanelStyles.container, {marginBottom: 60}]}>
 
-            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey', width: "80%"}}>
+            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', width: "90%"}}>
 
                 <View style={{flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'lightgrey', paddingVertical: 5}}>
                     <View style={{width: "50%", justifyContent: 'center', alignItems: 'center'}}>

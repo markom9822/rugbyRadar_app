@@ -49,9 +49,9 @@ export const rugbyVizleagueCodes = [
     { value: 'prem', code: "1011",
          displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4},
     { value: 'championsCup', code: "1008",
-         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 2},
+         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 4},
     { value: 'challengeCup', code: "1026",
-         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, playoffCutoffIndex: 2},
+         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, playoffCutoffIndex: 4},
 
 ];
 

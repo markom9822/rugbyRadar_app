@@ -143,6 +143,9 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
     const homeTeamMetres = handleGetMatchStat(matchDetails.data.homeTeam.stats?.metres);
     const awayTeamMetres = handleGetMatchStat(matchDetails.data.awayTeam.stats?.metres);
 
+    const homeTeamHalfScore = matchDetails.data.homeTeam.halfTimeScore;
+    const awayTeamHalfScore = matchDetails.data.awayTeam.halfTimeScore;
+
     var eventState;
     const matchStatus = matchDetails.data.status;
     if (matchStatus === "result") {
@@ -150,6 +153,10 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
     }
     else if (matchStatus === "fixture") {
         eventState = "pre"
+    }
+    else if(matchStatus === "first half" && homeTeamHalfScore != null && awayTeamHalfScore != null)
+    {
+            eventState = "halfTime"
     }
     else {
         eventState = "ongoing"

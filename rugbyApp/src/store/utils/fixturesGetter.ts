@@ -177,6 +177,9 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
 
             const eventTime = seasonAllMatches.data[index].minute;
 
+            const homeTeamHalfScore = seasonAllMatches.data[index].homeTeam.halfTimeScore;
+            const awayTeamHalfScore = seasonAllMatches.data[index].awayTeam.halfTimeScore;
+
             var eventState;
             const matchStatus = seasonAllMatches.data[index].status;
             if(matchStatus === "result")
@@ -186,6 +189,10 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
             else if(matchStatus === "fixture")
             {
                 eventState = "pre"
+            }
+            else if(matchStatus === "first half" && homeTeamHalfScore != null && awayTeamHalfScore != null)
+            {
+                eventState = "halfTime"
             }
             // TODO: add event state for halftime
             else
@@ -251,6 +258,7 @@ export const fetchRugbyVizData = async (thisLeagueName: string, selectedDate: Da
     if(rugbyVizLeagueCode !== undefined)
     {
         const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+seasonYear+'01'
+        console.info(apiStringAll)
         const seasonsAllMatches = await fetch( apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
