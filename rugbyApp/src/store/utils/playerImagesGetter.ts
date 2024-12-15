@@ -2,6 +2,9 @@
 import * as urcJSONData from '@/store/PlayerImages/URCPlayerImages.json'
 import * as premJSONData from '@/store/PlayerImages/PremPlayerImages.json'
 import * as top14JSONData from '@/store/PlayerImages/Top14PlayerImages.json'
+import * as miscJSONData from '@/store/PlayerImages/MiscPlayerImages.json'
+
+import { getChampsCupShortNameFromFullName } from '../ChampionsCupRugbyTeamsDatabase';
 
 
 export const getPlayerImageSrc = (leagueName: string, teamName: string, playerName: string) => {
@@ -9,34 +12,39 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
   const urcTeamArray = Array.from(urcJSONData.teams);
   const premTeamArray = Array.from(premJSONData.teams);
   const top14TeamArray = Array.from(top14JSONData.teams);
-  const champsCupTeamArray = [...urcTeamArray, ...premTeamArray, ...top14TeamArray]
+  const miscTeamArray = Array.from(miscJSONData.teams);
+
+  const champsCupTeamArray = [...urcTeamArray, ...premTeamArray, ...top14TeamArray, ...miscTeamArray]
 
   var leagueTeamArray;
+  var correctTeamName = ''
 
   if(leagueName === 'urc')
   {
+    correctTeamName = teamName
     leagueTeamArray = urcTeamArray;
   }
   else if (leagueName === "prem")
   {
+    correctTeamName = teamName
     leagueTeamArray = premTeamArray;
   }
   else if (leagueName === "top14")
   {
+    correctTeamName = teamName;
     leagueTeamArray = top14TeamArray;
   }
   else if(leagueName === "championsCup" || leagueName === "challengeCup")
   {
+    correctTeamName = getChampsCupShortNameFromFullName(teamName)
     leagueTeamArray = champsCupTeamArray;
   }
 
 
   console.info(playerName)
+  console.info(correctTeamName)
 
-
-  console.info(teamName)
-
-  const searchTeamName = teamName.replace(" Rugby", "")  
+  const searchTeamName = correctTeamName; 
 
   const targetTeam = champsCupTeamArray.find(item => item.name === searchTeamName);
 

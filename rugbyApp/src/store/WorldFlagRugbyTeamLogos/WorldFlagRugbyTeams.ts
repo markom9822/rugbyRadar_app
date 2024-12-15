@@ -9,6 +9,7 @@ export const FijiFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_Fiji.pn
 export const FranceFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_France.png')
 export const GermanyFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_Germany.png')
 export const IrelandFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_Ireland.png')
+export const IrelandRFUFlag = require('@/store/WorldFlagRugbyTeamLogos/Ireland_RFU_flag.png')
 export const ItalyFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_Italy.png')
 export const JapanFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_Japan.png')
 export const KenyaFlag = require('@/store/WorldFlagRugbyTeamLogos/Flag_of_Kenya.png')

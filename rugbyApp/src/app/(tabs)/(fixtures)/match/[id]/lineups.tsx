@@ -140,6 +140,7 @@ const Lineups = () => {
             const worldRugbyAPILeagueName = separatedArray[1]
 
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+worldRugbyAPIEventID+'/summary?language=en';
+            console.info(apiString)
             const matchDetails = await fetch(apiString,).then((res) => res.json())
             const matchDate = new Date(matchDetails.match.time.millis);
             const homeTeam = matchDetails.match.teams[0].name;
@@ -151,9 +152,10 @@ const Lineups = () => {
             // get ESPN match ID
             const espnMatchInfo = await getESPNMatchInfoFromDetails(matchDate, homeTeam, awayTeam)
             const espnAPIString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+espnMatchInfo?.leagueID+'/summary?contentorigin=espn&event='+espnMatchInfo?.matchID+'&lang=en&region=gb'
+            console.info(espnAPIString)
             const espnMatchDetails = await fetch(espnAPIString,).then((res) => res.json())
-            const homeLineup = getLineup(espnMatchDetails, 0)
-            const awayLineup = getLineup(espnMatchDetails, 1)
+            const homeLineup = getLineup(espnMatchDetails, 0, matchDetails)
+            const awayLineup = getLineup(espnMatchDetails, 1, matchDetails)
 
             console.info('Home Team Lineup')
             console.info(homeLineup)
@@ -181,6 +183,7 @@ const Lineups = () => {
             const planetRugbyAPILeagueName = separatedArray[1]
 
             const apiString = 'https://rugbylivecenter.yormedia.com/api/match-lineups/'+planetRugbyAPIEventID;
+            console.info(apiString)
 
             const matchDetails = await fetch(apiString,).then((res) => res.json())
             const [homeTeam, awayTeam] = matchDetails.data.matchDetails.teams.split(';');
@@ -339,6 +342,8 @@ const Lineups = () => {
     const [modalPlayerAge, setModalPlayerAge] = useState<string>('');
     const [modalPlayerHeight, setModalPlayerHeight] = useState<string>('');
     const [modalPlayerWeight, setModalPlayerWeight] = useState<string>('');
+    const [modalPlayerCountry, setModalPlayerCountry] = useState<string>('');
+
     const [modalPlayerImageSrc, setModalPlayerImageSrc] = useState<string>('');
     const [modalTeamColour, setModalTeamColour] = useState<string>('');
 
@@ -351,9 +356,7 @@ const Lineups = () => {
         setModalPlayerWeight('')
         setModalPlayerImageSrc('')
         setModalTeamColour(teamColour)
-
-        const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/players/'+playerID+'?provider=rugbyviz'
-        const playerInfo = await fetch(apiString,).then((res) => res.json())
+        setModalPlayerCountry('')
 
         const calculateAge = (birthDate: Date): number => {
             const today = new Date();
@@ -368,19 +371,52 @@ const Lineups = () => {
             return age;
         }
 
-        const playerPosition = playerInfo.data.position;
-        const playerDOB = new Date(playerInfo.data.dateOfBirth);
-        const playerAge = calculateAge(playerDOB).toString()
-        const playerHeight = playerInfo.data.height;
-        const playerWeight = playerInfo.data.weight;
-        const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+        // handle differently - separate API
+        if(leagueID.indexOf("_RugbyViz") !== -1)
+        {
+            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/players/'+playerID+'?provider=rugbyviz'
+            const playerInfo = await fetch(apiString,).then((res) => res.json())
+
+            const playerPosition = playerInfo.data.position;
+            const playerDOB = new Date(playerInfo.data.dateOfBirth);
+            const playerAge = calculateAge(playerDOB).toString()
+            const playerHeight = playerInfo.data.height;
+            const playerWeight = playerInfo.data.weight;
+            const playerCountry = playerInfo.data.country;
+            setModalPlayerPosition(playerPosition)
+            setModalPlayerAge(playerAge)
+            setModalPlayerHeight(playerHeight)
+            setModalPlayerWeight(playerWeight)
+            setModalPlayerCountry(playerCountry)
+            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+            setModalPlayerImageSrc(playerImageSrc)
+        }
+        else if (id.indexOf("_PlanetRugbyAPI") !== -1) 
+        {
+            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+            setModalPlayerImageSrc(playerImageSrc)
+        }
+        else if(id.indexOf("_WorldRugbyAPI") !== -1)
+        {
+            // get player image using id
+            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/player/'+playerID+'?language=en'
+            const playerInfo = await fetch(apiString,).then((res) => res.json())
+
+            //const playerPosition = playerInfo.data.position;
+            const playerDOB = new Date(playerInfo.dob.millis);
+            const playerAge = calculateAge(playerDOB).toString()
+            const playerHeight = playerInfo.height;
+            const playerWeight = playerInfo.weight;
+            const playerCountry = playerInfo.country;
+            //setModalPlayerPosition(playerPosition)
+            setModalPlayerAge(playerAge)
+            setModalPlayerHeight(playerHeight)
+            setModalPlayerWeight(playerWeight)
+            setModalPlayerCountry(playerCountry)
+            setModalPlayerImageSrc('https://www.rugbyworldcup.com/rwc2023/person-images-site/player-profile/'+playerID+'.png')
+        }
 
         setModalPlayerName(playerName)
-        setModalPlayerPosition(playerPosition)
-        setModalPlayerAge(playerAge)
-        setModalPlayerHeight(playerHeight)
-        setModalPlayerWeight(playerWeight)
-        setModalPlayerImageSrc(playerImageSrc)
     }
 
     const snapPoints = ["48%"];
@@ -419,10 +455,11 @@ const Lineups = () => {
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Age: {modalPlayerAge}</Text>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Height: {modalPlayerHeight} cm</Text>
                     <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Weight: {modalPlayerWeight} kg</Text>
+                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Birthplace: {modalPlayerCountry}</Text>
                 </View>
                  <View style={{width: "50%", alignItems: 'center'}}>
                     <View style={{padding: 4, margin: 4}}>
-                        <Image style={{width: 200, height: 200, opacity: 1}} src={modalPlayerImageSrc}/>
+                        <Image style={{width: 200, height: 200, opacity: 1, resizeMode:'contain'}} src={modalPlayerImageSrc}/>
                     </View>
                  </View>
                 </ImageBackground>

@@ -1,5 +1,5 @@
 
-export const getLineup = (matchDetails: any, rosterIndex: number) => {
+export const getLineup = (matchDetails: any, rosterIndex: number, worldRugbyAPIDetails: any) => {
 
     if(matchDetails.rosters[rosterIndex].roster === undefined)
     {
@@ -30,12 +30,14 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
         const playerName = matchDetails.rosters[rosterIndex].roster[index].athlete.displayName;
         const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");
 
+        const playerID = getMatchingPlayerIDWorldRugbyAPI(playerName, rosterIndex == 0, worldRugbyAPIDetails)
+
         const playerPosition = matchDetails.rosters[rosterIndex].roster[index].position.displayName;
         const isPlayerCaptain = matchDetails.rosters[rosterIndex].roster[index].captain;
 
         let newLineupInfo = {
             teamPlayer: playerName,
-            teamPlayerID: '',
+            teamPlayerID: playerID,
             teamPlayerNum: playerNumber,
             isPlayerCaptain: isPlayerCaptain,
             };
@@ -48,6 +50,26 @@ export const getLineup = (matchDetails: any, rosterIndex: number) => {
     return(
         newArray
     )
+}
+
+export const getMatchingPlayerIDWorldRugbyAPI = (playerName: string, isHome: boolean, matchDetails: any) => {
+    const targetRoster = isHome ? matchDetails.teams[0].teamList.list : matchDetails.teams[1].teamList.list
+
+    if (targetRoster === null || targetRoster.length == 0) {
+        return ''
+    }
+
+    for (let index = 0; index < targetRoster.length; index++) {
+
+        const thisPlayerName = targetRoster[index].player.name.display;
+
+        if(thisPlayerName == playerName)
+        {
+            return targetRoster[index].player.id;
+        }
+    }
+
+    return ''
 }
 
 export const getLineupRugbyViz = (matchDetails: any, isHome: boolean) => {

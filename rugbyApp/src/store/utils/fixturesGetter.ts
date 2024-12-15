@@ -187,6 +187,7 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
             {
                 eventState = "pre"
             }
+            // TODO: add event state for halftime
             else
             {
                 eventState = "ongoing"
