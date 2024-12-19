@@ -46,31 +46,22 @@ const FixturesScreen = () => {
 
     const [leagueName, setLeagueName] = useState<string>('all');
 
-    
-    const filterSectionList = (fixturesSections: FixturesSection[], leagueName: string) => {
-    
-        var filteredSections = [];
-    
-        if(leagueName == "")
-        {
-            return []
-        }
-    
-        for (let index = 0; index < fixturesSections.length; index++) {
 
-            if(fixturesSections[index].title == leagueName)
-            {
-                filteredSections.push({
-                    title: fixturesSections[index].title,
-                    data: fixturesSections[index].data,
-                })
-            } 
-        }
-    
-        return (
-            filteredSections
-        )
-    }
+    const leagueSearchData = [
+        { name: 'urc', offSeasonMonths: [7, 8]},
+        { name: 'prem', offSeasonMonths: [7, 8]},
+        { name: 'top14', offSeasonMonths: [7, 8] },
+        { name: 'superRugby', offSeasonMonths: [1, 7, 8, 9, 10, 11, 12] },
+        { name: 'championsCup', offSeasonMonths: [6, 7, 8, 9, 10, 11] },
+        { name: 'challengeCup', offSeasonMonths: [6, 7, 8, 9, 10, 11]  },
+        { name: 'sixNations', offSeasonMonths: [4, 5, 6, 7, 8, 9, 10, 11, 12] },
+        { name: 'u20SixNations', offSeasonMonths: [4, 5, 6, 7, 8, 9, 10, 11, 12] },
+        { name: 'autumnNations', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12] },
+        { name: 'rugbyChamp', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
+        { name: 'rugbyWorldCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 11, 12]  },
+        { name: 'u20Championship', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12] },
+        { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
+    ];
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
@@ -80,133 +71,94 @@ const FixturesScreen = () => {
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(leagueName)
 
+        const leagueNameArray = leagueName == "all" ? 
+        ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby', 
+            'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'BILTour' ] : [leagueName]
+
+        console.info(leagueNameArray)
+
         const allFixturesArray: FixturesSection[] = [];
+        
+        const handleGetRugbyVizFixtures = async (thisLeagueName: string) => {
+            
+            const rugbyVizFixtures: FixturesSection[] = await fetchRugbyVizData(thisLeagueName, selectedDate);
 
-        // collection of sections for all APIs
-        const URCFixtures: FixturesSection[] = await fetchRugbyVizData('urc', selectedDate);
-        const PremFixtures: FixturesSection[] = await fetchRugbyVizData('prem', selectedDate);
-        const ChampCupFixtures: FixturesSection[] = await fetchRugbyVizData('championsCup', selectedDate);
-        const ChallengeCupFixtures: FixturesSection[] = await fetchRugbyVizData('challengeCup', selectedDate);
+            if(rugbyVizFixtures !== undefined && rugbyVizFixtures.length > 0)
+            {
+                allFixturesArray.push({
+                    title: rugbyVizFixtures[0].title,
+                    data: rugbyVizFixtures[0].data,
+                })
+            }
+        }
 
-        const Top14Fixtures: FixturesSection[] = await fetchPlanetRugbyAPIData('top14', selectedDate);
-        const SuperRugbyFixtures: FixturesSection[] = await fetchPlanetRugbyAPIData('superRugby', selectedDate);
+        const handleGetPlanetRugbyFixtures = async (thisLeagueName: string) => {
+            
+            const planetRugbyFixtures: FixturesSection[] = await fetchPlanetRugbyAPIData(thisLeagueName, selectedDate);
 
-        const AutumnNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('autumnNations', selectedDate);
-        const SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('sixNations', selectedDate);
-        const RugbyChampFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyChamp', selectedDate);
-        const U20SixNationsFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('u20SixNations', selectedDate);
-        const WorldCupFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('rugbyWorldCup', selectedDate);
-        const U20ChampFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('u20Championship', selectedDate);
-        const LionsTourFixtures: FixturesSection[] = await fetchWorldRugbyAPIData('BILTour', selectedDate);
+            if(planetRugbyFixtures !== undefined && planetRugbyFixtures.length > 0)
+            {
+                allFixturesArray.push({
+                    title: planetRugbyFixtures[0].title,
+                    data: planetRugbyFixtures[0].data,
+                })
+            }
+        }
 
-        if(URCFixtures !== undefined && URCFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: URCFixtures[0].title,
-                data: URCFixtures[0].data,
-            })
+        const handleGetWorldRugbyFixtures = async (thisLeagueName: string) => {
+            
+            const worldRugbyFixtures: FixturesSection[] = await fetchWorldRugbyAPIData(thisLeagueName, selectedDate);
+
+            if(worldRugbyFixtures !== undefined && worldRugbyFixtures.length > 0)
+            {
+                allFixturesArray.push({
+                    title: worldRugbyFixtures[0].title,
+                    data: worldRugbyFixtures[0].data,
+                })
+            }
         }
-        if(PremFixtures !== undefined && PremFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: PremFixtures[0].title,
-                data: PremFixtures[0].data,
-            })
+
+        for (let index = 0; index < leagueNameArray.length; index++) {
+
+            const thisLeagueName = leagueNameArray[index];
+            const thisFixtureMonth = selectedDate.getMonth() + 1
+
+            const offSeasonMonths = leagueSearchData.find(league => league.name === thisLeagueName)?.offSeasonMonths;
+
+            // check if in offseason for league
+            if(offSeasonMonths?.includes(thisFixtureMonth))
+            {
+                continue;
+            }
+
+            switch (thisLeagueName) {
+                case "urc":
+                case "prem":
+                case "championsCup":
+                case "challengeCup":
+                    await handleGetRugbyVizFixtures(thisLeagueName)
+                    break;
+                case "top14":
+                case "superRugby":
+                    await handleGetPlanetRugbyFixtures(thisLeagueName)
+                    break;
+                case "autumnNations":
+                case "sixNations":
+                case "rugbyChamp":
+                case "u20SixNations":
+                case "rugbyWorldCup":
+                case "u20Championship":
+                case "BILTour":
+                    await handleGetWorldRugbyFixtures(thisLeagueName)
+                    break;
+            }
         }
-        if(ChampCupFixtures !== undefined && ChampCupFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: ChampCupFixtures[0].title,
-                data: ChampCupFixtures[0].data,
-            })
-        }
-        if(ChallengeCupFixtures !== undefined && ChallengeCupFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: ChallengeCupFixtures[0].title,
-                data: ChallengeCupFixtures[0].data,
-            })
-        }
-        if(Top14Fixtures !== undefined && Top14Fixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: Top14Fixtures[0].title,
-                data: Top14Fixtures[0].data,
-            })
-        }
-        if(SuperRugbyFixtures !== undefined && SuperRugbyFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: SuperRugbyFixtures[0].title,
-                data: SuperRugbyFixtures[0].data,
-            })
-        }
-        if(AutumnNationsFixtures !== undefined && AutumnNationsFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: AutumnNationsFixtures[0].title,
-                data: AutumnNationsFixtures[0].data,
-            })
-        }
-        if(SixNationsFixtures !== undefined && SixNationsFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: SixNationsFixtures[0].title,
-                data: SixNationsFixtures[0].data,
-            })
-        }
-        if(WorldCupFixtures !== undefined && WorldCupFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: WorldCupFixtures[0].title,
-                data: WorldCupFixtures[0].data,
-            })
-        }
-        if(RugbyChampFixtures !== undefined && RugbyChampFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: RugbyChampFixtures[0].title,
-                data: RugbyChampFixtures[0].data,
-            })
-        }
-        if(U20SixNationsFixtures !== undefined && U20SixNationsFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: U20SixNationsFixtures[0].title,
-                data: U20SixNationsFixtures[0].data,
-            })
-        }
-        if(U20ChampFixtures !== undefined && U20ChampFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: U20ChampFixtures[0].title,
-                data: U20ChampFixtures[0].data,
-            })
-        }
-        if(LionsTourFixtures !== undefined && LionsTourFixtures.length > 0)
-        {
-            allFixturesArray.push({
-                title: LionsTourFixtures[0].title,
-                data: LionsTourFixtures[0].data,
-            })
-        }
+
 
         const teamSectionsCollection : FixturesSection[] = allFixturesArray;
         console.info(teamSectionsCollection)
 
-        if(leagueName == 'all')
-        {
-            setMatchesSections(teamSectionsCollection)
-        }
-        else
-        {
-            if(currentLeagueCode == undefined) return
-            const leagueDisplayName = getLeagueDisplayNameFromCode(currentLeagueCode)
-            if(leagueDisplayName == undefined) return
-
-            const leagueFixtures = filterSectionList(allFixturesArray, leagueDisplayName)
-            setMatchesSections(leagueFixtures)
-        }
+        setMatchesSections(teamSectionsCollection)
 
         setLastRefresh(new Date().toLocaleTimeString('en-GB', {hour: 'numeric', minute: 'numeric', second: 'numeric'}))
         setIsLoading(false)

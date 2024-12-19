@@ -266,6 +266,8 @@ export const fetchRugbyVizData = async (thisLeagueName: string, selectedDate: Da
         }
         ).then((res) => res.json())
 
+        console.info(getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode))
+
         const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate, getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode) )
         return allFixturesArray;
     }
@@ -302,6 +304,7 @@ export const fetchWorldRugbyAPIData = async (thisLeagueName: string, selectedDat
             }
         }
         ).then((res) => res.json())
+
 
         const allFixturesArray = getFixturesForAllWorldRugbyAPI(seasonsAllMatches, selectedDate, getWorldRugbyAPILeagueDisplayNameFromCode(worldRugbyAPILeagueCode) )
         return allFixturesArray;
@@ -422,6 +425,8 @@ export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDa
             }
         }
         ).then((res) => res.json())
+
+        console.info(getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode))
 
         const allFixturesArray = await getFixturesForAllPlanetRugbyAPI(seasonsAllMatches, selectedDate, getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode) )
         return allFixturesArray;
