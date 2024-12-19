@@ -152,11 +152,24 @@ const Lineups = () => {
 
             // get ESPN match ID
             const espnMatchInfo = await getESPNMatchInfoFromDetails(matchDate, homeTeam, awayTeam)
-            const espnAPIString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+espnMatchInfo?.leagueID+'/summary?contentorigin=espn&event='+espnMatchInfo?.matchID+'&lang=en&region=gb'
-            console.info(espnAPIString)
-            const espnMatchDetails = await fetch(espnAPIString,).then((res) => res.json())
-            const homeLineup = getLineup(espnMatchDetails, 0, matchDetails)
-            const awayLineup = getLineup(espnMatchDetails, 1, matchDetails)
+            console.info(espnMatchInfo)
+
+            var homeLineup;
+            var awayLineup;
+
+            if(espnMatchInfo != null)
+            {
+                const espnAPIString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+espnMatchInfo?.leagueID+'/summary?contentorigin=espn&event='+espnMatchInfo?.matchID+'&lang=en&region=gb'
+                console.info(espnAPIString)
+                const espnMatchDetails = await fetch(espnAPIString,).then((res) => res.json())
+                homeLineup = getLineup(espnMatchDetails, 0, matchDetails)
+                awayLineup = getLineup(espnMatchDetails, 1, matchDetails)
+            }
+            else
+            {
+                homeLineup = getLineupWorldRugbyAPI(matchDetails, true)
+                awayLineup = getLineupWorldRugbyAPI(matchDetails, false)
+            }
 
             console.info('Home Team Lineup')
             console.info(homeLineup)
@@ -400,6 +413,7 @@ const Lineups = () => {
         else if(id.indexOf("_WorldRugbyAPI") !== -1)
         {
             // get player image using id
+            console.info(playerID)
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/player/'+playerID+'?language=en'
             const playerInfo = await fetch(apiString,).then((res) => res.json())
 

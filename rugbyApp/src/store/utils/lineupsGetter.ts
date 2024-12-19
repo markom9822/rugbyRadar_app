@@ -154,6 +154,7 @@ export const getLineupWorldRugbyAPI = (matchDetails: any, isHome: boolean) => {
 
         const playerName = targetRoster[index].player.name.display;
         const playerNumber = targetRoster[index].number;
+        const playerID = targetRoster[index].player.id;
 
         const playerPosition = targetRoster[index].positionLabel;
 
@@ -166,7 +167,7 @@ export const getLineupWorldRugbyAPI = (matchDetails: any, isHome: boolean) => {
 
         let newLineupInfo = {
             teamPlayer: playerName,
-            teamPlayerID: '',
+            teamPlayerID: playerID,
             teamPlayerNum: playerNumber,
             isPlayerCaptain: isPlayerCaptain,
             };
