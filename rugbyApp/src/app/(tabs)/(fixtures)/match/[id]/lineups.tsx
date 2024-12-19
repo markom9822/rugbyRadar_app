@@ -372,6 +372,11 @@ const Lineups = () => {
         setModalTeamColour(teamColour)
         setModalPlayerCountry('')
 
+        if(playerName == "-")
+        {
+            return;
+        }
+
         const calculateAge = (birthDate: Date): number => {
             const today = new Date();
             

@@ -180,6 +180,10 @@ const MatchSummary = () => {
                     refereeName={refereeName}
                 />
 
+                <View style={{marginTop: 20, borderBottomColor: 'grey', borderBottomWidth: 1, padding: 4, marginHorizontal: 5}}>
+                    <Text style={{textAlign: 'center', color: 'grey', fontFamily: fontFamilies.bold, fontSize: 15}}>PREVIOUS FIXTURES</Text>
+                </View>
+
                 <HeadToHeadEventsPanel
                     teamEventArray={headToHeadStatsArray}
                     matchID={id}
@@ -437,7 +441,6 @@ type PercentageStatsPanelProps = {
 
 export const PercentageStatsPanel = ({homePercent, statTitle, awayPercent, homeColour, awayColour}: PercentageStatsPanelProps ) => {
 
-    console.info(`home percent: ${homePercent}`)
     const homePercentNum = Number(homePercent.replace("%", ""));
     const awayPercentNum = Number(awayPercent.replace("%", ""));
 

@@ -182,13 +182,28 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
 
     if(keyEventArray.length == 0)
     {
-        return(
-        <View style={[keyEventsPanelStyles.container]}>
+        return (
+            <View style={[keyEventsPanelStyles.container]}>
 
-            <View style={{backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'grey'}}>
-                <Text style={{color:'lightgrey', fontFamily: fontFamilies.light}}>Currently no key events</Text>
+                <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey' }}>
+                    <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'lightgrey', paddingVertical: 5 }}>
+                        <View style={{ width: "50%", justifyContent: 'center', alignItems: 'center' }}>
+                            <Image style={[keyEventsPanelStyles.teamLogo]}
+                                source={homeAwayTeamInfo?.homeInfo.logo} />
+                        </View>
+
+                        <View style={{ width: "50%", justifyContent: 'center', alignItems: 'center' }}>
+                            <Image style={[keyEventsPanelStyles.teamLogo]}
+                                source={homeAwayTeamInfo?.awayInfo.logo} />
+                        </View>
+
+                    </View>
+
+                    <View style={{marginVertical: 15}}>
+                        <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center' }}>Currently no key events</Text>
+                    </View>
+                </View>
             </View>
-        </View>
         )
     }
 

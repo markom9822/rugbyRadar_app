@@ -21,12 +21,12 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
 
   if(leagueName === 'urc')
   {
-    correctTeamName = teamName
+    correctTeamName = teamName.replace(" Rugby", "")
     leagueTeamArray = urcTeamArray;
   }
   else if (leagueName === "prem")
   {
-    correctTeamName = teamName
+    correctTeamName = teamName.replace(" Rugby", "")
     leagueTeamArray = premTeamArray;
   }
   else if (leagueName === "top14")

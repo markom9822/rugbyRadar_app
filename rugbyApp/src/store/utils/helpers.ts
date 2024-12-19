@@ -6,7 +6,7 @@ import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
-import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyPassTVLogo, RugbyTVLogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
 import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 
@@ -402,8 +402,10 @@ export const broadcasters = [
     { name: 'BBC iPlayer', logo: BBCIPlayerLogo},
     { name: 'Premier Sports 1', logo: PremierSportsLogo},
     { name: 'Premier Sports 2', logo: PremierSportsLogo},
+    { name: 'Premier Player', logo: PremierSportsLogo},
     { name: 'ITV 1', logo: ITVLogo},
     { name: 'ITV X', logo: ITVXLogo},
+    { name: 'RugbyPass.com', logo: RugbyPassTVLogo},
 
 ];
 
