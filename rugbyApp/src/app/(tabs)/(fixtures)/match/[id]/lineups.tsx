@@ -3,10 +3,10 @@ import { useGlobalSearchParams } from "expo-router";
 import { Ref, RefAttributes, useCallback, useEffect, useRef, useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { defaultStyles, lineupPanelStyles } from "@/styles";
-import {getESPNMatchInfoFromDetails, getLeagueName, hexToRGB } from "@/store/utils/helpers";
+import {dateCustomFormatting, getESPNMatchInfoFromDetails, getLeagueName, hexToRGB } from "@/store/utils/helpers";
 import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet";
+import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import 'react-native-gesture-handler'
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
@@ -354,6 +354,8 @@ const Lineups = () => {
     const [modalPlayerName, setModalPlayerName] = useState<string>('');
     const [modalPlayerPosition, setModalPlayerPosition] = useState<string>('');
     const [modalPlayerAge, setModalPlayerAge] = useState<string>('');
+    const [modalPlayerDOB, setModalPlayerDOB] = useState<string>('');
+
     const [modalPlayerHeight, setModalPlayerHeight] = useState<string>('');
     const [modalPlayerWeight, setModalPlayerWeight] = useState<string>('');
     const [modalPlayerCountry, setModalPlayerCountry] = useState<string>('');
@@ -361,11 +363,24 @@ const Lineups = () => {
     const [modalPlayerImageSrc, setModalPlayerImageSrc] = useState<string>('');
     const [modalTeamColour, setModalTeamColour] = useState<string>('');
 
+    // renders
+	const renderBackdrop = useCallback(
+		(props: any) => (
+			<BottomSheetBackdrop
+				{...props}
+				disappearsOnIndex={-1}
+				appearsOnIndex={0}
+			/>
+		),
+		[]
+	);
+
     const handlePlayerModalShown = async (playerName: string, playerID: string, teamName: string, teamColour: string) => {
 
         setModalPlayerName(playerName)
         setModalPlayerPosition('')
         setModalPlayerAge('')
+        setModalPlayerDOB('')
         setModalPlayerHeight('')
         setModalPlayerWeight('')
         setModalPlayerImageSrc('')
@@ -390,6 +405,17 @@ const Lineups = () => {
             return age;
         }
 
+        function formatDate(date: Date): string {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        const cmToMeters = (centimeters: number): string => {
+            return (centimeters / 100).toFixed(2);
+        }
+
         // handle differently - separate API
         if(leagueID.indexOf("_RugbyViz") !== -1)
         {
@@ -404,7 +430,8 @@ const Lineups = () => {
             const playerCountry = playerInfo.data.country;
             setModalPlayerPosition(playerPosition)
             setModalPlayerAge(playerAge)
-            setModalPlayerHeight(playerHeight)
+            setModalPlayerDOB(formatDate(playerDOB))
+            setModalPlayerHeight(cmToMeters(playerHeight))
             setModalPlayerWeight(playerWeight)
             setModalPlayerCountry(playerCountry)
             const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
@@ -430,7 +457,8 @@ const Lineups = () => {
             const playerCountry = playerInfo.country;
             //setModalPlayerPosition(playerPosition)
             setModalPlayerAge(playerAge)
-            setModalPlayerHeight(playerHeight)
+            setModalPlayerDOB(formatDate(playerDOB))
+            setModalPlayerHeight(cmToMeters(playerHeight))
             setModalPlayerWeight(playerWeight)
             setModalPlayerCountry(playerCountry)
             setModalPlayerImageSrc('https://www.rugbyworldcup.com/rwc2023/person-images-site/player-profile/'+playerID+'.png')
@@ -439,7 +467,7 @@ const Lineups = () => {
         setModalPlayerName(playerName)
     }
 
-    const snapPoints = ["48%"];
+    const snapPoints = ["58%"];
 
     const teamBkgRBGA = hexToRGB(modalTeamColour, '0.25')
     const teamBorderRBGA = hexToRGB(modalTeamColour, '0.7')
@@ -460,6 +488,7 @@ const Lineups = () => {
             index={0}
             snapPoints={snapPoints}
             enableDynamicSizing={false}
+            backdropComponent={renderBackdrop}
             handleStyle={{backgroundColor: teamHandleRBGA, borderTopLeftRadius: 10, borderTopRightRadius: 10,
                  borderTopWidth: 1, borderTopColor: teamBorderRBGA, borderLeftWidth: 1, borderLeftColor: teamBorderRBGA, borderRightWidth: 1, borderRightColor: teamBorderRBGA}}
             handleIndicatorStyle={{backgroundColor: 'lightgrey'}}
@@ -469,19 +498,44 @@ const Lineups = () => {
                  borderLeftWidth: 1, borderLeftColor: teamBorderRBGA, borderRightWidth: 1, borderRightColor: teamBorderRBGA}}>
                 <ImageBackground resizeMode="cover" imageStyle={{opacity: 0.05}} 
                 style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}} source={selectedTeam == "home" ? homeTeamInfo?.altLogo : awayTeamInfo?.altLogo} >
-                <View style={{width: "50%", padding: 5}}>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.bold}}>{modalPlayerName.toUpperCase()}</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Position: {modalPlayerPosition.toUpperCase()}</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Age: {modalPlayerAge}</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Height: {modalPlayerHeight} cm</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Weight: {modalPlayerWeight} kg</Text>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>Birthplace: {modalPlayerCountry}</Text>
+                <View style={{width: "45%", padding: 10}}>
+                    <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 17, marginBottom: 10}}>{modalPlayerName.toUpperCase()}</Text>
+                    <View style={{borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 4}}>
+                        <Text style={{color: colors.text, fontFamily: fontFamilies.regular, paddingLeft: 1, paddingVertical: 3}}>{modalPlayerPosition.toUpperCase()}</Text>
+                    </View>
+                    <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
+                        <View style={{marginHorizontal: 2}}>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>AGE</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerAge}</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>DATE OF BIRTH</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerDOB}</Text>
+                        </View>
+                    </View>
+                    <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
+                        <View style={{marginHorizontal: 2}}>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>HEIGHT</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerHeight} m</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>WEIGHT</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerWeight} kg</Text>
+                        </View>
+                    </View>
+                    <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
+                        <View style={{marginHorizontal: 2}}>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>BIRTHPLACE</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerCountry}</Text>
+                        </View>
+                    </View>
+                
                 </View>
-                 <View style={{width: "50%", alignItems: 'center'}}>
-                    <View style={{padding: 4, margin: 4}}>
-                        <Image style={{width: 200, height: 200, opacity: 1, resizeMode:'contain'}} src={modalPlayerImageSrc}/>
+                 <View style={{width: "55%", alignItems: 'center'}}>
+                    <View style={{padding: 4, margin: 4, marginTop: 25}}>
+                        <Image style={{width: 210, height: 210, opacity: 1, resizeMode:'contain'}} src={modalPlayerImageSrc}/>
                         <View style={{position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
-                             top: 180, bottom: 0, left: 18, right: 18, backgroundColor: modalTeamColour}}>
+                             top: 190, bottom: 0, left: 18, right: 18, backgroundColor: modalTeamColour}}>
                             <Text style={{textAlign: 'center', color: colors.text,
                                  fontFamily: fontFamilies.bold, fontSize: 14}}>{modalPlayerName.toUpperCase().trim().split(" ")[1]}</Text>
                         </View>
