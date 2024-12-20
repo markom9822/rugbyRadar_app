@@ -6,7 +6,7 @@ import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
-import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyPassTVLogo, RugbyTVLogo, S4CLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyPassTVLogo, RugbyTVLogo, S4CLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
 import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 
@@ -382,6 +382,7 @@ export const getESPNMatchInfoFromDetails = async (selectedDate: Date, homeTeamNa
 export const broadcasters = [
     { name: 'RTE', logo: RTELogo},
     { name: 'S4C', logo: S4CLogo},
+    { name: 'SS', logo: SuperSportLogo},
     { name: 'Prem', logo: PremierSportsLogo},
     { name: 'premier', logo: PremierSportsLogo},
     { name: 'DISC', logo: DiscoveryPlusLogo},
@@ -400,6 +401,7 @@ export const broadcasters = [
     { name: 'TNT Sport Ultimate', logo: TNTSportsLogo},
     { name: 'discovery +', logo: DiscoveryPlusLogo},
     { name: 'BBC iPlayer', logo: BBCIPlayerLogo},
+    { name: 'BBC Player', logo: BBCIPlayerLogo},
     { name: 'Premier Sports 1', logo: PremierSportsLogo},
     { name: 'Premier Sports 2', logo: PremierSportsLogo},
     { name: 'Premier Player', logo: PremierSportsLogo},

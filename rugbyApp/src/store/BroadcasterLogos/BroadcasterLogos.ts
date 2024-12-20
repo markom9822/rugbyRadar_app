@@ -27,3 +27,7 @@ export const RugbyTVLogo = require('@/store/BroadcasterLogos/rugby_tv_europe_log
 export const EPCRTVLogo = require('@/store/BroadcasterLogos/epcr_tv_logo.png')
 
 export const RugbyPassTVLogo = require('@/store/BroadcasterLogos/rugbypassTV_logo.png')
+
+export const SkySportsLogo = require('@/store/BroadcasterLogos/sky_sport_logo.png')
+
+export const SuperSportLogo = require('@/store/BroadcasterLogos/super_sport_logo.png')
