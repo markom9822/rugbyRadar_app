@@ -1,5 +1,5 @@
 import { defaultStyles} from "@/styles"
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Image } from "react-native"
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Image, ScrollView } from "react-native"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
@@ -8,7 +8,7 @@ import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDat
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import {FontAwesome6} from '@expo/vector-icons'
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { MatchInfo } from "../(fixtures)"
 import { fetchRugbyVizKnockoutFixtures } from "@/store/utils/knockoutFixturesGetter"
@@ -328,7 +328,27 @@ const StandingsScreen = () => {
 		),
 		[]
 	);
-    
+
+    const getDefaultRoundButton = (knockoutsArray: MatchInfo[]) => {
+
+        const roundMapping = {
+            'R16': 'r16',
+            'QF': 'quaterFinals',
+            'SF': 'semiFinals',
+            'GF': 'final'
+        };
+        
+        const roundTypes = Object.entries(roundMapping)
+            .filter(([key]) => knockoutsArray.some(obj => obj.matchTitle === key))
+            .map(([_, value]) => value);
+
+        console.info(`Default Value: ${roundTypes[0]}`)
+
+        return roundTypes[0]
+    }
+
+    const [knockoutRoundName, setKnockoutRoundName] = useState<string>(getDefaultRoundButton(knockoutsArray));
+
     const handlePresentModalPress = useCallback( async () => {
 
         console.info("pressed")
@@ -336,11 +356,10 @@ const StandingsScreen = () => {
         console.info(seasonName)
 
         // get knockouts info
-
         bottomSheetModalRef.current?.present();
-
         const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, seasonName)
         setKnockoutsArray(knockoutFixtures)
+        setKnockoutRoundName(getDefaultRoundButton(knockoutFixtures))
 
     }, [leagueName, seasonName]);
     
@@ -367,6 +386,11 @@ const StandingsScreen = () => {
     }
 
     const snapPoints = ["100%"];
+
+    const handleNewRoundChosen = (roundName: string) => {
+        setKnockoutRoundName(roundName)
+    }
+
 
     return (
 
@@ -432,6 +456,7 @@ const StandingsScreen = () => {
             index={0}
             snapPoints={snapPoints}
             enableDynamicSizing={false}
+            enableOverDrag={false}
             backdropComponent={renderBackdrop}
             //handleStyle={}
             //handleIndicatorStyle={}
@@ -440,7 +465,10 @@ const StandingsScreen = () => {
             <BottomSheetView style={{flex: 1}}>
                <KnockoutsPanel 
                knockoutFixturesArray={knockoutsArray}
-               leagueName={leagueName}/>
+               leagueName={leagueName}
+               chosenKnockoutRound={knockoutRoundName}
+               handleChooseRound={handleNewRoundChosen}/>
+               
             </BottomSheetView>
             </BottomSheetModal>
 
@@ -455,16 +483,74 @@ const StandingsScreen = () => {
 type KnockoutsPanelProps = {
     knockoutFixturesArray: MatchInfo[]
     leagueName: string,
-    
+    chosenKnockoutRound: string,
+    handleChooseRound: (roundName: string) => void 
 }
 
-export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsPanelProps) => {
+type KnockoutsFixturePairProps = {
+    firstFixtureIndex: number,
+    secondFixtureIndex: number,
+    array: MatchInfo[],
+    thisLeagueName: string,
+    hasExtraMargin: boolean,
+}
 
-    const [knockoutRoundName, setKnockoutRoundName] = useState<string>('quaterFinals');
+export const KnockoutFixturePair = ({ firstFixtureIndex, secondFixtureIndex, array, thisLeagueName, hasExtraMargin }: KnockoutsFixturePairProps) => {
+
+    return (
+        <View style={{ flexDirection: 'row', marginBottom: hasExtraMargin ? 50 : 0 }}>
+            <View style={{ flexDirection: 'column', width: "80%" }}>
+                <KnockoutsFixture fixtureInfo={array[firstFixtureIndex]} leagueName={thisLeagueName} />
+                <KnockoutsFixture fixtureInfo={array[secondFixtureIndex]} leagueName={thisLeagueName} />
+            </View>
+
+            <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
+                <View style={{
+                    height: "100%",
+                    borderRightColor: 'white', borderRightWidth: 1, borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1
+                }}>
+                    <Text></Text>
+                </View>
+            </View>
+            <View style={{ position: 'absolute', bottom: "50%", right: 0, left: "90%", top: "50%", width: "10%", height: "1%" }}>
+                <View style={{ borderTopColor: 'white', borderTopWidth: 1 }}>
+                    <Text></Text>
+                </View>
+            </View>
+        </View>
+    )
+}
+
+export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
 
     const knockoutRoundRender = (knockoutRoundName: string) => {
 
-        if (knockoutRoundName == "quaterFinals") {
+        if (knockoutRoundName == "r16") {
+
+            const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "R16");
+
+            if(filteredArray.length == 0)
+            {
+                return null
+            }
+
+            return (
+                <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+                    <KnockoutFixturePair firstFixtureIndex={0} secondFixtureIndex={1} array={filteredArray}
+                        thisLeagueName={leagueName} hasExtraMargin={false} />
+
+                    <KnockoutFixturePair firstFixtureIndex={2} secondFixtureIndex={3} array={filteredArray}
+                        thisLeagueName={leagueName} hasExtraMargin={false} />
+
+                    <KnockoutFixturePair firstFixtureIndex={4} secondFixtureIndex={5} array={filteredArray}
+                        thisLeagueName={leagueName} hasExtraMargin={false} />
+
+                    <KnockoutFixturePair firstFixtureIndex={6} secondFixtureIndex={7} array={filteredArray}
+                        thisLeagueName={leagueName} hasExtraMargin={true} />
+                </View>
+            )
+        }
+        else if (knockoutRoundName == "quaterFinals") {
 
             const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "QF");
 
@@ -474,47 +560,12 @@ export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsP
             }
 
             return (
-                <View style={{flexDirection: 'column', height: "80%", justifyContent: 'center'}}>
-                    <View style={{ flexDirection: 'row'}}>
-                        <View style={{ flexDirection: 'column', width: "80%"}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName}/>
-                            <KnockoutsFixture fixtureInfo={filteredArray[3]} leagueName={leagueName} />
-                        </View>
+                <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+                    <KnockoutFixturePair firstFixtureIndex={0} secondFixtureIndex={1} array={filteredArray}
+                     thisLeagueName={leagueName} hasExtraMargin={false}/>
 
-                        <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
-                            <View style={{ height: "100%",
-                                borderRightColor: 'white', borderRightWidth: 1, borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1
-                            }}>
-                                <Text></Text>
-                            </View>
-                        </View>
-                        <View style={{ position: 'absolute', bottom: "50%", right: 0, left: "90%", top: "50%", width: "10%", height: "1%" }}>
-                            <View style={{borderTopColor: 'white', borderTopWidth: 1 }}>
-                                <Text></Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={{ flexDirection: 'row'}}>
-                        <View style={{ flexDirection: 'column', width: "80%"}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[1]} leagueName={leagueName} />
-                            <KnockoutsFixture fixtureInfo={filteredArray[2]} leagueName={leagueName} />
-                        </View>
-
-                        <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
-                            <View style={{ height: "100%",
-                                borderRightColor: 'white', borderRightWidth: 1, borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1
-                            }}>
-                                <Text></Text>
-                            </View>
-                        </View>
-                        <View style={{ position: 'absolute', bottom: "50%", right: 0, left: "90%", top: "50%", width: "10%", height: "1%" }}>
-                            <View style={{borderTopColor: 'white', borderTopWidth: 1 }}>
-                                <Text></Text>
-                            </View>
-                        </View>
-                    </View>
-
+                    <KnockoutFixturePair firstFixtureIndex={2} secondFixtureIndex={3} array={filteredArray}
+                     thisLeagueName={leagueName} hasExtraMargin={false}/>
                 </View>
                 
             )
@@ -529,29 +580,10 @@ export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsP
             }
 
             return (
-                <View style={{flexDirection: 'column',  height: "80%", justifyContent: 'center'}}>
-                    <View style={{ flexDirection: 'row'}}>
-                        <View style={{ flexDirection: 'column', width: "80%", gap: 80}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[1]} leagueName={leagueName} />
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} />
-                        </View>
-
-                        <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
-                            <View style={{ height: "100%",
-                                borderRightColor: 'white', borderRightWidth: 1, borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1
-                            }}>
-                                <Text></Text>
-                            </View>
-                        </View>
-                        <View style={{ position: 'absolute', bottom: "50%", right: 0, left: "90%", top: "50%", width: "10%", height: "1%" }}>
-                            <View style={{borderTopColor: 'white', borderTopWidth: 1 }}>
-                                <Text></Text>
-                            </View>
-                        </View>
-                    </View>
-
+                <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+                    <KnockoutFixturePair firstFixtureIndex={0} secondFixtureIndex={1} array={filteredArray}
+                     thisLeagueName={leagueName} hasExtraMargin={false}/>
                 </View>
-                
             )
         }
         else if (knockoutRoundName == "final") {
@@ -559,11 +591,11 @@ export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsP
             const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "GF");
             if(filteredArray.length == 0)
             {
-                    return null
+                return null
             }
 
             return (
-                <View style={{flexDirection: 'column', height: "80%", justifyContent: 'center'}}>
+                <View style={{flexDirection: 'column', justifyContent: 'center'}}>
                     <View style={{ flexDirection: 'row'}}>
                         <View style={{ flexDirection: 'column', width: "100%"}}>
                             <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} />
@@ -576,14 +608,52 @@ export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsP
         }
     }
 
+    const knockoutRoundButtonsRender = (knockoutFixturesArray: MatchInfo[]) => {
+
+        const hasR16Fixtures = knockoutFixturesArray.find(obj => obj.matchTitle === "R16") !== undefined;
+        const hasQFFixtures = knockoutFixturesArray.find(obj => obj.matchTitle === "QF") !== undefined;
+        const hasSFFixtures = knockoutFixturesArray.find(obj => obj.matchTitle === "SF") !== undefined;
+        const hasGFFixtures = knockoutFixturesArray.find(obj => obj.matchTitle === "GF") !== undefined;
+
+        return (
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                {hasR16Fixtures && (
+                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: chosenKnockoutRound == 'r16' ? 'lightgrey' : 'grey'}]} 
+                    onPress={() => handlePressRoundButton('r16')}>
+                        <Text style={[knockoutPanelStyles.roundText, {color: chosenKnockoutRound == 'r16' ? 'black':'white'}]}>R16</Text>
+                    </TouchableOpacity>   
+                )}
+                {hasQFFixtures && (
+                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: chosenKnockoutRound == 'quaterFinals' ? 'lightgrey' : 'grey'}]} 
+                    onPress={() => handlePressRoundButton('quaterFinals')}>
+                        <Text style={[knockoutPanelStyles.roundText, {color: chosenKnockoutRound == 'quaterFinals' ? 'black':'white'}]}>QUARTER FINALS</Text>
+                    </TouchableOpacity>   
+                )}
+                {hasSFFixtures && (
+                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: chosenKnockoutRound == 'semiFinals' ? 'lightgrey' : 'grey'}]}
+                    onPress={() => handlePressRoundButton('semiFinals')}>
+                        <Text style={[knockoutPanelStyles.roundText, {color: chosenKnockoutRound == 'semiFinals' ? 'black':'white'}]}>SEMI FINALS</Text>
+                    </TouchableOpacity>  
+                )}
+                {hasGFFixtures && (
+                   <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: chosenKnockoutRound == 'final' ? 'lightgrey' : 'grey'}]}
+                   onPress={() => handlePressRoundButton('final')}>
+                       <Text style={[knockoutPanelStyles.roundText, {color: chosenKnockoutRound == 'final' ? 'black':'white'}]}>FINAL</Text>
+                   </TouchableOpacity>  
+                )}
+
+            </View>
+        )
+    }
+
     const handlePressRoundButton = (roundName: string) => {
-        setKnockoutRoundName(roundName)
+        handleChooseRound(roundName)
     }
 
     const leagueDisplayName = getLeagueDisplayNameFromValue(leagueName)
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <View>
                 <Text style={{color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center', fontSize: fontSize.sm}}>KNOCKOUTS</Text>
             </View>
@@ -592,24 +662,17 @@ export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsP
                 <Text style={{color: colors.text, fontFamily: fontFamilies.regular, textAlign: 'center', fontSize: 14}}>{leagueDisplayName}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: knockoutRoundName == 'quaterFinals' ? 'lightgrey' : 'grey'}]} 
-            onPress={() => handlePressRoundButton('quaterFinals')}>
-                <Text style={[knockoutPanelStyles.roundText, {color: knockoutRoundName == 'quaterFinals' ? 'black':'white'}]}>QUARTER FINALS</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: knockoutRoundName == 'semiFinals' ? 'lightgrey' : 'grey'}]}
-            onPress={() => handlePressRoundButton('semiFinals')}>
-                <Text style={[knockoutPanelStyles.roundText, {color: knockoutRoundName == 'semiFinals' ? 'black':'white'}]}>SEMI FINALS</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={[knockoutPanelStyles.roundButton, {backgroundColor: knockoutRoundName == 'final' ? 'lightgrey' : 'grey'}]}
-            onPress={() => handlePressRoundButton('final')}>
-                <Text style={[knockoutPanelStyles.roundText, {color: knockoutRoundName == 'final' ? 'black':'white'}]}>FINAL</Text>
-            </TouchableOpacity>
+            <View>
+                {knockoutRoundButtonsRender(knockoutFixturesArray)}
             </View>
-
-            {knockoutRoundRender(knockoutRoundName)}
+        
+            <BottomSheetScrollView>
+                <View>
+                    {knockoutRoundRender(chosenKnockoutRound)}
+                </View> 
+            </BottomSheetScrollView>
+                       
             
         </View>  
     )
@@ -698,7 +761,7 @@ export const knockoutPanelStyles = StyleSheet.create({
     },
 
     roundButton: {
-       margin: 10,
+       margin: 5,
        borderRadius: 5
     },
 
