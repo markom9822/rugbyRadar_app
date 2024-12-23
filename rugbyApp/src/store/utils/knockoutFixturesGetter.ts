@@ -16,23 +16,23 @@ export const fetchRugbyVizKnockoutFixtures = async (thisLeagueName: string, seas
     }
 
     //console.info(getCurrentRugbySeason(selectedDate))
-    //const seasonYear = getCurrentRugbySeason(selectedDate)
+    const targetSeasonYear = Number(seasonYear) - 1
 
     if(rugbyVizLeagueCode !== undefined)
     {
-        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+seasonYear+'01'
+        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+targetSeasonYear.toString()+'01'
         console.info(apiStringAll)
         const allFixtureData = await fetch(apiStringAll,).then((res) => res.json())
 
 
-        const allFixturesArray = getKnockoutFixturesAllRugViz(allFixtureData)
+        const allFixturesArray = getKnockoutFixturesAllRugViz(allFixtureData, thisLeagueName)
         return allFixturesArray;
     }
 
     return []
 }
 
-export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any) => 
+export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any, leagueName: string) => 
 {
     const gamesCount = seasonAllMatches.data.length;
     console.info(gamesCount)
@@ -54,7 +54,30 @@ export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any) =>
             const matchVenue = seasonAllMatches.data[index].venue.name;
             const matchID = seasonAllMatches.data[index].id;
             const compName = seasonAllMatches.data[index].compName;
-            const matchTitle = seasonAllMatches.data[index].title;
+
+            const sourceMatchTitle = seasonAllMatches.data[index].title;
+
+            var matchTitle = ''
+
+            if(leagueName == 'prem')
+            {
+                matchTitle = sourceMatchTitle == 'SF' ? 'GF' : 'SF'
+            }
+            else if(leagueName == 'championsCup' || leagueName == 'challengeCup')
+            {
+                if(sourceMatchTitle == 'TF')
+                {
+                    matchTitle = 'GF'
+                }
+                else
+                {
+                    matchTitle = sourceMatchTitle;
+                }
+            }
+            else
+            {
+                matchTitle =  sourceMatchTitle
+            }
 
             const eventTime = seasonAllMatches.data[index].minute;
 

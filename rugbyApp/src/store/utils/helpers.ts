@@ -270,6 +270,12 @@ export const getLeagueDisplayNameFromCode = (leagueCode: string) => {
     return result?.displayName.toString()
 }
 
+export const getLeagueDisplayNameFromValue = (leagueValue: string) => {
+    
+    const result = leagueCodes.find((element) => element.value == leagueValue)
+    return result?.displayName.toString()
+}
+
 export const getLeagueInfoFromDisplayName  = (displayName: string) => {
     
     const result = leagueCodes.find((element) => element.displayName == displayName)

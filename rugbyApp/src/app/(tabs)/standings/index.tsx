@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, 
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
+import { generateSeasonList, getLeagueCode, getLeagueDisplayNameFromValue, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
@@ -190,18 +190,18 @@ const StandingsScreen = () => {
     }
 
     const leagueData = [
-        { label: 'URC', value: 'urc', logo: URCAltLogo },
-        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
-        { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
-        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
-        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
-        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-        { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo },
-        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
-        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
-        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo}
+        { label: 'URC', value: 'urc', logo: URCAltLogo, hasKnockouts: true },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, hasKnockouts: true },
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, hasKnockouts: true },
+        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, hasKnockouts: true },
+        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, hasKnockouts: true },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: true },
+        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, hasKnockouts: false },
+        { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo, hasKnockouts: false },
+        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, hasKnockouts: false},
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, hasKnockouts: true },
+        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo, hasKnockouts: true },
+        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, hasKnockouts: false}
     ];
 
     const seasonWorldCupData = [
@@ -328,20 +328,45 @@ const StandingsScreen = () => {
 		),
 		[]
 	);
-
+    
     const handlePresentModalPress = useCallback( async () => {
 
         console.info("pressed")
+        console.info(leagueName)
+        console.info(seasonName)
+
         // get knockouts info
 
         bottomSheetModalRef.current?.present();
 
-        const knockoutFixtures = await fetchRugbyVizKnockoutFixtures('urc', '2023')
+        const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, seasonName)
         setKnockoutsArray(knockoutFixtures)
 
-    }, []);
+    }, [leagueName, seasonName]);
+    
+    const knockoutsButton = () => {
 
-    const snapPoints = ["58%", "78%"];
+        var leagueHasKnockouts = false;
+
+        if(leagueName !== '')
+        {
+            const targetIndex = leagueData.findIndex(item => item.value === leagueName);
+            leagueHasKnockouts = leagueData[targetIndex].hasKnockouts;
+        }
+
+        if (standingsArray.length == 0 || !leagueHasKnockouts) {
+            return null
+        }
+        else {
+            return (
+                <TouchableOpacity style={{ backgroundColor: colors.altBackground, marginBottom: 60 }} activeOpacity={0.8} onPress={handlePresentModalPress}>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }}>KNOCKOUTS</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
+
+    const snapPoints = ["100%"];
 
     return (
 
@@ -400,9 +425,7 @@ const StandingsScreen = () => {
             isPlayoffCutoff={item.isPlayoffCutoff} />}
         />
 
-        <TouchableOpacity style={{backgroundColor: colors.altBackground, marginBottom: 60}} activeOpacity={0.8} onPress={handlePresentModalPress}>
-            <Text style={{color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center'}}>KNOCKOUT</Text>
-        </TouchableOpacity>
+        {knockoutsButton()}
 
         <BottomSheetModal
             ref={bottomSheetModalRef}
@@ -415,7 +438,9 @@ const StandingsScreen = () => {
             backgroundStyle={{backgroundColor: colors.altBackground}}
             >
             <BottomSheetView style={{flex: 1}}>
-               <KnockoutsPanel knockoutFixturesArray={knockoutsArray}/>
+               <KnockoutsPanel 
+               knockoutFixturesArray={knockoutsArray}
+               leagueName={leagueName}/>
             </BottomSheetView>
             </BottomSheetModal>
 
@@ -429,10 +454,11 @@ const StandingsScreen = () => {
 
 type KnockoutsPanelProps = {
     knockoutFixturesArray: MatchInfo[]
+    leagueName: string,
     
 }
 
-export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) => {
+export const KnockoutsPanel = ({ knockoutFixturesArray, leagueName }: KnockoutsPanelProps) => {
 
     const [knockoutRoundName, setKnockoutRoundName] = useState<string>('quaterFinals');
 
@@ -442,12 +468,17 @@ export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) =
 
             const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "QF");
 
+            if(filteredArray.length == 0)
+            {
+                return null
+            }
+
             return (
                 <View style={{flexDirection: 'column', height: "80%", justifyContent: 'center'}}>
                     <View style={{ flexDirection: 'row'}}>
                         <View style={{ flexDirection: 'column', width: "80%"}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName="urc"/>
-                            <KnockoutsFixture fixtureInfo={filteredArray[3]} leagueName="urc" />
+                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName}/>
+                            <KnockoutsFixture fixtureInfo={filteredArray[3]} leagueName={leagueName} />
                         </View>
 
                         <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
@@ -466,8 +497,8 @@ export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) =
 
                     <View style={{ flexDirection: 'row'}}>
                         <View style={{ flexDirection: 'column', width: "80%"}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[1]} leagueName="urc" />
-                            <KnockoutsFixture fixtureInfo={filteredArray[2]} leagueName="urc" />
+                            <KnockoutsFixture fixtureInfo={filteredArray[1]} leagueName={leagueName} />
+                            <KnockoutsFixture fixtureInfo={filteredArray[2]} leagueName={leagueName} />
                         </View>
 
                         <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
@@ -492,12 +523,17 @@ export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) =
 
             const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "SF");
 
+            if(filteredArray.length == 0)
+            {
+                return null
+            }
+
             return (
                 <View style={{flexDirection: 'column',  height: "80%", justifyContent: 'center'}}>
                     <View style={{ flexDirection: 'row'}}>
                         <View style={{ flexDirection: 'column', width: "80%", gap: 80}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[1]} leagueName="urc" />
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName="urc" />
+                            <KnockoutsFixture fixtureInfo={filteredArray[1]} leagueName={leagueName} />
+                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} />
                         </View>
 
                         <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
@@ -521,12 +557,16 @@ export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) =
         else if (knockoutRoundName == "final") {
 
             const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "GF");
+            if(filteredArray.length == 0)
+            {
+                    return null
+            }
 
             return (
                 <View style={{flexDirection: 'column', height: "80%", justifyContent: 'center'}}>
                     <View style={{ flexDirection: 'row'}}>
                         <View style={{ flexDirection: 'column', width: "100%"}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName="urc" />
+                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} />
                         </View>
                     </View>
 
@@ -540,11 +580,16 @@ export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) =
         setKnockoutRoundName(roundName)
     }
 
+    const leagueDisplayName = getLeagueDisplayNameFromValue(leagueName)
 
     return (
         <View>
             <View>
                 <Text style={{color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center', fontSize: fontSize.sm}}>KNOCKOUTS</Text>
+            </View>
+
+            <View>
+                <Text style={{color: colors.text, fontFamily: fontFamilies.regular, textAlign: 'center', fontSize: 14}}>{leagueDisplayName}</Text>
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -566,10 +611,8 @@ export const KnockoutsPanel = ({ knockoutFixturesArray }: KnockoutsPanelProps) =
 
             {knockoutRoundRender(knockoutRoundName)}
             
-        </View>
-        
+        </View>  
     )
-
 }
 
 type KnockoutsFixtureProps = {
@@ -585,9 +628,24 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
         return;
     }
 
+    var homeTeamName;
+    var awayTeamName;
+
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, fixtureInfo.homeTeam, fixtureInfo.awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
+
+    homeTeamName = homeTeamInfo?.abbreviation;
+    awayTeamName = awayTeamInfo?.abbreviation;
+
+    if(fixtureInfo.homeTeam == "TBC")
+    {
+        homeTeamName = fixtureInfo.homeTeam;
+    }
+    if(fixtureInfo.awayTeam == "TBC")
+    {
+        awayTeamName = fixtureInfo.awayTeam;
+    }
 
     const homeTeamScore = fixtureInfo.homeScore;
     const awayTeamScore = fixtureInfo.awayScore;
@@ -604,7 +662,7 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
     return(
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, marginHorizontal: 10, marginVertical: 10, padding: 5, borderRadius: 4}}>
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center',}}>
-                <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12}}>{homeTeamInfo?.abbreviation}</Text>
+                <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12}}>{homeTeamName}</Text>
                  <View style={{paddingHorizontal: 10}}>
                     <Image
                         style={[knockoutPanelStyles.teamLogo]}
@@ -619,7 +677,7 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
                         style={[knockoutPanelStyles.teamLogo]}
                         source={awayTeamInfo.logo} />
                 </View>
-                <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12}}>{awayTeamInfo?.abbreviation}</Text>
+                <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12}}>{awayTeamName}</Text>
             </View>
 
             <View style={{padding: 3}}>
