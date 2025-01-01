@@ -93,7 +93,7 @@ export const Top14RugbyTeams = [
     logo: BordeauxLogo,
     altLogo: BordeauxAltLogo,
     colour: '#69233F',
-    id: '3094',
+    id: '5979',
     defaultLeague: 'Top 14',
     foundedYear: '2006',
     seasonType: 'north',

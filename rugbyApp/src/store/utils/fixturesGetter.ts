@@ -463,10 +463,18 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
 
         // fetch match info
         const apiString = 'https://rugbylivecenter.yormedia.com/api/match-overview/'+ matchIDs[index];
+        console.info(apiString)
         const matchInfo = await fetch(apiString,).then((res) => res.json())
         console.info(matchInfo)
         
         // need to get date
+        //const simpleFormat = (dateStr: string): string => {
+        //    return `${dateStr.replace(' ', 'T')}.000Z`;
+        //}
+
+        //const formattedDate = simpleFormat(matchInfo.data.match.datetime);
+        //console.info(formattedDate)
+
         const matchDate = new Date(matchInfo.data.match.datetime);
         const currentYear = new Date().getFullYear()
 

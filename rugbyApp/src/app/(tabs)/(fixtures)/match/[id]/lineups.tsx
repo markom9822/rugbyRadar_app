@@ -4,7 +4,7 @@ import { Ref, RefAttributes, useCallback, useEffect, useRef, useState } from "re
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { defaultStyles, lineupPanelStyles } from "@/styles";
 import {dateCustomFormatting, getESPNMatchInfoFromDetails, getLeagueName, hexToRGB } from "@/store/utils/helpers";
-import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
+import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import 'react-native-gesture-handler'
@@ -439,6 +439,36 @@ const Lineups = () => {
         }
         else if (id.indexOf("_PlanetRugbyAPI") !== -1) 
         {
+            if(leagueName == "top14")
+            {
+                const teamID = getTeamInfo("championsCup", teamName)?.teamInfo.id;
+                console.info(teamName)
+                const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/teams/'+teamID+'/players?provider=rugbyviz&competitionId=1008&seasonId=202401&images=true'
+                console.info(apiString)
+                const teamPlayersInfo = await fetch(apiString,).then((res) => res.json())
+
+                for (let index = 0; index < teamPlayersInfo.data.length; index++) {
+
+                    if (teamPlayersInfo.data[index].knownName == playerName) {
+
+                        const playerPosition = teamPlayersInfo.data[index].position;
+                        const playerDOB = new Date(teamPlayersInfo.data[index].dateOfBirth);
+                        const playerAge = calculateAge(playerDOB).toString()
+                        const playerHeight = teamPlayersInfo.data[index].height;
+                        const playerWeight = teamPlayersInfo.data[index].weight;
+                        const playerCountry = teamPlayersInfo.data[index].country;
+                        setModalPlayerPosition(playerPosition)
+                        setModalPlayerAge(playerAge)
+                        setModalPlayerDOB(formatDate(playerDOB))
+                        setModalPlayerHeight(cmToMeters(playerHeight))
+                        setModalPlayerWeight(playerWeight)
+                        setModalPlayerCountry(playerCountry)
+                        break;
+                    }
+                }
+
+            }
+
             const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
             setModalPlayerImageSrc(playerImageSrc)
         }
