@@ -9,38 +9,39 @@ import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyPassTVLogo, RugbyTVLogo, S4CLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
 import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
+import { PremiershipTrophyIcon, Top14TrophyIcon, URCTrophyIcon } from "../TrophyIcons/TrophyIcons";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
-         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo},
+         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, trophyIcon: URCTrophyIcon},
     { value: 'prem', code: "267979",
-         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo},
+         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, trophyIcon: PremiershipTrophyIcon},
     { value: 'top14', code: "270559",
-         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo, trophyIcon: Top14TrophyIcon},
     { value: 'superRugby', code: "242041",
-         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
+         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo, trophyIcon: null},
     { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
-         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
+         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo, trophyIcon: null},
     { value: 'rugbyWorldCup', code: "164205",
-         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: null},
     { value: 'championsCup', code: "271937",
-         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo},
+         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, trophyIcon: null},
     { value: 'challengeCup', code: "272073",
-         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo},
+         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, trophyIcon: null},
     { value: 'sixNations', code: "180659",
-         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
+         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo, trophyIcon: null},
     { value: 'inter', code: "289234",
-         displayName: "Men's Internationals", leagueLogo: null, leagueAltLogo: null},
+         displayName: "Men's Internationals", leagueLogo: null, leagueAltLogo: null, trophyIcon: null},
     { value: 'menSevens', code: "282",
-         displayName: '', leagueLogo: null, leagueAltLogo: null},
+         displayName: '', leagueLogo: null, leagueAltLogo: null, trophyIcon: null},
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
-        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo},
+        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo, trophyIcon: null},
     { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
-        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsLogo},
+        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsLogo, trophyIcon: null},
     { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
-        displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+        displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: null},
     { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
-        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo},
+        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo, trophyIcon: null},
 ];
 
 export const rugbyVizleagueCodes = [
@@ -280,6 +281,12 @@ export const getLeagueLogoFromValue = (leagueValue: string) => {
     
     const result = leagueCodes.find((element) => element.value == leagueValue)
     return result?.leagueAltLogo.toString()
+}
+
+export const getLeagueTrophyIconFromValue = (leagueValue: string) => {
+    
+    const result = leagueCodes.find((element) => element.value == leagueValue)
+    return result?.trophyIcon
 }
 
 export const getLeagueInfoFromDisplayName  = (displayName: string) => {

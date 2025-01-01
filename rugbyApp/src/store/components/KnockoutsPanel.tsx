@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Image, ScrollView, ImageBackgroundBase, ImageBackground } from "react-native"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import { getLeagueDisplayNameFromValue, getLeagueLogoFromValue } from "@/store/utils/helpers"
+import { getLeagueDisplayNameFromValue, getLeagueLogoFromValue, getLeagueTrophyIconFromValue } from "@/store/utils/helpers"
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo"
 import { MatchInfo } from "@/app/(tabs)/(fixtures)"
-import { Top14AltLogo, URCAltLogo } from "../LeagueLogos/LeagueLogos"
 import { StandingInfo } from "@/app/(tabs)/standings"
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
+import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
+import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
 
 type KnockoutsPanelProps = {
     standingsArray: StandingInfo[]
@@ -28,8 +29,8 @@ export const KnockoutFixturePair = ({ firstMatch, secondMatch, thisLeagueName, h
     return (
         <View style={{ flexDirection: 'row', marginBottom: hasExtraMargin ? 50 : 0 }}>
             <View style={{ flexDirection: 'column', width: "80%" }}>
-                <KnockoutsFixture fixtureInfo={firstMatch} leagueName={thisLeagueName} />
-                <KnockoutsFixture fixtureInfo={secondMatch} leagueName={thisLeagueName} />
+                <KnockoutsFixture fixtureInfo={firstMatch} leagueName={thisLeagueName} isFinalMatch={false} />
+                <KnockoutsFixture fixtureInfo={secondMatch} leagueName={thisLeagueName} isFinalMatch={false} />
             </View>
 
             <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
@@ -70,12 +71,26 @@ export const getFixtureFromStandingIndex = (team1Index: number, team2Index: numb
             homeTeamSearchName = getURCTeamInfoFromName(fixturesArray[index].homeTeam).displayName;
             awayTeamSearchName = getURCTeamInfoFromName(fixturesArray[index].awayTeam).displayName;
         }
+        if(league === "prem")
+        {
+            homeTeamSearchName = getPremTeamInfoFromName(fixturesArray[index].homeTeam).displayName;
+            awayTeamSearchName = getPremTeamInfoFromName(fixturesArray[index].awayTeam).displayName;
+        }
+        if(league === "championsCup")
+        {
+            homeTeamSearchName = getChampionsCupTeamInfoFromName(fixturesArray[index].homeTeam).displayName;
+            console.info(`home team search name: ${homeTeamSearchName}, team1 Name: ${team1Name}`)
+            awayTeamSearchName = getChampionsCupTeamInfoFromName(fixturesArray[index].awayTeam).displayName;
+            console.info(`away team search name: ${awayTeamSearchName}, team2 Name: ${team2Name}`)
+
+        }
 
         const homeCheck = homeTeamSearchName == team1Name || homeTeamSearchName == team2Name;
         const awayCheck = awayTeamSearchName == team1Name || awayTeamSearchName == team2Name;
 
         if(homeCheck && awayCheck)
         {
+            console.info("Got here")
             return fixturesArray[index]
         }
         
@@ -84,7 +99,71 @@ export const getFixtureFromStandingIndex = (team1Index: number, team2Index: numb
     return null
 }
 
+export const sortTeamsArray = (standings: StandingInfo[], rankingsIndex: number ) => {
+
+    const clonedStandings = [...standings];
+
+    const filtered = clonedStandings.filter(item => item.ranking === rankingsIndex );
+    console.info("Filtered")
+    console.info(filtered)
+
+    const sorted = filtered.sort((a, b) => 
+        Number(b.teamPoints) - Number(a.teamPoints) || 
+        Number(b.teamPD) - Number(a.teamPD)
+    );
+
+    return filtered
+}
+
+export const pooledTableIntoRanked = (standingsArray: StandingInfo[]) => {
+
+    const clonedArray = [...standingsArray];
+
+    const filteredPools = clonedArray.filter(item => item.teamName !== "Pool" );
+
+    const rank1Array = sortTeamsArray(filteredPools, 0)
+    const rank2Array = sortTeamsArray(filteredPools, 1)
+    const rank3Array = sortTeamsArray(filteredPools, 2)
+    const rank4Array = sortTeamsArray(filteredPools, 3)
+
+    const rankedArray = [...rank1Array, ...rank2Array, ...rank3Array, ...rank4Array];
+
+    for (let index = 0; index < rankedArray.length; index++) {
+
+        const newStanding: StandingInfo = {
+            isHeader: rankedArray[index].isHeader,
+            teamPool: rankedArray[index].teamPool,
+            teamName: rankedArray[index].teamName,
+            teamGP: rankedArray[index].teamGP,
+            teamWins: rankedArray[index].teamWins,
+            teamDraws: rankedArray[index].teamDraws,
+            teamLosses: rankedArray[index].teamGP,
+            teamPD: rankedArray[index].teamPD,
+            teamPoints: rankedArray[index].teamPoints,
+            ranking: index,
+            isLastItem: rankedArray[index].isLastItem,
+            isEndOfList: rankedArray[index].isEndOfList,
+            isPlayoffCutoff: rankedArray[index].isPlayoffCutoff
+        };
+        
+        rankedArray[index] = newStanding;
+        console.info(`Team: ${rankedArray[index].teamName}, ranking: ${index}`)
+    }
+
+    return rankedArray
+
+}
+
 export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
+
+    var targetStandingsArray = standingsArray;
+
+    if(leagueName == "championsCup")
+    {
+        // turn pooled table into ranked table
+
+        targetStandingsArray = pooledTableIntoRanked(standingsArray);
+    }
 
     const knockoutRoundRender = (knockoutRoundName: string) => {
 
@@ -97,39 +176,34 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
                 return null
             }
 
-            const R1_FirstFixture = getFixtureFromStandingIndex( 1, 8, standingsArray, filteredArray, leagueName)
-            const R1_SecondFixture = getFixtureFromStandingIndex( 1, 8, standingsArray, filteredArray, leagueName)
+            const R16Seedings = [[1,16], [8,9], [5,12], [4,13], [2,15], [7,10], [3,14], [6,11]]
 
-            const R2_FirstFixture = getFixtureFromStandingIndex( 1, 8, standingsArray, filteredArray, leagueName)
-            const R2_SecondFixture = getFixtureFromStandingIndex( 4, 5, standingsArray, filteredArray, leagueName)
+            var R16Fixtures = new Array(filteredArray.length);
 
-            const R3_FirstFixture = getFixtureFromStandingIndex( 2, 7, standingsArray, filteredArray, leagueName)
-            const R3_SecondFixture = getFixtureFromStandingIndex( 3, 6, standingsArray, filteredArray, leagueName)
-
-            const R4_FirstFixture = getFixtureFromStandingIndex( 2, 7, standingsArray, filteredArray, leagueName)
-            const R4_SecondFixture = getFixtureFromStandingIndex( 3, 6, standingsArray, filteredArray, leagueName)
-
-            if(R1_FirstFixture == null) return;
-            if(R1_SecondFixture == null) return;
-            if(R2_FirstFixture == null) return;
-            if(R2_SecondFixture == null) return;
-            if(R3_FirstFixture == null) return;
-            if(R3_SecondFixture == null) return;
-            if(R4_FirstFixture == null) return;
-            if(R4_SecondFixture == null) return;
+            for (let index = 0; index < filteredArray.length; index++) {
+                
+                if(filteredArray[index].homeTeam == "TBC" && filteredArray[index].awayTeam == "TBC" )
+                {
+                    R16Fixtures[index] = filteredArray[index]
+                }
+                else
+                {
+                    R16Fixtures[index] = getFixtureFromStandingIndex( R16Seedings[index][0], R16Seedings[index][1], targetStandingsArray, filteredArray, leagueName);
+                } 
+            }
 
             return (
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-                    <KnockoutFixturePair firstMatch={R1_FirstFixture} secondMatch={R1_SecondFixture}
+                    <KnockoutFixturePair firstMatch={R16Fixtures[0]} secondMatch={R16Fixtures[1]}
                         thisLeagueName={leagueName} hasExtraMargin={false} />
 
-                    <KnockoutFixturePair firstMatch={R2_FirstFixture} secondMatch={R2_SecondFixture}
+                    <KnockoutFixturePair firstMatch={R16Fixtures[2]} secondMatch={R16Fixtures[3]}
                         thisLeagueName={leagueName} hasExtraMargin={false} />
 
-                    <KnockoutFixturePair firstMatch={R3_FirstFixture} secondMatch={R3_SecondFixture}
+                    <KnockoutFixturePair firstMatch={R16Fixtures[4]} secondMatch={R16Fixtures[5]}
                         thisLeagueName={leagueName} hasExtraMargin={false} />
 
-                    <KnockoutFixturePair firstMatch={R4_FirstFixture} secondMatch={R4_SecondFixture}
+                    <KnockoutFixturePair firstMatch={R16Fixtures[6]} secondMatch={R16Fixtures[7]}
                         thisLeagueName={leagueName} hasExtraMargin={true} />
                 </View>
             )
@@ -143,23 +217,28 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
                 return null
             }
 
-            const QF1_FirstFixture = getFixtureFromStandingIndex( 1, 8, standingsArray, filteredArray, leagueName)
-            const QF1_SecondFixture = getFixtureFromStandingIndex( 4, 5, standingsArray, filteredArray, leagueName)
+            const QFSeedings = [[1,8], [4,5], [2,7], [3,6]]
 
-            const QF2_FirstFixture = getFixtureFromStandingIndex( 2, 7, standingsArray, filteredArray, leagueName)
-            const QF2_SecondFixture = getFixtureFromStandingIndex( 3, 6, standingsArray, filteredArray, leagueName)
+            var QFFixtures = new Array(filteredArray.length);
 
-            if(QF1_FirstFixture == null) return;
-            if(QF1_SecondFixture == null) return;
-            if(QF2_FirstFixture == null) return;
-            if(QF2_SecondFixture == null) return;
+            for (let index = 0; index < filteredArray.length; index++) {
+                
+                if(filteredArray[index].homeTeam == "TBC" && filteredArray[index].awayTeam == "TBC" )
+                {
+                    QFFixtures[index] = filteredArray[index]
+                }
+                else
+                {
+                    QFFixtures[index] = getFixtureFromStandingIndex( QFSeedings[index][0], QFSeedings[index][1], standingsArray, filteredArray, leagueName);
+                } 
+            }
     
             return (
                 <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-                    <KnockoutFixturePair firstMatch={QF1_FirstFixture} secondMatch={QF1_SecondFixture}
+                    <KnockoutFixturePair firstMatch={QFFixtures[0]} secondMatch={QFFixtures[1]}
                      thisLeagueName={leagueName} hasExtraMargin={false}/>
 
-                    <KnockoutFixturePair firstMatch={QF2_FirstFixture} secondMatch={QF2_SecondFixture}
+                    <KnockoutFixturePair firstMatch={QFFixtures[2]} secondMatch={QFFixtures[3]}
                      thisLeagueName={leagueName} hasExtraMargin={false}/>
                 </View>
                 
@@ -174,35 +253,46 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
                 return null
             }
 
-            const SF1_Option1Fixture = getFixtureFromStandingIndex( 1, 4, standingsArray, filteredArray, leagueName)
-            const SF1_Option2Fixture = getFixtureFromStandingIndex( 1, 5, standingsArray, filteredArray, leagueName)
-            const SF1_Option3Fixture = getFixtureFromStandingIndex( 8, 4, standingsArray, filteredArray, leagueName)
-            const SF1_Option4Fixture = getFixtureFromStandingIndex( 8, 5, standingsArray, filteredArray, leagueName)
+            var SFSeedings: any;
 
-            const SF2_Option1Fixture = getFixtureFromStandingIndex( 2, 3, standingsArray, filteredArray, leagueName)
-            const SF2_Option2Fixture = getFixtureFromStandingIndex( 2, 6, standingsArray, filteredArray, leagueName)
-            const SF2_Option3Fixture = getFixtureFromStandingIndex( 7, 3, standingsArray, filteredArray, leagueName)
-            const SF2_Option4Fixture = getFixtureFromStandingIndex( 7, 6, standingsArray, filteredArray, leagueName)
+            if(leagueName == "urc")
+            {
+                SFSeedings = [[1,4], [1,5], [8,4], [8,5], [2,3], [2,6], [7,3], [7,6]]
+            }
+            else if (leagueName == "prem")
+            {
+                SFSeedings = [[1,4], [2,3]]
+            }
+
+            var SFFixtures = new Array(filteredArray.length);
+            var SFFixturesTemp = new Array(SFSeedings.length);
+
+            for (let index = 0; index < filteredArray.length; index++) {
+                
+                if(filteredArray[index].homeTeam == "TBC" && filteredArray[index].homeTeam == "TBC" )
+                {
+                    SFFixtures[index] = filteredArray[index]
+                }
+            }
+
+            for (let index = 0; index < SFSeedings.length; index++) {
+
+                SFFixturesTemp[index] = getFixtureFromStandingIndex( SFSeedings[index][0], SFSeedings[index][1], standingsArray, filteredArray, leagueName);
+            }
 
             function isValidFixture<T>(fixture: T | null | undefined): fixture is T {
                 return fixture !== null && fixture !== undefined;
             }
-            
-            const validFixtures = [
-                SF1_Option1Fixture,
-                SF1_Option2Fixture,
-                SF1_Option3Fixture,
-                SF1_Option4Fixture,
-                SF2_Option1Fixture,
-                SF2_Option2Fixture,
-                SF2_Option3Fixture,
-                SF2_Option4Fixture,
-            ].filter(isValidFixture);
-        
+
+            if(SFFixtures[0] == null && SFFixtures[1] == null)
+            {
+                const validFixtures = SFFixturesTemp.filter(isValidFixture);
+                SFFixtures = validFixtures;
+            }
 
             return (
                 <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-                    <KnockoutFixturePair firstMatch={validFixtures[0]} secondMatch={validFixtures[1]}
+                    <KnockoutFixturePair firstMatch={SFFixtures[0]} secondMatch={SFFixtures[1]}
                      thisLeagueName={leagueName} hasExtraMargin={false}/>
                 </View>
             )
@@ -219,7 +309,7 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
                 <View style={{flexDirection: 'column', justifyContent: 'center'}}>
                     <View style={{ flexDirection: 'row'}}>
                         <View style={{ flexDirection: 'column', width: "100%"}}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} />
+                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} isFinalMatch={true} />
                         </View>
                     </View>
 
@@ -306,11 +396,12 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
 
 type KnockoutsFixtureProps = {
     leagueName: string,
-    fixtureInfo: MatchInfo
+    fixtureInfo: MatchInfo,
+    isFinalMatch: boolean,
     
 }
 
-export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixtureProps) => {
+export const KnockoutsFixture = ({ leagueName, fixtureInfo, isFinalMatch }: KnockoutsFixtureProps) => {
 
     if(fixtureInfo == undefined || fixtureInfo == null)
     {
@@ -348,8 +439,30 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
     const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold):(fontFamilies.light);
     const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold):(fontFamilies.light);
 
+    const renderTrophyIcon = (finalMatch: boolean) => {
+
+        const leagueTrophyIcon = getLeagueTrophyIconFromValue(leagueName)
+
+        if(finalMatch)
+        {
+            return (
+                <View style={{margin: 3}}>
+                    <Image style={[knockoutPanelStyles.teamLogo]}
+                        source={leagueTrophyIcon}/>
+                </View>
+            )
+        }
+
+        return (
+            <></>
+        )
+    }
+
     return(
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, marginHorizontal: 10, marginVertical: 10, padding: 5, borderRadius: 4}}>
+
+            {renderTrophyIcon(isFinalMatch)}
+
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center',}}>
                 <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12}}>{homeTeamName}</Text>
                  <View style={{paddingHorizontal: 10}}>
