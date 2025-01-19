@@ -1,9 +1,9 @@
 import { defaultStyles} from "@/styles"
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Image, ScrollView } from "react-native"
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode, getLeagueDisplayNameFromValue, getPlanetRugbyAPILeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, getWorldRugbyAPILeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInPlanetRugbyAPIFromLeagueName, isLeagueInWorldRugbyAPIFromLeagueName } from "@/store/utils/helpers"
+import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
+import { generateSeasonList, getLeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName } from "@/store/utils/helpers"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
@@ -12,7 +12,6 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, Bottom
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { MatchInfo } from "../(fixtures)"
 import { fetchRugbyVizKnockoutFixtures } from "@/store/utils/knockoutFixturesGetter"
-import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo"
 import { KnockoutsPanel } from "@/store/components/KnockoutsPanel"
 
 export type StandingInfo = {
@@ -192,18 +191,18 @@ const StandingsScreen = () => {
     }
 
     const leagueData = [
-        { label: 'URC', value: 'urc', logo: URCAltLogo, hasKnockouts: true },
-        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, hasKnockouts: true },
-        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, hasKnockouts: true },
-        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, hasKnockouts: true },
-        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, hasKnockouts: true },
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: true },
-        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, hasKnockouts: false },
-        { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo, hasKnockouts: false },
-        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, hasKnockouts: false},
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, hasKnockouts: true },
-        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo, hasKnockouts: true },
-        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, hasKnockouts: false}
+        { label: 'URC', value: 'urc', logo: URCAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022'] },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022'] },
+        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024'] },
+        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024'] },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
+        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, hasKnockouts: false, knockoutsYears: []},
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
+        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
+        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, hasKnockouts: false, knockoutsYears: []}
     ];
 
     const seasonWorldCupData = [
@@ -219,6 +218,13 @@ const StandingsScreen = () => {
         { label: '1987', value: '1987' },
     ];
 
+    const seasonManualData = [
+        {label: "2024/25", value: "2025"},
+        {label: "2023/24", value: "2024"},
+        {label: "2022/23", value: "2023"},
+        {label: "2021/22", value: "2022"}
+    ];
+
     const seasonSingleData = [
         { label: '2024/25', value: '2025' },
     ]
@@ -227,11 +233,11 @@ const StandingsScreen = () => {
 
     switch(leagueName) { 
         case "urc": { 
-           currentSeasonData = seasonDates; 
+           currentSeasonData = seasonManualData; 
            break; 
         } 
         case "prem": { 
-            currentSeasonData = seasonDates; 
+            currentSeasonData = seasonManualData; 
             break; 
         } 
         case "top14": { 
@@ -239,11 +245,11 @@ const StandingsScreen = () => {
             break; 
         }
         case "superRugby": { 
-            currentSeasonData = seasonDates; 
+            currentSeasonData = seasonManualData; 
             break; 
         }
         case "championsCup": { 
-            currentSeasonData = seasonDates; 
+            currentSeasonData = seasonManualData; 
             break; 
         }
         case "sixNations": { 
@@ -255,7 +261,7 @@ const StandingsScreen = () => {
            break; 
         }
         default: { 
-            currentSeasonData = seasonDates; 
+            currentSeasonData = seasonManualData; 
            break; 
         }
     } 
@@ -369,19 +375,26 @@ const StandingsScreen = () => {
     const knockoutsButton = () => {
 
         var leagueHasKnockouts = false;
+        var seasonHasKnockouts = false;
 
         if(leagueName !== '')
         {
             const targetIndex = leagueData.findIndex(item => item.value === leagueName);
             leagueHasKnockouts = leagueData[targetIndex].hasKnockouts;
+            seasonHasKnockouts = leagueData[targetIndex].knockoutsYears.includes(seasonName)
+            console.info(`Season Name: ${seasonName}`)
         }
 
-        if (standingsArray.length == 0 || !leagueHasKnockouts) {
-            return null
+        if (standingsArray.length == 0 || !leagueHasKnockouts || !seasonHasKnockouts) {
+            return <View style={{ backgroundColor: 'transparent', marginBottom: 60, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}>
+                        <Text></Text>
+                    </View>
         }
         else {
             return (
-                <TouchableOpacity style={{ backgroundColor: colors.altBackground, marginBottom: 60, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} activeOpacity={0.8} onPress={handlePresentModalPress}>
+                <TouchableOpacity style={{ backgroundColor: "#0d0c0c", marginBottom: 60, borderTopColor: 'lightgrey',
+                borderTopWidth: 0.5, borderRightColor: 'lightgrey', borderRightWidth: 0.5, borderLeftColor: 'lightgrey', borderLeftWidth: 0.5,
+                 borderTopRightRadius: 10, borderTopLeftRadius: 10 }} activeOpacity={0.8} onPress={handlePresentModalPress}>
                     <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }}>KNOCKOUTS</Text>
                 </TouchableOpacity>
             )
@@ -462,7 +475,7 @@ const StandingsScreen = () => {
             backdropComponent={renderBackdrop}
             //handleStyle={}
             handleIndicatorStyle={{backgroundColor: 'lightgrey'}}
-            backgroundStyle={{backgroundColor: colors.altBackground}}
+            backgroundStyle={{backgroundColor: "#0d0c0c", borderColor: 'lightgrey', borderWidth: 0.5}}
             >
             <BottomSheetView style={{flex: 1}}>
                <KnockoutsPanel 

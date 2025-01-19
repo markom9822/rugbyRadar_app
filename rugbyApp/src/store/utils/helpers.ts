@@ -9,7 +9,7 @@ import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 import { BBCIPlayerLogo, BBCNILogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyPassTVLogo, RugbyTVLogo, S4CLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
 import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
-import { PremiershipTrophyIcon, Top14TrophyIcon, URCTrophyIcon } from "../TrophyIcons/TrophyIcons";
+import { ChallengeCupTrophyIcon, ChampsCupTrophyIcon, PremiershipTrophyIcon, RWCTrophyIcon, Top14TrophyIcon, URCTrophyIcon } from "../TrophyIcons/TrophyIcons";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
@@ -23,11 +23,11 @@ export const leagueCodes = [
     { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
          displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo, trophyIcon: null},
     { value: 'rugbyWorldCup', code: "164205",
-         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: null},
+         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: RWCTrophyIcon},
     { value: 'championsCup', code: "271937",
-         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, trophyIcon: null},
+         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, trophyIcon: ChampsCupTrophyIcon},
     { value: 'challengeCup', code: "272073",
-         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, trophyIcon: null},
+         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, trophyIcon: ChallengeCupTrophyIcon},
     { value: 'sixNations', code: "180659",
          displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo, trophyIcon: null},
     { value: 'inter', code: "289234",
