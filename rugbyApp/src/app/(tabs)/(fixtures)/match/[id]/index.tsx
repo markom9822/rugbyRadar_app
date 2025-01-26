@@ -349,12 +349,24 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
     const homeFontFamily = (matchInfoArray[0].homeTeamScore > matchInfoArray[0].awayTeamScore) ? fontFamilies.bold : fontFamilies.regular;
     const awayFontFamily = (matchInfoArray[0].awayTeamScore > matchInfoArray[0].homeTeamScore) ? fontFamilies.bold : fontFamilies.regular;
 
+    var homeAbbreviation = homeTeamInfo?.abbreviation;
+    var awayAbbreviation = awayTeamInfo?.abbreviation;
+
+    if(matchInfoArray[0].homeTeamName.includes("U20"))
+    {
+        homeAbbreviation += " U20"
+    }
+    if(matchInfoArray[0].awayTeamName.includes("U20"))
+    {
+        awayAbbreviation += " U20"
+    }
+
     return (
         <View style={[summaryPanelStyles.container]}>
 
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 15}}>
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "44%"}}>
-                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4}}>{homeTeamInfo?.abbreviation}</Text>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4, width: "50%"}}>{homeAbbreviation}</Text>
                     <View style={{ margin: 8 }}>
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={homeTeamInfo?.logo} />
@@ -369,7 +381,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={awayTeamInfo?.logo} />
                     </View>
-                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4}}>{awayTeamInfo?.abbreviation}</Text>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4, width: "50%"}}>{awayAbbreviation}</Text>
                 </View>
             </View>
 

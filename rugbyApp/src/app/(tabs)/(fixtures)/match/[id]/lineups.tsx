@@ -270,6 +270,18 @@ const Lineups = () => {
                 }
             }
 
+            var homeAbbreviation = homeTeamInfo?.abbreviation;
+            var awayAbbreviation = awayTeamInfo?.abbreviation;
+        
+            if(homeTeamName.includes("U20"))
+            {
+                homeAbbreviation += " U20"
+            }
+            if(awayTeamName.includes("U20"))
+            {
+                awayAbbreviation += " U20"
+            }
+
             return (
                 <>
                     <View style={[lineupPanelStyles.container, { borderBottomColor: 'lightgrey', borderBottomWidth: 1, paddingVertical: 8 }]}>
@@ -284,7 +296,7 @@ const Lineups = () => {
                                     style={[lineupPanelStyles.teamLogo, {opacity: (selectedTeam === "home") ? 1: 0.2 }]} />
                             </View>
 
-                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "home") ? colors.text : 'grey' }]}>{homeTeamInfo.abbreviation}</Text>
+                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "home") ? colors.text : 'grey', width: "50%" }]}>{homeAbbreviation}</Text>
                         </TouchableOpacity>
 
 
@@ -298,7 +310,7 @@ const Lineups = () => {
                                     style={[lineupPanelStyles.teamLogo, {opacity: (selectedTeam === "away") ? 1: 0.2 }]} />
                             </View>
 
-                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "away") ? colors.text : 'grey' }]}>{awayTeamInfo.abbreviation}</Text>
+                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "away") ? colors.text : 'grey', width: "50%" }]}>{awayAbbreviation}</Text>
                         </TouchableOpacity>
                     </View>
 

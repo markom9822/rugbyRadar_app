@@ -141,6 +141,18 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         linkID = matchID;
     }
 
+    var homeAbbreviation = homeTeamInfo.abbreviation;
+    var awayAbbreviation = awayTeamInfo.abbreviation;
+
+    if(homeTeam.includes("U20"))
+    {
+        homeAbbreviation += " U20"
+    }
+    if(awayTeam.includes("U20"))
+    {
+        awayAbbreviation += " U20"
+    }
+
     return(
         <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 60: 3}]}>
               <View style={[fixtureStyles.cardHeaderAllInfo,
@@ -151,7 +163,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold}]}>{homeTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%"}]}>{homeAbbreviation}</Text>
                         <View style={{paddingHorizontal: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
@@ -168,7 +180,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                             style={[fixtureStyles.teamLogo]}
                             source={awayTeamInfo.logo} />
                         </View>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold}]}>{awayTeamInfo.abbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%"}]}>{awayAbbreviation}</Text>
                     </View>
 
                 </View>
