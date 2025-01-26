@@ -183,7 +183,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     return (
         <View style={[statsPanelStyles.container, {marginBottom: 55}]}>
 
-            <View style={{backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5, marginVertical: 5}}>
+            <View style={{backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5, marginVertical: 5, width: "95%"}}>
 
                 <View style={{ alignItems: 'center' }}>
                     <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 2 }}>

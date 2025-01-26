@@ -185,7 +185,7 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
         return (
             <View style={[keyEventsPanelStyles.container]}>
 
-                <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey' }}>
+                <View style={{ backgroundColor: colors.background, padding: 10, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', width: "95%" }}>
                     <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'lightgrey', paddingVertical: 5 }}>
                         <View style={{ width: "50%", justifyContent: 'center', alignItems: 'center' }}>
                             <Image style={[keyEventsPanelStyles.teamLogo]}
@@ -337,10 +337,10 @@ export const keyEventsPanelStyles = StyleSheet.create({
     },
     teamLogo: {
       resizeMode: 'contain',
-      width: 25,
-      height: 25,
-      minHeight: 25,
-      minWidth: 25,
+      width: 30,
+      height: 30,
+      minHeight: 30,
+      minWidth: 30,
     },
     eventIcon: {
         resizeMode: 'center',

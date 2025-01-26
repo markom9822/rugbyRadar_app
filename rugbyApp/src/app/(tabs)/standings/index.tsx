@@ -76,6 +76,8 @@ export type SeasonDateInfo = {
 
 const StandingsScreen = () => {
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
+    const [secondaryStandingsArray, setSecondaryStandingsArray] = useState<StandingInfo[]>([]);
+
     const [leagueName, setLeagueName] = useState<string>('');
     const [seasonName, setSeasonName] = useState<string>('');
     const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
@@ -136,6 +138,16 @@ const StandingsScreen = () => {
 
             console.info(newArray)
             setStandingsArray(newArray)
+
+            if(leagueName == "challengeCup")
+            {
+                const champsCupCode = "1008"
+                // challenge cup needs secondary standings
+                const secondaryApiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/'+champsCupCode+'?provider=rugbyviz&season='+ seasonNumber +'01';
+                const secondarySeasonStandingsRugViz = await fetch( secondaryApiString,).then((res) => res.json())
+                const secondaryArray = getAllStandingsDataRugbyViz(secondarySeasonStandingsRugViz, 'championsCup', playoffIndex)
+                setSecondaryStandingsArray(secondaryArray)
+            }
         }
         // use planet rugby API for standings
         else if(planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
@@ -480,6 +492,7 @@ const StandingsScreen = () => {
             <BottomSheetView style={{flex: 1}}>
                <KnockoutsPanel 
                standingsArray={standingsArray}
+               secondaryStandingsArray={secondaryStandingsArray}
                knockoutFixturesArray={knockoutsArray}
                leagueName={leagueName}
                chosenKnockoutRound={knockoutRoundName}

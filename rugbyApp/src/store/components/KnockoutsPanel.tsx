@@ -8,9 +8,12 @@ import { StandingInfo } from "@/app/(tabs)/standings"
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
 import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
+import { getAllStandingsDataRugbyViz } from "../utils/standingsGetter"
+import { useEffect } from "react"
 
 type KnockoutsPanelProps = {
     standingsArray: StandingInfo[]
+    secondaryStandingsArray: StandingInfo[]
     knockoutFixturesArray: MatchInfo[]
     leagueName: string,
     chosenKnockoutRound: string,
@@ -29,8 +32,8 @@ export const KnockoutFixturePair = ({ firstMatch, secondMatch, thisLeagueName, h
     return (
         <View style={{ flexDirection: 'row', marginBottom: hasExtraMargin ? 50 : 0 }}>
             <View style={{ flexDirection: 'column', width: "80%" }}>
-                <KnockoutsFixture fixtureInfo={firstMatch} leagueName={thisLeagueName} isFinalMatch={false} />
-                <KnockoutsFixture fixtureInfo={secondMatch} leagueName={thisLeagueName} isFinalMatch={false} />
+                <KnockoutsFixture fixtureInfo={firstMatch} leagueName={thisLeagueName} />
+                <KnockoutsFixture fixtureInfo={secondMatch} leagueName={thisLeagueName} />
             </View>
 
             <View style={{ position: 'absolute', bottom: "25%", right: 0, left: "80%", top: "25%", width: "10%", height: "50%", }}>
@@ -197,9 +200,7 @@ export const sortTeamsArrayChallengeCup = (standings: StandingInfo[], rankingsIn
     return filtered
 }
 
-export const pooledTableIntoRankedChallengeCup = (standingsArray: StandingInfo[]) => {
-
-    // need to include teams from champs cup in ranks 9 - 12
+export const pooledTableIntoRankedChallengeCup = (standingsArray: StandingInfo[], secondaryArray: StandingInfo[]) => {
 
     const clonedArray = [...standingsArray];
 
@@ -208,8 +209,20 @@ export const pooledTableIntoRankedChallengeCup = (standingsArray: StandingInfo[]
     const rank1Array = sortTeamsArrayChallengeCup(filteredPools, 0)
     const rank2Array = sortTeamsArrayChallengeCup(filteredPools, 1)
     const rank3Array = sortTeamsArrayChallengeCup(filteredPools, 2)
+    const rank4Array = sortTeamsArrayChallengeCup(filteredPools, 3)
 
-    const rankedArray = [...rank1Array, ...rank2Array, ...rank3Array];
+    // last in rank3Array is first in rank4Array
+    rank4Array.unshift(rank3Array[rank3Array.length -1])
+    const lastElement = rank3Array.pop()
+
+    // need to include teams from champs cup in ranks 9 - 12
+    // take 5th place team from each pool
+    const champsCupClonedArray = [...secondaryArray];
+    const champsCupFilteredPools = champsCupClonedArray.filter(item => item.teamName !== "Pool");
+    const champsCupRankArray = sortTeamsArrayChallengeCup(champsCupFilteredPools, 4)
+    console.info(champsCupRankArray)
+
+    const rankedArray = [...rank1Array, ...rank2Array, ...rank3Array, ...champsCupRankArray, ...rank4Array];
 
     for (let index = 0; index < rankedArray.length; index++) {
 
@@ -362,10 +375,13 @@ export const getSFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
 
         if (leagueName == "championsCup" || leagueName === "challengeCup") {
             // need to find matching index
-            SFFixtures[index] = findFixtureCombination(SFSeedings[index], targetStandingsArray, filteredArray, leagueName)
+            SFFixturesTemp[index] = findFixtureCombination(SFSeedings[index], targetStandingsArray, filteredArray, leagueName)
         }
-
-        SFFixturesTemp[index] = getFixtureFromStandingIndex(SFSeedings[index][0], SFSeedings[index][1], targetStandingsArray, filteredArray, leagueName);
+        else
+        {
+            SFFixturesTemp[index] = getFixtureFromStandingIndex(SFSeedings[index][0], SFSeedings[index][1], targetStandingsArray, filteredArray, leagueName);
+        }
+        
     }
 
     if (SFFixtures[0] == null && SFFixtures[1] == null) {
@@ -378,7 +394,7 @@ export const getSFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
     )
 }
 
-export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
+export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
 
     var targetStandingsArray = standingsArray;
 
@@ -389,8 +405,9 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
 
     if (leagueName === "challengeCup") {
         // turn pooled table into ranked table
-        targetStandingsArray = pooledTableIntoRankedChallengeCup(standingsArray);
+        targetStandingsArray = pooledTableIntoRankedChallengeCup(standingsArray, secondaryStandingsArray);
     }
+   
 
     const knockoutRoundRender = (knockoutRoundName: string) => {
 
@@ -451,7 +468,7 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ flexDirection: 'column', width: "100%" }}>
-                            <KnockoutsFixture fixtureInfo={filteredArray[0]} leagueName={leagueName} isFinalMatch={true} />
+                            <KnockoutsFinalMatch fixtureInfo={filteredArray[0]} leagueName={leagueName}/>
                         </View>
                     </View>
 
@@ -538,11 +555,9 @@ export const KnockoutsPanel = ({ standingsArray, knockoutFixturesArray, leagueNa
 type KnockoutsFixtureProps = {
     leagueName: string,
     fixtureInfo: MatchInfo,
-    isFinalMatch: boolean,
-
 }
 
-export const KnockoutsFixture = ({ leagueName, fixtureInfo, isFinalMatch }: KnockoutsFixtureProps) => {
+export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixtureProps) => {
 
     if (fixtureInfo == undefined || fixtureInfo == null) {
         return;
@@ -577,29 +592,36 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo, isFinalMatch }: Knoc
     const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
     const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
 
-    const renderTrophyIcon = (finalMatch: boolean) => {
+    const renderScoreTime = (eventState: string) => {
 
-        const leagueTrophyIcon = getLeagueTrophyIconFromValue(leagueName)
+        const formattedDate = fixtureInfo.matchDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit'
+          });
 
-        if (finalMatch) {
+        // not started yet
+        if (eventState === "pre") {
             return (
-                <View style={{ margin: 3 }}>
-                    <Image style={[knockoutPanelStyles.teamLogo]}
-                        source={leagueTrophyIcon} />
+                <View style={{ padding: 4, flexDirection: 'row' }}>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 5 }}>{formattedDate}</Text>
+                </View>  
+            )
+        }
+        // event finished or ongoing
+        else
+        {
+            return (
+                <View style={{ padding: 4, flexDirection: 'row' }}>
+                    <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5 }}>{homeTeamScore}</Text>
+                    <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5 }}>{awayTeamScore}</Text>
                 </View>
             )
         }
-
-        return (
-            <></>
-        )
     }
 
     return (
         <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 0.5,
         marginHorizontal: 10, marginVertical: 10, padding: 5, borderRadius: 4 }}>
-
-            {renderTrophyIcon(isFinalMatch)}
 
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
                 <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12 }}>{homeTeamName}</Text>
@@ -608,10 +630,9 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo, isFinalMatch }: Knoc
                         style={[knockoutPanelStyles.teamLogo]}
                         source={homeTeamInfo.logo} />
                 </View>
-                <View style={{ padding: 4, flexDirection: 'row' }}>
-                    <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5 }}>{homeTeamScore}</Text>
-                    <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5 }}>{awayTeamScore}</Text>
-                </View>
+
+                {renderScoreTime(fixtureInfo.eventState)}
+
                 <View style={{ paddingHorizontal: 10 }}>
                     <Image
                         style={[knockoutPanelStyles.teamLogo]}
@@ -622,6 +643,111 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo, isFinalMatch }: Knoc
 
             <View style={{ padding: 3 }}>
                 <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 11 }}>{matchVenue}</Text>
+            </View>
+        </View>
+    )
+}
+
+export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtureProps) => {
+
+    if (fixtureInfo == undefined || fixtureInfo == null) {
+        return;
+    }
+
+    var homeTeamName;
+    var awayTeamName;
+
+    const homeAwayInfo = getHomeAwayTeamInfo(leagueName, fixtureInfo.homeTeam, fixtureInfo.awayTeam);
+    const homeTeamInfo = homeAwayInfo?.homeInfo;
+    const awayTeamInfo = homeAwayInfo?.awayInfo;
+
+    homeTeamName = homeTeamInfo?.abbreviation;
+    awayTeamName = awayTeamInfo?.abbreviation;
+
+    if (fixtureInfo.homeTeam == "TBC") {
+        homeTeamName = fixtureInfo.homeTeam;
+    }
+    if (fixtureInfo.awayTeam == "TBC") {
+        awayTeamName = fixtureInfo.awayTeam;
+    }
+
+    const homeTeamScore = fixtureInfo.homeScore;
+    const awayTeamScore = fixtureInfo.awayScore;
+    const matchVenue = fixtureInfo.matchVenue;
+
+    if (homeTeamInfo === null) return
+    if (awayTeamInfo === null) return
+    if (homeTeamInfo === undefined) return
+    if (awayTeamInfo === undefined) return
+
+    const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
+    const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
+
+    const renderScoreTime = (eventState: string) => {
+
+        const formattedDate = fixtureInfo.matchDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit'
+          });
+
+        // not started yet
+        if (eventState === "pre") {
+            return (
+                <View style={{ padding: 4, flexDirection: 'row', marginHorizontal: 5 }}>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 5, fontSize: 16 }}>{formattedDate}</Text>
+                </View>  
+            )
+        }
+        // event finished or ongoing
+        else
+        {
+            return (
+                <View style={{ padding: 4, flexDirection: 'row', marginHorizontal: 5 }}>
+                    <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, fontSize: 16 }}>{homeTeamScore}</Text>
+                    <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, fontSize: 16 }}>{awayTeamScore}</Text>
+                </View>
+            )
+        }
+    }
+
+    const renderTrophyIcon = () => {
+
+        const leagueTrophyIcon = getLeagueTrophyIconFromValue(leagueName)
+
+        return (
+            <View style={{ margin: 3 }}>
+                <Image style={[knockoutPanelStyles.finalsTeamLogo]}
+                    source={leagueTrophyIcon} />
+            </View>
+        )
+    }
+
+    return (
+        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 0.5,
+        marginHorizontal: 10, marginVertical: 10, padding: 3, borderRadius: 4 }}>
+
+            {renderTrophyIcon()}
+
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 8 }}>
+                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>{homeTeamName}</Text>
+                <View style={{ paddingHorizontal: 10 }}>
+                    <Image
+                        style={[knockoutPanelStyles.finalsTeamLogo]}
+                        source={homeTeamInfo.logo} />
+                </View>
+
+                {renderScoreTime(fixtureInfo.eventState)}
+                
+                <View style={{ paddingHorizontal: 10 }}>
+                    <Image
+                        style={[knockoutPanelStyles.finalsTeamLogo]}
+                        source={awayTeamInfo.logo} />
+                </View>
+                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>{awayTeamName}</Text>
+            </View>
+
+            <View style={{ padding: 3 }}>
+                <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 12 }}>{matchVenue}</Text>
             </View>
         </View>
     )
@@ -648,5 +774,13 @@ export const knockoutPanelStyles = StyleSheet.create({
         height: 25,
         minHeight: 25,
         minWidth: 25
+    },
+
+    finalsTeamLogo: {
+        resizeMode: 'contain',
+        width: 30,
+        height: 30,
+        minHeight: 30,
+        minWidth: 30
     },
 })
