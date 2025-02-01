@@ -109,7 +109,7 @@ export const PremRugbyTeams = [
   {
     type: 'Prem Club',
     displayName: 'Harlequins',
-    abbreviation: 'HQUIN',
+    abbreviation: 'QUIN',
     logo: HarlequinsLogo,
     altLogo: HarlequinsAltLogo,
     colour: '#b6234a',
@@ -145,7 +145,7 @@ export const PremRugbyTeams = [
   {
     type: 'Prem Club',
     displayName: 'Northampton Saints',
-    abbreviation: 'NTHMP',
+    abbreviation: 'SAINT',
     logo: NorthamptonLogo,
     altLogo: NorthamptonAltLogo,
     colour: '#006442',

@@ -58,7 +58,7 @@ export const URCRugbyTeams = [
   {
     type: 'URC Club',
     displayName: 'Munster',
-    abbreviation: 'MUNST',
+    abbreviation: 'MUN',
     logo: MunsterLogo,
     altLogo: MunsterAltLogo,
     colour: '#cd0a2d',
@@ -106,7 +106,7 @@ export const URCRugbyTeams = [
   {
     type: 'URC Club',
     displayName: 'Glasgow Warriors',
-    abbreviation: 'GLASG',
+    abbreviation: 'GLAS',
     logo: GlasgowLogo,
     altLogo: GlasgowAltLogo,
     colour: '#5aaaf0',
@@ -130,7 +130,7 @@ export const URCRugbyTeams = [
   {
     type: 'URC Club',
     displayName: 'Scarlets',
-    abbreviation: 'SCARL',
+    abbreviation: 'SCAR',
     logo: ScarletsLogo,
     altLogo: ScarletsAltLogo,
     colour: '#78040d',
@@ -202,7 +202,7 @@ export const URCRugbyTeams = [
   {
     type: 'URC Club',
     displayName: 'Vodacom Bulls',
-    abbreviation: 'BULLS',
+    abbreviation: 'BULL',
     logo: BullsLogo,
     altLogo: BullsAltLogo,
     colour: '#0082e6',
@@ -214,7 +214,7 @@ export const URCRugbyTeams = [
   {
     type: 'URC Club',
     displayName: 'Emirates Lions',
-    abbreviation: 'LIONS',
+    abbreviation: 'LION',
     logo: LionsLogo,
     altLogo: LionsAltLogo,
     colour: '#ff1e29',

@@ -12,6 +12,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
 import { LineupPlayerPanel } from "@/store/components/LineupPlayerPanel";
 import { LinearGradient } from "expo-linear-gradient";
+import { StretchInX } from "react-native-reanimated";
 
 
 export type LineUpInfo = {
@@ -272,14 +273,18 @@ const Lineups = () => {
 
             var homeAbbreviation = homeTeamInfo?.abbreviation;
             var awayAbbreviation = awayTeamInfo?.abbreviation;
+            var homeFontSize = fontSize.base;
+            var awayFontSize = fontSize.base;
         
             if(homeTeamName.includes("U20"))
             {
                 homeAbbreviation += " U20"
+                homeFontSize = fontSize.sm
             }
             if(awayTeamName.includes("U20"))
             {
                 awayAbbreviation += " U20"
+                awayFontSize = fontSize.sm
             }
 
             return (
@@ -296,7 +301,7 @@ const Lineups = () => {
                                     style={[lineupPanelStyles.teamLogo, {opacity: (selectedTeam === "home") ? 1: 0.2 }]} />
                             </View>
 
-                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "home") ? colors.text : 'grey', width: "50%" }]}>{homeAbbreviation}</Text>
+                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "home") ? colors.text : 'grey', width: "50%", fontSize: homeFontSize }]}>{homeAbbreviation}</Text>
                         </TouchableOpacity>
 
 
@@ -310,7 +315,7 @@ const Lineups = () => {
                                     style={[lineupPanelStyles.teamLogo, {opacity: (selectedTeam === "away") ? 1: 0.2 }]} />
                             </View>
 
-                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "away") ? colors.text : 'grey', width: "50%" }]}>{awayAbbreviation}</Text>
+                            <Text style={[lineupPanelStyles.teamName, { color:(selectedTeam === "away") ? colors.text : 'grey', width: "50%", fontSize: awayFontSize }]}>{awayAbbreviation}</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -424,6 +429,36 @@ const Lineups = () => {
             return `${day}/${month}/${year}`;
         }
 
+        const handleNullHeightOutput = (playerHeight: string) => {
+
+            if(playerHeight == null)
+            {
+                return "-"
+            }
+
+            return cmToMeters(Number(playerHeight)) + " m";
+        }
+
+        const handleNullWeightOutput = (playerWeight: string) => {
+
+            if(playerWeight == null)
+            {
+                return "-"
+            }
+
+            return playerWeight + " kg" ;
+        }
+
+        const handleNullOutput = (playerStat: string) => {
+
+            if(playerStat == null)
+            {
+                return "-"
+            }
+
+            return playerStat;
+        }
+
         const cmToMeters = (centimeters: number): string => {
             return (centimeters / 100).toFixed(2);
         }
@@ -437,13 +472,16 @@ const Lineups = () => {
             const playerPosition = playerInfo.data.position;
             const playerDOB = new Date(playerInfo.data.dateOfBirth);
             const playerAge = calculateAge(playerDOB).toString()
-            const playerHeight = playerInfo.data.height;
-            const playerWeight = playerInfo.data.weight;
-            const playerCountry = playerInfo.data.country;
+
+            const playerHeight = handleNullHeightOutput(playerInfo.data.height);
+            const playerWeight = handleNullWeightOutput(playerInfo.data.weight);
+
+            const playerCountry = handleNullOutput(playerInfo.data.country);
+
             setModalPlayerPosition(playerPosition)
             setModalPlayerAge(playerAge)
             setModalPlayerDOB(formatDate(playerDOB))
-            setModalPlayerHeight(cmToMeters(playerHeight))
+            setModalPlayerHeight(playerHeight)
             setModalPlayerWeight(playerWeight)
             setModalPlayerCountry(playerCountry)
             const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
@@ -466,13 +504,15 @@ const Lineups = () => {
                         const playerPosition = teamPlayersInfo.data[index].position;
                         const playerDOB = new Date(teamPlayersInfo.data[index].dateOfBirth);
                         const playerAge = calculateAge(playerDOB).toString()
-                        const playerHeight = teamPlayersInfo.data[index].height;
-                        const playerWeight = teamPlayersInfo.data[index].weight;
-                        const playerCountry = teamPlayersInfo.data[index].country;
+
+                        const playerHeight = handleNullHeightOutput(teamPlayersInfo.data[index].height);
+                        const playerWeight = handleNullWeightOutput(teamPlayersInfo.data[index].weight);
+
+                        const playerCountry = handleNullOutput(teamPlayersInfo.data[index].country);
                         setModalPlayerPosition(playerPosition)
                         setModalPlayerAge(playerAge)
                         setModalPlayerDOB(formatDate(playerDOB))
-                        setModalPlayerHeight(cmToMeters(playerHeight))
+                        setModalPlayerHeight(playerHeight)
                         setModalPlayerWeight(playerWeight)
                         setModalPlayerCountry(playerCountry)
                         break;
@@ -491,16 +531,20 @@ const Lineups = () => {
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/player/'+playerID+'?language=en'
             const playerInfo = await fetch(apiString,).then((res) => res.json())
 
+            console.info(playerInfo)
+
             //const playerPosition = playerInfo.data.position;
             const playerDOB = new Date(playerInfo.dob.millis);
             const playerAge = calculateAge(playerDOB).toString()
-            const playerHeight = playerInfo.height;
-            const playerWeight = playerInfo.weight;
-            const playerCountry = playerInfo.country;
+
+            const playerHeight = handleNullHeightOutput(playerInfo.height);
+            const playerWeight = handleNullWeightOutput(playerInfo.weight);
+            const playerCountry = handleNullOutput(playerInfo.country);
             //setModalPlayerPosition(playerPosition)
+
             setModalPlayerAge(playerAge)
             setModalPlayerDOB(formatDate(playerDOB))
-            setModalPlayerHeight(cmToMeters(playerHeight))
+            setModalPlayerHeight(playerHeight)
             setModalPlayerWeight(playerWeight)
             setModalPlayerCountry(playerCountry)
             setModalPlayerImageSrc('https://www.rugbyworldcup.com/rwc2023/person-images-site/player-profile/'+playerID+'.png')
@@ -558,11 +602,11 @@ const Lineups = () => {
                     <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
                         <View style={{marginHorizontal: 2}}>
                             <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>HEIGHT</Text>
-                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerHeight} m</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerHeight}</Text>
                         </View>
                         <View>
                             <Text style={{color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13}}>WEIGHT</Text>
-                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerWeight} kg</Text>
+                            <Text style={{color: colors.text, fontFamily: fontFamilies.light}}>{modalPlayerWeight}</Text>
                         </View>
                     </View>
                     <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>

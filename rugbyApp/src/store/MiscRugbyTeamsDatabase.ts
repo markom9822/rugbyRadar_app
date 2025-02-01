@@ -36,7 +36,7 @@ export const MiscRugbyTeams = [
   {
     type: 'Misc Club',
     displayName: 'Toyota Cheetahs',
-    abbreviation: 'CHEET',
+    abbreviation: 'CHEE',
     logo: CheetahsLogo,
     altLogo: CheetahsAltLogo,
     colour: '#E89719',

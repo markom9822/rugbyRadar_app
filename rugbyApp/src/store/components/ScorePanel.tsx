@@ -49,17 +49,15 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
         // not started yet
         if (eventState === "pre") {
-            return (
-                <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
-                        <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light}}>{matchTime}</Text>
-                </View>  
+            return (  
+                <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light}}>{matchTime}</Text>  
             )
         }
         // event finished
         else if (eventState === "post")
         {
             return (
-            <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
+            <View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
                         <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
@@ -71,7 +69,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         // event at halftime
         else if (eventState === "halfTime") {
             return (
-                <View style={{ width: "25%", flexDirection: 'column', alignItems: 'center' }}>
+                <View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={[fixtureStyles.teamScore, { fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
                         <Text style={[fixtureStyles.teamScore, { fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily }]}>{awayScore}</Text>
@@ -83,7 +81,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         // event ongoing
         else { 
             return (
-                <View style={{width: "25%", flexDirection: 'column', alignItems: 'center'}}>
+                <View>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
                             <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
@@ -163,8 +161,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%"}]}>{homeAbbreviation}</Text>
-                        <View style={{paddingHorizontal: 2}}>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%", textAlign: 'right'}]}>{homeAbbreviation}</Text>
+                        <View style={{paddingHorizontal: 2, width: "50%"}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
                             source={homeTeamInfo.logo} />
@@ -172,15 +170,17 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         
                     </View>
                     
-                    {scoreRender(eventState)}
+                    <View style={{width: "30%", flexDirection: 'column', alignItems: 'center'}}>
+                        {scoreRender(eventState)}
+                    </View>
 
                     <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <View style={{paddingHorizontal: 2}}>
+                        <View style={{paddingHorizontal: 2, width: "50%"}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
                             source={awayTeamInfo.logo} />
                         </View>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%"}]}>{awayAbbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%", textAlign: 'left'}]}>{awayAbbreviation}</Text>
                     </View>
 
                 </View>

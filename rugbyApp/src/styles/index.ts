@@ -80,7 +80,7 @@ export const fixtureStyles = StyleSheet.create({
     },
     teamName: {
         paddingHorizontal: 6,
-        fontSize: 15,
+        fontSize: 14,
     },
     teamScore: {
         fontSize: fontSize.lg,

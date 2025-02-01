@@ -351,14 +351,18 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
     var homeAbbreviation = homeTeamInfo?.abbreviation;
     var awayAbbreviation = awayTeamInfo?.abbreviation;
+    var homeFontSize = 16;
+    var awayFontSize = 16;
 
     if(matchInfoArray[0].homeTeamName.includes("U20"))
     {
         homeAbbreviation += " U20"
+        homeFontSize = 14;
     }
     if(matchInfoArray[0].awayTeamName.includes("U20"))
     {
         awayAbbreviation += " U20"
+        awayFontSize = 14;
     }
 
     return (
@@ -366,7 +370,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 15}}>
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "44%"}}>
-                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4, width: "50%"}}>{homeAbbreviation}</Text>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: homeFontSize, padding: 4, width: "50%"}}>{homeAbbreviation}</Text>
                     <View style={{ margin: 8 }}>
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={homeTeamInfo?.logo} />
@@ -381,7 +385,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                         <Image style={[summaryPanelStyles.titleTeamLogo]}
                             source={awayTeamInfo?.logo} />
                     </View>
-                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: 16, padding: 4, width: "50%"}}>{awayAbbreviation}</Text>
+                    <Text style={{textAlign: 'center', fontFamily: fontFamilies.bold, color: colors.text, fontSize: awayFontSize, padding: 4, width: "50%"}}>{awayAbbreviation}</Text>
                 </View>
             </View>
 

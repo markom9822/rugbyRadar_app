@@ -209,7 +209,7 @@ export const Top14RugbyTeams = [
   {
     type: 'Top14 Club',
     displayName: 'Racing 92',
-    abbreviation: 'RAMET',
+    abbreviation: 'RAC',
     logo: Racing92Logo,
     altLogo: Racing92AltLogo,
     colour: '#C1DFF7',
@@ -221,7 +221,7 @@ export const Top14RugbyTeams = [
   {
     type: 'Top14 Club',
     displayName: 'Stade Francais',
-    abbreviation: 'SFRAN',
+    abbreviation: 'SFRA',
     logo: StadeFrancaisLogo,
     altLogo: StadeFrancaisAltLogo,
     colour: '#EB5195',

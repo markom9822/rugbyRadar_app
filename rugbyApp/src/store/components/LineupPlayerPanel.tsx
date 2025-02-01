@@ -46,12 +46,13 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
 
     const panelBackground = hexToRGB(teamColour, '0.1')
 
-    const handlePresentModalPress = useCallback(() => {
+    const handlePresentModalPress = useCallback(async () => {
 
         console.info("pressed")
-
-        OnPlayerModalShown(playerName, playerID, selectedTeamDisplayName, teamColour)
+        
         bottomSheetRef.current?.present();
+        
+        await OnPlayerModalShown(playerName, playerID, selectedTeamDisplayName, teamColour)
       }, [selectedTeam]);
 
 

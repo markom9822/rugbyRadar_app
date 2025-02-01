@@ -182,13 +182,18 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     var homeAbbreviation = homeTeamInfo?.abbreviation;
     var awayAbbreviation = awayTeamInfo?.abbreviation;
 
+    var homeFontSize = 18;
+    var awayFontSize = 18;
+
     if(matchInfoArray[0].homeTeamName.includes("U20"))
     {
         homeAbbreviation += " U20"
+        homeFontSize = 15;
     }
     if(matchInfoArray[0].awayTeamName.includes("U20"))
     {
         awayAbbreviation += " U20"
+        awayFontSize = 15;
     }
 
     return (
@@ -201,11 +206,11 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
                         <View style={[statsPanelStyles.teamInfoContainer]}>
                             <Image style={[statsPanelStyles.teamLogo]} 
                             source={homeTeamInfo?.logo}/>
-                            <Text style={[statsPanelStyles.teamName]}>{homeAbbreviation}</Text>
+                            <Text style={[statsPanelStyles.teamName, {fontSize: homeFontSize}]}>{homeAbbreviation}</Text>
                         </View>
                         <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
                         <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Text style={[statsPanelStyles.teamName]}>{awayAbbreviation}</Text>
+                            <Text style={[statsPanelStyles.teamName, {fontSize: awayFontSize}]}>{awayAbbreviation}</Text>
                             <Image style={[statsPanelStyles.teamLogo]} 
                             source={awayTeamInfo?.logo}/>
                         </View>
