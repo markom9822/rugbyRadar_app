@@ -547,7 +547,16 @@ const Lineups = () => {
             setModalPlayerHeight(playerHeight)
             setModalPlayerWeight(playerWeight)
             setModalPlayerCountry(playerCountry)
-            setModalPlayerImageSrc('https://www.rugbyworldcup.com/rwc2023/person-images-site/player-profile/'+playerID+'.png')
+            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+
+            if(playerImageSrc.length === 0)
+            {
+                setModalPlayerImageSrc('https://www.rugbyworldcup.com/rwc2023/person-images-site/player-profile/'+ playerID +'.png')
+            }
+            else
+            {
+                setModalPlayerImageSrc(playerImageSrc)
+            }
         }
 
         setModalPlayerName(playerName)

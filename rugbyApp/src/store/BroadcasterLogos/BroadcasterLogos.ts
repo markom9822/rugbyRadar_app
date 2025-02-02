@@ -16,6 +16,7 @@ export const BBCWalesLogo = require('@/store/BroadcasterLogos/bbc_wales_logo.png
 export const BBCNILogo = require('@/store/BroadcasterLogos/bbc_northernIreland_logo.png')
 
 export const BBCIPlayerLogo = require('@/store/BroadcasterLogos/bbc_iplayer_logo.png')
+export const BBCOneLogo = require('@/store/BroadcasterLogos/bbc_one_logo.png')
 
 export const ITVXLogo = require('@/store/BroadcasterLogos/itvx_logo.png')
 export const ITVLogo = require('@/store/BroadcasterLogos/itv_logo.png')
@@ -31,3 +32,6 @@ export const RugbyPassTVLogo = require('@/store/BroadcasterLogos/rugbypassTV_log
 export const SkySportsLogo = require('@/store/BroadcasterLogos/sky_sport_logo.png')
 
 export const SuperSportLogo = require('@/store/BroadcasterLogos/super_sport_logo.png')
+
+export const STVHDLogo = require('@/store/BroadcasterLogos/stvHD_logo.png')
+export const STVPlayerLogo = require('@/store/BroadcasterLogos/stvPlayer_logo.png')

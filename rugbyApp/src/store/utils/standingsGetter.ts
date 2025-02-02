@@ -32,7 +32,8 @@ export const getAllStandingsData = (seasonStandings: any) => {
                     teamPoints: '0',
                     ranking: index,
                     isLastItem: false,
-                    isEndOfList: false
+                    isEndOfList: false,
+                    isPlayoffCutoff: false,
                 };
 
                 newArray.push(headerRankingInfo)
@@ -59,7 +60,8 @@ export const getAllStandingsData = (seasonStandings: any) => {
                 teamPoints: teamPoints,
                 ranking: index,
                 isLastItem: index == standingsCount - 1,
-                isEndOfList: (index == standingsCount - 1) && (j == seasonStandings.children.length - 1)
+                isEndOfList: (index == standingsCount - 1) && (j == seasonStandings.children.length - 1),
+                isPlayoffCutoff: false,
             };
 
             newArray.push(newRankingInfo)

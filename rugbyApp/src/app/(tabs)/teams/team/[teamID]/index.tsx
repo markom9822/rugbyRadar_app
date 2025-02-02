@@ -215,13 +215,6 @@ const TeamSummary = () => {
             teamForm={teamInfo?.teamForm}
             />
 
-            <TeamStandingPanel
-            standingsArray={standingsArray}
-            teamLeagueName={teamLeagueName}
-            currentTeamName={teamIDName}
-            currentYear={teamInfoYear.toString()}
-            />
-
             </ScrollView>
 
         </View>

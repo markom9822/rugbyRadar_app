@@ -101,12 +101,17 @@ const StandingsScreen = () => {
 
         const planetRugbyStandingsLeagueCodes = [
             { leagueName: 'top14', leagueCodes: ['1310036262'], playoffCutoffIndex: 6},
-            { leagueName: 'superRugby', leagueCodes: ['1310032187'], playoffCutoffIndex: 8},
-            { leagueName: 'sixNations', leagueCodes: ['1310031041'], playoffCutoffIndex: -1},
+            { leagueName: 'sixNations', leagueCodes: ['1310035506'], playoffCutoffIndex: -1},
             { leagueName: 'u20SixNations', leagueCodes: ['1310031586'], playoffCutoffIndex: -1},
             { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1},
             { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2},
             { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2},
+        ];
+
+        const ESPNRugbyStandingsLeagueCodes = [
+            { leagueName: 'sixNations', leagueCode: '180659', playoffCutoffIndex: -1},
+            { leagueName: 'superRugby', leagueCode: '242041', playoffCutoffIndex: 8},
+            { leagueName: 'rugbyChamp', leagueCode: '244293', playoffCutoffIndex: -1},
         ];
 
         if(leagueName == "worldRankings")
@@ -148,6 +153,19 @@ const StandingsScreen = () => {
                 const secondaryArray = getAllStandingsDataRugbyViz(secondarySeasonStandingsRugViz, 'championsCup', playoffIndex)
                 setSecondaryStandingsArray(secondaryArray)
             }
+        }
+        // ESPN rugby API
+        else if(ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
+        {
+            const ESPNRugbyAPILeagueCode = ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCode;
+
+            const seasonNumber = Number(targetSeasonName);
+            apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/'+ESPNRugbyAPILeagueCode+'/standings?lang=en&region=gb&season='+seasonNumber+'&seasontype=1&sort=rank:asc&type=0';
+            console.info(apiString)
+
+            const seasonStandingsESPN = await fetch( apiString,).then((res) => res.json())
+            const newArray = getAllStandingsData(seasonStandingsESPN)
+            setStandingsArray(newArray)
         }
         // use planet rugby API for standings
         else if(planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
@@ -208,7 +226,7 @@ const StandingsScreen = () => {
         { label: 'Top 14', value: 'top14', logo: Top14AltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022'] },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024'] },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024'] },
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: false, knockoutsYears: ['2025','2024', '2023', '2022']},
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, hasKnockouts: false, knockoutsYears: [] },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, hasKnockouts: false, knockoutsYears: []},
@@ -265,7 +283,7 @@ const StandingsScreen = () => {
             break; 
         }
         case "sixNations": { 
-            currentSeasonData = seasonSingleData; 
+            currentSeasonData = seasonManualData; 
             break; 
         } 
         case "rugbyWorldCup": { 
@@ -278,8 +296,8 @@ const StandingsScreen = () => {
         }
     } 
 
-    const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "sixNations" || leagueName == "u20SixNations"
-     || leagueName == "top14" || leagueName == "rugbyChamp" || leagueName == "superRugby" || leagueName == "u20Championship" || leagueName == "rugbyWorldCup"
+    const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "u20SixNations"
+     || leagueName == "top14" || leagueName == "u20Championship" || leagueName == "rugbyWorldCup"
 
     useEffect(() => {
 

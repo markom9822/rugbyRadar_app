@@ -233,12 +233,15 @@ type GameStatsPanelProps = {
 
 export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelProps ) => {
 
+    const homeStatFontFamily = (Number(homeStat) > Number(awayStat)) ? fontFamilies.bold : fontFamilies.light;
+    const awayStatFontFamily = (Number(awayStat) > Number(homeStat)) ? fontFamilies.bold : fontFamilies.light;
+
     return (
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{homeStat}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%", fontFamily: homeStatFontFamily}]}>{homeStat}</Text>
                 <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.background}]}>{statTitle}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%"}]}>{awayStat}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%", fontFamily: awayStatFontFamily}]}>{awayStat}</Text>
             </View>
         </View>
     )
@@ -257,12 +260,15 @@ export const GamePercentageStatsPanel = ({homePercent, statTitle, awayPercent, h
     const homePercentNum = Number(homePercent.replace("%", ""));
     const awayPercentNum = Number(awayPercent.replace("%", ""));
 
+    const homeStatFontFamily = (Number(homePercentNum) > Number(awayPercentNum)) ? fontFamilies.bold : fontFamilies.light;
+    const awayStatFontFamily = (Number(awayPercentNum) > Number(homePercentNum)) ? fontFamilies.bold : fontFamilies.light;
+
     return (
         <View style={{ alignItems: 'center', flexDirection: 'column', marginVertical: 5 }}>
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%" }]}>{homePercent}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: homeStatFontFamily }]}>{homePercent}</Text>
                 <Text style={[statsPanelStyles.statsPanelRow, { width: "50%", backgroundColor: colors.background }]}>{statTitle}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%" }]}>{awayPercent}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: awayStatFontFamily }]}>{awayPercent}</Text>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
                 <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 1, borderRightColor: 'lightgrey' }}>

@@ -93,7 +93,7 @@ export const StandingPanel = ({index, league, isHeader, isWorldRanking, teamPool
             return (
                 <View style={{width: "100%", flexDirection: 'row', backgroundColor: colors.background}}>
                     <View style={{width: "40%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed'}} />
-                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 600, color: 'grey', fontSize: 10, textAlign: 'center', width: "20%"}]}>Playoffs</Text>
+                    <Text style={[standingsPanelStyles.teamText, {fontWeight: 600, color: 'grey', fontSize: 10, textAlign: 'center', width: "20%"}]}>KNOCKOUTS</Text>
                     <View style={{width: "40%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed'}} />
                 </View>
             )

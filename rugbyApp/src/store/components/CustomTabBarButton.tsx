@@ -4,6 +4,7 @@ import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } f
 import { useEffect } from "react"
 import { isDevelopmentBuild } from "expo-dev-client"
 import { TabBarItem } from "react-native-tab-view"
+import { fontFamilies, fontSize } from "@/constants/tokens"
 
 
 export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, color, label} : {onPress: Function, onLongPress: Function, isFocused: boolean, routeName: string, color: string, label: string}) => {
@@ -65,7 +66,7 @@ export const CustomTabBarButton = ({onPress, onLongPress, isFocused, routeName, 
                 {iconRender(routeName, isFocused)}
             </Animated.View>
             
-            <Text style={{color: (isFocused ? "white": "grey"), textAlign: 'center'}}>
+            <Text style={{color: (isFocused ? "white": "grey"), textAlign: 'center', fontSize: fontSize.xs, fontFamily: fontFamilies.regular}}>
                 {label}
             </Text>
             
