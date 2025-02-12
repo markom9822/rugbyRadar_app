@@ -1,9 +1,10 @@
-import { fixtureStyles } from "@/styles"
-import { View, Text, TouchableOpacity, Image } from "react-native"
-import { Link } from "expo-router"
-import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getLeagueNameFromDisplayName, getRugbyVizLeagueCode, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
+import { fixtureStyles } from "@/styles";
+import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
+import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
+import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
 
 type ScorePanelProps = {
     leagueDisplayName: string
@@ -50,32 +51,39 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         // not started yet
         if (eventState === "pre") {
             return (  
-                <Text style={{color: colors.text, fontSize: fontSize.base, fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light}}>{matchTime}</Text>  
+                <View style={{flexDirection: 'column', width: "100%", paddingVertical: 8}}>
+                        <Text style={{color: colors.text, fontSize: fontSize.lg,
+                             textAlign: 'center', fontFamily: fontFamilies.regular}}>{matchTime}</Text> 
+                </View>
             )
         }
         // event finished
         else if (eventState === "post")
         {
             return (
-            <View>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
-                        <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8}}>
+                        <Text style={[fixtureStyles.teamScore,
+                             {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily, width: "35%", textAlign: 'center'}]}>{homeScore}</Text>
+
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: fontSize.base, width: "30%"}}>FT</Text>
+
+                        <Text style={[fixtureStyles.teamScore, 
+                            {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily, width: "35%", textAlign: 'center'}]}>{awayScore}</Text>
                     </View>
-                    <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, paddingVertical: 2}}>FT</Text>
-            </View> 
             )
         }
         // event at halftime
         else if (eventState === "halfTime") {
             return (
-                <View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={[fixtureStyles.teamScore, { fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
-                        <Text style={[fixtureStyles.teamScore, { fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily }]}>{awayScore}</Text>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8}}>
+                        <Text style={[fixtureStyles.teamScore,
+                             {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily, width: "30%", textAlign: 'center'}]}>{homeScore}</Text>
+
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: fontSize.base, width: "40%"}}>HT</Text>
+
+                        <Text style={[fixtureStyles.teamScore, 
+                            {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily, width: "30%", textAlign: 'center'}]}>{awayScore}</Text>
                     </View>
-                    <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, paddingVertical: 2 }}>HT</Text>
-                </View>
             )
         }
         // event ongoing
@@ -88,22 +96,6 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         </View>
                         <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, paddingVertical: 2}}>{eventTime}'</Text>
                 </View> 
-            )
-        }
-    }
-
-    const venueRender = (eventNotStarted: boolean) => {
-
-        if (eventNotStarted) {
-            return (
-                <View style={{paddingVertical: 3}}>
-                    <Text style={{textAlign: 'center', fontSize: fontSize.xs, fontWeight: 300, color: colors.text, fontFamily: fontFamilies.light}}>{matchVenue}</Text>
-                </View>  
-            )
-        }
-        else {
-            return (
-                <></>
             )
         }
     }
@@ -151,45 +143,58 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         awayAbbreviation += " U20"
     }
 
+    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.5');
+    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.5');
+    const matchLeagueLogo = getLeagueInfoFromDisplayName(matchLeague)?.leagueAltLogo
+
     return(
         <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 60: 3}]}>
-              <View style={[fixtureStyles.cardHeaderAllInfo,
-                 {backgroundColor: '#242323', borderColor: 'grey', borderWidth: 2, borderRadius: 4}]}>
+             
+                <LinearGradient colors={[homeGradientColour,'rgba(25, 26, 27, 0.5)',awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} 
+                style={[fixtureStyles.cardHeaderAllInfo,{borderColor: 'grey', borderWidth: 2, borderRadius: 12, padding: 3}]}>
 
                 <Link href={`/(tabs)/(fixtures)/match/${linkID}`} asChild>
                 <TouchableOpacity activeOpacity={0.5} >
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
-                    <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%", textAlign: 'right'}]}>{homeAbbreviation}</Text>
-                        <View style={{paddingHorizontal: 2, width: "50%"}}>
+                    
+                    <View style={{width: "20%", flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center'}}>
+                        <View style={{paddingVertical: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
                             source={homeTeamInfo.logo} />
                         </View>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center'}]}>{homeAbbreviation}</Text>
                         
                     </View>
                     
-                    <View style={{width: "30%", flexDirection: 'column', alignItems: 'center'}}>
-                        {scoreRender(eventState)}
+                    <View style={{width: "60%", flexDirection: 'column', alignItems: 'center', justifyContent :'center'}}>
+                         <ImageBackground resizeMode='contain' imageStyle={{opacity: 0.04}} 
+                                        style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: "100%"}} source={matchLeagueLogo} >
+                                            
+                            <Text style={{textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%"}}>{matchLeague}</Text>
+
+                            {scoreRender(eventState)}
+
+                            <Text style={{textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%"}}>{matchVenue}</Text>
+                        </ImageBackground>
                     </View>
 
-                    <View style={{width: "35%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <View style={{paddingHorizontal: 2, width: "50%"}}>
+                    <View style={{width: "20%", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center'}}>
+                        <View style={{paddingVertical: 2}}>
                             <Image
                             style={[fixtureStyles.teamLogo]}
                             source={awayTeamInfo.logo} />
                         </View>
-                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, width: "50%", textAlign: 'left'}]}>{awayAbbreviation}</Text>
+                        <Text style={[fixtureStyles.teamName, {color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center'}]}>{awayAbbreviation}</Text>
                     </View>
 
                 </View>
 
-                {venueRender(eventState === "pre")}
-
                 </TouchableOpacity> 
                 </Link>
-              </View>
+
+            </LinearGradient>
               {lastRefreshHeader(lastRefreshTime)}
             </View>
     )

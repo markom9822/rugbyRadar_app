@@ -79,19 +79,19 @@ export const fixtureStyles = StyleSheet.create({
         padding: 4
     },
     teamName: {
-        paddingHorizontal: 6,
-        fontSize: 14,
+        paddingVertical: 6,
+        fontSize: 13,
     },
     teamScore: {
-        fontSize: fontSize.lg,
+        fontSize: 30,
         paddingHorizontal: 8,
     },
     teamLogo: {
         resizeMode: 'contain',
-        width: 50,
-        height: 50,
-        minHeight:50,
-        minWidth: 50
+        width: 55,
+        height: 55,
+        minHeight: 55,
+        minWidth: 55
     },
     quickViewButton: {
       backgroundColor: '#f0f2f0',
