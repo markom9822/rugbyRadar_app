@@ -2,7 +2,168 @@
     "teams": [
         {
             "name": "Blues",
-            "players": []
+            "players": [
+                {
+                    "name": "Jordan Lay",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/99.png.webp?maxw=240"
+                },
+                {
+                    "name": "Josh Fusitua",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6689.png.webp?maxw=240"
+                },
+                {
+                    "name": "Ben Ake",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/13901.png.webp?maxw=240"
+                },
+                {
+                    "name": "Ricky Riccitelli",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2291.png.webp?maxw=240"
+                },
+                {
+                    "name": "Kurt Eklund",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2601.png.webp?maxw=240"
+                },
+                {
+                    "name": "James Mullan",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/14265.png.webp?maxw=240"
+                },
+                {
+                    "name": "Nathaniel Pole",
+                    "image": ""
+                },
+                {
+                    "name": "Ofa Tu'ungafasi",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2903.png.webp?maxw=240"
+                },
+                {
+                    "name": "Marcel Renata",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2510.png.webp?maxw=240"
+                },
+                {
+                    "name": "Angus Ta'avao",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2486.png.webp?maxw=240"
+                },
+                {
+                    "name": "PJ Sheck",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6072.png.webp?maxw=240"
+                },
+                {
+                    "name": "Laghlan McWhannell",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2833.png.webp?maxw=240"
+                },
+                {
+                    "name": "Sam Darry",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5240.png.webp?maxw=240"
+                },
+                {
+                    "name": "Josh Beehre",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6966.png.webp?maxw=240"
+                },
+                {
+                    "name": "Patrick Tuipulotu",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/279.png.webp?maxw=240"
+                },
+                {
+                    "name": "Cameron Suafoa",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/4583.png.webp?maxw=240"
+                },
+                {
+                    "name": "Che Clark",
+                    "image": ""
+                },
+                {
+                    "name": "Dalton Papali'i",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/3034.png.webp?maxw=240"
+                },
+                {
+                    "name": "Adrian Choat",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/3476.png.webp?maxw=240"
+                },
+                {
+                    "name": "Anton Segner",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5305.png.webp?maxw=240"
+                },
+                {
+                    "name": "Hoskins Sotutu",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/3177.png.webp?maxw=240"
+                },
+                {
+                    "name": "Sam Nock",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2428.png.webp?maxw=240"
+                },
+                {
+                    "name": "Finlay Christie",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2378.png.webp?maxw=240"
+                },
+                {
+                    "name": "Taufa Funaki",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5214.png.webp?maxw=240"
+                },
+                {
+                    "name": "Beauden Barrett",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/263.png.webp?maxw=240"
+                },
+                {
+                    "name": "Stephen Perofeta",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2431.png.webp?maxw=240"
+                },
+                {
+                    "name": "Harry Plummer",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2849.png.webp?maxw=240"
+                },
+                {
+                    "name": "Caleb Clarke",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2785.png.webp?maxw=240"
+                },
+                {
+                    "name": "Corey Evans",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6096.png.webp?maxw=240"
+                },
+                {
+                    "name": "Xavi Taele",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/13907.png.webp?maxw=240"
+                },
+                {
+                    "name": "Rieko Ioane",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/289.png.webp?maxw=240"
+                },
+                {
+                    "name": "Meihana Grindlay",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6295.png.webp?maxw=240"
+                },
+                {
+                    "name": "Reon Paul",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/14618.png.webp?maxw=240"
+                },
+                {
+                    "name": "Bryce Heem",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/737.png.webp?maxw=240"
+                },
+                {
+                    "name": "Mark Tele'a",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2637.png.webp?maxw=240"
+                },
+                {
+                    "name": "AJ Lam",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/4397.png.webp?maxw=240"
+                },
+                {
+                    "name": "Cole Forbes",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/3517.png.webp?maxw=240"
+                },
+                {
+                    "name": "Zarn Sullivan",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5215.png.webp?maxw=240"
+                },
+                {
+                    "name": "Payton Spencer",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/14266.png.webp?maxw=240"
+                },
+                {
+                    "name": "Cameron Christie",
+                    "image": ""
+                }
+            ]
         },
         {
             "name": "Brumbies",
@@ -167,7 +328,168 @@
         },
         {
             "name": "Crusaders",
-            "players": []
+            "players": [
+                {
+                    "name": "George Bower",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2757.png.webp?maxw=240"
+                },
+                {
+                    "name": "Finlay Brewis",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5234.png.webp?maxw=240"
+                },
+                {
+                    "name": "Kershawl Sykes-Martin",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5307.png.webp?maxw=240"
+                },
+                {
+                    "name": "Codie Taylor",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/270.png.webp?maxw=240"
+                },
+                {
+                    "name": "Ioane Moananu",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5222.png.webp?maxw=240"
+                },
+                {
+                    "name": "George Bell",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6794.png.webp?maxw=240"
+                },
+                {
+                    "name": "Manumaua Letiu",
+                    "image": ""
+                },
+                {
+                    "name": "Fletcher Newell",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5235.png.webp?maxw=240"
+                },
+                {
+                    "name": "Tamaiti Williams",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5241.png.webp?maxw=240"
+                },
+                {
+                    "name": "Seb Calder",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6947.png.webp?maxw=240"
+                },
+                {
+                    "name": "Scott Barrett",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/278.png.webp?maxw=240"
+                },
+                {
+                    "name": "Tahlor Cahill",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/11233.png.webp?maxw=240"
+                },
+                {
+                    "name": "Jamie Hannah",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/14262.png.webp?maxw=240"
+                },
+                {
+                    "name": "Quinten Strange",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2451.png.webp?maxw=240"
+                },
+                {
+                    "name": "Antonio Shalfoon",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/4524.png.webp?maxw=240"
+                },
+                {
+                    "name": "Ethan Blackadder",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2455.png.webp?maxw=240"
+                },
+                {
+                    "name": "Dom Gardiner",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/8639.png.webp?maxw=240"
+                },
+                {
+                    "name": "Xavier Saifoloi",
+                    "image": ""
+                },
+                {
+                    "name": "Tom Christie",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2778.png.webp?maxw=240"
+                },
+                {
+                    "name": "Corey Kellow",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6099.png.webp?maxw=240"
+                },
+                {
+                    "name": "Fletcher Anderson",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/7036.png.webp?maxw=240"
+                },
+                {
+                    "name": "Cullen Grace",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/4431.png.webp?maxw=300"
+                },
+                {
+                    "name": "Christian Lio-Willie",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/8638.png.webp?maxw=300"
+                },
+                {
+                    "name": "Samuel Matenga",
+                    "image": ""
+                },
+                {
+                    "name": "Mitchell Drummond",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/281.png.webp?maxw=240"
+                },
+                {
+                    "name": "Noah Hotham",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/6222.png.webp?maxw=240"
+                },
+                {
+                    "name": "Kyle Preston",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/14312.png.webp?maxw=240"
+                },
+                {
+                    "name": "James O'Connor",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2983.png.webp?maxw=240"
+                },
+                {
+                    "name": "Rivez Reihana",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/4415.png.webp?maxw=240"
+                },
+                {
+                    "name": "Taha Kemara",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/7031.png.webp?maxw=240"
+                },
+                {
+                    "name": "Aki Tuivailala",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/13910.png.webp?maxw=240"
+                },
+                {
+                    "name": "David Havili",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/286.png.webp?maxw=240"
+                },
+                {
+                    "name": "Levi Aumua",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2762.png.webp?maxw=240"
+                },
+                {
+                    "name": "Braydon Ennor",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2525.png.webp?maxw=240"
+                },
+                {
+                    "name": "Dallas McLeod",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/4526.png.webp?maxw=240"
+                },
+                {
+                    "name": "Sevu Reece",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2627.png.webp?maxw=240"
+                },
+                {
+                    "name": "Johnny McNicholl",
+                    "image": ""
+                },
+                {
+                    "name": "Will Jordan",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/2788.png.webp?maxw=240"
+                },
+                {
+                    "name": "Chay Fihaki",
+                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5233.png.webp?maxw=240"
+                },
+                {
+                    "name": "Macca Springer",
+                    "image": ""
+                }
+            ]
         },
         {
             "name": "Fijian Drua",
@@ -662,7 +984,32 @@
         },
         {
             "name": "Western Force",
-            "players": []
+            "players": [
+                {
+                    "name": "",
+                    "image": ""
+                },
+                {
+                    "name": "",
+                    "image": ""
+                },
+                {
+                    "name": "",
+                    "image": ""
+                },
+                {
+                    "name": "",
+                    "image": ""
+                },
+                {
+                    "name": "",
+                    "image": ""
+                },
+                {
+                    "name": "",
+                    "image": ""
+                }
+            ]
         }
     ]
 }

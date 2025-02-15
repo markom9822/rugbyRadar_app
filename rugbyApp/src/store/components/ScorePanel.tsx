@@ -1,7 +1,6 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { fixtureStyles } from "@/styles";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
@@ -9,7 +8,6 @@ import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, i
 type ScorePanelProps = {
     leagueDisplayName: string
     index: number
-    currentIndex: Number | null
 	homeTeam: string
 	awayTeam: string
     homeScore: string
@@ -23,11 +21,12 @@ type ScorePanelProps = {
     stateDetail: string
     eventTime: string,
     isLastItem: boolean,
-    lastRefreshTime: string
+    lastRefreshTime: string,
+    OnPress: (index: number, id: string) => void
 }
 
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
-     index, currentIndex, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime}: ScorePanelProps) => {
+     index, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime, OnPress}: ScorePanelProps) => {
 
     const leagueName = getLeagueNameFromDisplayName(leagueDisplayName)
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
@@ -90,11 +89,15 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         else { 
             return (
                 <View>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: homeScoreWeight,color: colors.text, fontFamily: homeFontFamily }]}>{homeScore}</Text>
-                            <Text style={[fixtureStyles.teamScore, {fontWeight: awayScoreWeight,color: colors.text, fontFamily: awayFontFamily}]}>{awayScore}</Text>
-                        </View>
-                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, paddingVertical: 2}}>{eventTime}'</Text>
+                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8}}>
+                        <Text style={[fixtureStyles.teamScore,
+                             {fontWeight: homeScoreWeight, color: colors.text, fontFamily: homeFontFamily, width: "35%", textAlign: 'center'}]}>{homeScore}</Text>
+
+                        <Text style={{textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: 16, width: "30%"}}>{eventTime}'</Text>
+
+                        <Text style={[fixtureStyles.teamScore, 
+                            {fontWeight: awayScoreWeight, color: colors.text, fontFamily: awayFontFamily, width: "35%", textAlign: 'center'}]}>{awayScore}</Text>
+                    </View>
                 </View> 
             )
         }
@@ -113,7 +116,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         return null
     }
 
-    var linkID
+    var linkID: string
     if(isLeagueInRugbyViz(leagueDisplayName))
     {
         linkID = matchID + leagueName + "_RugbyViz"
@@ -143,18 +146,22 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         awayAbbreviation += " U20"
     }
 
-    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.5');
-    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.5');
+    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.3');
+    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.3');
     const matchLeagueLogo = getLeagueInfoFromDisplayName(matchLeague)?.leagueAltLogo
+
+    const handlePressedScorePanel = () => {
+
+        OnPress(index, linkID)
+    }
 
     return(
         <View style={[fixtureStyles.card, {marginBottom: (isLastItem) ? 60: 3}]}>
              
                 <LinearGradient colors={[homeGradientColour,'rgba(25, 26, 27, 0.5)',awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} 
-                style={[fixtureStyles.cardHeaderAllInfo,{borderColor: 'grey', borderWidth: 2, borderRadius: 12, padding: 3}]}>
+                style={[fixtureStyles.cardHeaderAllInfo,{borderColor: 'grey', borderWidth: 1, borderRadius: 12, padding: 3}]}>
 
-                <Link href={`/(tabs)/(fixtures)/match/${linkID}`} asChild>
-                <TouchableOpacity activeOpacity={0.5} >
+                <TouchableOpacity activeOpacity={0.5} onPress={handlePressedScorePanel}>
 
                 <View style={[fixtureStyles.cardHeaderGameInfo]}>
                     
@@ -192,7 +199,6 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 </View>
 
                 </TouchableOpacity> 
-                </Link>
 
             </LinearGradient>
               {lastRefreshHeader(lastRefreshTime)}

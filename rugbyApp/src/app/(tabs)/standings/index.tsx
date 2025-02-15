@@ -1,18 +1,18 @@
-import { defaultStyles} from "@/styles"
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { KnockoutsPanel } from "@/store/components/KnockoutsPanel"
 import { CustomSelectDropdown, DropdownData, LeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import { generateSeasonList, getLeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName } from "@/store/utils/helpers"
-import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "@/store/utils/standingsGetter"
 import { StandingPanel } from "@/store/components/StandingPanel"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-import {FontAwesome6} from '@expo/vector-icons'
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet"
+import { generateSeasonList, getLeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName } from "@/store/utils/helpers"
+import { fetchRugbyVizKnockoutFixtures } from "@/store/utils/knockoutFixturesGetter"
+import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz } from "@/store/utils/standingsGetter"
+import { defaultStyles } from "@/styles"
+import { FontAwesome6 } from '@expo/vector-icons'
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { MatchInfo } from "../(fixtures)"
-import { fetchRugbyVizKnockoutFixtures } from "@/store/utils/knockoutFixturesGetter"
-import { KnockoutsPanel } from "@/store/components/KnockoutsPanel"
 
 export type StandingInfo = {
     isHeader: boolean

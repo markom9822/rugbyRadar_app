@@ -166,7 +166,7 @@ export const SuperRugbyTeams = [
         abbreviation: 'WARAT',
         logo: WaratahsLogo,
         altLogo: WaratahsAltLogo,
-        colour: '#D41042',
+        colour: '#8fc5eb',
         id: '227',
         defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1882',

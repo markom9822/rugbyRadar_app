@@ -1,18 +1,16 @@
-import { View, Text, TouchableOpacity, FlatList, Image, ActivityIndicator, Button, ImageBackground } from "react-native"
-import { useGlobalSearchParams } from "expo-router";
-import { Ref, RefAttributes, useCallback, useEffect, useRef, useState } from "react";
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
-import { defaultStyles, lineupPanelStyles } from "@/styles";
-import {dateCustomFormatting, getESPNMatchInfoFromDetails, getLeagueName, hexToRGB } from "@/store/utils/helpers";
-import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
-import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import 'react-native-gesture-handler'
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
 import { LineupPlayerPanel } from "@/store/components/LineupPlayerPanel";
-import { LinearGradient } from "expo-linear-gradient";
-import { StretchInX } from "react-native-reanimated";
+import { getHomeAwayTeamInfo, getTeamInfo } from "@/store/utils/getTeamInfo";
+import { getESPNMatchInfoFromDetails, hexToRGB } from "@/store/utils/helpers";
+import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "@/store/utils/lineupsGetter";
+import { getPlayerImageSrc } from "@/store/utils/playerImagesGetter";
+import { defaultStyles, lineupPanelStyles } from "@/styles";
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet";
+import { useGlobalSearchParams } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ActivityIndicator, FlatList, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
 export type LineUpInfo = {
@@ -396,13 +394,13 @@ const Lineups = () => {
 
         setModalPlayerName(playerName)
         setModalPlayerPosition('')
-        setModalPlayerAge('')
-        setModalPlayerDOB('')
-        setModalPlayerHeight('')
-        setModalPlayerWeight('')
+        setModalPlayerAge('-')
+        setModalPlayerDOB('-')
+        setModalPlayerHeight('-')
+        setModalPlayerWeight('-')
         setModalPlayerImageSrc('')
         setModalTeamColour(teamColour)
-        setModalPlayerCountry('')
+        setModalPlayerCountry('-')
 
         if(playerName == "-")
         {

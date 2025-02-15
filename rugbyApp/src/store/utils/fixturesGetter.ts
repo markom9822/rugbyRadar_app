@@ -1,5 +1,4 @@
-import { FixturesSection } from "@/app/(tabs)/(fixtures)";
-import { getLeagueCodeFromDisplayName, getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "./helpers";
+import { getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode } from "./helpers";
 
 export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
 
@@ -61,95 +60,6 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
         sections
     )
 
-}
-
-export const getFixturesForAll = (todaysAllMatches: any) => {
-
-    const todaysScores = todaysAllMatches.scores;
-
-    var sections: FixturesSection[] = []
-
-    for (let index = 0; index < todaysScores.length; index++) {
-
-        var leagueArray = []
-
-        const leagueName = todaysScores[index].leagues[0].name;
-        const leagueID = todaysScores[index].leagues[0].slug;
-
-        // check if in ESPN API
-        const apiCheck = getLeagueCodeFromDisplayName(leagueName) !== undefined && !isLeagueInRugbyViz(leagueName) && !isLeagueInWorldRugbyAPI(leagueName)
-
-        if (apiCheck) {
-            console.info(leagueName)
-
-            const leagueEvents = todaysScores[index].events;
-
-            for (let eventIndex = 0; eventIndex < leagueEvents.length; eventIndex++) {
-
-                console.info(leagueEvents[eventIndex].name)
-                console.info(leagueEvents[eventIndex].competitions[0].venue.fullName)
-                
-                const matchTitle = leagueEvents[eventIndex].name;
-                const matchVenue = leagueEvents[eventIndex].competitions[0].venue.fullName;
-                const eventID = leagueEvents[eventIndex].id;
-                const matchID = eventID + leagueID;
-                const eventState = leagueEvents[eventIndex].status.type.state;
-                const stateDetail = leagueEvents[eventIndex].status.type.shortDetail;
-
-                const homeTeamName = leagueEvents[eventIndex].competitions[0].competitors[0].team.name;
-                const homeTeamScore = leagueEvents[eventIndex].competitions[0].competitors[0].score;
-                const awayTeamName = leagueEvents[eventIndex].competitions[0].competitors[1].team.name;
-                const awayTeamScore = leagueEvents[eventIndex].competitions[0].competitors[1].score;
-
-                console.info(homeTeamScore)
-                console.info(awayTeamScore)
-
-                const matchDate = new Date(leagueEvents[eventIndex].date)
-
-                var eventTime = '0';
-                if(leagueEvents[eventIndex].competitions[0].details != undefined)
-                {
-                    const detailsLength = Number(leagueEvents[eventIndex].competitions[0].details.length);
-                    if(detailsLength > 0)
-                    {
-                        eventTime = leagueEvents[eventIndex].competitions[0].details[detailsLength - 1].clock.displayValue;
-                    }
-                }
-            
-                let newMatchInfo = {
-                    homeTeam: homeTeamName,
-                    awayTeam: awayTeamName,
-                    homeScore: homeTeamScore,
-                    awayScore: awayTeamScore,
-                    matchDate: matchDate,
-                    matchTitle: matchTitle,
-                    matchVenue: matchVenue,
-                    matchLeague: leagueName,
-                    matchID: matchID,
-                    eventState: eventState,
-                    stateDetail: stateDetail,
-                    eventTime: eventTime,
-                };
-
-                leagueArray.push(newMatchInfo)
-            }
-
-            const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-
-            let leagueMatchesInfo = {
-                title: leagueName,
-                data: sortedLeagueArray
-            }
-            
-            sections.push(leagueMatchesInfo)
-        }
-    }
-
-    console.info(sections)
-
-    return (
-        sections
-    )
 }
 
 export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
@@ -221,19 +131,9 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
     }
 
     console.info(leagueArray)
-
-    if (leagueArray.length > 0) {
-        const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-        let leagueMatchesInfo = {
-            title: leagueDisplayName,
-            data: sortedLeagueArray
-        }
-
-        sections.push(leagueMatchesInfo)
-    }
-
+    const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
     return (
-        sections
+        sortedLeagueArray
     )
 }
 
@@ -386,19 +286,10 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
     }
 
     console.info(leagueArray)
-
-    if (leagueArray.length > 0) {
-        const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-        let leagueMatchesInfo = {
-            title: leagueDisplayName,
-            data: sortedLeagueArray
-        }
-
-        sections.push(leagueMatchesInfo)
-    }
+    const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
 
     return (
-        sections
+        sortedLeagueArray
     )
 }
 
@@ -538,18 +429,9 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
     }
 
     console.info(leagueArray)
-
-    if (leagueArray.length > 0) {
-        const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-        let leagueMatchesInfo = {
-            title: leagueDisplayName,
-            data: sortedLeagueArray
-        }
-
-        sections.push(leagueMatchesInfo)
-    }
+    const sortedLeagueArray = leagueArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
 
     return (
-        sections
+        sortedLeagueArray
     )
 }

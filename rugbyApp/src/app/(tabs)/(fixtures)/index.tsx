@@ -1,17 +1,18 @@
-import { defaultStyles } from "@/styles"
-import { View, Text, ViewStyle, TouchableOpacity, Image, SectionList, RefreshControl, ActivityIndicator } from "react-native"
-import { colors, fontFamilies, fontSize} from "@/constants/tokens"
-import { useState } from "react"
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { dateCustomFormatting, getLeagueCode, getLeagueDisplayNameFromCode, getLeagueInfoFromDisplayName, isLastItemInSectionList } from "@/store/utils/helpers"
+import { colors, fontFamilies, fontSize } from "@/constants/tokens"
+import { FixturesPanel } from "@/store/components/FixturesPanel"
 import { ScorePanel } from "@/store/components/ScorePanel"
-import { DropdownData, LeagueSelectDropdown, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
-import {AntDesign, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
-import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData, getFixturesForAll } from "@/store/utils/fixturesGetter"
-import {FontAwesome6} from '@expo/vector-icons'
-import { LionsAltLogo } from "@/store/URCTeamLogos/URCTeams"
+import { DropdownData, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { BALionsAltLogo } from "@/store/InternationalTeamLogos/InternationalTeams"
+import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "@/store/utils/fixturesGetter"
+import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
+import { defaultStyles } from "@/styles"
+import { AntDesign, FontAwesome6, MaterialIcons } from '@expo/vector-icons'
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { useCallback, useRef, useState } from "react"
+import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -28,16 +29,13 @@ export type MatchInfo = {
     eventTime: string,
 }
 
-export type FixturesSection = {
-    title: string;
-    data: MatchInfo[];
-  };
-
 const FixturesScreen = () => {
 
     const [lastRefresh, setLastRefresh] = useState('');
-    const [matchesSections, setMatchesSections] = useState<FixturesSection[]>([]);
-    const [currentIndex, setCurrentIndex] = useState<Number | null>(null);
+    const [matchesArray, setMatchesArray] = useState<MatchInfo[]>([]);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [currentID, setCurrentID] = useState<string>('');
+
     const [refreshing, setRefreshing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -45,6 +43,8 @@ const FixturesScreen = () => {
     const [selectedDate, setDate] = useState(new Date())
 
     const [leagueName, setLeagueName] = useState<string>('all');
+
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
 
     const leagueSearchData = [
@@ -65,7 +65,7 @@ const FixturesScreen = () => {
 
     const handlePressFetchData = async () =>{
         console.info("Pressed Fetch Data")
-        setMatchesSections([])
+        setMatchesArray([])
         setIsLoading(true)
 
         const formattedDate = dateCustomFormatting(selectedDate)
@@ -77,44 +77,35 @@ const FixturesScreen = () => {
 
         console.info(leagueNameArray)
 
-        const allFixturesArray: FixturesSection[] = [];
+        const allFixturesArray: MatchInfo[] = [];
         
         const handleGetRugbyVizFixtures = async (thisLeagueName: string) => {
             
-            const rugbyVizFixtures: FixturesSection[] = await fetchRugbyVizData(thisLeagueName, selectedDate);
+            const rugbyVizFixtures: MatchInfo[] = await fetchRugbyVizData(thisLeagueName, selectedDate);
 
             if(rugbyVizFixtures !== undefined && rugbyVizFixtures.length > 0)
             {
-                allFixturesArray.push({
-                    title: rugbyVizFixtures[0].title,
-                    data: rugbyVizFixtures[0].data,
-                })
+                allFixturesArray.push(...rugbyVizFixtures)
             }
         }
 
         const handleGetPlanetRugbyFixtures = async (thisLeagueName: string) => {
             
-            const planetRugbyFixtures: FixturesSection[] = await fetchPlanetRugbyAPIData(thisLeagueName, selectedDate);
+            const planetRugbyFixtures: MatchInfo[] = await fetchPlanetRugbyAPIData(thisLeagueName, selectedDate);
 
             if(planetRugbyFixtures !== undefined && planetRugbyFixtures.length > 0)
             {
-                allFixturesArray.push({
-                    title: planetRugbyFixtures[0].title,
-                    data: planetRugbyFixtures[0].data,
-                })
+                allFixturesArray.push(...planetRugbyFixtures)
             }
         }
 
         const handleGetWorldRugbyFixtures = async (thisLeagueName: string) => {
             
-            const worldRugbyFixtures: FixturesSection[] = await fetchWorldRugbyAPIData(thisLeagueName, selectedDate);
+            const worldRugbyFixtures: MatchInfo[] = await fetchWorldRugbyAPIData(thisLeagueName, selectedDate);
 
             if(worldRugbyFixtures !== undefined && worldRugbyFixtures.length > 0)
             {
-                allFixturesArray.push({
-                    title: worldRugbyFixtures[0].title,
-                    data: worldRugbyFixtures[0].data,
-                })
+                allFixturesArray.push(...worldRugbyFixtures)
             }
         }
 
@@ -154,11 +145,9 @@ const FixturesScreen = () => {
             }
         }
 
+        console.info(allFixturesArray)
 
-        const teamSectionsCollection : FixturesSection[] = allFixturesArray;
-        console.info(teamSectionsCollection)
-
-        setMatchesSections(teamSectionsCollection)
+        setMatchesArray(allFixturesArray)
 
         setLastRefresh(new Date().toLocaleTimeString('en-GB', {hour: 'numeric', minute: 'numeric', second: 'numeric'}))
         setIsLoading(false)
@@ -194,7 +183,7 @@ const FixturesScreen = () => {
         { label: 'Lions Tour', value: 'BILTour', logo: BALionsAltLogo },
     ];
 
-    const notFoundHeader = (eventsArray: FixturesSection[]) => {
+    const notFoundHeader = (eventsArray: MatchInfo[]) => {
 
         if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
         {
@@ -237,7 +226,34 @@ const FixturesScreen = () => {
         
     }
 
-    return <View style={defaultStyles.container}>
+    // bottom sheet
+
+    const handlePresentModalPress = (index: number, linkID: string) => {
+
+        setCurrentID(linkID)
+        setCurrentIndex(index)
+        bottomSheetModalRef.current?.present();
+    }
+
+    // renders
+	const renderBackdrop = useCallback(
+		(props: any) => (
+			<BottomSheetBackdrop
+				{...props}
+				disappearsOnIndex={-1}
+				appearsOnIndex={0}
+			/>
+		),
+		[]
+	);
+
+    const snapPoints = ["100%"];
+
+    return <GestureHandlerRootView>
+
+    <BottomSheetModalProvider>
+    
+    <View style={defaultStyles.container}>
 
         <View style={{flexDirection: 'row'}}>
             <TestLeagueSelectDropdown
@@ -283,12 +299,11 @@ const FixturesScreen = () => {
         {dateHeader()}
 
         {activityIndicatorHeader()}
-        {notFoundHeader(matchesSections)}
+        {notFoundHeader(matchesArray)}
 
-        <SectionList
-            sections={matchesSections}
-            keyExtractor={(item, index) => item.matchID}
-            renderItem={({ item, index, section }) =>
+        <FlatList
+            data={matchesArray}
+            renderItem={({item, index}) => 
                 <ScorePanel
                     leagueDisplayName={item.matchLeague}
                     homeTeam={item.homeTeam}
@@ -300,35 +315,41 @@ const FixturesScreen = () => {
                     matchLeague={item.matchLeague}
                     matchVenue={item.matchVenue}
                     matchID={item.matchID}
-                    currentIndex={currentIndex}
                     index={index}
                     eventState={item.eventState}
                     stateDetail={item.stateDetail}
                     eventTime={item.eventTime}
-                    isLastItem={isLastItemInSectionList(index, section, matchesSections)}
+                    isLastItem={index == matchesArray.length - 1}
                     lastRefreshTime={lastRefresh}
+                    OnPress={handlePresentModalPress}
                 />}
-            renderSectionHeader={({ section: { title, data } }) => (
-                <View style={{ marginTop: 12, marginHorizontal: 5, flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{ paddingHorizontal: 10 }}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: 20,
-                                height: 20,
-                                minHeight: 20,
-                                minWidth: 20
-                            }}
-                            source={getLeagueInfoFromDisplayName(data[0].matchLeague)?.leagueAltLogo} />
-                    </View>
-                    <Text style={{ fontSize: 13, color: 'grey', fontWeight: 600, fontFamily: fontFamilies.bold }}>{title.toUpperCase()}</Text>
-                </View>
-            )}
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />
             }
         />
+
+        <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={0}
+            snapPoints={snapPoints}
+            enableDynamicSizing={false}
+            enableOverDrag={false}
+            backdropComponent={renderBackdrop}
+            handleComponent={null}
+            handleIndicatorStyle={{backgroundColor: 'lightgrey', width: "10%"}}
+            backgroundStyle={{backgroundColor: "#0d0c0c"}}
+            >
+            <BottomSheetView style={{flex: 1}}>
+               <FixturesPanel
+               matchInfo={matchesArray[currentIndex]}
+               id={currentID}/>
+            </BottomSheetView>
+            </BottomSheetModal>
     </View>
+
+    </BottomSheetModalProvider>
+
+    </GestureHandlerRootView>
 }
 
 export default FixturesScreen
