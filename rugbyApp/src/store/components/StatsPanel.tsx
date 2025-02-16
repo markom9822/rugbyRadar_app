@@ -1,7 +1,6 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { StyleSheet, Text, View } from "react-native"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
-import { hexToRGB } from "../utils/helpers"
 
 export type StatsInfo = {
     statsAvailable: boolean,
@@ -67,8 +66,6 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
 
     const homeTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
     const awayTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
-
-    const fadedGreyColour = hexToRGB('#424242', '0.7');
     
 
     const statsPanelRender = (statsAvailable: boolean) => {
@@ -203,7 +200,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     return (
         <View style={[statsPanelStyles.container, {marginBottom: 130}]}>
 
-            <View style={{backgroundColor: fadedGreyColour, padding: 10, borderRadius: 5, width: "95%"}}>
+            <View style={{backgroundColor: 'transparent', padding: 10, borderRadius: 5, width: "95%"}}>
 
                 {statsPanelRender(matchInfoArray[0].statsAvailable)}
 

@@ -8,11 +8,10 @@ import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } fr
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles"
 import { AntDesign, FontAwesome6, MaterialIcons } from '@expo/vector-icons'
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useCallback, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -249,11 +248,7 @@ const FixturesScreen = () => {
 
     const snapPoints = ["100%"];
 
-    return <GestureHandlerRootView>
-
-    <BottomSheetModalProvider>
-    
-    <View style={defaultStyles.container}>
+    return <View style={defaultStyles.container}>
 
         <View style={{flexDirection: 'row'}}>
             <TestLeagueSelectDropdown
@@ -346,10 +341,6 @@ const FixturesScreen = () => {
             </BottomSheetView>
             </BottomSheetModal>
     </View>
-
-    </BottomSheetModalProvider>
-
-    </GestureHandlerRootView>
 }
 
 export default FixturesScreen

@@ -1,15 +1,14 @@
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
+import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { BALionsAltLogo, DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
 import { AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
+import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
 import { Top14RugbyTeams } from "../Top14RugbyTeamsDatabase";
-import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
-import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyPassTVLogo, RugbyTVLogo, S4CLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
-import { LionsAltLogo } from "../URCTeamLogos/URCTeams";
-import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 import { ChallengeCupTrophyIcon, ChampsCupTrophyIcon, PremiershipTrophyIcon, RWCTrophyIcon, Top14TrophyIcon, URCTrophyIcon } from "../TrophyIcons/TrophyIcons";
+import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 
 export const leagueCodes = [
     { value: 'urc', code: "270557",
@@ -500,4 +499,16 @@ export const hexToRGB = (hexValue: string, alpha: string) => {
     const g = numericValue >> 8 & 0xFF;
     const b = numericValue & 0xFF;
     return `rgba(${r}, ${g}, ${b}, ${alpha})`
-  }
+}
+
+export function getFirstName(fullName: string): string {
+    return fullName.split(' ')[0];
+}
+
+export function getLastName(fullName: string): string {
+
+    const lastNameArray: string[] = fullName.split(' ').slice(1);
+    const filteredArray = lastNameArray.filter(item => item !== "");
+   
+    return filteredArray.join(" ")
+}

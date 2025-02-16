@@ -5,8 +5,10 @@ import { useState } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { getLeagueNameFromDisplayName, hexToRGB } from "../utils/helpers"
+import { FixtureLineups } from "./FixtureLineups"
 import { FixtureOverview } from "./FixtureOverview"
 import { FixtureStats } from "./FixtureStats"
+import { FixtureEvents } from "./FixturesEvents"
 
 
 type FixturesPanelProps = {
@@ -130,6 +132,8 @@ export const FixturesInfoBox = ({ id, currentTabKey}: FixturesInfoBox) => {
         <View>
             <FixtureOverview id={id} isShown={currentTabKey == "Overview"}/>
             <FixtureStats id={id} isShown={currentTabKey == "Stats"}/>
+            <FixtureEvents id={id} isShown={currentTabKey == "Events"}/>
+            <FixtureLineups id={id} isShown={currentTabKey == "Lineups"}/>
         </View>
     )
 }
@@ -166,7 +170,7 @@ export const FixturesInfoTabButton = ({ title, isTabSelected, OnPressTab }: Fixt
 
     return (
         <TouchableOpacity style={{margin: 4, width: "22%"}} activeOpacity={0.8} onPress={() => OnPressTab(title)}>
-                    <Text style={{color: isTabSelected ? colors.text : 'grey', fontFamily: fontFamilies.regular, textAlign: 'center', fontSize: 15}}>{title}</Text>
+                    <Text style={{color: isTabSelected ? colors.text : 'grey', fontFamily: isTabSelected ? fontFamilies.bold : fontFamilies.regular, textAlign: 'center', fontSize: 15}}>{title}</Text>
         </TouchableOpacity>
     )
 }

@@ -1,8 +1,8 @@
-import { useCallback } from "react"
-import { hexToRGB } from "../utils/helpers"
-import { Text, TouchableOpacity, View } from "react-native"
-import { lineupPanelStyles } from "@/styles"
 import { colors, fontFamilies } from "@/constants/tokens"
+import { lineupPanelStyles } from "@/styles"
+import { useCallback } from "react"
+import { Text, TouchableOpacity, View } from "react-native"
+import { getFirstName, getLastName } from "../utils/helpers"
 
 type LineupPlayerPanelProps = {
     selectedTeam: string,
@@ -44,8 +44,6 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
         isCaptain = isAwayPlayerCaptain;
     }
 
-    const panelBackground = hexToRGB(teamColour, '0.1')
-
     const handlePresentModalPress = useCallback(async () => {
 
         console.info("pressed")
@@ -53,24 +51,39 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
         bottomSheetRef.current?.present();
         
         await OnPlayerModalShown(playerName, playerID, selectedTeamDisplayName, teamColour)
-      }, [selectedTeam]);
+    }, [selectedTeam]);
+
+    const displayPlayerName = (playerName: string, isCaptain: boolean) => {
+
+        const playerFirstName = getFirstName(playerName);
+        const playerLastName = getLastName(playerName);
+
+        return (
+            <View style={{flexDirection: 'row', paddingHorizontal: 6}}>
+                <Text style={{fontSize: 13, color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 2}}>
+                {playerFirstName.toUpperCase()}</Text>
+
+                <Text style={{fontSize: 13, color: colors.text, fontFamily: fontFamilies.bold, paddingHorizontal: 2}}>
+                {playerLastName.toUpperCase()}</Text>
+            </View>
+        )
+    }
 
 
     if (hometeamPlayer === "Substitutes") {
         return (
-            <View style={{flexDirection: 'row', backgroundColor: panelBackground}}>
+            <View style={{flexDirection: selectedTeam == "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start',  backgroundColor: 'transparent', borderBottomColor:'grey', borderBottomWidth: 1}}>
                 <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName.toUpperCase()}</Text>
             </View>
         )
     }
     else {
         return ( 
-            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{flexDirection: 'row', backgroundColor: panelBackground, paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: isLastItem ? 60: 0}]}>
-                <Text style={{fontWeight: 500, paddingHorizontal: 4, fontSize: 11, color: colors.text, width: "8%", textAlign: 'center', fontFamily: fontFamilies.bold}}>
+            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{flexDirection: selectedTeam == "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start', backgroundColor: 'transparent',  paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 0.5, marginBottom: isLastItem ? 60: 0}]}>
+                <Text style={{paddingHorizontal: 4, fontSize: 11, color: 'lightgrey', width: "8%", textAlign: 'center', fontFamily: fontFamilies.bold}}>
                     {playerNumber}
                 </Text>
-                <Text style={{fontWeight: 500, paddingHorizontal: 6, fontSize: 12, color: colors.text, textAlign: 'left', width: "92%", fontFamily: fontFamilies.regular}}>
-                    {playerName.toUpperCase()} {(isCaptain) ? '(c)' : ''}</Text>
+                {displayPlayerName(playerName, isCaptain)}
             </TouchableOpacity>
         )
     }

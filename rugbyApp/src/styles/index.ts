@@ -157,13 +157,10 @@ export const lineupPanelStyles = StyleSheet.create({
       paddingLeft: 5
     },
     substitutesHeader: {
-      width: "100%",
-      borderBottomWidth: 1, 
-      borderBottomColor: 'lightgrey',
-      paddingLeft: 5,
+      paddingHorizontal: 5,
       paddingTop: 10,
       fontWeight: 600,
-      color: 'lightgrey',
+      color: 'grey',
       fontSize: 11,
       fontFamily: fontFamilies.bold
     },

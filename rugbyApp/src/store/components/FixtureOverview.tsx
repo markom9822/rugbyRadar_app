@@ -4,7 +4,7 @@ import { TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
 import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "@/store/utils/getTeamFormStats";
-import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
+import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
@@ -202,9 +202,7 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
     export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName}: GameInfoPanelProps) => {
     
         if(matchInfoArray == undefined) return
-    
-        const fadedGreyColour = hexToRGB('#424242', '0.7');
-        
+            
         var matchAttendance = 'NA'
         if(matchInfoArray[0].matchAttendance !== undefined)
         {
@@ -260,7 +258,7 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
             
             <View style={{flexDirection: 'column'}}>
     
-                <View style={{backgroundColor: fadedGreyColour, padding: 10, borderRadius: 5, marginVertical: 10}}>
+                <View style={{backgroundColor: 'transparent', padding: 10, borderRadius: 5, marginVertical: 10}}>
                     <View style={{ alignItems: 'flex-start', flexDirection: 'column', justifyContent: 'flex-start' }}>
     
                         <View style={{ flexDirection: 'row', marginVertical: 4 }}>

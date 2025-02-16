@@ -1,12 +1,18 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { defaultStyles } from "@/styles"
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 import { Stack } from "expo-router"
 import { View, } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 
 const FavouritesScreenLayout = () => {
 
-    return <View style={defaultStyles.container}>
+    return <GestureHandlerRootView>
+
+    <BottomSheetModalProvider>
+    
+    <View style={defaultStyles.container}>
         <Stack screenOptions={{
             headerShown: false,
             headerStyle: {
@@ -23,6 +29,10 @@ const FavouritesScreenLayout = () => {
                 }} />
         </Stack>		
     </View>
+
+    </BottomSheetModalProvider>
+
+    </GestureHandlerRootView>
 }
 
 
