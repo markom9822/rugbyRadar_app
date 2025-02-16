@@ -47,22 +47,22 @@ const FixturesScreen = () => {
 
 
     const leagueSearchData = [
-        { name: 'urc', offSeasonMonths: [7, 8]},
-        { name: 'prem', offSeasonMonths: [7, 8]},
+        { name: 'urc', offSeasonMonths: [7, 8] },
+        { name: 'prem', offSeasonMonths: [7, 8] },
         { name: 'top14', offSeasonMonths: [7, 8] },
         { name: 'superRugby', offSeasonMonths: [1, 7, 8, 9, 10, 11, 12] },
         { name: 'championsCup', offSeasonMonths: [6, 7, 8, 9, 10, 11] },
-        { name: 'challengeCup', offSeasonMonths: [6, 7, 8, 9, 10, 11]  },
+        { name: 'challengeCup', offSeasonMonths: [6, 7, 8, 9, 10, 11] },
         { name: 'sixNations', offSeasonMonths: [4, 5, 6, 7, 8, 9, 10, 11, 12] },
         { name: 'u20SixNations', offSeasonMonths: [4, 5, 6, 7, 8, 9, 10, 11, 12] },
         { name: 'autumnNations', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12] },
         { name: 'rugbyChamp', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
-        { name: 'rugbyWorldCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 11, 12]  },
+        { name: 'rugbyWorldCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 11, 12] },
         { name: 'u20Championship', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12] },
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
     ];
 
-    const handlePressFetchData = async () =>{
+    const handlePressFetchData = async () => {
         console.info("Pressed Fetch Data")
         setMatchesArray([])
         setIsLoading(true)
@@ -70,40 +70,37 @@ const FixturesScreen = () => {
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(leagueName)
 
-        const leagueNameArray = leagueName == "all" ? 
-        ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby', 
-            'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'BILTour' ] : [leagueName]
+        const leagueNameArray = leagueName == "all" ?
+            ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby',
+                'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'BILTour'] : [leagueName]
 
         console.info(leagueNameArray)
 
         const allFixturesArray: MatchInfo[] = [];
-        
+
         const handleGetRugbyVizFixtures = async (thisLeagueName: string) => {
-            
+
             const rugbyVizFixtures: MatchInfo[] = await fetchRugbyVizData(thisLeagueName, selectedDate);
 
-            if(rugbyVizFixtures !== undefined && rugbyVizFixtures.length > 0)
-            {
+            if (rugbyVizFixtures !== undefined && rugbyVizFixtures.length > 0) {
                 allFixturesArray.push(...rugbyVizFixtures)
             }
         }
 
         const handleGetPlanetRugbyFixtures = async (thisLeagueName: string) => {
-            
+
             const planetRugbyFixtures: MatchInfo[] = await fetchPlanetRugbyAPIData(thisLeagueName, selectedDate);
 
-            if(planetRugbyFixtures !== undefined && planetRugbyFixtures.length > 0)
-            {
+            if (planetRugbyFixtures !== undefined && planetRugbyFixtures.length > 0) {
                 allFixturesArray.push(...planetRugbyFixtures)
             }
         }
 
         const handleGetWorldRugbyFixtures = async (thisLeagueName: string) => {
-            
+
             const worldRugbyFixtures: MatchInfo[] = await fetchWorldRugbyAPIData(thisLeagueName, selectedDate);
 
-            if(worldRugbyFixtures !== undefined && worldRugbyFixtures.length > 0)
-            {
+            if (worldRugbyFixtures !== undefined && worldRugbyFixtures.length > 0) {
                 allFixturesArray.push(...worldRugbyFixtures)
             }
         }
@@ -116,8 +113,7 @@ const FixturesScreen = () => {
             const offSeasonMonths = leagueSearchData.find(league => league.name === thisLeagueName)?.offSeasonMonths;
 
             // check if in offseason for league
-            if(offSeasonMonths?.includes(thisFixtureMonth))
-            {
+            if (offSeasonMonths?.includes(thisFixtureMonth)) {
                 continue;
             }
 
@@ -148,7 +144,7 @@ const FixturesScreen = () => {
 
         setMatchesArray(allFixturesArray)
 
-        setLastRefresh(new Date().toLocaleTimeString('en-GB', {hour: 'numeric', minute: 'numeric', second: 'numeric'}))
+        setLastRefresh(new Date().toLocaleTimeString('en-GB', { hour: 'numeric', minute: 'numeric', second: 'numeric' }))
         setIsLoading(false)
     }
 
@@ -184,8 +180,7 @@ const FixturesScreen = () => {
 
     const notFoundHeader = (eventsArray: MatchInfo[]) => {
 
-        if(eventsArray == undefined || eventsArray.length == 0 && !isLoading)
-        {
+        if (eventsArray == undefined || eventsArray.length == 0 && !isLoading) {
             return (
                 <View style={{ marginTop: 20, marginHorizontal: 5 }}>
                     <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
@@ -195,34 +190,33 @@ const FixturesScreen = () => {
                 </View>
             )
         }
-        
+
         return null
     }
 
     const activityIndicatorHeader = () => {
 
-        if(isLoading)
-        {
+        if (isLoading) {
             return (
-                <View style={{marginVertical: 20}}>
+                <View style={{ marginVertical: 20 }}>
                     <ActivityIndicator size='large' color='lightgrey' />
                 </View>
             )
         }
-        
+
         return null
     }
 
     const dateHeader = () => {
 
-        const dateString = new Date(selectedDate).toLocaleDateString('en-GB', {weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'})
+        const dateString = new Date(selectedDate).toLocaleDateString('en-GB', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })
 
         return (
-            <View style={{ marginBottom: 2, paddingBottom: 4, marginHorizontal: 5, justifyContent: 'center', alignContent: 'center', borderBottomColor: '#363434', borderBottomWidth: 1}}>
+            <View style={{ marginBottom: 2, paddingBottom: 4, marginHorizontal: 5, justifyContent: 'center', alignContent: 'center', borderBottomColor: '#363434', borderBottomWidth: 1 }}>
                 <Text style={{ fontSize: fontSize.sm, color: 'lightgrey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.bold }}>{dateString}</Text>
             </View>
         )
-        
+
     }
 
     // bottom sheet
@@ -235,22 +229,22 @@ const FixturesScreen = () => {
     }
 
     // renders
-	const renderBackdrop = useCallback(
-		(props: any) => (
-			<BottomSheetBackdrop
-				{...props}
-				disappearsOnIndex={-1}
-				appearsOnIndex={0}
-			/>
-		),
-		[]
-	);
+    const renderBackdrop = useCallback(
+        (props: any) => (
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+            />
+        ),
+        []
+    );
 
     const snapPoints = ["100%"];
 
     return <View style={defaultStyles.container}>
 
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
             <TestLeagueSelectDropdown
                 placeholder="Select League"
                 data={leagueData}
@@ -259,9 +253,9 @@ const FixturesScreen = () => {
                 isDisabled={false}
                 iconName="trophy-outline" />
 
-            <View style={{ justifyContent: 'center', alignContent: 'center', width: "45%"}}>
+            <View style={{ justifyContent: 'center', alignContent: 'center', width: "45%" }}>
                 <TouchableOpacity onPress={handlePressDatePicker}
-                    style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'grey', padding: 4, borderWidth: 1, borderRadius: 4, marginHorizontal: 6}}>
+                    style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'grey', padding: 4, borderWidth: 1, borderRadius: 4, marginHorizontal: 6 }}>
                     <View style={{ paddingHorizontal: 5, justifyContent: 'center' }}>
                         <MaterialIcons name="date-range" size={20} color={colors.icon} />
                     </View>
@@ -281,7 +275,7 @@ const FixturesScreen = () => {
 
         </View>
 
-        <View style={{borderBottomColor: 'grey', borderBottomWidth: 1, paddingBottom: 10, marginBottom: 20}}>
+        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, paddingBottom: 10, marginBottom: 20 }}>
             <TouchableOpacity onPress={handlePressFetchData} style={{
                 backgroundColor: '#3d3d3d', justifyContent: 'center', alignItems: 'center',
                 paddingVertical: 10, margin: 4, borderRadius: 5
@@ -289,7 +283,7 @@ const FixturesScreen = () => {
                 <AntDesign name="search1" size={24} color="lightgrey" />
             </TouchableOpacity>
         </View>
-        
+
 
         {dateHeader()}
 
@@ -298,7 +292,7 @@ const FixturesScreen = () => {
 
         <FlatList
             data={matchesArray}
-            renderItem={({item, index}) => 
+            renderItem={({ item, index }) =>
                 <ScorePanel
                     leagueDisplayName={item.matchLeague}
                     homeTeam={item.homeTeam}
@@ -331,15 +325,16 @@ const FixturesScreen = () => {
             enableOverDrag={false}
             backdropComponent={renderBackdrop}
             handleComponent={null}
-            handleIndicatorStyle={{backgroundColor: 'lightgrey', width: "10%"}}
-            backgroundStyle={{backgroundColor: "#0d0c0c"}}
-            >
-            <BottomSheetView style={{flex: 1}}>
-               <FixturesPanel
-               matchInfo={matchesArray[currentIndex]}
-               id={currentID}/>
+            handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
+            backgroundStyle={{ backgroundColor: "#0d0c0c" }}
+        >
+            <BottomSheetView style={{ flex: 1 }}>
+                <FixturesPanel
+                    matchInfo={matchesArray[currentIndex]}
+                    id={currentID}
+                    bottomSheetRef={bottomSheetModalRef} />
             </BottomSheetView>
-            </BottomSheetModal>
+        </BottomSheetModal>
     </View>
 }
 

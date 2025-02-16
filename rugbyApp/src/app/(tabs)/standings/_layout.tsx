@@ -6,8 +6,9 @@ import { View } from "react-native"
 const StandingsScreenLayout = () => {
     return <View style={defaultStyles.container}>
         <Stack screenOptions={{
+            headerShown: false,
             headerStyle: {
-            backgroundColor: colors.background
+                backgroundColor: colors.background
             },
             headerTitleStyle: {
                 color: colors.text,
@@ -17,7 +18,7 @@ const StandingsScreenLayout = () => {
         }}>
             <Stack.Screen name="index" options={{
                 headerTitle: 'Standings'
-                }} />
+            }} />
         </Stack>
     </View>
 }
