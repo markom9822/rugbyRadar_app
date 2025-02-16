@@ -1,6 +1,7 @@
-import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import { getAnyHomeAwayTeamInfo, getHomeAwayTeamInfo } from "../utils/getTeamInfo"
-import { View, Image, Text, StyleSheet } from "react-native"
+import { colors, fontFamilies } from "@/constants/tokens"
+import { StyleSheet, Text, View } from "react-native"
+import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
+import { hexToRGB } from "../utils/helpers"
 
 export type StatsInfo = {
     statsAvailable: boolean,
@@ -66,6 +67,9 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
 
     const homeTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
     const awayTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
+
+    const fadedGreyColour = hexToRGB('#424242', '0.7');
+    
 
     const statsPanelRender = (statsAvailable: boolean) => {
 
@@ -197,25 +201,9 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     }
 
     return (
-        <View style={[statsPanelStyles.container, {marginBottom: 55}]}>
+        <View style={[statsPanelStyles.container, {marginBottom: 130}]}>
 
-            <View style={{backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 1, padding: 10, borderRadius: 5, marginVertical: 5, width: "95%"}}>
-
-                <View style={{ alignItems: 'center' }}>
-                    <View style={{ alignItems: 'center', flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 2 }}>
-                        <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Image style={[statsPanelStyles.teamLogo]} 
-                            source={homeTeamInfo?.logo}/>
-                            <Text style={[statsPanelStyles.teamName, {fontSize: homeFontSize}]}>{homeAbbreviation}</Text>
-                        </View>
-                        <Text style={{ paddingHorizontal: 10, paddingVertical: 5, textAlign: 'center', width: "30%"}}></Text>
-                        <View style={[statsPanelStyles.teamInfoContainer]}>
-                            <Text style={[statsPanelStyles.teamName, {fontSize: awayFontSize}]}>{awayAbbreviation}</Text>
-                            <Image style={[statsPanelStyles.teamLogo]} 
-                            source={awayTeamInfo?.logo}/>
-                        </View>
-                    </View>
-                </View>
+            <View style={{backgroundColor: fadedGreyColour, padding: 10, borderRadius: 5, width: "95%"}}>
 
                 {statsPanelRender(matchInfoArray[0].statsAvailable)}
 
@@ -240,7 +228,7 @@ export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelPr
         <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%", fontFamily: homeStatFontFamily}]}>{homeStat}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%", backgroundColor: colors.background}]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%"}]}>{statTitle}</Text>
                 <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%", fontFamily: awayStatFontFamily}]}>{awayStat}</Text>
             </View>
         </View>
@@ -267,7 +255,7 @@ export const GamePercentageStatsPanel = ({homePercent, statTitle, awayPercent, h
         <View style={{ alignItems: 'center', flexDirection: 'column', marginVertical: 5 }}>
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                 <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: homeStatFontFamily }]}>{homePercent}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, { width: "50%", backgroundColor: colors.background }]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "50%" }]}>{statTitle}</Text>
                 <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: awayStatFontFamily }]}>{awayPercent}</Text>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
@@ -322,7 +310,7 @@ export const statsPanelStyles = StyleSheet.create({
     statsTitle: {
         paddingHorizontal: 10,
         paddingVertical: 7,
-        marginTop: 8,
+        marginTop: 2,
         textAlign: 'center',
         fontWeight: 500, 
         borderBottomColor: 'lightgrey',

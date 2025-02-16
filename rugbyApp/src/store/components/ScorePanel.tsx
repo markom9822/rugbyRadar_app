@@ -38,10 +38,10 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     if(homeTeamInfo === undefined) return
     if(awayTeamInfo === undefined) return
 
-    const homeScoreWeight = (new Number(homeScore) > new Number(awayScore)) ? ('600'):('300');
-    const awayScoreWeight = (new Number(awayScore) > new Number(homeScore)) ? ('600'):('300');
-    const homeFontFamily = (new Number(homeScore) > new Number(awayScore)) ? (fontFamilies.bold):(fontFamilies.light);
-    const awayFontFamily = (new Number(awayScore) > new Number(homeScore)) ? (fontFamilies.bold):(fontFamilies.light);
+    const homeScoreWeight = (new Number(homeScore) >= new Number(awayScore)) ? ('600'):('300');
+    const awayScoreWeight = (new Number(awayScore) >= new Number(homeScore)) ? ('600'):('300');
+    const homeFontFamily = (new Number(homeScore) >= new Number(awayScore)) ? (fontFamilies.bold):(fontFamilies.light);
+    const awayFontFamily = (new Number(awayScore) >= new Number(homeScore)) ? (fontFamilies.bold):(fontFamilies.light);
 
     const matchTime = matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 

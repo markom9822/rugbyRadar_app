@@ -1,10 +1,12 @@
 import { MatchInfo } from "@/app/(tabs)/(fixtures)"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { LinearGradient } from "expo-linear-gradient"
+import { useState } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { getLeagueNameFromDisplayName, hexToRGB } from "../utils/helpers"
 import { FixtureOverview } from "./FixtureOverview"
+import { FixtureStats } from "./FixtureStats"
 
 
 type FixturesPanelProps = {
@@ -27,8 +29,8 @@ export const FixturesPanel = ({ matchInfo, id }: FixturesPanelProps) => {
     var homeAbbreviation = homeTeamInfo.abbreviation;
     var awayAbbreviation = awayTeamInfo.abbreviation;
 
-    const homeFontFamily = (new Number(matchInfo.homeScore) > new Number(matchInfo.awayScore)) ? (fontFamilies.bold):(fontFamilies.light);
-    const awayFontFamily = (new Number(matchInfo.awayScore) > new Number(matchInfo.homeScore)) ? (fontFamilies.bold):(fontFamilies.light);
+    const homeFontFamily = (new Number(matchInfo.homeScore) >= new Number(matchInfo.awayScore)) ? (fontFamilies.bold):(fontFamilies.light);
+    const awayFontFamily = (new Number(matchInfo.awayScore) >= new Number(matchInfo.homeScore)) ? (fontFamilies.bold):(fontFamilies.light);
 
     const matchTime = matchInfo.matchDate.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'})
 
@@ -61,7 +63,7 @@ export const FixturesPanel = ({ matchInfo, id }: FixturesPanelProps) => {
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
 
                 <View style={{width: "30%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                    <View style={{paddingVertical: 2}}>
+                    <View style={{paddingVertical: 5}}>
                         <Image
                         style={[fixturesPanelStyles.teamLogo]}
                         source={homeTeamInfo.logo} />
@@ -74,7 +76,7 @@ export const FixturesPanel = ({ matchInfo, id }: FixturesPanelProps) => {
                 </View>
 
                 <View style={{width: "30%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                    <View style={{paddingVertical: 2}}>
+                    <View style={{paddingVertical: 5}}>
                         <Image
                         style={[fixturesPanelStyles.teamLogo]}
                         source={awayTeamInfo.logo} />
@@ -98,13 +100,17 @@ type FixturesInfoPanel = {
 
 export const FixtureInfoPanel = ({ id  }: FixturesInfoPanel) => {
 
+    const [currentTab, setCurrentTab] = useState<string>('Overview');
+
+    console.info(currentTab)
+    
     return (
         <LinearGradient colors={['#0d0c0c','transparent']} start={{ x: 0.5, y: 0.3 }} end={{ x: 0.5, y: 0 }} 
                             style={[{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%'}]}>
 
-            <FixturesInfoTabBar/>
+            <FixturesInfoTabBar OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab}/>
 
-            <FixturesInfoBox id={id}/>
+            <FixturesInfoBox id={id} currentTabKey={currentTab}/>
 
         </LinearGradient>
     )
@@ -112,49 +118,55 @@ export const FixtureInfoPanel = ({ id  }: FixturesInfoPanel) => {
 
 type FixturesInfoBox = {
     id: string,
+    currentTabKey: string
 
 }
 
 
-export const FixturesInfoBox = ({ id }: FixturesInfoBox) => {
+export const FixturesInfoBox = ({ id, currentTabKey}: FixturesInfoBox) => {
 
     return (
 
         <View>
-            <FixtureOverview id={id}/>
+            <FixtureOverview id={id} isShown={currentTabKey == "Overview"}/>
+            <FixtureStats id={id} isShown={currentTabKey == "Stats"}/>
         </View>
     )
 }
 
 type FixturesInfoTabBar = {
+    OnTabButtonPressed: (key: string) => void,
+    currentTabKey: string,
 
 }
 
 
-export const FixturesInfoTabBar = ({ }: FixturesInfoTabBar) => {
+export const FixturesInfoTabBar = ({ OnTabButtonPressed, currentTabKey }: FixturesInfoTabBar) => {
 
     return (
 
         <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 5, marginTop: 30}}>
-                <FixturesInfoTabButton title="Overview"/>
-                <FixturesInfoTabButton title="Stats"/>
-                <FixturesInfoTabButton title="Events"/>
-                <FixturesInfoTabButton title="Lineups"/>
+                <FixturesInfoTabButton title="Overview" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Overview"}/>
+                <FixturesInfoTabButton title="Stats" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Stats"}/>
+                <FixturesInfoTabButton title="Events" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Events"}/>
+                <FixturesInfoTabButton title="Lineups" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Lineups"}/>
         </View>
     )
 }
 
 type FixturesInfoTabButton = {
-    title: string
+    title: string,
+    isTabSelected: boolean,
+    OnPressTab: (key: string) => void
 
 }
 
 
-export const FixturesInfoTabButton = ({ title }: FixturesInfoTabButton) => {
+export const FixturesInfoTabButton = ({ title, isTabSelected, OnPressTab }: FixturesInfoTabButton) => {
 
     return (
-        <TouchableOpacity style={{margin: 4, width: "22%"}}>
-                    <Text style={{color: colors.text, fontFamily: fontFamilies.regular, textAlign: 'center', fontSize: 15}}>{title}</Text>
+        <TouchableOpacity style={{margin: 4, width: "22%"}} activeOpacity={0.8} onPress={() => OnPressTab(title)}>
+                    <Text style={{color: isTabSelected ? colors.text : 'grey', fontFamily: fontFamilies.regular, textAlign: 'center', fontSize: 15}}>{title}</Text>
         </TouchableOpacity>
     )
 }

@@ -4,19 +4,20 @@ import { TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
 import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "@/store/utils/getTeamFormStats";
-import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo";
-import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
+import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
 
 type FixtureOverview = {
-    id: string
+    id: string,
+    isShown: boolean
 
 }
 
-export const FixtureOverview = ({ id }: FixtureOverview) => {
+export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
@@ -171,19 +172,22 @@ export const FixtureOverview = ({ id }: FixtureOverview) => {
         if(matchInfoArray == undefined) return
     
         return(
-            
-            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />}>
 
-                {activityIndicatorHeader()}
+            <View>
+            {isShown && 
+                <BottomSheetScrollView>
 
-                    <GameInfoPanel
-                        matchInfoArray={matchInfoArray}
-                        matchID={id}
-                        leagueName={leagueName}
-                        refereeName={refereeName}
-                    />
-   
-            </ScrollView>
+                    {activityIndicatorHeader()}
+
+                        <GameInfoPanel
+                            matchInfoArray={matchInfoArray}
+                            matchID={id}
+                            leagueName={leagueName}
+                            refereeName={refereeName}
+                            />
+    
+                </BottomSheetScrollView> }
+            </View>
     
         )
     }
@@ -199,9 +203,7 @@ export const FixtureOverview = ({ id }: FixtureOverview) => {
     
         if(matchInfoArray == undefined) return
     
-        const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
-        const homeTeamInfo = homeAwayInfo?.homeInfo;
-        const awayTeamInfo = homeAwayInfo?.awayInfo;
+        const fadedGreyColour = hexToRGB('#424242', '0.7');
         
         var matchAttendance = 'NA'
         if(matchInfoArray[0].matchAttendance !== undefined)
@@ -255,9 +257,10 @@ export const FixtureOverview = ({ id }: FixtureOverview) => {
         }
     
         return (
+            
             <View style={{flexDirection: 'column'}}>
     
-                <View style={{ padding: 10, borderRadius: 5, marginVertical: 10, borderWidth: 1, borderColor: 'lightgrey', flex: 1 }}>
+                <View style={{backgroundColor: fadedGreyColour, padding: 10, borderRadius: 5, marginVertical: 10}}>
                     <View style={{ alignItems: 'flex-start', flexDirection: 'column', justifyContent: 'flex-start' }}>
     
                         <View style={{ flexDirection: 'row', marginVertical: 4 }}>
