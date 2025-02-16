@@ -1,4 +1,4 @@
-rootProject.name = 'Rugby Radar [BETA]'
+rootProject.name = 'Rugby Radar'
 
 dependencyResolutionManagement {
   versionCatalogs {

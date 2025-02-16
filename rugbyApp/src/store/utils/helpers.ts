@@ -1,5 +1,5 @@
 import { SeasonDateInfo } from "@/app/(tabs)/standings";
-import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
+import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, SkySportsLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { BALionsAltLogo, DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
 import { AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
@@ -429,6 +429,10 @@ export const broadcasters = [
     { name: 'ITV X', logo: ITVXLogo},
     { name: 'STV HD', logo: STVHDLogo},
     { name: 'STV player', logo: STVPlayerLogo},
+
+    { name: 'Sky Sport Plus', logo: SkySportsLogo},
+    { name: 'Sky Sport MIX HD', logo: SkySportsLogo},
+
 
 ];
 
