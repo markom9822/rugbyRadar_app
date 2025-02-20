@@ -1,5 +1,4 @@
 import { SearchTeamInfo } from "@/app/(tabs)/teams"
-import { getTeamBasicInfo } from "@/app/(tabs)/teams/team/[teamID]"
 import { colors, fontFamilies } from "@/constants/tokens"
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { useEffect, useState } from "react"
@@ -15,6 +14,37 @@ export type TeamInfo = {
     homeVenue: string
     homeLocation: string
     teamForm: string
+}
+
+export const getTeamBasicInfo = (teamDetails: any) => {
+
+    const teamName = teamDetails.team.displayName;
+
+    var homeVenue;
+    var homeVenueCity;
+    var homeVenueState;
+
+    if (teamDetails.team.venue !== undefined) {
+        homeVenue = teamDetails.team.venue.fullName
+        homeVenueCity = teamDetails.team.venue.address.city
+        homeVenueState = teamDetails.team.venue.address.state
+    }
+    else {
+        homeVenue = '-'
+        homeVenueCity = '-'
+        homeVenueState = '-'
+    }
+
+    const teamForm = teamDetails.team.form;
+
+    return (
+        {
+            teamName: teamName,
+            homeVenue: homeVenue,
+            homeLocation: homeVenueCity + ', ' + homeVenueState,
+            teamForm: teamForm,
+        }
+    )
 }
 
 export const TeamSummaryPanel = ({ teamInfo }: TeamSummaryPanelProps) => {
