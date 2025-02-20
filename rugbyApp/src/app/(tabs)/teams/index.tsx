@@ -33,6 +33,10 @@ export type TeamsSection = {
 
 export const filterTeams = (teamArray: SearchTeamInfo[], searchString: string) => {
 
+    if (searchString == "") {
+        return []
+    }
+
     const filteredItems = teamArray.filter(item => {
         return Object.values(item.displayName)
             .join('')
@@ -81,28 +85,7 @@ const getFilteredSearchTeams = (teamSections: TeamsSection[], searchValue: strin
 
 const TeamsScreen = () => {
 
-    const teamSections = [
-        {
-            title: 'International',
-            data: InternationalRugbyTeams,
-        },
-        {
-            title: 'United Rugby Championship',
-            data: URCRugbyTeams,
-        },
-        {
-            title: 'Premiership',
-            data: PremRugbyTeams,
-        },
-        {
-            title: 'Top 14',
-            data: Top14RugbyTeams,
-        },
-        {
-            title: 'Super Rugby',
-            data: SuperRugbyTeams,
-        },
-    ]
+    const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams]
 
     const teamLeagueLogos = [
         { displayName: 'United Rugby Championship', leagueLogo: URCAltLogo },
@@ -113,7 +96,7 @@ const TeamsScreen = () => {
     ];
 
     const [teamSearch, setTeamSearch] = useState<string>('');
-    const [searchSections, setSearchSections] = useState<TeamsSection[]>([]);
+    const [searchArray, setSearchArray] = useState<SearchTeamInfo[]>([]);
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
     const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -126,7 +109,8 @@ const TeamsScreen = () => {
 
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
-        setSearchSections(getFilteredSearchTeams(teamSections, search))
+
+        setSearchArray(filterTeams(teamsArray, search))
     }
 
     // renders
@@ -173,7 +157,7 @@ const TeamsScreen = () => {
                     <View style={{ marginBottom: 50 }}>
 
                         <GridView
-                            data={URCRugbyTeams}
+                            data={searchArray}
                             col={3}
                             renderItem={(item, index) =>
                                 <GridSearchPanel
@@ -202,7 +186,7 @@ const TeamsScreen = () => {
                 >
                     <BottomSheetView style={{ flex: 1 }}>
                         <SearchInfoPanel
-                            teamInfo={URCRugbyTeams[currentIndex]}
+                            teamInfo={searchArray[currentIndex]}
                             bottomSheetRef={bottomSheetModalRef}
                         />
                     </BottomSheetView>

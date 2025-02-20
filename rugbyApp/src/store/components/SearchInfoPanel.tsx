@@ -50,7 +50,7 @@ export const SearchInfoPanel = ({ teamInfo, bottomSheetRef }: SearchInfoPanelPro
                         style={[searchInfoPanelStyles.teamLogo]}
                         source={teamInfo.logo} />
                 </View>
-                <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }]}>{teamInfo.abbreviation}</Text>
+                <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }]}>{teamInfo.displayName}</Text>
             </View>
 
 
