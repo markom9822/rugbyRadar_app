@@ -12,6 +12,7 @@ const TeamsSearchLayout = () => {
 
             <View style={[defaultStyles.container]}>
                 <Stack screenOptions={{
+                    headerShown: false,
                     headerStyle: {
                         backgroundColor: colors.background
                     },

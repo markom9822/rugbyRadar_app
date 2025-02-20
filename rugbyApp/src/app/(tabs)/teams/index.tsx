@@ -1,9 +1,11 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { GridView } from "@/store/components/GridView"
-import { SearchInfoPanel } from "@/store/components/SearchInfoPanel"
+import { SearchLeagueInfoPanel } from "@/store/components/SearchLeagueInfoPanel"
+import { SearchTeamInfoPanel } from "@/store/components/SearchTeamInfoPanel"
 import { InternationalRugbyTeams } from "@/store/InternationalRugbyTeamsDatabase"
 import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { PremRugbyTeams } from "@/store/PremiershipRubyTeamsDatabase"
+import { RugbyLeagues } from "@/store/RugbyLeaguesDatabase"
 import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
 import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
@@ -22,6 +24,18 @@ export type SearchTeamInfo = {
     colour: string;
     id: string;
     defaultLeague: string;
+    foundedYear: string;
+    seasonType: string;
+}
+
+export type SearchLeagueInfo = {
+    value: string;
+    displayName: string;
+    abbreviation: string;
+    logo: any;
+    altLogo: any;
+    colour: string;
+    id: string;
     foundedYear: string;
     seasonType: string;
 }
@@ -47,45 +61,32 @@ export const filterTeams = (teamArray: SearchTeamInfo[], searchString: string) =
     return (
         filteredItems
     )
-
 }
 
-export const filterSectionList = (teamsSections: TeamsSection[], search: string) => {
+export const filterLeagues = (leagueArray: SearchLeagueInfo[], searchString: string) => {
 
-    var filteredSections = [];
-
-    if (search == "") {
+    if (searchString == "") {
         return []
     }
 
-    for (let index = 0; index < teamsSections.length; index++) {
-
-        let newSection = {
-            title: teamsSections[index].title,
-            data: filterTeams(teamsSections[index].data, search)
-        }
-
-        filteredSections.push(newSection)
-    }
+    const filteredItems = leagueArray.filter(item => {
+        return Object.values(item.displayName)
+            .join('')
+            .toLowerCase()
+            .includes(searchString.toLowerCase());
+    });
 
     return (
-        filteredSections
+        filteredItems
     )
 }
 
-
-const getFilteredSearchTeams = (teamSections: TeamsSection[], searchValue: string) => {
-
-    const filteredSections = filterSectionList(teamSections, searchValue)
-
-    return (
-        filteredSections
-    )
-}
 
 const TeamsScreen = () => {
 
     const teamsArray = [...InternationalRugbyTeams, ...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams]
+
+    const leaguesArray = RugbyLeagues;
 
     const teamLeagueLogos = [
         { displayName: 'United Rugby Championship', leagueLogo: URCAltLogo },
@@ -96,9 +97,12 @@ const TeamsScreen = () => {
     ];
 
     const [teamSearch, setTeamSearch] = useState<string>('');
-    const [searchArray, setSearchArray] = useState<SearchTeamInfo[]>([]);
+    const [searchTeamArray, setSearchTeamArray] = useState<SearchTeamInfo[]>([]);
+    const [searchLeagueArray, setSearchLeagueArray] = useState<SearchLeagueInfo[]>([]);
+
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [searchOption, setSearchOption] = useState<string>('teams');
 
 
     const getLeagueLogoFromDisplayName = (displayName: string) => {
@@ -110,7 +114,10 @@ const TeamsScreen = () => {
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
 
-        setSearchArray(filterTeams(teamsArray, search))
+        if (searchOption == "teams") {
+            setSearchTeamArray(filterTeams(teamsArray, search))
+        }
+
     }
 
     // renders
@@ -134,6 +141,72 @@ const TeamsScreen = () => {
         bottomSheetModalRef.current?.present();
     }
 
+    const handlePressSearchOption = (option: string) => {
+        setSearchOption(option)
+
+        if (option == "leagues") {
+            setSearchLeagueArray(leaguesArray)
+        }
+    }
+
+    const handleRenderGrid = (selectedOption: string) => {
+
+        if (selectedOption == "teams") {
+            return (
+                <GridView
+                    data={searchTeamArray}
+                    col={3}
+                    renderItem={(item, index) =>
+                        <GridSearchPanel
+                            title={item.abbreviation}
+                            colour={item.colour}
+                            logo={item.logo}
+                            altLogo={item.altLogo}
+                            id={item.id}
+                            index={index}
+                            OnPress={handlePresentModalPress} />
+                    } />)
+        }
+        else if (selectedOption == "leagues") {
+            return (
+                <GridView
+                    data={searchLeagueArray}
+                    col={3}
+                    renderItem={(item, index) =>
+                        <GridSearchPanel
+                            title={item.abbreviation}
+                            colour={item.colour}
+                            logo={item.logo}
+                            altLogo={item.altLogo}
+                            id={item.id}
+                            index={index}
+                            OnPress={handlePresentModalPress} />
+                    } />)
+        }
+
+    }
+
+    const handleRenderBottomSheet = (selectedOption: string) => {
+
+        if (selectedOption == "teams") {
+
+            return (
+                <SearchTeamInfoPanel
+                    teamInfo={searchTeamArray[currentIndex]}
+                    bottomSheetRef={bottomSheetModalRef}
+                />
+            )
+        }
+        else if (selectedOption == "leagues") {
+            return (
+                <SearchLeagueInfoPanel
+                    leagueInfo={searchLeagueArray[currentIndex]}
+                    bottomSheetRef={bottomSheetModalRef}
+                />
+            )
+        }
+    }
+
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -152,24 +225,20 @@ const TeamsScreen = () => {
                     value={teamSearch}
                 />
 
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity style={{ backgroundColor: searchOption == "teams" ? 'grey' : 'transparent', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5, justifyContent: 'center', alignItems: 'center', margin: 3 }} activeOpacity={0.7} onPress={() => handlePressSearchOption('teams')}>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular }}>Teams</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ backgroundColor: searchOption == "leagues" ? 'grey' : 'transparent', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5, justifyContent: 'center', alignItems: 'center', margin: 3 }} activeOpacity={0.7} onPress={() => handlePressSearchOption('leagues')}>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular }}>Leagues</Text>
+                    </TouchableOpacity>
+                </View>
+
 
                 <ScrollView>
                     <View style={{ marginBottom: 50 }}>
-
-                        <GridView
-                            data={searchArray}
-                            col={3}
-                            renderItem={(item, index) =>
-                                <GridSearchPanel
-                                    title={item.abbreviation}
-                                    colour={item.colour}
-                                    logo={item.logo}
-                                    altLogo={item.altLogo}
-                                    id={item.id}
-                                    index={index}
-                                    OnPress={handlePresentModalPress} />
-                            }
-                        />
+                        {handleRenderGrid(searchOption)}
                     </View>
                 </ScrollView>
 
@@ -185,10 +254,7 @@ const TeamsScreen = () => {
                     backgroundStyle={{ backgroundColor: "#0d0c0c" }}
                 >
                     <BottomSheetView style={{ flex: 1 }}>
-                        <SearchInfoPanel
-                            teamInfo={searchArray[currentIndex]}
-                            bottomSheetRef={bottomSheetModalRef}
-                        />
+                        {handleRenderBottomSheet(searchOption)}
                     </BottomSheetView>
                 </BottomSheetModal>
 
