@@ -1,24 +1,29 @@
-import { colors, fontFamilies, fontSize } from "@/constants/tokens"
+import { colors, fontFamilies } from "@/constants/tokens"
+import { GridView } from "@/store/components/GridView"
+import { SearchInfoPanel } from "@/store/components/SearchInfoPanel"
 import { InternationalRugbyTeams } from "@/store/InternationalRugbyTeamsDatabase"
+import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { PremRugbyTeams } from "@/store/PremiershipRubyTeamsDatabase"
+import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
 import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
-import { useState } from "react"
-import { Link } from "expo-router"
-import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard, Image, StyleSheet, Pressable, SectionList, TouchableOpacity } from "react-native"
-import { hexToRGB, isLastItemInSectionList } from "@/store/utils/helpers"
-import { SuperRugbyTeams } from "@/store/SuperRugbyPacificRugbyTeamsDatabase"
-import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
-import {FontAwesome6} from '@expo/vector-icons'
+import { hexToRGB } from "@/store/utils/helpers"
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet"
+import { LinearGradient } from "expo-linear-gradient"
+import { useCallback, useRef, useState } from "react"
+import { Image, Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 
 export type SearchTeamInfo = {
     type: string;
     displayName: string;
     abbreviation: string;
     logo: any;
-    altLogo: any,
+    altLogo: any;
     colour: string;
     id: string;
+    defaultLeague: string;
+    foundedYear: string;
+    seasonType: string;
 }
 
 export type TeamsSection = {
@@ -35,23 +40,22 @@ export const filterTeams = (teamArray: SearchTeamInfo[], searchString: string) =
             .includes(searchString.toLowerCase());
     });
 
-    return(
+    return (
         filteredItems
     )
-    
+
 }
 
 export const filterSectionList = (teamsSections: TeamsSection[], search: string) => {
 
     var filteredSections = [];
 
-    if(search == "")
-    {
+    if (search == "") {
         return []
     }
 
     for (let index = 0; index < teamsSections.length; index++) {
-        
+
         let newSection = {
             title: teamsSections[index].title,
             data: filterTeams(teamsSections[index].data, search)
@@ -101,18 +105,21 @@ const TeamsScreen = () => {
     ]
 
     const teamLeagueLogos = [
-        { displayName: 'United Rugby Championship', leagueLogo: URCAltLogo},
-        { displayName: 'Premiership', leagueLogo: PremiershipAltLogo},
-        { displayName: 'Top 14', leagueLogo: Top14AltLogo},
-        { displayName: 'Super Rugby', leagueLogo: SuperRugbyAltLogo},
-        { displayName: 'International', leagueLogo: InternationalLogo},
+        { displayName: 'United Rugby Championship', leagueLogo: URCAltLogo },
+        { displayName: 'Premiership', leagueLogo: PremiershipAltLogo },
+        { displayName: 'Top 14', leagueLogo: Top14AltLogo },
+        { displayName: 'Super Rugby', leagueLogo: SuperRugbyAltLogo },
+        { displayName: 'International', leagueLogo: InternationalLogo },
     ];
 
     const [teamSearch, setTeamSearch] = useState<string>('');
     const [searchSections, setSearchSections] = useState<TeamsSection[]>([]);
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-    const getLeagueLogoFromDisplayName  = (displayName: string) => {
-    
+
+    const getLeagueLogoFromDisplayName = (displayName: string) => {
+
         const result = teamLeagueLogos.find((element) => element.displayName == displayName)
         return result
     }
@@ -122,36 +129,37 @@ const TeamsScreen = () => {
         setSearchSections(getFilteredSearchTeams(teamSections, search))
     }
 
-    const sectionHeader = (title: string, data: SearchTeamInfo[]) => {
+    // renders
+    const renderBackdrop = useCallback(
+        (props: any) => (
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+            />
+        ),
+        []
+    );
 
-        if(data.length !== 0)
-        {
-            return (
-                <View style={{marginTop: 12, marginBottom: 3,  marginHorizontal: 5, flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{paddingHorizontal: 10}}>
-                    <Image
-                        style={{resizeMode: 'contain',
-                            width: 20,
-                            height: 20,
-                            minHeight:20,
-                            minWidth: 20}}
-                        source={getLeagueLogoFromDisplayName(title)?.leagueLogo} />
-                </View>
-                <Text style={{fontSize: 13, color: 'grey', fontWeight: 600, fontFamily: fontFamilies.bold}}>{title.toUpperCase()}</Text>
-            </View>
-            )
-        }
-        
-        return null
+    const snapPoints = ["100%"];
+
+    const handlePresentModalPress = (id: string, index: number) => {
+
+        //setCurrentID(linkID)
+        setCurrentIndex(index)
+        bottomSheetModalRef.current?.present();
     }
+
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={{ flex: 1, backgroundColor: colors.background}}>
+            <View style={{ flex: 1, backgroundColor: colors.background }}>
 
                 <TextInput
-                    style={{ height: 40, margin: 12, borderRadius: 4 , 
-                        borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text, fontFamily: fontFamilies.light }}
+                    style={{
+                        height: 40, margin: 12, borderRadius: 4,
+                        borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text, fontFamily: fontFamilies.light
+                    }}
                     returnKeyType="search"
                     placeholder="Search teams"
                     placeholderTextColor={colors.text}
@@ -160,71 +168,90 @@ const TeamsScreen = () => {
                     value={teamSearch}
                 />
 
-                <SectionList
-                    sections={searchSections}
-                    keyExtractor={(item, index) => item.id + index}
-                    ListEmptyComponent={
-                        <View style={{ marginTop: 20, marginHorizontal: 5 }}>
-                            <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Matching Team</Text>
-                            <View style={{justifyContent:'center', alignItems: 'center', margin: 30}}>
-                            <FontAwesome6 name="shield-halved" size={80} color={'rgba(40,40,40,0.9)'}/>
-                            </View>  
-                        </View>
-                    }
-                    renderItem={({ item, index, section }) =>
-                        <TeamInfoPanel
-                            teamName={item.displayName}
-                            teamColour={item.colour}
-                            teamLogo={item.logo}
-                            teamAltLogo={item.altLogo}
-                            teamID={item.id}
-                            isLastItem={isLastItemInSectionList(index, section, searchSections)}
-                        />}
-                    renderSectionHeader={({ section: { title, data } }) => (
-                        sectionHeader(title, data)
-                    )}
-                />
+
+                <ScrollView>
+                    <View style={{ marginBottom: 50 }}>
+
+                        <GridView
+                            data={URCRugbyTeams}
+                            col={3}
+                            renderItem={(item, index) =>
+                                <GridSearchPanel
+                                    title={item.abbreviation}
+                                    colour={item.colour}
+                                    logo={item.logo}
+                                    altLogo={item.altLogo}
+                                    id={item.id}
+                                    index={index}
+                                    OnPress={handlePresentModalPress} />
+                            }
+                        />
+                    </View>
+                </ScrollView>
+
+                <BottomSheetModal
+                    ref={bottomSheetModalRef}
+                    index={0}
+                    snapPoints={snapPoints}
+                    enableDynamicSizing={false}
+                    enableOverDrag={false}
+                    backdropComponent={renderBackdrop}
+                    handleComponent={null}
+                    handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
+                    backgroundStyle={{ backgroundColor: "#0d0c0c" }}
+                >
+                    <BottomSheetView style={{ flex: 1 }}>
+                        <SearchInfoPanel
+                            teamInfo={URCRugbyTeams[currentIndex]}
+                            bottomSheetRef={bottomSheetModalRef}
+                        />
+                    </BottomSheetView>
+                </BottomSheetModal>
 
             </View>
         </TouchableWithoutFeedback>
     )
 }
 
-type TeamInfoPanelProps = {
-    teamName: string,
-    teamColour: string,
-    teamLogo: any,
-    teamAltLogo: any,
-    teamID: string,
-    isLastItem: boolean
+type GridSearchPanelProps = {
+    title: string,
+    colour: string,
+    logo: any,
+    altLogo: any,
+    id: string,
+    index: number,
+    OnPress: (id: string, index: number) => void
+
 }
 
-export const TeamInfoPanel = ({ teamName, teamColour, teamLogo, teamAltLogo, teamID, isLastItem }: TeamInfoPanelProps) => {
+export const GridSearchPanel = ({ title, colour, logo, altLogo, id, index, OnPress }: GridSearchPanelProps) => {
 
-    const teamBkgRBGA = hexToRGB(teamColour, '0.05')
-    const teamBorderRBGA = hexToRGB(teamColour, '0.4')
+    const bkgRBGA = hexToRGB(colour, '0.1')
+    const borderRBGA = hexToRGB(colour, '0.4')
+
+    const panelColour = hexToRGB("#4d4b4b", '0.5')
+
+    const handlePressedScorePanel = () => {
+
+        OnPress(id, index)
+    }
 
     return (
-        <View style={{ backgroundColor: colors.background, marginBottom: (isLastItem) ? 50: 0 }}>
-            <Link href={`/(tabs)/teams/team/${teamID + teamName}`} asChild>
-                <TouchableOpacity activeOpacity={0.5}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handlePressedScorePanel}>
+            <LinearGradient colors={[bkgRBGA, 'transparent']} start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }}
+                style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 5, backgroundColor: panelColour, borderRadius: 6, borderColor: 'grey', borderWidth: 0.5 }}>
+                <View style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                    <Image
+                        style={[teamInfoPanelStyles.teamLogo]}
+                        source={logo} />
+                </View>
+                <View style={{ padding: 5 }}>
+                    <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold }]}>{title}</Text>
+                </View>
 
-                    <View style={[teamInfoPanelStyles.container,
-                    { backgroundColor: teamBkgRBGA, borderColor: 'lightgrey', borderWidth: 2 }]}>
-                        <View style={{ padding: 5, width: "20%", alignItems: 'center' }}>
-                            <Image
-                                style={[teamInfoPanelStyles.teamLogo]}
-                                source={teamLogo} />
-                        </View>
-                        <View style={{width: "80%"}}>
-                            <Text style={[teamInfoPanelStyles.teamName, { color: colors.text,}]}>{teamName.toLocaleUpperCase()}</Text>
-                        </View>
-                    </View>
+            </LinearGradient>
 
-                </TouchableOpacity>
-            </Link>
-
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -248,7 +275,7 @@ export const teamInfoPanelStyles = StyleSheet.create({
         paddingHorizontal: 10,
         textAlign: 'left',
         fontWeight: 600,
-        fontSize: 18, 
+        fontSize: 18,
         fontFamily: fontFamilies.bold
     },
 })

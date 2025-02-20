@@ -1,71 +1,84 @@
-import { View, Text, Image } from "react-native"
-import { getAnyTeamInfoFromName, hexToRGB } from "../utils/helpers"
-import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
+import { SearchTeamInfo } from "@/app/(tabs)/teams"
+import { getTeamBasicInfo } from "@/app/(tabs)/teams/team/[teamID]"
+import { colors, fontFamilies } from "@/constants/tokens"
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { useEffect, useState } from "react"
+import { Text, View } from "react-native"
+import { hexToRGB } from "../utils/helpers"
 
 type TeamSummaryPanelProps = {
-    teamName: string | undefined
-    homeVenue: string | undefined
-    homeLocation: string | undefined
-    teamForm: string | undefined
+    teamInfo: SearchTeamInfo,
 }
 
-export const TeamSummaryPanel = ({ teamName, homeVenue, homeLocation, teamForm}: TeamSummaryPanelProps) => {
+export type TeamInfo = {
+    teamName: string
+    homeVenue: string
+    homeLocation: string
+    teamForm: string
+}
 
-    if(teamName == undefined) return
-    if(homeVenue == undefined) return
+export const TeamSummaryPanel = ({ teamInfo }: TeamSummaryPanelProps) => {
 
-    const teamInfo = getAnyTeamInfoFromName(teamName)
+    const [teamSummaryInfo, setTeamSummaryInfo] = useState<TeamInfo | undefined>();
+
+    const handlePressFetchData = async () => {
+        console.info("Pressed Fetch Team Info")
+
+        // getting basic team info
+        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/' + teamInfo.id;
+
+        const teamDetails = await fetch(apiString,).then((res) => res.json())
+        const basicTeamInfo = getTeamBasicInfo(teamDetails)
+        const teamName = teamInfo.displayName;
+        setTeamSummaryInfo(basicTeamInfo)
+
+    }
+
+    useEffect(() => {
+        async function fetchMyAPI() {
+            await handlePressFetchData()
+        }
+        fetchMyAPI()
+    }, [])
 
     const foundedYear = Number(teamInfo.foundedYear);
     const currentYear = Number(new Date().getFullYear().valueOf());
     const yearDiff = currentYear - foundedYear;
 
-    return(
-        <View style={{justifyContent: 'center', marginHorizontal: 5}}>
-            <View style={{flexDirection: 'row', paddingVertical: 10}}>
-                <View style={{marginHorizontal: 4}}>
-                    <Image source={teamInfo.logo} 
-                    style={{resizeMode: 'contain',
-                        width: 60,
-                        height: 60,
-                        minHeight:60,
-                        minWidth: 60,}}/>
-                </View>
-                
-                <View style={{flexDirection: 'column', paddingHorizontal: 5, width: "80%"}}>
-                    <Text style={{fontSize: fontSize.lg, fontWeight: 600, color: colors.text, width: "100%", fontFamily: fontFamilies.bold}}>{teamName.toUpperCase()}</Text>
-                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light}}>{teamForm}</Text>
-                </View>
-                
-            </View>
+    const foundedText = teamInfo.foundedYear + ` (${yearDiff} years ago)`;
 
-            <View style={{backgroundColor: colors.background, paddingVertical: 6, paddingHorizontal: 2, borderRadius: 4, borderColor: 'lightgrey', borderWidth: 1}}>
-                <View style={{ flexDirection: 'row', marginVertical: 4}}>
-                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'lightgrey', borderRightWidth: 1}}>
-                        <MaterialIcons name="stadium" size={20} color={'lightgrey'} />
-                    </View>
-                    
-                    <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.light }}>{homeVenue}</Text>
-                </View>
+    const panelColour = hexToRGB("#4d4b4b", '0.8')
 
-                <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'lightgrey', borderRightWidth: 1}}>
-                        <MaterialIcons name="location-pin" size={20} color={'lightgrey'} />
-                    </View>
-                    
-                    <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.light }}>{homeLocation}</Text>
-                </View>
+    return (
+        <View style={{ width: "100%" }}>
+            <View style={{ backgroundColor: panelColour, paddingVertical: 6, paddingHorizontal: 4, borderRadius: 5, margin: 15 }}>
 
-                <View style={{ flexDirection: 'row', marginVertical: 4 }}>
-                    <View style={{width: "10%", justifyContent: 'center', alignItems: 'center', borderRightColor: 'lightgrey', borderRightWidth: 1}}>
-                        <MaterialCommunityIcons name="timer-sand" size={20} color={'lightgrey'} />
-                    </View>
-                    
-                    <Text style={{ paddingHorizontal: 8, color: colors.text, fontFamily: fontFamilies.light }}>{teamInfo.foundedYear} ({yearDiff} years ago)</Text>
-                </View>
+                <SummaryInfoItem icon={<MaterialIcons name="stadium" size={20} color={'lightgrey'} />} text={teamSummaryInfo?.homeVenue} />
+                <SummaryInfoItem icon={<MaterialIcons name="location-pin" size={20} color={'lightgrey'} />} text={teamSummaryInfo?.homeLocation} />
+                <SummaryInfoItem icon={<MaterialCommunityIcons name="timer-sand" size={20} color={'lightgrey'} />} text={foundedText} />
 
             </View>
         </View>
     )
+}
+
+type SummaryInfoItemPanelProps = {
+    icon: any,
+    text: string | undefined
+}
+
+export const SummaryInfoItem = ({ icon, text }: SummaryInfoItemPanelProps) => {
+
+    return (
+
+        <View style={{ flexDirection: 'row', marginVertical: 5, width: "100%" }}>
+            <View style={{ width: "10%", justifyContent: 'center', alignItems: 'center' }}>
+                {icon}
+            </View>
+
+            <Text style={{ width: "90%", paddingHorizontal: 10, color: colors.text, fontFamily: fontFamilies.light }}>{text}</Text>
+        </View>
+
+    )
+
 }

@@ -130,7 +130,7 @@ export const SuperRugbyTeams = [
         abbreviation: 'CRUS',
         logo: CrusadersLogo,
         altLogo: CrusadersAltLogo,
-        colour: '#e84141',
+        colour: '#6D0000',
         id: '25936',
         defaultLeague: 'Super Rugby Pacific',
         foundedYear: '1996',
