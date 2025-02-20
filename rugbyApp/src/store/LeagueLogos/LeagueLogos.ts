@@ -27,5 +27,12 @@ export const URCAltLogo = require('@/store/LeagueLogos/URC_Logo_White.png')
 
 export const RankingsLogo = require('@/store/LeagueLogos/Rankings_Icon.png')
 export const InternationalLogo = require('@/store/LeagueLogos/International_Icon.png')
-export const AutumnNationsLogo = require('@/store/LeagueLogos/Autumn_Nations_Logo_White.png')
-export const U20SixNationsLogo = require('@/store/LeagueLogos/u20_SixNations_Logo_White.png')
+
+export const AutumnNationsLogo = require('@/store/LeagueLogos/Autumn_Nations_Logo.png')
+export const AutumnNationsAltLogo = require('@/store/LeagueLogos/Autumn_Nations_Logo_White.png')
+
+export const U20SixNationsLogo = require('@/store/LeagueLogos/u20_SixNations_Logo.png')
+export const U20SixNationsAltLogo = require('@/store/LeagueLogos/u20_SixNations_Logo_White.png')
+
+export const U20WorldChampsLogo = require('@/store/LeagueLogos/u20_world_champs_logo.png')
+export const U20WorldChampsAltLogo = require('@/store/LeagueLogos/u20_world_champs_logo_white.png')

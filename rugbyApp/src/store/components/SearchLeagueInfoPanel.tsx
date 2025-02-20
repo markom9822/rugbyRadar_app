@@ -1,10 +1,11 @@
-import { SearchLeagueInfo } from "@/app/(tabs)/teams"
+import { SearchLeagueInfo } from "@/app/(tabs)/search"
 import { fontFamilies } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
 import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import { LinearGradient } from "expo-linear-gradient"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { hexToRGB } from "../utils/helpers"
+import { LeagueStandingsPanel } from "./LeagueStandingsPanel"
 
 type SearchLeagueInfoPanelProps = {
     leagueInfo: SearchLeagueInfo,
@@ -43,6 +44,8 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
                 </View>
                 <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }]}>{leagueInfo.displayName}</Text>
             </View>
+
+            <LeagueStandingsPanel />
 
         </LinearGradient>
     )

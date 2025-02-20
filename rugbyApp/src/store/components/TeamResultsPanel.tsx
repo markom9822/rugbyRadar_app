@@ -1,5 +1,5 @@
+import { SearchTeamInfo } from "@/app/(tabs)/search"
 import { SeasonDateInfo } from "@/app/(tabs)/standings"
-import { SearchTeamInfo } from "@/app/(tabs)/teams"
 import { TeamEvent } from "@/app/(tabs)/teams/team/[teamID]/results"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'

@@ -1,4 +1,4 @@
-import { SearchTeamInfo } from "@/app/(tabs)/teams"
+import { SearchTeamInfo } from "@/app/(tabs)/search"
 import { fontFamilies } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
 import { BottomSheetModal } from "@gorhom/bottom-sheet"

@@ -171,7 +171,7 @@ const TeamsScreen = () => {
             return (
                 <GridView
                     data={searchLeagueArray}
-                    col={3}
+                    col={2}
                     renderItem={(item, index) =>
                         <GridSearchPanel
                             title={item.abbreviation}
@@ -296,7 +296,7 @@ export const GridSearchPanel = ({ title, colour, logo, altLogo, id, index, OnPre
                         source={logo} />
                 </View>
                 <View style={{ padding: 5 }}>
-                    <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold }]}>{title}</Text>
+                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold }]}>{title}</Text>
                 </View>
 
             </LinearGradient>

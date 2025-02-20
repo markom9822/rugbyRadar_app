@@ -1,4 +1,4 @@
-import { SearchTeamInfo } from "@/app/(tabs)/teams"
+import { SearchTeamInfo } from "@/app/(tabs)/search"
 import { colors, fontFamilies } from "@/constants/tokens"
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { useEffect, useState } from "react"
