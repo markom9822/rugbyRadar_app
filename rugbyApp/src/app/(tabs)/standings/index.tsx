@@ -18,7 +18,7 @@ export type StandingInfo = {
     isHeader: boolean
     teamPool: string
     teamName: string
-	teamGP: string
+    teamGP: string
     teamWins: string
     teamDraws: string
     teamLosses: string
@@ -58,7 +58,7 @@ const getWorldRankingsData = (todaysRankings: any): StandingInfo[] => {
             isLastItem: index == rankListLength - 1,
             isEndOfList: index == rankListLength - 1,
             isPlayoffCutoff: false,
-    };
+        };
 
         newArray.push(newRankingInfo)
     }
@@ -86,10 +86,9 @@ const StandingsScreen = () => {
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
-    const handlePressFetchData = async (targetSeasonName: string) =>{
+    const handlePressFetchData = async (targetSeasonName: string) => {
         console.info("Pressed Fetch Standings")
-        if(leagueName === '' || targetSeasonName === '')
-        {
+        if (leagueName === '' || targetSeasonName === '') {
             return;
         }
         setIsLoading(true)
@@ -100,40 +99,37 @@ const StandingsScreen = () => {
         const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
 
         const planetRugbyStandingsLeagueCodes = [
-            { leagueName: 'top14', leagueCodes: ['1310036262'], playoffCutoffIndex: 6},
-            { leagueName: 'sixNations', leagueCodes: ['1310035506'], playoffCutoffIndex: -1},
-            { leagueName: 'u20SixNations', leagueCodes: ['1310031586'], playoffCutoffIndex: -1},
-            { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1},
-            { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2},
-            { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2},
+            { leagueName: 'top14', leagueCodes: ['1310036262'], playoffCutoffIndex: 6 },
+            { leagueName: 'sixNations', leagueCodes: ['1310035506'], playoffCutoffIndex: -1 },
+            { leagueName: 'u20SixNations', leagueCodes: ['1310031586'], playoffCutoffIndex: -1 },
+            { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1 },
+            { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2 },
+            { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2 },
         ];
 
         const ESPNRugbyStandingsLeagueCodes = [
-            { leagueName: 'sixNations', leagueCode: '180659', playoffCutoffIndex: -1},
-            { leagueName: 'superRugby', leagueCode: '242041', playoffCutoffIndex: 8},
-            { leagueName: 'rugbyChamp', leagueCode: '244293', playoffCutoffIndex: -1},
+            { leagueName: 'sixNations', leagueCode: '180659', playoffCutoffIndex: -1 },
+            { leagueName: 'superRugby', leagueCode: '242041', playoffCutoffIndex: 8 },
+            { leagueName: 'rugbyChamp', leagueCode: '244293', playoffCutoffIndex: -1 },
         ];
 
-        if(leagueName == "worldRankings")
-        {
+        if (leagueName == "worldRankings") {
             apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/rankings/mru?language=en';
 
-            const worldRankings = await fetch( apiString,).then((res) => res.json())
+            const worldRankings = await fetch(apiString,).then((res) => res.json())
             const newArray = getWorldRankingsData(worldRankings)
 
             console.info(newArray)
             setStandingsArray(newArray)
         }
         // uses rugbyViz API
-        else if(rugbyVizCode !== undefined)
-        {
+        else if (rugbyVizCode !== undefined) {
             const seasonNumber = Number(targetSeasonName) - 1;
-            apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/'+rugbyVizCode+'?provider=rugbyviz&season='+ seasonNumber +'01';
+            apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/' + rugbyVizCode + '?provider=rugbyviz&season=' + seasonNumber + '01';
             console.info(apiString)
 
-            const seasonStandingsRugViz = await fetch( apiString,).then((res) => res.json())
-            if(seasonStandingsRugViz.data == undefined)
-            {
+            const seasonStandingsRugViz = await fetch(apiString,).then((res) => res.json())
+            if (seasonStandingsRugViz.data == undefined) {
                 setIsLoading(false)
                 return;
             }
@@ -144,47 +140,43 @@ const StandingsScreen = () => {
             console.info(newArray)
             setStandingsArray(newArray)
 
-            if(leagueName == "challengeCup")
-            {
+            if (leagueName == "challengeCup") {
                 const champsCupCode = "1008"
                 // challenge cup needs secondary standings
-                const secondaryApiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/'+champsCupCode+'?provider=rugbyviz&season='+ seasonNumber +'01';
-                const secondarySeasonStandingsRugViz = await fetch( secondaryApiString,).then((res) => res.json())
+                const secondaryApiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/' + champsCupCode + '?provider=rugbyviz&season=' + seasonNumber + '01';
+                const secondarySeasonStandingsRugViz = await fetch(secondaryApiString,).then((res) => res.json())
                 const secondaryArray = getAllStandingsDataRugbyViz(secondarySeasonStandingsRugViz, 'championsCup', playoffIndex)
                 setSecondaryStandingsArray(secondaryArray)
             }
         }
         // ESPN rugby API
-        else if(ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
-        {
+        else if (ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined) {
             const ESPNRugbyAPILeagueCode = ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCode;
 
             const seasonNumber = Number(targetSeasonName);
-            apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/'+ESPNRugbyAPILeagueCode+'/standings?lang=en&region=gb&season='+seasonNumber+'&seasontype=1&sort=rank:asc&type=0';
+            apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + ESPNRugbyAPILeagueCode + '/standings?lang=en&region=gb&season=' + seasonNumber + '&seasontype=1&sort=rank:asc&type=0';
             console.info(apiString)
 
-            const seasonStandingsESPN = await fetch( apiString,).then((res) => res.json())
+            const seasonStandingsESPN = await fetch(apiString,).then((res) => res.json())
             const newArray = getAllStandingsData(seasonStandingsESPN)
             setStandingsArray(newArray)
         }
         // use planet rugby API for standings
-        else if(planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined)
-        {
+        else if (planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined) {
             const planetRugbyAPILeagueCodes = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCodes;
             const planetRugbyAPIPlayoffCutoffIndex = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.playoffCutoffIndex;
 
-            if(planetRugbyAPILeagueCodes == undefined) return;
+            if (planetRugbyAPILeagueCodes == undefined) return;
 
-            if(planetRugbyAPILeagueCodes.length > 1)
-            {
-                var pooledArray:StandingInfo[] = [];
+            if (planetRugbyAPILeagueCodes.length > 1) {
+                var pooledArray: StandingInfo[] = [];
 
                 for (let index = 0; index < planetRugbyAPILeagueCodes.length; index++) {
 
-                    apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCodes[index];
+                    apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/' + planetRugbyAPILeagueCodes[index];
 
-                    const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
-                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, true, index == planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex) 
+                    const seasonStandingsPlanetRugby = await fetch(apiString,).then((res) => res.json())
+                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, true, index == planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex)
                     pooledArray.push(...newArray)
                 }
 
@@ -194,9 +186,9 @@ const StandingsScreen = () => {
                 return;
             }
 
-            apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/'+planetRugbyAPILeagueCodes[0];
+            apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/' + planetRugbyAPILeagueCodes[0];
 
-            const seasonStandingsPlanetRugby = await fetch( apiString,).then((res) => res.json())
+            const seasonStandingsPlanetRugby = await fetch(apiString,).then((res) => res.json())
             const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, false, true, planetRugbyAPIPlayoffCutoffIndex)
 
             console.info(newArray)
@@ -204,7 +196,7 @@ const StandingsScreen = () => {
 
             setIsLoading(false)
         }
-        
+
         setIsLoading(false)
     }
 
@@ -221,18 +213,18 @@ const StandingsScreen = () => {
     }
 
     const leagueData = [
-        { label: 'URC', value: 'urc', logo: URCAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022'] },
-        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
-        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022'] },
-        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024'] },
-        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024'] },
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: false, knockoutsYears: ['2025','2024', '2023', '2022']},
+        { label: 'URC', value: 'urc', logo: URCAltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024'] },
+        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024'] },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, hasKnockouts: false, knockoutsYears: [] },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: SixNationsAltLogo, hasKnockouts: false, knockoutsYears: [] },
-        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, hasKnockouts: false, knockoutsYears: []},
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
-        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025','2024', '2023', '2022']},
-        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, hasKnockouts: false, knockoutsYears: []}
+        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, hasKnockouts: false, knockoutsYears: [] }
     ];
 
     const seasonWorldCupData = [
@@ -249,10 +241,10 @@ const StandingsScreen = () => {
     ];
 
     const seasonManualData = [
-        {label: "2024/25", value: "2025"},
-        {label: "2023/24", value: "2024"},
-        {label: "2022/23", value: "2023"},
-        {label: "2021/22", value: "2022"}
+        { label: "2024/25", value: "2025" },
+        { label: "2023/24", value: "2024" },
+        { label: "2022/23", value: "2023" },
+        { label: "2021/22", value: "2022" }
     ];
 
     const seasonSingleData = [
@@ -261,65 +253,63 @@ const StandingsScreen = () => {
 
     var currentSeasonData;
 
-    switch(leagueName) { 
-        case "urc": { 
-           currentSeasonData = seasonManualData; 
-           break; 
-        } 
-        case "prem": { 
-            currentSeasonData = seasonManualData; 
-            break; 
-        } 
-        case "top14": { 
-            currentSeasonData = seasonSingleData; 
-            break; 
+    switch (leagueName) {
+        case "urc": {
+            currentSeasonData = seasonManualData;
+            break;
         }
-        case "superRugby": { 
-            currentSeasonData = seasonManualData; 
-            break; 
+        case "prem": {
+            currentSeasonData = seasonManualData;
+            break;
         }
-        case "championsCup": { 
-            currentSeasonData = seasonManualData; 
-            break; 
+        case "top14": {
+            currentSeasonData = seasonSingleData;
+            break;
         }
-        case "sixNations": { 
-            currentSeasonData = seasonManualData; 
-            break; 
-        } 
-        case "rugbyWorldCup": { 
-            currentSeasonData = seasonWorldCupData; 
-           break; 
+        case "superRugby": {
+            currentSeasonData = seasonManualData;
+            break;
         }
-        default: { 
-            currentSeasonData = seasonManualData; 
-           break; 
+        case "championsCup": {
+            currentSeasonData = seasonManualData;
+            break;
         }
-    } 
+        case "sixNations": {
+            currentSeasonData = seasonManualData;
+            break;
+        }
+        case "rugbyWorldCup": {
+            currentSeasonData = seasonWorldCupData;
+            break;
+        }
+        default: {
+            currentSeasonData = seasonManualData;
+            break;
+        }
+    }
 
     const isSeasonDropdownDisabled = leagueName == "worldRankings" || leagueName == "u20SixNations"
-     || leagueName == "top14" || leagueName == "u20Championship" || leagueName == "rugbyWorldCup"
+        || leagueName == "top14" || leagueName == "u20Championship" || leagueName == "rugbyWorldCup"
 
     useEffect(() => {
 
-        if(isSeasonDropdownDisabled)
-        {
+        if (isSeasonDropdownDisabled) {
             handlePressFetchData('2024')
         }
-        
+
     }, [leagueName]);
 
     const headerRender = (isWorldRanking: boolean, eventsArray: StandingInfo[]) => {
 
-        if(eventsArray == undefined || eventsArray.length == 0)
-        {
+        if (eventsArray == undefined || eventsArray.length == 0) {
             return;
         }
 
         if (isWorldRanking) {
             return (
                 <View style={{ flexDirection: 'row' }}>
-                        <Text style={[standingsHeadingStyles.seasonTitle, { width: "60%", textAlign: 'left' }]}> #        Team</Text>
-                        <Text style={[standingsHeadingStyles.headerStat, { width: "40%" }]}>Points</Text>
+                    <Text style={[standingsHeadingStyles.seasonTitle, { width: "60%", textAlign: 'left' }]}> #        Team</Text>
+                    <Text style={[standingsHeadingStyles.headerStat, { width: "40%" }]}>Points</Text>
                 </View>
             )
         }
@@ -343,29 +333,28 @@ const StandingsScreen = () => {
 
     const activityIndicatorHeader = () => {
 
-        if(isLoading)
-        {
+        if (isLoading) {
             return (
-                <View style={{marginVertical: 20}}>
+                <View style={{ marginVertical: 20 }}>
                     <ActivityIndicator size='large' color='lightgrey' />
                 </View>
             )
         }
-        
+
         return null
     }
 
     // renders
-	const renderBackdrop = useCallback(
-		(props: any) => (
-			<BottomSheetBackdrop
-				{...props}
-				disappearsOnIndex={-1}
-				appearsOnIndex={0}
-			/>
-		),
-		[]
-	);
+    const renderBackdrop = useCallback(
+        (props: any) => (
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+            />
+        ),
+        []
+    );
 
     const getDefaultRoundButton = (knockoutsArray: MatchInfo[]) => {
 
@@ -375,7 +364,7 @@ const StandingsScreen = () => {
             'SF': 'semiFinals',
             'GF': 'final'
         };
-        
+
         const roundTypes = Object.entries(roundMapping)
             .filter(([key]) => knockoutsArray.some(obj => obj.matchTitle === key))
             .map(([_, value]) => value);
@@ -387,7 +376,7 @@ const StandingsScreen = () => {
 
     const [knockoutRoundName, setKnockoutRoundName] = useState<string>(getDefaultRoundButton(knockoutsArray));
 
-    const handlePresentModalPress = useCallback( async () => {
+    const handlePresentModalPress = useCallback(async () => {
 
         console.info("pressed")
         console.info(leagueName)
@@ -401,14 +390,13 @@ const StandingsScreen = () => {
         setKnockoutRoundName(getDefaultRoundButton(knockoutFixtures))
 
     }, [leagueName, seasonName]);
-    
+
     const knockoutsButton = () => {
 
         var leagueHasKnockouts = false;
         var seasonHasKnockouts = false;
 
-        if(leagueName !== '')
-        {
+        if (leagueName !== '') {
             const targetIndex = leagueData.findIndex(item => item.value === leagueName);
             leagueHasKnockouts = leagueData[targetIndex].hasKnockouts;
             seasonHasKnockouts = leagueData[targetIndex].knockoutsYears.includes(seasonName)
@@ -417,14 +405,16 @@ const StandingsScreen = () => {
 
         if (standingsArray.length == 0 || !leagueHasKnockouts || !seasonHasKnockouts) {
             return <View style={{ backgroundColor: 'transparent', marginBottom: 60, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}>
-                        <Text></Text>
-                    </View>
+                <Text></Text>
+            </View>
         }
         else {
             return (
-                <TouchableOpacity style={{ backgroundColor: "#0d0c0c", marginBottom: 60, borderTopColor: 'lightgrey',
-                borderTopWidth: 0.5, borderRightColor: 'lightgrey', borderRightWidth: 0.5, borderLeftColor: 'lightgrey', borderLeftWidth: 0.5,
-                 borderTopRightRadius: 10, borderTopLeftRadius: 10 }} activeOpacity={0.8} onPress={handlePresentModalPress}>
+                <TouchableOpacity style={{
+                    backgroundColor: "#0d0c0c", marginBottom: 60, borderTopColor: 'lightgrey',
+                    borderTopWidth: 0.5, borderRightColor: 'lightgrey', borderRightWidth: 0.5, borderLeftColor: 'lightgrey', borderLeftWidth: 0.5,
+                    borderTopRightRadius: 10, borderTopLeftRadius: 10
+                }} activeOpacity={0.8} onPress={handlePresentModalPress}>
                     <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }}>KNOCKOUTS</Text>
                 </TouchableOpacity>
             )
@@ -439,91 +429,91 @@ const StandingsScreen = () => {
 
     return (
 
-    <GestureHandlerRootView>
+        <GestureHandlerRootView>
 
-    <BottomSheetModalProvider>
-    
-        <View style={defaultStyles.container}>
+            <BottomSheetModalProvider>
 
-        <LeagueSelectDropdown
-        placeholder="Select League" 
-        data={leagueData}
-        onChangeSelection={handleOnChangeLeague}
-        isDisabled={false}
-        value={leagueName}
-        iconName="trophy-outline"/>
+                <View style={defaultStyles.container}>
 
-        <CustomSelectDropdown
-        placeholder="Select Season" 
-        data={currentSeasonData}
-        onChangeSelection={handleOnChangeSeason}
-        isDisabled={isSeasonDropdownDisabled}
-        value={seasonName}
-        iconName="calendar-range"/>
+                    <LeagueSelectDropdown
+                        placeholder="Select League"
+                        data={leagueData}
+                        onChangeSelection={handleOnChangeLeague}
+                        isDisabled={false}
+                        value={leagueName}
+                        iconName="trophy-outline" />
 
-        {activityIndicatorHeader()}
-        {headerRender(leagueName == "worldRankings", standingsArray)}
-        
-        <FlatList 
-        data={standingsArray}
-        ListEmptyComponent={
-            <View style={{ marginTop: 20, marginHorizontal: 5 }}>
-                <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Standing Found</Text>
-                <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
-                    <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
+                    <CustomSelectDropdown
+                        placeholder="Select Season"
+                        data={currentSeasonData}
+                        onChangeSelection={handleOnChangeSeason}
+                        isDisabled={isSeasonDropdownDisabled}
+                        value={seasonName}
+                        iconName="calendar-range" />
+
+                    {activityIndicatorHeader()}
+                    {headerRender(leagueName == "worldRankings", standingsArray)}
+
+                    <FlatList
+                        data={standingsArray}
+                        ListEmptyComponent={
+                            <View style={{ marginTop: 20, marginHorizontal: 5 }}>
+                                <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Standing Found</Text>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
+                                    <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
+                                </View>
+                            </View>
+                        }
+                        renderItem={({ item, index }) =>
+                            <StandingPanel
+                                index={index}
+                                league={leagueName}
+                                isHeader={item.isHeader}
+                                isWorldRanking={leagueName == "worldRankings"}
+                                teamPool={item.teamPool}
+                                teamName={item.teamName}
+                                teamGP={item.teamGP}
+                                teamWins={item.teamWins}
+                                teamDraws={item.teamDraws}
+                                teamLosses={item.teamLosses}
+                                teamPD={item.teamPD}
+                                teamPoints={item.teamPoints}
+                                ranking={item.ranking}
+                                isLastItem={item.isLastItem}
+                                isEndOfList={item.isEndOfList}
+                                isPlayoffCutoff={item.isPlayoffCutoff} />}
+                    />
+
+                    {knockoutsButton()}
+
+                    <BottomSheetModal
+                        ref={bottomSheetModalRef}
+                        index={0}
+                        snapPoints={snapPoints}
+                        enableDynamicSizing={false}
+                        enableOverDrag={false}
+                        backdropComponent={renderBackdrop}
+                        //handleStyle={}
+                        handleIndicatorStyle={{ backgroundColor: 'lightgrey' }}
+                        backgroundStyle={{ backgroundColor: "#0d0c0c", borderColor: 'lightgrey', borderWidth: 0.5 }}
+                    >
+                        <BottomSheetView style={{ flex: 1 }}>
+                            <KnockoutsPanel
+                                standingsArray={standingsArray}
+                                secondaryStandingsArray={secondaryStandingsArray}
+                                knockoutFixturesArray={knockoutsArray}
+                                leagueName={leagueName}
+                                chosenKnockoutRound={knockoutRoundName}
+                                handleChooseRound={handleNewRoundChosen} />
+
+                        </BottomSheetView>
+                    </BottomSheetModal>
+
                 </View>
-            </View>
-        }
-        renderItem={({item, index}) => 
-        <StandingPanel
-            index={index}
-            league={leagueName}
-            isHeader={item.isHeader}
-            isWorldRanking={leagueName == "worldRankings"}
-            teamPool={item.teamPool}
-            teamName={item.teamName}
-            teamGP={item.teamGP}
-            teamWins={item.teamWins}
-            teamDraws={item.teamDraws}
-            teamLosses={item.teamLosses}
-            teamPD={item.teamPD}
-            teamPoints={item.teamPoints}
-            ranking={item.ranking}
-            isLastItem={item.isLastItem}
-            isEndOfList={item.isEndOfList}
-            isPlayoffCutoff={item.isPlayoffCutoff} />}
-        />
 
-        {knockoutsButton()}
+            </BottomSheetModalProvider>
 
-        <BottomSheetModal
-            ref={bottomSheetModalRef}
-            index={0}
-            snapPoints={snapPoints}
-            enableDynamicSizing={false}
-            enableOverDrag={false}
-            backdropComponent={renderBackdrop}
-            //handleStyle={}
-            handleIndicatorStyle={{backgroundColor: 'lightgrey'}}
-            backgroundStyle={{backgroundColor: "#0d0c0c", borderColor: 'lightgrey', borderWidth: 0.5}}
-            >
-            <BottomSheetView style={{flex: 1}}>
-               <KnockoutsPanel 
-               standingsArray={standingsArray}
-               secondaryStandingsArray={secondaryStandingsArray}
-               knockoutFixturesArray={knockoutsArray}
-               leagueName={leagueName}
-               chosenKnockoutRound={knockoutRoundName}
-               handleChooseRound={handleNewRoundChosen}/>
-               
-            </BottomSheetView>
-            </BottomSheetModal>
-
-        </View>
-
-    </BottomSheetModalProvider>
-
-    </GestureHandlerRootView>
+        </GestureHandlerRootView>
     )
 }
 
@@ -542,7 +532,7 @@ export const standingsHeadingStyles = StyleSheet.create({
         color: 'grey',
         fontFamily: fontFamilies.bold
     },
-  })
+})
 
 
 export default StandingsScreen

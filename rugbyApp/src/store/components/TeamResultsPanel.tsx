@@ -1,16 +1,25 @@
 import { SearchTeamInfo } from "@/app/(tabs)/search"
 import { SeasonDateInfo } from "@/app/(tabs)/standings"
-import { TeamEvent } from "@/app/(tabs)/teams/team/[teamID]/results"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import Entypo from '@expo/vector-icons/Entypo'
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { useEffect, useState } from "react"
-import { ActivityIndicator, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Image, ImageBackground, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { getTeamSeasonFixtures } from "../utils/getTeamSeasonFixtures"
 import { generateSeasonList, getLeagueInfoFromDisplayName, hexToRGB } from "../utils/helpers"
+import { SeasonYearPicker } from "./LeagueStandingsPanel"
 import { DropdownData } from "./SelectDropdown"
+
+export type TeamEvent = {
+    eventDate: string,
+    homeTeamName: string,
+    awayTeamName: string,
+    homeTeamScore: string,
+    awayTeamScore: string,
+    leagueName: string,
+    eventState: string,
+}
 
 
 type TeamResultsPanelProps = {
@@ -36,12 +45,12 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
     const seasonDropdownColour = hexToRGB("#4d4b4b", '0.4')
 
 
-    const handlePressFetchData = async () => {
+    const handlePressFetchData = async (year: string) => {
         console.info("Pressed Fetch Team Results")
         setTeamEventsArray([])
 
         setIsLoading(true)
-        const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, seasonYear)
+        const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, year)
         console.info(teamSeasonFixtures)
         setTeamEventsArray(teamSeasonFixtures)
         setIsLoading(false)
@@ -49,7 +58,7 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
     useEffect(() => {
         async function fetchMyAPI() {
-            await handlePressFetchData()
+            await handlePressFetchData(seasonYear)
         }
         fetchMyAPI()
     }, [])
@@ -95,52 +104,55 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
         return null
     }
 
+    const handlePressedSeasonYear = async (year: string) => {
+
+        setSeasonYear(year)
+        await handlePressFetchData(year)
+
+    }
+
+    const seasonManualData = ['2025', '2024', '2023', '2022'];
+
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ width: "100%", flex: 1 }}>
+
+            <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 3 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'flex-start', paddingHorizontal: 5, width: "50%" }}>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, textAlign: 'left' }}>Results / Fixtures</Text>
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "50%", paddingHorizontal: 5 }}>
+                    <SeasonYearPicker currentSeasonYear={seasonYear} seasonYearOptions={seasonManualData} OnPressSeasonYear={handlePressedSeasonYear} />
+                </View>
+
+            </View>
+
             {activityIndicatorHeader()}
 
-            {!isLoading &&
-                <View>
-                    <View style={{ marginHorizontal: 12, marginVertical: 4, flexDirection: 'row' }}>
-                        <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, padding: 2, width: "50%" }}>Results/Fixtures</Text>
+            <View style={{ backgroundColor: isLoading ? 'transparent' : panelColour, borderRadius: 8, marginHorizontal: 12, marginBottom: 100 }}>
 
-                        <TouchableOpacity activeOpacity={0.8} style={{ justifyContent: 'center', alignItems: 'flex-end', width: "50%", paddingHorizontal: 5 }}>
-                            <View style={{ backgroundColor: seasonDropdownColour, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 12, flexDirection: 'row' }}>
-                                <View style={{ paddingHorizontal: 4, justifyContent: 'center', alignContent: 'center' }}>
-                                    <Entypo name="chevron-down" size={15} color="grey" />
-                                </View>
-                                <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', paddingHorizontal: 2 }}>{seasonYear}</Text>
-                            </View>
+                {notFoundHeader(teamEventsArray)}
 
-                        </TouchableOpacity>
+                <BottomSheetScrollView style={{ marginVertical: 2 }}>
 
-                    </View>
+                    <FlatList
+                        data={teamEventsArray}
+                        scrollEnabled={false}
+                        renderItem={({ item, index }) =>
+                            <TeamResultsPanelItem
+                                eventDate={item.eventDate}
+                                homeTeamName={item.homeTeamName}
+                                awayTeamName={item.awayTeamName}
+                                homeTeamScore={item.homeTeamScore}
+                                awayTeamScore={item.awayTeamScore}
+                                leagueName={item.leagueName}
+                                eventState={item.eventState}
+                                isLastItem={findLastItem(teamEventsArray, index)}
+                            />}
+                    />
+                </BottomSheetScrollView>
 
-                    <View style={{ backgroundColor: panelColour, borderRadius: 8, marginHorizontal: 12, marginBottom: 130 }}>
-
-                        {notFoundHeader(teamEventsArray)}
-
-                        <BottomSheetScrollView style={{ marginVertical: 2 }}>
-
-                            <FlatList
-                                data={teamEventsArray}
-                                scrollEnabled={false}
-                                renderItem={({ item, index }) =>
-                                    <TeamResultsPanelItem
-                                        eventDate={item.eventDate}
-                                        homeTeamName={item.homeTeamName}
-                                        awayTeamName={item.awayTeamName}
-                                        homeTeamScore={item.homeTeamScore}
-                                        awayTeamScore={item.awayTeamScore}
-                                        leagueName={item.leagueName}
-                                        eventState={item.eventState}
-                                        isLastItem={findLastItem(teamEventsArray, index)}
-                                    />}
-                            />
-                        </BottomSheetScrollView>
-
-                    </View>
-                </View>}
+            </View>
 
         </View>
     )

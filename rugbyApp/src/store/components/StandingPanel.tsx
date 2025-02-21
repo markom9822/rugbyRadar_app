@@ -1,4 +1,4 @@
-import { colors, fontFamilies } from "@/constants/tokens"
+import { colors } from "@/constants/tokens"
 import { standingsPanelStyles } from "@/styles"
 import { Image, Text, View } from "react-native"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
@@ -74,17 +74,17 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
 
         if (isHeader) {
             return (
-                <View style={{ width: "50%", flexDirection: 'row', paddingTop: 10, paddingLeft: 3 }}>
-                    <Text style={[standingsPanelStyles.teamText, { fontWeight: 600, color: 'lightgrey', fontSize: 11 }]}>{teamPool.toUpperCase()}</Text>
+                <View style={{ width: "100%", flexDirection: 'row', paddingTop: 5, paddingHorizontal: 5, borderBottomColor: 'grey', borderBottomWidth: 1, marginVertical: 2 }}>
+                    <Text style={[standingsPanelStyles.teamText, { color: 'grey', fontSize: 10, textAlign: 'left' }]}>{teamPool.toUpperCase()}</Text>
                 </View>
             )
         }
         else if (isPlayoffCutoff) {
             return (
-                <View style={{ width: "100%", flexDirection: 'row', backgroundColor: colors.background }}>
-                    <View style={{ width: "40%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed' }} />
-                    <Text style={[standingsPanelStyles.teamText, { fontWeight: 600, color: 'grey', fontSize: 10, textAlign: 'center', width: "20%" }]}>KNOCKOUTS</Text>
-                    <View style={{ width: "40%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed' }} />
+                <View style={{ width: "100%", flexDirection: 'row' }}>
+                    <View style={{ width: "35%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed' }} />
+                    <Text style={[standingsPanelStyles.teamText, { color: 'grey', fontSize: 9, textAlign: 'center', width: "30%" }]}>KNOCKOUTS</Text>
+                    <View style={{ width: "35%", height: 10, borderBottomColor: 'grey', borderBottomWidth: 1, borderStyle: 'dashed' }} />
                 </View>
             )
         }
@@ -112,28 +112,25 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
             else {
                 return (
                     <>
-                        <View style={{ width: "40%", flexDirection: 'row', padding: 7, justifyContent: 'space-evenly', alignItems: 'center' }}>
+                        <Text style={[standingsPanelStyles.teamText, { width: "5%", fontSize: 9, textAlign: 'center' }]}>{ranking + 1}</Text>
 
-                            <Text style={[standingsPanelStyles.teamText, { width: "20%", fontSize: 10, textAlign: 'left' }]}>{ranking + 1}</Text>
+                        <View style={{ width: "33%", flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
 
-                            <View style={{ flexDirection: 'row', width: "80%", justifyContent: 'flex-start', alignItems: 'center' }}>
-                                <View style={{ padding: 3 }}>
-                                    <Image
-                                        style={{ resizeMode: 'contain', width: 30, height: 30, minHeight: 30, minWidth: 30 }}
-                                        source={teamInfo.logo} />
-                                </View>
-
-                                <Text style={[standingsPanelStyles.teamText, { paddingLeft: 5 }]}>{teamInfo.abbreviation}</Text>
+                            <View style={{ padding: 3, width: "30%", justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                    style={{ resizeMode: 'contain', width: 22, height: 22, minHeight: 22, minWidth: 22, }}
+                                    source={teamInfo.logo} />
                             </View>
 
+                            <Text adjustsFontSizeToFit={true} numberOfLines={2} style={[standingsPanelStyles.teamText, { width: "70%" }]}>{teamInfo.displayName}</Text>
                         </View>
 
-                        <Text style={[standingsPanelStyles.teamStat, { width: '9%' }]}>{teamGP}</Text>
-                        <Text style={[standingsPanelStyles.teamStat, { width: '9%' }]}>{teamWins}</Text>
-                        <Text style={[standingsPanelStyles.teamStat, { width: '9%' }]}>{teamDraws}</Text>
-                        <Text style={[standingsPanelStyles.teamStat, { width: '9%' }]}>{teamLosses}</Text>
-                        <Text style={[standingsPanelStyles.teamStat, { width: '15%', color: teamPDTextColour }]}>{teamPD}</Text>
-                        <Text style={[standingsPanelStyles.teamStat, { width: '9%', fontWeight: 600, fontFamily: fontFamilies.bold }]}>{teamPoints}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, { width: '10%' }]}>{teamGP}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, { width: '10%' }]}>{teamWins}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, { width: '8%' }]}>{teamDraws}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, { width: '10%' }]}>{teamLosses}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, { width: '14%' }]}>{teamPD}</Text>
+                        <Text style={[standingsPanelStyles.teamStat, { width: '10%' }]}>{teamPoints}</Text>
 
                     </>
                 )
@@ -146,8 +143,7 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
     return (
         <View style={[standingsPanelStyles.container,
         {
-            backgroundColor: (isHeader) ? altBackgroundColour : panelBkgColour, borderBottomColor: (isHeader || isLastItem) ? 'grey' : 'transparent',
-            borderBottomWidth: (isHeader || isLastItem) ? 1 : 0
+            backgroundColor: 'transparent'
         }]}>
             {standingsRender(isHeader, isPlayoffCutoff)}
         </View>
