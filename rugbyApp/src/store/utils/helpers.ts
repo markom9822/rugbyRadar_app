@@ -2,7 +2,7 @@ import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, SkySportsLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { BALionsAltLogo, DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
-import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
+import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
@@ -36,7 +36,7 @@ export const leagueCodes = [
     { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
         displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsAltLogo, trophyIcon: null},
     { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
-        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsLogo, trophyIcon: null},
+        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsAltLogo, trophyIcon: null},
     { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
         displayName: 'World Rugby U20 Championship', leagueLogo: U20WorldChampsLogo, leagueAltLogo: U20WorldChampsAltLogo, trophyIcon: null},
     { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",

@@ -7,7 +7,6 @@ import { useState } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, U20WorldChampsAltLogo, URCAltLogo, WorldCupAltLogo } from "../LeagueLogos/LeagueLogos"
 import { hexToRGB } from "../utils/helpers"
-import { LeagueKnockoutsPanel } from "./LeagueKnockoutsPanel"
 import { LeagueStandingsPanel } from "./LeagueStandingsPanel"
 import { LeagueUpcomingFixturesPanel } from "./LeagueUpcomingFixturesPanel"
 
@@ -19,7 +18,6 @@ type SearchLeagueInfoPanelProps = {
 
 export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeagueInfoPanelProps) => {
 
-
     const seasonManualData = ['2025', '2024', '2023', '2022'];
     const seasonSingleData = ['2025'];
     const seasonSingleWorldCupData = ['2023'];
@@ -27,7 +25,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
     const leagueData = [
         { label: 'URC', value: 'urc', logo: URCAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
         { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
-        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, seasonData: seasonSingleData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024'] },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024'] },
 
@@ -35,8 +33,8 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, seasonData: seasonSingleWorldCupData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
-        { label: 'U20 Championship', value: 'u20Championship', logo: U20WorldChampsAltLogo, seasonData: seasonSingleData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, seasonData: seasonSingleWorldCupData, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'U20 Championship', value: 'u20Championship', logo: U20WorldChampsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
         { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] }
     ];
 
@@ -86,10 +84,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
 
                 <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} />
 
-                <LeagueStandingsPanel leagueName={leagueInfo.value} seasonYear={seasonName} leagueSeasonData={leagueSeasonData} OnChangeSeasonYear={handleChangedSeasonYear} />
-
-                <LeagueKnockoutsPanel leagueName={leagueInfo.value} seasonYear={seasonName} showKnockouts={shouldShowKnockouts} />
-
+                <LeagueStandingsPanel leagueName={leagueInfo.value} seasonYear={seasonName} leagueSeasonData={leagueSeasonData} shouldShowKnockouts={shouldShowKnockouts} OnChangeSeasonYear={handleChangedSeasonYear} />
 
             </LinearGradient>
         </BottomSheetScrollView>

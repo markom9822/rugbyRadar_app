@@ -1,15 +1,13 @@
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Image, ImageBackground } from "react-native"
-import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import { getLeagueDisplayNameFromValue, getLeagueLogoFromValue, getLeagueTrophyIconFromValue } from "@/store/utils/helpers"
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet"
-import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo"
 import { MatchInfo } from "@/app/(tabs)/(fixtures)"
 import { StandingInfo } from "@/app/(tabs)/standings"
-import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
-import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
+import { colors, fontFamilies } from "@/constants/tokens"
+import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo"
+import { getLeagueDisplayNameFromValue, getLeagueLogoFromValue, getLeagueTrophyIconFromValue, hexToRGB } from "@/store/utils/helpers"
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
-import { getAllStandingsDataRugbyViz } from "../utils/standingsGetter"
-import { useEffect } from "react"
+import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
+import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
+import { GridView } from "./GridView"
 
 type KnockoutsPanelProps = {
     standingsArray: StandingInfo[]
@@ -30,7 +28,7 @@ type KnockoutsFixturePairProps = {
 export const KnockoutFixturePair = ({ firstMatch, secondMatch, thisLeagueName, hasExtraMargin }: KnockoutsFixturePairProps) => {
 
     return (
-        <View style={{ flexDirection: 'row', marginBottom: hasExtraMargin ? 50 : 0 }}>
+        <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'column', width: "80%" }}>
                 <KnockoutsFixture fixtureInfo={firstMatch} leagueName={thisLeagueName} />
                 <KnockoutsFixture fixtureInfo={secondMatch} leagueName={thisLeagueName} />
@@ -212,7 +210,7 @@ export const pooledTableIntoRankedChallengeCup = (standingsArray: StandingInfo[]
     const rank4Array = sortTeamsArrayChallengeCup(filteredPools, 3)
 
     // last in rank3Array is first in rank4Array
-    rank4Array.unshift(rank3Array[rank3Array.length -1])
+    rank4Array.unshift(rank3Array[rank3Array.length - 1])
     const lastElement = rank3Array.pop()
 
     // need to include teams from champs cup in ranks 9 - 12
@@ -377,11 +375,10 @@ export const getSFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
             // need to find matching index
             SFFixturesTemp[index] = findFixtureCombination(SFSeedings[index], targetStandingsArray, filteredArray, leagueName)
         }
-        else
-        {
+        else {
             SFFixturesTemp[index] = getFixtureFromStandingIndex(SFSeedings[index][0], SFSeedings[index][1], targetStandingsArray, filteredArray, leagueName);
         }
-        
+
     }
 
     if (SFFixtures[0] == null && SFFixtures[1] == null) {
@@ -394,7 +391,7 @@ export const getSFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
     )
 }
 
-export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
+export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
 
     var targetStandingsArray = standingsArray;
 
@@ -407,7 +404,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knocko
         // turn pooled table into ranked table
         targetStandingsArray = pooledTableIntoRankedChallengeCup(standingsArray, secondaryStandingsArray);
     }
-   
+
 
     const knockoutRoundRender = (knockoutRoundName: string) => {
 
@@ -468,7 +465,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knocko
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ flexDirection: 'column', width: "100%" }}>
-                            <KnockoutsFinalMatch fixtureInfo={filteredArray[0]} leagueName={leagueName}/>
+                            <KnockoutsFinalMatch fixtureInfo={filteredArray[0]} leagueName={leagueName} />
                         </View>
                     </View>
 
@@ -484,34 +481,48 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knocko
         const hasSFFixtures = knockoutFixturesArray.find(obj => obj.matchTitle === "SF") !== undefined;
         const hasGFFixtures = knockoutFixturesArray.find(obj => obj.matchTitle === "GF") !== undefined;
 
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                {hasR16Fixtures && (
-                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound == 'r16' ? 'lightgrey' : 'transparent' }]}
-                        onPress={() => handlePressRoundButton('r16')}>
-                        <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound == 'r16' ? 'black' : 'white' }]}>R16</Text>
-                    </TouchableOpacity>
-                )}
-                {hasQFFixtures && (
-                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound == 'quaterFinals' ? 'lightgrey' : 'transparent' }]}
-                        onPress={() => handlePressRoundButton('quaterFinals')}>
-                        <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound == 'quaterFinals' ? 'black' : 'white' }]}>QUARTER FINALS</Text>
-                    </TouchableOpacity>
-                )}
-                {hasSFFixtures && (
-                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound == 'semiFinals' ? 'lightgrey' : 'transparent' }]}
-                        onPress={() => handlePressRoundButton('semiFinals')}>
-                        <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound == 'semiFinals' ? 'black' : 'white' }]}>SEMI FINALS</Text>
-                    </TouchableOpacity>
-                )}
-                {hasGFFixtures && (
-                    <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound == 'final' ? 'lightgrey' : 'transparent' }]}
-                        onPress={() => handlePressRoundButton('final')}>
-                        <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound == 'final' ? 'black' : 'white' }]}>FINAL</Text>
-                    </TouchableOpacity>
-                )}
+        const buttonsArray = [
+            {
+                code: "r16",
+                title: "R16"
+            },
+            {
+                code: "quaterFinals",
+                title: "QF"
+            },
+            {
+                code: "semiFinals",
+                title: "SF"
+            },
+            {
+                code: "final",
+                title: "F"
+            }
+        ]
 
-            </View>
+        const booleanMap = {
+            R16: hasR16Fixtures,
+            QF: hasQFFixtures,
+            SF: hasSFFixtures,
+            F: hasGFFixtures
+        };
+
+        const filteredButtonsArray = buttonsArray.filter(button => {
+            return booleanMap[button.title as keyof typeof booleanMap];
+        });
+
+        return (
+
+            <GridView
+                data={filteredButtonsArray}
+                col={filteredButtonsArray.length}
+                renderItem={(item, index) =>
+                    <View>
+                        <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound == item.code ? 'lightgrey' : 'transparent' }]}
+                            onPress={() => handlePressRoundButton(item.code)}>
+                            <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound == item.code ? 'black' : 'white' }]}>{item.title}</Text>
+                        </TouchableOpacity>
+                    </View>} />
         )
     }
 
@@ -523,16 +534,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knocko
     const leagueLogo = getLeagueLogoFromValue(leagueName)
 
     return (
-        <ImageBackground resizeMode="cover" imageStyle={{ opacity: 0.05 }}
-            style={{ flex: 1, justifyContent: 'center', flexDirection: 'column' }}
-            source={leagueLogo} >
-            <View>
-                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center', fontSize: fontSize.sm }}>KNOCKOUTS</Text>
-            </View>
-
-            <View style={{ marginVertical: 5 }}>
-                <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, textAlign: 'center', fontSize: 14 }}>{leagueDisplayName}</Text>
-            </View>
+        <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column' }}>
 
             {knockoutFixturesArray.length == 0 && (
                 <View style={{ marginVertical: 20 }}>
@@ -544,11 +546,9 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray ,knocko
                 {knockoutRoundButtonsRender(knockoutFixturesArray)}
             </View>
 
-            <BottomSheetScrollView>
-                {knockoutRoundRender(chosenKnockoutRound)}
-            </BottomSheetScrollView>
+            {knockoutRoundRender(chosenKnockoutRound)}
 
-        </ImageBackground>
+        </View>
     )
 }
 
@@ -597,52 +597,82 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
         const formattedDate = fixtureInfo.matchDate.toLocaleDateString('en-GB', {
             day: '2-digit',
             month: '2-digit'
-          });
+        });
 
         // not started yet
         if (eventState === "pre") {
             return (
-                <View style={{ padding: 4, flexDirection: 'row' }}>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 5 }}>{formattedDate}</Text>
-                </View>  
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 5 }}>{formattedDate}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
+                </View>
             )
         }
-        // event finished or ongoing
-        else
-        {
+        // event finished
+        else if (eventState === "post") {
             return (
-                <View style={{ padding: 4, flexDirection: 'row' }}>
-                    <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5 }}>{homeTeamScore}</Text>
-                    <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5 }}>{awayTeamScore}</Text>
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 13 }}>{homeTeamScore}</Text>
+
+                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12 }}>FT</Text>
+
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 13 }}>{awayTeamScore}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
+                </View>
+
+            )
+        }
+        // event ongoing
+        else {
+            return (
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
+
+                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 14 }}></Text>
+
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
                 </View>
             )
         }
     }
 
+    const panelColour = hexToRGB("#4d4b4b", '0.6')
+
     return (
-        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 0.5,
-        marginHorizontal: 10, marginVertical: 10, padding: 5, borderRadius: 4 }}>
+        <View style={{
+            flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: panelColour,
+            marginHorizontal: 10, marginVertical: 10, paddingHorizontal: 7, paddingVertical: 3, borderRadius: 4
+        }}>
 
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
-                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12 }}>{homeTeamName}</Text>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Image
-                        style={[knockoutPanelStyles.teamLogo]}
-                        source={homeTeamInfo.logo} />
+                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: "20%" }}>
+                    <View style={{ padding: 5, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image
+                            style={[knockoutPanelStyles.teamLogo]}
+                            source={homeTeamInfo.logo} />
+                    </View>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 11, textAlign: 'center' }}>{homeTeamName}</Text>
                 </View>
 
-                {renderScoreTime(fixtureInfo.eventState)}
-
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Image
-                        style={[knockoutPanelStyles.teamLogo]}
-                        source={awayTeamInfo.logo} />
+                <View style={{ width: "60%" }}>
+                    {renderScoreTime(fixtureInfo.eventState)}
                 </View>
-                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12 }}>{awayTeamName}</Text>
-            </View>
 
-            <View style={{ padding: 3 }}>
-                <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 11 }}>{matchVenue}</Text>
+                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: "20%" }}>
+                    <View style={{ padding: 5, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image
+                            style={[knockoutPanelStyles.teamLogo]}
+                            source={awayTeamInfo.logo} />
+                    </View>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 11, textAlign: 'center' }}>{awayTeamName}</Text>
+                </View>
             </View>
         </View>
     )
@@ -682,29 +712,54 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
 
     const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
     const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
+    const panelColour = hexToRGB("#4d4b4b", '0.6')
+
 
     const renderScoreTime = (eventState: string) => {
 
         const formattedDate = fixtureInfo.matchDate.toLocaleDateString('en-GB', {
             day: '2-digit',
             month: '2-digit'
-          });
+        });
 
         // not started yet
         if (eventState === "pre") {
             return (
-                <View style={{ padding: 4, flexDirection: 'row', marginHorizontal: 5 }}>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 5, fontSize: 16 }}>{formattedDate}</Text>
-                </View>  
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light, paddingHorizontal: 5 }}>{formattedDate}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
+                </View>
             )
         }
-        // event finished or ongoing
-        else
-        {
+        // event finished
+        else if (eventState === "post") {
             return (
-                <View style={{ padding: 4, flexDirection: 'row', marginHorizontal: 5 }}>
-                    <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, fontSize: 16 }}>{homeTeamScore}</Text>
-                    <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, fontSize: 16 }}>{awayTeamScore}</Text>
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
+
+                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 14 }}>FT</Text>
+
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
+                </View>
+            )
+        }
+        // event ongoing
+        else {
+            return (
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
+
+                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 14 }}></Text>
+
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
                 </View>
             )
         }
@@ -723,31 +778,35 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
     }
 
     return (
-        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background, borderColor: 'lightgrey', borderWidth: 0.5,
-        marginHorizontal: 10, marginVertical: 10, padding: 3, borderRadius: 4 }}>
+        <View style={{
+            flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: panelColour,
+            marginHorizontal: 10, marginVertical: 10, paddingHorizontal: 7, paddingVertical: 3, borderRadius: 4
+        }}>
 
             {renderTrophyIcon()}
 
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 8 }}>
-                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>{homeTeamName}</Text>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Image
-                        style={[knockoutPanelStyles.finalsTeamLogo]}
-                        source={homeTeamInfo.logo} />
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
+                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: "20%" }}>
+                    <View style={{ padding: 5, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image
+                            style={[knockoutPanelStyles.teamLogo]}
+                            source={homeTeamInfo.logo} />
+                    </View>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13, textAlign: 'center' }}>{homeTeamName}</Text>
                 </View>
 
-                {renderScoreTime(fixtureInfo.eventState)}
-                
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Image
-                        style={[knockoutPanelStyles.finalsTeamLogo]}
-                        source={awayTeamInfo.logo} />
+                <View style={{ width: "60%" }}>
+                    {renderScoreTime(fixtureInfo.eventState)}
                 </View>
-                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>{awayTeamName}</Text>
-            </View>
 
-            <View style={{ padding: 3 }}>
-                <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 12 }}>{matchVenue}</Text>
+                <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: "20%" }}>
+                    <View style={{ padding: 5, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image
+                            style={[knockoutPanelStyles.teamLogo]}
+                            source={awayTeamInfo.logo} />
+                    </View>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13, textAlign: 'center' }}>{awayTeamName}</Text>
+                </View>
             </View>
         </View>
     )
@@ -757,7 +816,7 @@ export const knockoutPanelStyles = StyleSheet.create({
     roundText: {
         fontFamily: fontFamilies.bold,
         textAlign: 'center',
-        fontSize: fontSize.xs,
+        fontSize: 11,
         padding: 6
     },
 

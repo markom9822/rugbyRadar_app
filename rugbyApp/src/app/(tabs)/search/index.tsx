@@ -212,18 +212,6 @@ const TeamsScreen = () => {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={{ flex: 1, backgroundColor: colors.background }}>
 
-                <TextInput
-                    style={{
-                        height: 40, margin: 12, borderRadius: 4,
-                        borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text, fontFamily: fontFamilies.light
-                    }}
-                    returnKeyType="search"
-                    placeholder="Search teams"
-                    placeholderTextColor={colors.text}
-                    cursorColor={'lightgrey'}
-                    onChangeText={(search) => handleOnSearchTextChange(search)}
-                    value={teamSearch}
-                />
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <TouchableOpacity style={{ backgroundColor: searchOption == "teams" ? 'grey' : 'transparent', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5, justifyContent: 'center', alignItems: 'center', margin: 3 }} activeOpacity={0.7} onPress={() => handlePressSearchOption('teams')}>
@@ -235,6 +223,20 @@ const TeamsScreen = () => {
                     </TouchableOpacity>
                 </View>
 
+                {searchOption == "teams" && (
+                    <TextInput
+                        style={{
+                            height: 40, margin: 12, borderRadius: 4,
+                            borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text, fontFamily: fontFamilies.light
+                        }}
+                        returnKeyType="search"
+                        placeholder="Search teams"
+                        placeholderTextColor={colors.text}
+                        cursorColor={'lightgrey'}
+                        onChangeText={(search) => handleOnSearchTextChange(search)}
+                        value={teamSearch}
+                    />
+                )}
 
                 <ScrollView>
                     <View style={{ marginBottom: 50 }}>

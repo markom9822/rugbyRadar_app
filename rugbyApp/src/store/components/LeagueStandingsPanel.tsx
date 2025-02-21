@@ -1,3 +1,4 @@
+import { MatchInfo } from "@/app/(tabs)/(fixtures)"
 import { fontFamilies, fontSize } from "@/constants/tokens"
 import { FontAwesome6 } from '@expo/vector-icons'
 import Entypo from '@expo/vector-icons/Entypo'
@@ -5,7 +6,9 @@ import { useEffect, useState } from "react"
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { getLeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, hexToRGB } from "../utils/helpers"
+import { fetchRugbyVizKnockoutFixtures } from "../utils/knockoutFixturesGetter"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz } from "../utils/standingsGetter"
+import { KnockoutsPanel } from "./KnockoutsPanel"
 import { StandingPanel } from "./StandingPanel"
 
 
@@ -66,17 +69,42 @@ const getWorldRankingsData = (todaysRankings: any): StandingInfo[] => {
 type LeagueStandingsPanelProps = {
     leagueName: string,
     seasonYear: string,
-    leagueSeasonData: string[]
+    leagueSeasonData: string[],
+    shouldShowKnockouts: boolean,
     OnChangeSeasonYear: (year: string) => void
 
 }
 
-export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData, OnChangeSeasonYear }: LeagueStandingsPanelProps) => {
+
+export const getDefaultRoundButton = (knockoutsArray: MatchInfo[]) => {
+
+    const roundMapping = {
+        'R16': 'r16',
+        'QF': 'quaterFinals',
+        'SF': 'semiFinals',
+        'GF': 'final'
+    };
+
+    const roundTypes = Object.entries(roundMapping)
+        .filter(([key]) => knockoutsArray.some(obj => obj.matchTitle === key))
+        .map(([_, value]) => value);
+
+    console.info(`Default Value: ${roundTypes[0]}`)
+
+    return roundTypes[0]
+}
+
+export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData, shouldShowKnockouts, OnChangeSeasonYear }: LeagueStandingsPanelProps) => {
 
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
     const [secondaryStandingsArray, setSecondaryStandingsArray] = useState<StandingInfo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+
+    const [knockoutsArray, setKnockoutsArray] = useState<MatchInfo[]>([]);
+    const [knockoutRoundName, setKnockoutRoundName] = useState<string>(getDefaultRoundButton(knockoutsArray));
+
+
 
     const handlePressFetchData = async (targetSeasonName: string) => {
         console.info("Pressed Fetch Standings")
@@ -196,9 +224,17 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
     useEffect(() => {
         async function fetchMyAPI() {
             await handlePressFetchData(seasonYear)
+
+            const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, seasonYear)
+            setKnockoutsArray(knockoutFixtures)
+            setKnockoutRoundName(getDefaultRoundButton(knockoutFixtures))
         }
         fetchMyAPI()
     }, [])
+
+    const handleNewRoundChosen = (roundName: string) => {
+        setKnockoutRoundName(roundName)
+    }
 
     const activityIndicatorHeader = () => {
 
@@ -214,8 +250,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
     }
 
     const panelColour = hexToRGB("#4d4b4b", '0.6')
-    const seasonDropdownColour = hexToRGB("#4d4b4b", '0.4')
-    const dropdownIconText = showDropdown ? "chevron-up" : "chevron-down"
 
     const handlePressedSeasonYear = async (year: string) => {
 
@@ -223,11 +257,14 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
         if (year != seasonYear) {
             await handlePressFetchData(year)
+            const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, year)
+            setKnockoutsArray(knockoutFixtures)
+            setKnockoutRoundName(getDefaultRoundButton(knockoutFixtures))
         }
     }
 
     return (
-        <View style={{ width: "100%", marginVertical: 10 }}>
+        <View style={{ width: "100%" }}>
 
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 3 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'flex-start', paddingHorizontal: 5, width: "50%" }}>
@@ -240,7 +277,10 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
             </View>
 
-            <View style={{ backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15 }}>
+            <View style={{
+                backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15,
+                marginBottom: shouldShowKnockouts ? 15 : 60
+            }}>
 
                 {activityIndicatorHeader()}
 
@@ -279,9 +319,23 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
             </View>
 
-            <View style={{ backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15 }}>
+            {shouldShowKnockouts && (
+                <View>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5, width: "100%" }}>
+                        <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, textAlign: 'center' }}>Knockouts {seasonYear}</Text>
+                    </View>
+                    <View style={{ backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15, marginBottom: 60 }}>
 
-            </View>
+                        <KnockoutsPanel
+                            standingsArray={standingsArray}
+                            secondaryStandingsArray={secondaryStandingsArray}
+                            knockoutFixturesArray={knockoutsArray}
+                            leagueName={leagueName}
+                            chosenKnockoutRound={knockoutRoundName}
+                            handleChooseRound={handleNewRoundChosen} />
+                    </View>
+                </View>
+            )}
         </View>
     )
 }
