@@ -1,6 +1,5 @@
 import { MatchInfo } from "@/app/(tabs)/(fixtures)"
 import { fontFamilies, fontSize } from "@/constants/tokens"
-import { FontAwesome6 } from '@expo/vector-icons'
 import Entypo from '@expo/vector-icons/Entypo'
 import { useEffect, useState } from "react"
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
@@ -103,7 +102,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
     const [knockoutsArray, setKnockoutsArray] = useState<MatchInfo[]>([]);
     const [knockoutRoundName, setKnockoutRoundName] = useState<string>(getDefaultRoundButton(knockoutsArray));
-
 
 
     const handlePressFetchData = async (targetSeasonName: string) => {
@@ -232,6 +230,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
         fetchMyAPI()
     }, [])
 
+
     const handleNewRoundChosen = (roundName: string) => {
         setKnockoutRoundName(roundName)
     }
@@ -282,20 +281,12 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                 marginBottom: shouldShowKnockouts ? 15 : 60
             }}>
 
-                {activityIndicatorHeader()}
 
                 <StandingsHeader />
 
                 <FlatList
                     data={standingsArray}
                     scrollEnabled={false}
-                    ListEmptyComponent={
-                        <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
-                                <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
-                            </View>
-                        </View>
-                    }
                     renderItem={({ item, index }) =>
                         <StandingPanel
                             index={index}
@@ -316,6 +307,8 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                             isPlayoffCutoff={item.isPlayoffCutoff} />}
                 />
 
+                {activityIndicatorHeader()}
+
 
             </View>
 
@@ -325,14 +318,17 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                         <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, textAlign: 'center' }}>Knockouts {seasonYear}</Text>
                     </View>
                     <View style={{ backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15, marginBottom: 60 }}>
+                        {activityIndicatorHeader()}
 
-                        <KnockoutsPanel
-                            standingsArray={standingsArray}
-                            secondaryStandingsArray={secondaryStandingsArray}
-                            knockoutFixturesArray={knockoutsArray}
-                            leagueName={leagueName}
-                            chosenKnockoutRound={knockoutRoundName}
-                            handleChooseRound={handleNewRoundChosen} />
+                        {!isLoading && (
+                            <KnockoutsPanel
+                                standingsArray={standingsArray}
+                                secondaryStandingsArray={secondaryStandingsArray}
+                                knockoutFixturesArray={knockoutsArray}
+                                leagueName={leagueName}
+                                chosenKnockoutRound={knockoutRoundName}
+                                handleChooseRound={handleNewRoundChosen} />
+                        )}
                     </View>
                 </View>
             )}

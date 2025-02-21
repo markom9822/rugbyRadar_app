@@ -119,7 +119,7 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
     console.info(currentTab)
 
     return (
-        <LinearGradient colors={['#0d0c0c', 'transparent']} start={{ x: 0.5, y: 0.3 }} end={{ x: 0.5, y: 0 }}
+        <LinearGradient colors={['#0d0c0c', 'transparent']} start={{ x: 0.5, y: 0.9 }} end={{ x: 0.5, y: 0 }}
             style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }]}>
 
             <FixturesInfoTabBar OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} />

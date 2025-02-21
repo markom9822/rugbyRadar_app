@@ -3,7 +3,7 @@ import { HeadToHeadEventsPanel, TeamEventsPanel, TeamEventStatsInfo } from "@/st
 import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
 import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "@/store/utils/getTeamFormStats";
-import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails } from "@/store/utils/helpers";
+import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
@@ -274,11 +274,13 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
         }
     }
 
+    const panelColour = hexToRGB("#4d4b4b", '0.5')
+
     return (
 
         <View style={{ flexDirection: 'column' }}>
 
-            <View style={{ backgroundColor: 'transparent', padding: 10, borderRadius: 5, marginVertical: 10 }}>
+            <View style={{ backgroundColor: panelColour, padding: 10, borderRadius: 5, margin: 10 }}>
                 <View style={{ alignItems: 'flex-start', flexDirection: 'column', justifyContent: 'flex-start' }}>
 
                     <View style={{ flexDirection: 'row', marginVertical: 4 }}>

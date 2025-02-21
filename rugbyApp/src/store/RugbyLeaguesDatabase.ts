@@ -55,7 +55,7 @@ export const RugbyLeagues = [
     abbreviation: 'Challenge Cup',
     logo: ChallengeCupLogo,
     altLogo: ChallengeCupAltLogo,
-    colour: '#d1fa00',
+    colour: '#96b302',
     id: '1026',
     foundedYear: '-',
     seasonType: 'north',

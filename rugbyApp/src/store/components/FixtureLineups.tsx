@@ -293,32 +293,39 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
             const gradientStartFraction = (selectedTeam === "home") ? 0 : 1;
             const gradientEndFraction = (selectedTeam === "home") ? 0.8 : 0.2;
 
+            const panelColour = hexToRGB("#4d4b4b", '0.5')
+            const homeTeamGradientColour = hexToRGB(homeTeamInfo.colour, '0.6')
+            const awayTeamGradientColour = hexToRGB(awayTeamInfo.colour, '0.6')
+
             return (
                 <>
                     <View style={[lineupPanelStyles.container, { paddingVertical: 8, justifyContent: 'center', alignItems: 'center' }]}>
                         <TouchableOpacity onPress={() => handlePressLineupTeam('home')}
                             style={[lineupPanelStyles.teamHeader,
                             {
-                                backgroundColor: (selectedTeam === "home") ? (homeTeamBkgRBGA) : ('transparent'),
-                                borderColor: (selectedTeam === "home") ? homeTeamBorderRBGA : '#363434', borderWidth: (selectedTeam === "home") ? 2 : 1, justifyContent: 'center'
+                                backgroundColor: panelColour, justifyContent: 'center'
                             }]}>
-                            <View style={{ padding: 5 }}>
+
+                            <LinearGradient colors={[(selectedTeam === "home") ? homeTeamGradientColour : 'transparent', 'transparent']} start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }} style={{ width: "100%", justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 5 }}>
+
                                 <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo}
                                     style={[lineupPanelStyles.teamLogo, { opacity: (selectedTeam === "home") ? 1 : 0.3 }]} />
-                            </View>
+                            </LinearGradient>
 
                         </TouchableOpacity>
 
 
                         <TouchableOpacity onPress={() => handlePressLineupTeam('away')}
-                            style={[lineupPanelStyles.teamHeader, {
-                                backgroundColor: (selectedTeam === "away") ? (awayTeamBkgRBGA) : ('transparent'),
-                                borderColor: (selectedTeam === "away") ? awayTeamBorderRBGA : '#363434', borderWidth: (selectedTeam === "away") ? 2 : 1, justifyContent: 'center'
+                            style={[lineupPanelStyles.teamHeader,
+                            {
+                                backgroundColor: panelColour, justifyContent: 'center'
                             }]}>
-                            <View style={{ padding: 5 }}>
+
+                            <LinearGradient colors={[(selectedTeam === "away") ? awayTeamGradientColour : 'transparent', 'transparent']} start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }} style={{ width: "100%", justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 5 }}>
+
                                 <Image source={(selectedTeam === "away") ? awayTeamInfo.logo : awayTeamInfo.altLogo}
                                     style={[lineupPanelStyles.teamLogo, { opacity: (selectedTeam === "away") ? 1 : 0.3 }]} />
-                            </View>
+                            </LinearGradient>
 
                         </TouchableOpacity>
                     </View>

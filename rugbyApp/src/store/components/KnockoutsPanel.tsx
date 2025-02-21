@@ -395,6 +395,8 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
 
     var targetStandingsArray = standingsArray;
 
+    if (standingsArray.length == 0) return;
+
     if (leagueName == "championsCup") {
         // turn pooled table into ranked table
         targetStandingsArray = pooledTableIntoRankedChampsCup(standingsArray);

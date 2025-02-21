@@ -1,6 +1,7 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { StyleSheet, Text, View } from "react-native"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
+import { hexToRGB } from "../utils/helpers"
 
 export type StatsInfo = {
     statsAvailable: boolean,
@@ -48,14 +49,14 @@ export type StatsInfo = {
 }
 
 type StatsPanelProps = {
-	matchInfoArray: StatsInfo[] | undefined,
+    matchInfoArray: StatsInfo[] | undefined,
     matchID: string | string[] | undefined,
     leagueName: string | undefined,
 }
 
-export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelProps) => {
+export const StatsPanel = ({ matchInfoArray, matchID, leagueName }: StatsPanelProps) => {
 
-    if(matchInfoArray == undefined) return
+    if (matchInfoArray == undefined) return
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -66,115 +67,113 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
 
     const homeTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].homeTeamTerritory) * 100)).toString() + ' %';
     const awayTerritoryPercent = (Math.round(parseFloat(matchInfoArray[0].awayTeamTerritory) * 100)).toString() + ' %';
-    
+
 
     const statsPanelRender = (statsAvailable: boolean) => {
 
-        if(!statsAvailable)
-        {
+        if (!statsAvailable) {
             return (
                 <View>
-                    <Text style={{color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', marginVertical: 10}}>Stats Not Available</Text>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', marginVertical: 10 }}>Stats Not Available</Text>
                 </View>
             )
         }
-        else
-        {
+        else {
             return (
                 <>
-                <GameStatsTitlePanel 
-                statTitle="Match Events"/>
+                    <GameStatsTitlePanel
+                        statTitle="Match Events" />
 
-                <GamePercentageStatsPanel 
-                homePercent={homePossessionPercent}
-                awayPercent={awayPossessionPercent}
-                statTitle="Possession"
-                homeColour={homeTeamInfo?.colour}
-                awayColour={awayTeamInfo?.colour}/>
-                
-                <GamePercentageStatsPanel 
-                homePercent={homeTerritoryPercent}
-                awayPercent={awayTerritoryPercent}
-                statTitle="Territory"
-                homeColour={homeTeamInfo?.colour}
-                awayColour={awayTeamInfo?.colour}/>
+                    <GamePercentageStatsPanel
+                        homePercent={homePossessionPercent}
+                        awayPercent={awayPossessionPercent}
+                        statTitle="Possession"
+                        homeColour={homeTeamInfo?.colour}
+                        awayColour={awayTeamInfo?.colour} />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTries}
-                awayStat={matchInfoArray[0].awayTeamTries}
-                statTitle="Tries"/>
+                    <GamePercentageStatsPanel
+                        homePercent={homeTerritoryPercent}
+                        awayPercent={awayTerritoryPercent}
+                        statTitle="Territory"
+                        homeColour={homeTeamInfo?.colour}
+                        awayColour={awayTeamInfo?.colour} />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamConversions}
-                awayStat={matchInfoArray[0].awayTeamConversions}
-                statTitle="Conversion Goals"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamTries}
+                        awayStat={matchInfoArray[0].awayTeamTries}
+                        statTitle="Tries" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamPenalties}
-                awayStat={matchInfoArray[0].awayTeamPenalties}
-                statTitle="Penalty Goals"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamConversions}
+                        awayStat={matchInfoArray[0].awayTeamConversions}
+                        statTitle="Conversion Goals" />
 
-                <GameStatsTitlePanel 
-                statTitle="Defence"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamPenalties}
+                        awayStat={matchInfoArray[0].awayTeamPenalties}
+                        statTitle="Penalty Goals" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamTackles}
-                awayStat={matchInfoArray[0].awayTeamTackles}
-                statTitle="Tackles"/>
+                    <GameStatsTitlePanel
+                        statTitle="Defence" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamMissedTackles}
-                awayStat={matchInfoArray[0].awayTeamMissedTackles}
-                statTitle="Missed Tackles"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamTackles}
+                        awayStat={matchInfoArray[0].awayTeamTackles}
+                        statTitle="Tackles" />
 
-                <GameStatsTitlePanel 
-                statTitle="Attack"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamMissedTackles}
+                        awayStat={matchInfoArray[0].awayTeamMissedTackles}
+                        statTitle="Missed Tackles" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamMetres}
-                awayStat={matchInfoArray[0].awayTeamMetres}
-                statTitle="Metres Run"/>
+                    <GameStatsTitlePanel
+                        statTitle="Attack" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamPasses}
-                awayStat={matchInfoArray[0].awayTeamPasses}
-                statTitle="Passes"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamMetres}
+                        awayStat={matchInfoArray[0].awayTeamMetres}
+                        statTitle="Metres Run" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamDefendersBeaten}
-                awayStat={matchInfoArray[0].awayTeamDefendersBeaten}
-                statTitle="Defenders Beaten"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamPasses}
+                        awayStat={matchInfoArray[0].awayTeamPasses}
+                        statTitle="Passes" />
 
-                <GameStatsTitlePanel 
-                statTitle="Set Piece"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamDefendersBeaten}
+                        awayStat={matchInfoArray[0].awayTeamDefendersBeaten}
+                        statTitle="Defenders Beaten" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamScrumsWon + '/' + matchInfoArray[0].homeTeamScrumsTotal}
-                awayStat={matchInfoArray[0].awayTeamScrumsWon + '/' + matchInfoArray[0].awayTeamScrumsTotal}
-                statTitle="Scrums Won"/>
+                    <GameStatsTitlePanel
+                        statTitle="Set Piece" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamLineoutsWon + '/' + matchInfoArray[0].homeTeamLineoutsTotal}
-                awayStat={matchInfoArray[0].awayTeamLineoutsWon + '/' + matchInfoArray[0].awayTeamLineoutsTotal}
-                statTitle="Lineouts Won"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamScrumsWon + '/' + matchInfoArray[0].homeTeamScrumsTotal}
+                        awayStat={matchInfoArray[0].awayTeamScrumsWon + '/' + matchInfoArray[0].awayTeamScrumsTotal}
+                        statTitle="Scrums Won" />
 
-                <GameStatsTitlePanel 
-                statTitle="Discipline"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamLineoutsWon + '/' + matchInfoArray[0].homeTeamLineoutsTotal}
+                        awayStat={matchInfoArray[0].awayTeamLineoutsWon + '/' + matchInfoArray[0].awayTeamLineoutsTotal}
+                        statTitle="Lineouts Won" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamPensConceded}
-                awayStat={matchInfoArray[0].awayTeamPensConceded}
-                statTitle="Pen's Conceded"/>
+                    <GameStatsTitlePanel
+                        statTitle="Discipline" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamYellowCards}
-                awayStat={matchInfoArray[0].awayTeamYellowCards}
-                statTitle="Yellow Cards"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamPensConceded}
+                        awayStat={matchInfoArray[0].awayTeamPensConceded}
+                        statTitle="Pen's Conceded" />
 
-                <GameStatsPanel 
-                homeStat={matchInfoArray[0].homeTeamRedCards}
-                awayStat={matchInfoArray[0].awayTeamRedCards}
-                statTitle="Red Cards"/>
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamYellowCards}
+                        awayStat={matchInfoArray[0].awayTeamYellowCards}
+                        statTitle="Yellow Cards" />
+
+                    <GameStatsPanel
+                        homeStat={matchInfoArray[0].homeTeamRedCards}
+                        awayStat={matchInfoArray[0].awayTeamRedCards}
+                        statTitle="Red Cards" />
                 </>
             )
         }
@@ -186,61 +185,61 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName}: StatsPanelPro
     var homeFontSize = 18;
     var awayFontSize = 18;
 
-    if(matchInfoArray[0].homeTeamName.includes("U20"))
-    {
+    if (matchInfoArray[0].homeTeamName.includes("U20")) {
         homeAbbreviation += " U20"
         homeFontSize = 15;
     }
-    if(matchInfoArray[0].awayTeamName.includes("U20"))
-    {
+    if (matchInfoArray[0].awayTeamName.includes("U20")) {
         awayAbbreviation += " U20"
         awayFontSize = 15;
     }
 
-    return (
-        <View style={[statsPanelStyles.container, {marginBottom: 130}]}>
+    const panelColour = hexToRGB("#4d4b4b", '0.5')
 
-            <View style={{backgroundColor: 'transparent', padding: 10, borderRadius: 5, width: "95%"}}>
+    return (
+        <View style={[statsPanelStyles.container, { marginBottom: 130 }]}>
+
+            <View style={{ backgroundColor: panelColour, padding: 10, borderRadius: 8, width: "95%" }}>
 
                 {statsPanelRender(matchInfoArray[0].statsAvailable)}
 
             </View>
-            
+
         </View>
     )
 }
 
 type GameStatsPanelProps = {
-	homeStat: string,
+    homeStat: string,
     statTitle: string,
     awayStat: string,
 }
 
-export const GameStatsPanel = ({homeStat, statTitle, awayStat}: GameStatsPanelProps ) => {
+export const GameStatsPanel = ({ homeStat, statTitle, awayStat }: GameStatsPanelProps) => {
 
     const homeStatFontFamily = (Number(homeStat) > Number(awayStat)) ? fontFamilies.bold : fontFamilies.light;
     const awayStatFontFamily = (Number(awayStat) > Number(homeStat)) ? fontFamilies.bold : fontFamilies.light;
 
     return (
-        <View style={{alignItems: 'center'}}>
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%", fontFamily: homeStatFontFamily}]}>{homeStat}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow, {width: "50%"}]}>{statTitle}</Text>
-                <Text style={[statsPanelStyles.statsPanelRow,  {width: "20%", fontFamily: awayStatFontFamily}]}>{awayStat}</Text>
+        <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: homeStatFontFamily }]}>{homeStat}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "50%" }]}>{statTitle}</Text>
+                <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: awayStatFontFamily }]}>{awayStat}</Text>
             </View>
         </View>
     )
 }
 
 type GamePercentageStatsPanelProps = {
-	homePercent: string,
+    homePercent: string,
     statTitle: string,
     awayPercent: string,
     homeColour: string | undefined,
     awayColour: string | undefined,
 }
 
-export const GamePercentageStatsPanel = ({homePercent, statTitle, awayPercent, homeColour, awayColour}: GamePercentageStatsPanelProps ) => {
+export const GamePercentageStatsPanel = ({ homePercent, statTitle, awayPercent, homeColour, awayColour }: GamePercentageStatsPanelProps) => {
 
     const homePercentNum = Number(homePercent.replace("%", ""));
     const awayPercentNum = Number(awayPercent.replace("%", ""));
@@ -259,7 +258,7 @@ export const GamePercentageStatsPanel = ({homePercent, statTitle, awayPercent, h
                 <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 1, borderRightColor: 'lightgrey' }}>
                     <Text></Text>
                 </View>
-                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 1, borderLeftColor: 'lightgrey'}}>
+                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 1, borderLeftColor: 'lightgrey' }}>
                     <Text></Text>
                 </View>
             </View>
@@ -272,12 +271,12 @@ type GameStatsTitleProps = {
     statTitle: string,
 }
 
-export const GameStatsTitlePanel = ({statTitle}: GameStatsTitleProps ) => {
+export const GameStatsTitlePanel = ({ statTitle }: GameStatsTitleProps) => {
 
     return (
-        <View style={{alignItems: 'center'}}>
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <Text style={[statsPanelStyles.statsTitle]}>{statTitle.toUpperCase()}</Text>
+        <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                <Text style={[statsPanelStyles.statsTitle]}>{statTitle}</Text>
             </View>
         </View>
     )
@@ -285,17 +284,17 @@ export const GameStatsTitlePanel = ({statTitle}: GameStatsTitleProps ) => {
 
 export const statsPanelStyles = StyleSheet.create({
     container: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginVertical: 10
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
     },
     teamLogo: {
-      resizeMode: 'contain',
-      width: 30,
-      height: 30,
-      minHeight: 30,
-      minWidth: 30,
+        resizeMode: 'contain',
+        width: 30,
+        height: 30,
+        minHeight: 30,
+        minWidth: 30,
     },
     statsPanelRow: {
         paddingHorizontal: 10,
@@ -306,14 +305,14 @@ export const statsPanelStyles = StyleSheet.create({
     },
     statsTitle: {
         paddingHorizontal: 10,
-        paddingVertical: 7,
+        paddingVertical: 2,
         marginTop: 2,
         textAlign: 'center',
-        fontWeight: 500, 
-        borderBottomColor: 'lightgrey',
-        borderBottomWidth: 2,
-        width : "90%",
-        color: colors.text,
+        fontWeight: 500,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1,
+        width: "90%",
+        color: 'grey',
         fontFamily: fontFamilies.bold,
         fontSize: 14
     },
@@ -326,14 +325,14 @@ export const statsPanelStyles = StyleSheet.create({
         color: colors.text,
         fontFamily: fontFamilies.bold
     },
-    teamInfoContainer:{
+    teamInfoContainer: {
         width: "30%",
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
     statsLink: {
-      fontWeight: 600,
-      color: 'blue'
+        fontWeight: 600,
+        color: 'blue'
     }
-  })
+})

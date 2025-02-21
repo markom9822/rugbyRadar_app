@@ -103,15 +103,17 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
     const teamBackgroundColour = hexToRGB(teamInfo.teamInfo.colour, "0.5")
 
+    const panelColour = hexToRGB("#4d4b4b", '0.5')
+
     return (
         <View style={[teamEventsPanelStyles.container, { marginBottom: isLastItem ? 130 : 0 }]}>
 
-            <View style={{ backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey', width: "95%" }}>
+            <View style={{ backgroundColor: panelColour, margin: 4, borderRadius: 5, width: "95%" }}>
 
                 <TouchableOpacity onPress={toggleFormTab} activeOpacity={0.8}>
                     <View style={{
-                        flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: teamBackgroundColour,
-                        borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5
+                        flexDirection: 'row', backgroundColor: teamBackgroundColour,
+                        alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5
                     }}>
                         <View style={{ margin: 4, padding: 4, justifyContent: 'center', alignItems: 'center', width: "10%" }}>
                             <Image
@@ -197,15 +199,17 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
     const teamBackgroundColour1 = hexToRGB(homeTeamInfo.colour, "0.5")
     const teamBackgroundColour2 = hexToRGB(awayTeamInfo.colour, "0.5")
 
+    const panelColour = hexToRGB("#4d4b4b", '0.5')
+
     return (
         <View style={[teamEventsPanelStyles.container, { marginBottom: isLastItem ? 55 : 0 }]}>
 
-            <View style={{ backgroundColor: colors.background, margin: 4, borderRadius: 5, borderWidth: 1, borderColor: 'lightgrey' }}>
+            <View style={{ backgroundColor: panelColour, margin: 4, borderRadius: 5 }}>
 
                 <LinearGradient colors={[teamBackgroundColour1, teamBackgroundColour2]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} locations={[0.4, 0.6]}
                     style={{
-                        flexDirection: 'row', borderBottomColor: 'lightgrey', backgroundColor: 'transparent',
-                        borderBottomWidth: 1, alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignContent: 'center'
+                        flexDirection: 'row', backgroundColor: 'transparent',
+                        alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignContent: 'center'
                     }}>
 
                     <View style={{ margin: 4, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
