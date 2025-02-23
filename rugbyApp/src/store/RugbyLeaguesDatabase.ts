@@ -1,5 +1,5 @@
 import { BALionsAltLogo, BALionsLogo } from "./InternationalTeamLogos/InternationalTeams";
-import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "./LeagueLogos/LeagueLogos";
+import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PacificNationsCupLogo, PremiershipAltLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "./LeagueLogos/LeagueLogos";
 
 export const getRugbyLeagueTeamInfoFromValue = (name: string) => {
 
@@ -136,6 +136,17 @@ export const RugbyLeagues = [
     id: '560edcbf-fd99-4a11-b7b5-0a5e017d61f2',
     foundedYear: '-',
     seasonType: 'north',
+  },
+  {
+    value: 'pacificNationsCup',
+    displayName: 'Pacific Nations Cup',
+    abbreviation: 'Pacific Nations Cup',
+    logo: PacificNationsCupLogo,
+    altLogo: PacificNationsCupAltLogo,
+    colour: '#00b5ee',
+    id: '735a21a5-9069-4fad-810e-81806f9c47a4',
+    foundedYear: '-',
+    seasonType: 'south',
   }
 ];
 

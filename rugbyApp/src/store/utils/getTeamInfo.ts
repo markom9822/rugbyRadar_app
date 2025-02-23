@@ -1,10 +1,9 @@
-import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
-import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
-import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
-import { getWorldFlagTeamInfoFromName } from "../WorldFlagsRugbyTeamsDatabase";
-import { getInternationalTeamInfoFromName, getLionsTourTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase"
+import { getInternationalTeamInfoFromName, getLionsTourTeamInfoFromName } from "@/store/InternationalRugbyTeamsDatabase";
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase";
+import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase";
 import { getSuperRugbyTeamInfoFromName } from "../SuperRugbyPacificRugbyTeamsDatabase";
+import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
+import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
 import { getAnyTeamInfoFromName } from "./helpers";
 
 
@@ -18,7 +17,7 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
         homeInfo = getURCTeamInfoFromName(homeTeam)
         awayInfo = getURCTeamInfoFromName(awayTeam)
     }
-    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup")
+    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup" || league === "pacificNationsCup")
     {
         homeInfo = getInternationalTeamInfoFromName(homeTeam)
         awayInfo = getInternationalTeamInfoFromName(awayTeam)

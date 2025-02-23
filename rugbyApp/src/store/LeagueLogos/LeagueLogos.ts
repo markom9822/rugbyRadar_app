@@ -36,3 +36,6 @@ export const U20SixNationsAltLogo = require('@/store/LeagueLogos/u20_SixNations_
 
 export const U20WorldChampsLogo = require('@/store/LeagueLogos/u20_world_champs_logo.png')
 export const U20WorldChampsAltLogo = require('@/store/LeagueLogos/u20_world_champs_logo_white.png')
+
+export const PacificNationsCupLogo = require('@/store/LeagueLogos/pacific_nations_logo.png')
+export const PacificNationsCupAltLogo = require('@/store/LeagueLogos/pacific_nations_logo_white.png')

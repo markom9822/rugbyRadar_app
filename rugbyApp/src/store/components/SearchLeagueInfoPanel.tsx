@@ -5,7 +5,7 @@ import { BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { LinearGradient } from "expo-linear-gradient"
 import { useState } from "react"
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, U20WorldChampsAltLogo, URCAltLogo, WorldCupAltLogo } from "../LeagueLogos/LeagueLogos"
+import { ChallengeCupAltLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PremiershipAltLogo, RankingsLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, U20WorldChampsAltLogo, URCAltLogo, WorldCupAltLogo } from "../LeagueLogos/LeagueLogos"
 import { hexToRGB } from "../utils/helpers"
 import { LeagueStandingsPanel } from "./LeagueStandingsPanel"
 import { LeagueUpcomingFixturesPanel } from "./LeagueUpcomingFixturesPanel"
@@ -33,8 +33,10 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, seasonData: seasonSingleWorldCupData, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
-        { label: 'U20 Championship', value: 'u20Championship', logo: U20WorldChampsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
+        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo, seasonData: seasonSingleWorldCupData, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'U20 Championship', value: 'u20Championship', logo: U20WorldChampsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'Pacific Nations Cup', value: 'pacificNationsCup', logo: PacificNationsCupAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
+
         { label: 'World Rankings', value: 'worldRankings', logo: RankingsLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] }
     ];
 

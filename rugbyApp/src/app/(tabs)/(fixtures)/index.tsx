@@ -3,7 +3,7 @@ import { FixturesPanel } from "@/store/components/FixturesPanel"
 import { ScorePanel } from "@/store/components/ScorePanel"
 import { DropdownData, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { BALionsAltLogo } from "@/store/InternationalTeamLogos/InternationalTeams"
-import { AutumnNationsLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
+import { AutumnNationsAltLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "@/store/utils/fixturesGetter"
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles"
@@ -59,6 +59,8 @@ const FixturesScreen = () => {
         { name: 'rugbyChamp', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
         { name: 'rugbyWorldCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 11, 12] },
         { name: 'u20Championship', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12] },
+        { name: 'pacificNationsCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
+
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
     ];
 
@@ -72,7 +74,7 @@ const FixturesScreen = () => {
 
         const leagueNameArray = leagueName == "all" ?
             ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby',
-                'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'BILTour'] : [leagueName]
+                'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'pacificNationsCup', 'BILTour'] : [leagueName]
 
         console.info(leagueNameArray)
 
@@ -97,6 +99,8 @@ const FixturesScreen = () => {
         }
 
         const handleGetWorldRugbyFixtures = async (thisLeagueName: string) => {
+
+            console.info(thisLeagueName)
 
             const worldRugbyFixtures: MatchInfo[] = await fetchWorldRugbyAPIData(thisLeagueName, selectedDate);
 
@@ -134,6 +138,7 @@ const FixturesScreen = () => {
                 case "u20SixNations":
                 case "rugbyWorldCup":
                 case "u20Championship":
+                case "pacificNationsCup":
                 case "BILTour":
                     await handleGetWorldRugbyFixtures(thisLeagueName)
                     break;
@@ -170,11 +175,13 @@ const FixturesScreen = () => {
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-        { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsLogo },
-        { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsLogo },
+        { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo },
+        { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsAltLogo },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
         { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
         { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
+        { label: 'Pacific Nations Cup', value: 'pacificNationsCup', logo: PacificNationsCupAltLogo },
+
         { label: 'Lions Tour', value: 'BILTour', logo: BALionsAltLogo },
     ];
 

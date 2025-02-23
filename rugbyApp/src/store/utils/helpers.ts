@@ -2,7 +2,7 @@ import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, SkySportsLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { BALionsAltLogo, DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
-import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
+import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, ChampionsCupLogo, PacificNationsCupAltLogo, PacificNationsCupLogo, PremiershipAltLogo, PremiershipLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { MiscRugbyTeams } from "../MiscRugbyTeamsDatabase";
 import { PremRugbyTeams } from "../PremiershipRubyTeamsDatabase";
 import { SuperRugbyTeams } from "../SuperRugbyPacificRugbyTeamsDatabase";
@@ -39,6 +39,10 @@ export const leagueCodes = [
         displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsAltLogo, trophyIcon: null},
     { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
         displayName: 'World Rugby U20 Championship', leagueLogo: U20WorldChampsLogo, leagueAltLogo: U20WorldChampsAltLogo, trophyIcon: null},
+
+    { value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
+        displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo, trophyIcon: null},
+
     { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
         displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo, trophyIcon: null},
 ];
@@ -115,6 +119,10 @@ export const worldRugbyAPILeagueCodes = [
         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
     { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
         displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+
+    { value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
+        displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo},
+
     { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
         displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo},
     
