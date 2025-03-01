@@ -15,11 +15,6 @@ const TabsNavigation = () => {
             <Tabs.Screen name="search"
                 options={{
                     title: "Search",
-                }}
-            />
-            <Tabs.Screen name="standings"
-                options={{
-                    title: "Standings",
                 }} />
         </Tabs>
     )

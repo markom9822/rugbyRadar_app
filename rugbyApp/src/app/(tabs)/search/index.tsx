@@ -2,6 +2,7 @@ import { colors, fontFamilies } from "@/constants/tokens"
 import { GridView } from "@/store/components/GridView"
 import { SearchLeagueInfoPanel } from "@/store/components/SearchLeagueInfoPanel"
 import { SearchTeamInfoPanel } from "@/store/components/SearchTeamInfoPanel"
+import { StandingsHeaderBanner } from "@/store/components/StandingsHeaderBanner"
 import { InternationalRugbyTeams } from "@/store/InternationalRugbyTeamsDatabase"
 import { InternationalLogo, PremiershipAltLogo, SuperRugbyAltLogo, Top14AltLogo, URCAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { PremRugbyTeams } from "@/store/PremiershipRubyTeamsDatabase"
@@ -211,6 +212,8 @@ const TeamsScreen = () => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={{ flex: 1, backgroundColor: colors.background }}>
+
+                <StandingsHeaderBanner />
 
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

@@ -1,4 +1,3 @@
-import { SeasonDateInfo } from "@/app/(tabs)/standings";
 import { BBCIPlayerLogo, BBCNILogo, BBCOneLogo, BBCWalesLogo, BEINSportsLogo, DiscoveryPlusLogo, EPCRTVLogo, FloRugbyLogo, ITVLogo, ITVXLogo, PremierSportsLogo, RTELogo, RugbyTVLogo, S4CLogo, SkySportsLogo, STVHDLogo, STVPlayerLogo, SuperSportLogo, TG4Logo, TNTSportsLogo } from "../BroadcasterLogos/BroadcasterLogos";
 import { InternationalRugbyTeams } from "../InternationalRugbyTeamsDatabase";
 import { BALionsAltLogo, DefaultLogo } from "../InternationalTeamLogos/InternationalTeams";
@@ -440,6 +439,7 @@ export const broadcasters = [
 
     { name: 'Sky Sport Plus', logo: SkySportsLogo},
     { name: 'Sky Sport MIX HD', logo: SkySportsLogo},
+    { name: 'Sky Sports Action / HD', logo: SkySportsLogo},
 
 
 ];
@@ -462,6 +462,27 @@ export const getClosestWorldCupYear = (year: number) => {
     }
 
     return year - remainder;
+}
+
+export type SeasonDateInfo = {
+    label: string,
+    value: string
+}
+
+export type StandingInfo = {
+    isHeader: boolean
+    teamPool: string
+    teamName: string
+    teamGP: string
+    teamWins: string
+    teamDraws: string
+    teamLosses: string
+    teamPD: string
+    teamPoints: string
+    ranking: number
+    isLastItem: boolean
+    isEndOfList: boolean
+    isPlayoffCutoff: boolean,
 }
 
 export const generateSeasonList = () =>{

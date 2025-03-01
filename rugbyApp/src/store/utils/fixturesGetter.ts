@@ -42,6 +42,7 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
             eventState: eventState,
             stateDetail: stateDetail,
             eventTime: eventTime,
+            isDateHeader: false,
         };
 
         newArray.push(newMatchInfo)
@@ -123,6 +124,7 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
                 eventState: eventState,
                 stateDetail: 'FT',
                 eventTime: eventTime,
+                isDateHeader: false,
             };
 
             leagueArray.push(newMatchInfo)
@@ -278,6 +280,7 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
                 eventState: eventState,
                 stateDetail: 'FT',
                 eventTime: eventTime.toString(),
+                isDateHeader: false,
             };
 
             leagueArray.push(newMatchInfo)
@@ -421,6 +424,7 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
                 eventState: eventState,
                 stateDetail: 'FT',
                 eventTime: eventTime.toString(),
+                isDateHeader: false,
             };
 
             leagueArray.push(newMatchInfo)

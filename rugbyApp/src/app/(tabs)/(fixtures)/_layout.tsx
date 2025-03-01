@@ -10,27 +10,27 @@ const FavouritesScreenLayout = () => {
 
     return <GestureHandlerRootView>
 
-    <BottomSheetModalProvider>
-    
-    <View style={defaultStyles.container}>
-        <Stack screenOptions={{
-            headerShown: false,
-            headerStyle: {
-            backgroundColor: colors.background
-            },
-            headerTitleStyle: {
-                color: colors.text,
-                fontFamily: fontFamilies.bold
-            },
-            headerTintColor: colors.text
-        }}>
-            <Stack.Screen name="index" options={{
-                headerTitle: 'Fixtures'
-                }} />
-        </Stack>		
-    </View>
+        <BottomSheetModalProvider>
 
-    </BottomSheetModalProvider>
+            <View style={defaultStyles.container}>
+                <Stack screenOptions={{
+                    headerShown: false,
+                    headerStyle: {
+                        backgroundColor: colors.background,
+                    },
+                    headerTitleStyle: {
+                        color: colors.text,
+                        fontFamily: fontFamilies.bold,
+                    },
+                    headerTintColor: colors.text
+                }}>
+                    <Stack.Screen name="index" options={{
+                        headerTitle: 'Rugby Radar'
+                    }} />
+                </Stack>
+            </View>
+
+        </BottomSheetModalProvider>
 
     </GestureHandlerRootView>
 }

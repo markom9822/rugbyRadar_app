@@ -1,17 +1,17 @@
-import { colors, fontFamilies, fontSize } from "@/constants/tokens"
+import { fontFamilies, fontSize } from "@/constants/tokens"
+import { FixturesHeaderBanner } from "@/store/components/FixturesHeaderBanner"
 import { FixturesPanel } from "@/store/components/FixturesPanel"
+import { MultiTabBar } from "@/store/components/MultiTabBar"
 import { ScorePanel } from "@/store/components/ScorePanel"
-import { DropdownData, TestLeagueSelectDropdown } from "@/store/components/SelectDropdown"
 import { BALionsAltLogo } from "@/store/InternationalTeamLogos/InternationalTeams"
 import { AutumnNationsAltLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "@/store/utils/fixturesGetter"
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles"
-import { AntDesign, FontAwesome6, MaterialIcons } from '@expo/vector-icons'
+import { FontAwesome6 } from '@expo/vector-icons'
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet"
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { useCallback, useRef, useState } from "react"
-import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -26,6 +26,7 @@ export type MatchInfo = {
     eventState: string,
     stateDetail: string,
     eventTime: string,
+    isDateHeader: boolean,
 }
 
 const FixturesScreen = () => {
@@ -42,6 +43,8 @@ const FixturesScreen = () => {
     const [selectedDate, setDate] = useState(new Date())
 
     const [leagueName, setLeagueName] = useState<string>('all');
+    const [currentTab, setCurrentTab] = useState<string>('Today');
+    const [currentDateArray, setCurrentDateArray] = useState<Date[]>([new Date()]);
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
@@ -64,91 +67,136 @@ const FixturesScreen = () => {
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
     ];
 
-    const handlePressFetchData = async () => {
+    const handlePressFetchData = async (datesArray: Date[], targetLeagueName: string) => {
         console.info("Pressed Fetch Data")
         setMatchesArray([])
         setIsLoading(true)
 
         const formattedDate = dateCustomFormatting(selectedDate)
-        const currentLeagueCode = getLeagueCode(leagueName)
+        const currentLeagueCode = getLeagueCode(targetLeagueName)
 
-        const leagueNameArray = leagueName == "all" ?
+        const leagueNameArray = targetLeagueName == "all" ?
             ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby',
-                'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'pacificNationsCup', 'BILTour'] : [leagueName]
+                'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'pacificNationsCup', 'BILTour'] : [targetLeagueName]
 
         console.info(leagueNameArray)
 
         const allFixturesArray: MatchInfo[] = [];
 
-        const handleGetRugbyVizFixtures = async (thisLeagueName: string) => {
+        const handleGetRugbyVizFixtures = async (thisLeagueName: string, thisDate: Date, tempArray: MatchInfo[]) => {
 
-            const rugbyVizFixtures: MatchInfo[] = await fetchRugbyVizData(thisLeagueName, selectedDate);
+            const rugbyVizFixtures: MatchInfo[] = await fetchRugbyVizData(thisLeagueName, thisDate);
 
             if (rugbyVizFixtures !== undefined && rugbyVizFixtures.length > 0) {
-                allFixturesArray.push(...rugbyVizFixtures)
+                tempArray.push(...rugbyVizFixtures)
+                //return (rugbyVizFixtures)
             }
         }
 
-        const handleGetPlanetRugbyFixtures = async (thisLeagueName: string) => {
+        const handleGetPlanetRugbyFixtures = async (thisLeagueName: string, thisDate: Date, tempArray: MatchInfo[]) => {
 
-            const planetRugbyFixtures: MatchInfo[] = await fetchPlanetRugbyAPIData(thisLeagueName, selectedDate);
+            const planetRugbyFixtures: MatchInfo[] = await fetchPlanetRugbyAPIData(thisLeagueName, thisDate);
 
             if (planetRugbyFixtures !== undefined && planetRugbyFixtures.length > 0) {
-                allFixturesArray.push(...planetRugbyFixtures)
+                tempArray.push(...planetRugbyFixtures)
+                //return (planetRugbyFixtures)
             }
         }
 
-        const handleGetWorldRugbyFixtures = async (thisLeagueName: string) => {
+        const handleGetWorldRugbyFixtures = async (thisLeagueName: string, thisDate: Date, tempArray: MatchInfo[]) => {
 
             console.info(thisLeagueName)
 
-            const worldRugbyFixtures: MatchInfo[] = await fetchWorldRugbyAPIData(thisLeagueName, selectedDate);
+            const worldRugbyFixtures: MatchInfo[] = await fetchWorldRugbyAPIData(thisLeagueName, thisDate);
 
             if (worldRugbyFixtures !== undefined && worldRugbyFixtures.length > 0) {
-                allFixturesArray.push(...worldRugbyFixtures)
+                tempArray.push(...worldRugbyFixtures)
+                //return (worldRugbyFixtures)
             }
         }
 
-        for (let index = 0; index < leagueNameArray.length; index++) {
+        for (let i = 0; i < datesArray.length; i++) {
 
-            const thisLeagueName = leagueNameArray[index];
-            const thisFixtureMonth = selectedDate.getMonth() + 1
+            let dateHeaderMatchInfo = {
+                homeTeam: '',
+                awayTeam: '',
+                homeScore: '',
+                awayScore: '',
+                matchDate: datesArray[i],
+                matchTitle: '',
+                matchVenue: '',
+                matchLeague: '',
+                matchID: '',
+                eventState: '',
+                stateDetail: '',
+                eventTime: '',
+                isDateHeader: true,
+            };
 
-            const offSeasonMonths = leagueSearchData.find(league => league.name === thisLeagueName)?.offSeasonMonths;
+            var tempArray: MatchInfo[] = []
 
-            // check if in offseason for league
-            if (offSeasonMonths?.includes(thisFixtureMonth)) {
-                continue;
+            allFixturesArray.push(dateHeaderMatchInfo)
+
+            for (let index = 0; index < leagueNameArray.length; index++) {
+
+                const thisLeagueName = leagueNameArray[index];
+                const thisFixtureMonth = datesArray[i].getMonth() + 1
+
+                const offSeasonMonths = leagueSearchData.find(league => league.name === thisLeagueName)?.offSeasonMonths;
+
+                // check if in offseason for league
+                if (offSeasonMonths?.includes(thisFixtureMonth)) {
+                    continue;
+                }
+
+                switch (thisLeagueName) {
+                    case "urc":
+                    case "prem":
+                    case "championsCup":
+                    case "challengeCup":
+                        await handleGetRugbyVizFixtures(thisLeagueName, datesArray[i], tempArray)
+                        break;
+                    case "top14":
+                    case "superRugby":
+                        await handleGetPlanetRugbyFixtures(thisLeagueName, datesArray[i], tempArray)
+                        break;
+                    case "autumnNations":
+                    case "sixNations":
+                    case "rugbyChamp":
+                    case "u20SixNations":
+                    case "rugbyWorldCup":
+                    case "u20Championship":
+                    case "pacificNationsCup":
+                    case "BILTour":
+                        await handleGetWorldRugbyFixtures(thisLeagueName, datesArray[i], tempArray)
+                        break;
+                }
             }
 
-            switch (thisLeagueName) {
-                case "urc":
-                case "prem":
-                case "championsCup":
-                case "challengeCup":
-                    await handleGetRugbyVizFixtures(thisLeagueName)
-                    break;
-                case "top14":
-                case "superRugby":
-                    await handleGetPlanetRugbyFixtures(thisLeagueName)
-                    break;
-                case "autumnNations":
-                case "sixNations":
-                case "rugbyChamp":
-                case "u20SixNations":
-                case "rugbyWorldCup":
-                case "u20Championship":
-                case "pacificNationsCup":
-                case "BILTour":
-                    await handleGetWorldRugbyFixtures(thisLeagueName)
-                    break;
-            }
+            tempArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
+            allFixturesArray.push(...tempArray)
         }
+
 
         console.info(allFixturesArray)
 
-        const sortedAllFixturesArray = allFixturesArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
-        setMatchesArray(sortedAllFixturesArray)
+        const filteredArray = allFixturesArray.filter((item, index, array) => {
+
+            if (index == allFixturesArray.length - 1 && item.isDateHeader) {
+                return null
+            }
+
+            if (item.isDateHeader && array[index + 1]?.isDateHeader) {
+                return null
+            }
+            else {
+                return item
+            }
+        });
+
+        console.info(filteredArray)
+
+        setMatchesArray(filteredArray)
 
         setLastRefresh(new Date().toLocaleTimeString('en-GB', { hour: 'numeric', minute: 'numeric', second: 'numeric' }))
         setIsLoading(false)
@@ -163,8 +211,9 @@ const FixturesScreen = () => {
         setDatePickerOpen(!datePickerOpen)
     }
 
-    const handleOnChangeLeague = (item: DropdownData) => {
-        setLeagueName(item.value)
+    const handleOnChangeLeague = (leagueValue: string) => {
+        setLeagueName(leagueValue)
+        handlePressFetchData(currentDateArray, leagueValue)
     }
 
     const leagueData = [
@@ -202,6 +251,13 @@ const FixturesScreen = () => {
         return null
     }
 
+    useEffect(() => {
+        async function fetchMyAPI() {
+            await handlePressFetchData(currentDateArray, leagueName)
+        }
+        fetchMyAPI()
+    }, [])
+
     const activityIndicatorHeader = () => {
 
         if (isLoading) {
@@ -215,20 +271,55 @@ const FixturesScreen = () => {
         return null
     }
 
-    const dateHeader = () => {
+    const dateHeader = (matchDate: Date) => {
 
-        const dateString = new Date(selectedDate).toLocaleDateString('en-GB', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })
+        const dateString = matchDate.toLocaleDateString('en-GB', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })
 
         return (
-            <View style={{ marginBottom: 2, paddingBottom: 4, marginHorizontal: 5, justifyContent: 'center', alignContent: 'center', borderBottomColor: '#363434', borderBottomWidth: 1 }}>
-                <Text style={{ fontSize: fontSize.sm, color: 'lightgrey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.bold }}>{dateString}</Text>
+            <View style={{ marginHorizontal: 5, marginTop: 10 }}>
+                <Text style={{ color: 'grey', fontFamily: fontFamilies.bold, fontSize: 13 }}>{dateString.toUpperCase()}</Text>
             </View>
         )
+    }
 
+    function get7Days(previous: boolean): Date[] {
+        const dates: Date[] = [];
+        const today = new Date();
+
+        for (let i = 1; i < 8; i++) {
+            const date = new Date();
+            date.setDate(today.getDate() + i * (previous ? -1 : 1)); // Subtract days from today
+            dates.push(date);
+        }
+
+        return dates;
+    }
+
+    const handlePressedDateTab = (key: string) => {
+
+        setCurrentTab(key)
+
+        if (key == "Today" && currentTab != "Today") {
+            console.info("Selected Today")
+            setCurrentDateArray([new Date()])
+            handlePressFetchData([new Date()], leagueName)
+
+        }
+        else if (key == "Previous" && currentTab != "Previous") {
+            console.info("Selected Previous")
+            setCurrentDateArray(get7Days(true))
+
+            handlePressFetchData(get7Days(true), leagueName)
+        }
+        else if (key == "Upcoming" && currentTab != "Upcoming") {
+            console.info("Selected Upcoming")
+            setCurrentDateArray(get7Days(false))
+
+            handlePressFetchData(get7Days(false), leagueName)
+        }
     }
 
     // bottom sheet
-
     const handlePresentModalPress = (index: number, linkID: string) => {
 
         setCurrentID(linkID)
@@ -252,78 +343,50 @@ const FixturesScreen = () => {
 
     return <View style={defaultStyles.container}>
 
-        <View style={{ flexDirection: 'row' }}>
-            <TestLeagueSelectDropdown
-                placeholder="Select League"
-                data={leagueData}
-                onChangeSelection={handleOnChangeLeague}
-                value={leagueName}
-                isDisabled={false}
-                iconName="trophy-outline" />
+        <FixturesHeaderBanner currentLeague={leagueName} OnPressLeague={handleOnChangeLeague} />
 
-            <View style={{ justifyContent: 'center', alignContent: 'center', width: "45%" }}>
-                <TouchableOpacity onPress={handlePressDatePicker}
-                    style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', borderColor: 'grey', padding: 4, borderWidth: 1, borderRadius: 4, marginHorizontal: 6 }}>
-                    <View style={{ paddingHorizontal: 5, justifyContent: 'center' }}>
-                        <MaterialIcons name="date-range" size={20} color={colors.icon} />
-                    </View>
-                    <Text style={{ fontSize: 15, color: colors.text, fontFamily: fontFamilies.regular }}>{selectedDate.toLocaleDateString()}</Text>
-                </TouchableOpacity>
-                {
-                    datePickerOpen && (
-                        <DateTimePicker
-                            value={selectedDate}
-                            mode="date"
-                            onChange={handleSelectedDate}
-
-                        />
-                    )
-                }
-            </View>
-
+        <View style={{ marginVertical: 7 }}>
+            <MultiTabBar tabsArray={["Previous", "Today", "Upcoming"]} OnTabButtonPressed={handlePressedDateTab} currentTabKey={currentTab} />
         </View>
-
-        <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1, paddingBottom: 10, marginBottom: 20 }}>
-            <TouchableOpacity onPress={handlePressFetchData} style={{
-                backgroundColor: '#3d3d3d', justifyContent: 'center', alignItems: 'center',
-                paddingVertical: 10, margin: 4, borderRadius: 5
-            }}>
-                <AntDesign name="search1" size={24} color="lightgrey" />
-            </TouchableOpacity>
-        </View>
-
-
-        {dateHeader()}
 
         {activityIndicatorHeader()}
         {notFoundHeader(matchesArray)}
 
         <FlatList
             data={matchesArray}
-            renderItem={({ item, index }) =>
-                <ScorePanel
-                    leagueDisplayName={item.matchLeague}
-                    homeTeam={item.homeTeam}
-                    homeScore={item.homeScore}
-                    awayTeam={item.awayTeam}
-                    awayScore={item.awayScore}
-                    matchDate={item.matchDate}
-                    matchTitle={item.matchTitle}
-                    matchLeague={item.matchLeague}
-                    matchVenue={item.matchVenue}
-                    matchID={item.matchID}
-                    index={index}
-                    eventState={item.eventState}
-                    stateDetail={item.stateDetail}
-                    eventTime={item.eventTime}
-                    isLastItem={index == matchesArray.length - 1}
-                    lastRefreshTime={lastRefresh}
-                    OnPress={handlePresentModalPress}
-                />}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={handlePressFetchData} />
+            renderItem={({ item, index }) => {
+
+                if (item.isDateHeader !== undefined && item.isDateHeader && currentTab !== "Today") {
+                    return (
+                        dateHeader(item.matchDate)
+                    )
+                }
+                else {
+                    return (
+                        <ScorePanel
+                            leagueDisplayName={item.matchLeague}
+                            homeTeam={item.homeTeam}
+                            homeScore={item.homeScore}
+                            awayTeam={item.awayTeam}
+                            awayScore={item.awayScore}
+                            matchDate={item.matchDate}
+                            matchTitle={item.matchTitle}
+                            matchLeague={item.matchLeague}
+                            matchVenue={item.matchVenue}
+                            matchID={item.matchID}
+                            index={index}
+                            eventState={item.eventState}
+                            stateDetail={item.stateDetail}
+                            eventTime={item.eventTime}
+                            isLastItem={index == matchesArray.length - 1}
+                            lastRefreshTime={lastRefresh}
+                            OnPress={handlePresentModalPress}
+                        />
+                    )
+                }
             }
-        />
+            }
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => handlePressFetchData(currentDateArray, leagueName)} />} />
 
         <BottomSheetModal
             ref={bottomSheetModalRef}

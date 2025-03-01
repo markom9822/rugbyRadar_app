@@ -23,7 +23,7 @@ const TeamsSearchLayout = () => {
                     headerTintColor: colors.text,
                 }}>
                     <Stack.Screen name="index" options={{
-                        headerTitle: 'Search'
+                        headerTitle: 'Rugby Radar'
                     }} />
                 </Stack>
             </View>
