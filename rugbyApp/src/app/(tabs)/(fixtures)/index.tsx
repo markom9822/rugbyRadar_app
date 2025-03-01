@@ -147,7 +147,8 @@ const FixturesScreen = () => {
 
         console.info(allFixturesArray)
 
-        setMatchesArray(allFixturesArray)
+        const sortedAllFixturesArray = allFixturesArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
+        setMatchesArray(sortedAllFixturesArray)
 
         setLastRefresh(new Date().toLocaleTimeString('en-GB', { hour: 'numeric', minute: 'numeric', second: 'numeric' }))
         setIsLoading(false)
