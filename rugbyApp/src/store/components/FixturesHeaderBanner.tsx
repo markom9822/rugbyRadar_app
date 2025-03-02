@@ -1,11 +1,10 @@
 import { colors, fontFamilies } from "@/constants/tokens"
-import { BALionsAltLogo } from "@/store/InternationalTeamLogos/InternationalTeams"
-import { AutumnNationsAltLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import Entypo from '@expo/vector-icons/Entypo'
 import { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { RugbyRadarIconWhite } from "../Icons/Icons"
 import { hexToRGB } from "../utils/helpers"
+import { carouselData } from "./CustomBottomPanel"
 
 type LeagueDataItem = {
     label: string;
@@ -13,34 +12,17 @@ type LeagueDataItem = {
     logo: React.ReactNode | null;
 };
 
-export const leagueData: LeagueDataItem[] = [
-    { label: 'All Leagues', value: 'all', logo: null },
-    { label: 'URC', value: 'urc', logo: URCAltLogo },
-    { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
-    { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
-    { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
-    { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
-    { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
-    { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-    { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo },
-    { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsAltLogo },
-    { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
-    { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
-    { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
-    { label: 'Pacific Nations Cup', value: 'pacificNationsCup', logo: PacificNationsCupAltLogo },
-
-    { label: 'Lions Tour', value: 'BILTour', logo: BALionsAltLogo },
-];
-
 type FixturesHeaderBannerProps = {
 
     currentLeague: string,
-
-    OnPressLeague: (league: string) => void
-
+    OnPressLeague: () => void
 }
 
 export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesHeaderBannerProps) => {
+
+    const chooseLeagueButtonColour = hexToRGB("#4d4b4b", '0.6')
+
+    const currentLeagueImage = carouselData.find((item) => item.value === currentLeague)?.image;
 
     return (
 
@@ -50,22 +32,27 @@ export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesH
                     <Image
                         style={{
                             resizeMode: 'contain',
-                            width: 50,
-                            height: 50,
-                            minHeight: 50,
-                            minWidth: 50
+                            width: 40,
+                            height: 40,
+                            minHeight: 40,
+                            minWidth: 40
                         }}
                         source={RugbyRadarIconWhite} />
                 </View>
 
                 <View>
-                    <Text style={{ fontFamily: fontFamilies.bold, fontSize: 20, color: colors.text }}>Rugby Radar</Text>
+                    <Text style={{ fontFamily: fontFamilies.bold, fontSize: 18, color: colors.text }}>Rugby Radar</Text>
                 </View>
             </View>
 
 
             <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "40%", paddingHorizontal: 10 }}>
-                <LeaguePicker currentLeague={currentLeague} leagueOptions={leagueData} OnPressLeague={OnPressLeague} />
+                <TouchableOpacity style={{ padding: 5, backgroundColor: chooseLeagueButtonColour, borderRadius: 5, flexDirection: 'row', alignItems: 'center' }} onPress={OnPressLeague}>
+                    <View style={{ padding: 4, backgroundColor: chooseLeagueButtonColour, marginHorizontal: 3, borderRadius: 4 }}>
+                        <Image source={currentLeagueImage} style={{ resizeMode: 'contain', height: 20, width: 20, minHeight: 20, minWidth: 20 }} />
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, fontSize: 13 }}>Choose League</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

@@ -141,8 +141,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         awayAbbreviation += " U20"
     }
 
-    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.3');
-    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.3');
+    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.2');
+    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.2');
     const matchLeagueLogo = getLeagueInfoFromDisplayName(matchLeague)?.leagueAltLogo
 
     const handlePressedScorePanel = () => {

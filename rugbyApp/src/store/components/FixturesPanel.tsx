@@ -45,8 +45,8 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
         awayAbbreviation += " U20"
     }
 
-    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.4');
-    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.4');
+    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.3');
+    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.3');
 
     const fadedGreyColour = hexToRGB('#a4a6a6', '0.8');
 

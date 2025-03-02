@@ -1,5 +1,6 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { GridView } from "@/store/components/GridView"
+import { MultiTabBar } from "@/store/components/MultiTabBar"
 import { SearchLeagueInfoPanel } from "@/store/components/SearchLeagueInfoPanel"
 import { SearchTeamInfoPanel } from "@/store/components/SearchTeamInfoPanel"
 import { StandingsHeaderBanner } from "@/store/components/StandingsHeaderBanner"
@@ -103,7 +104,7 @@ const TeamsScreen = () => {
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [searchOption, setSearchOption] = useState<string>('teams');
+    const [searchOption, setSearchOption] = useState<string>('Teams');
 
 
     const getLeagueLogoFromDisplayName = (displayName: string) => {
@@ -115,7 +116,7 @@ const TeamsScreen = () => {
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
 
-        if (searchOption == "teams") {
+        if (searchOption == "Teams") {
             setSearchTeamArray(filterTeams(teamsArray, search))
         }
 
@@ -145,14 +146,14 @@ const TeamsScreen = () => {
     const handlePressSearchOption = (option: string) => {
         setSearchOption(option)
 
-        if (option == "leagues") {
+        if (option == "Leagues") {
             setSearchLeagueArray(leaguesArray)
         }
     }
 
     const handleRenderGrid = (selectedOption: string) => {
 
-        if (selectedOption == "teams") {
+        if (selectedOption == "Teams") {
             return (
                 <GridView
                     data={searchTeamArray}
@@ -168,7 +169,7 @@ const TeamsScreen = () => {
                             OnPress={handlePresentModalPress} />
                     } />)
         }
-        else if (selectedOption == "leagues") {
+        else if (selectedOption == "Leagues") {
             return (
                 <GridView
                     data={searchLeagueArray}
@@ -189,7 +190,7 @@ const TeamsScreen = () => {
 
     const handleRenderBottomSheet = (selectedOption: string) => {
 
-        if (selectedOption == "teams") {
+        if (selectedOption == "Teams") {
 
             return (
                 <SearchTeamInfoPanel
@@ -198,7 +199,7 @@ const TeamsScreen = () => {
                 />
             )
         }
-        else if (selectedOption == "leagues") {
+        else if (selectedOption == "Leagues") {
             return (
                 <SearchLeagueInfoPanel
                     leagueInfo={searchLeagueArray[currentIndex]}
@@ -215,18 +216,11 @@ const TeamsScreen = () => {
 
                 <StandingsHeaderBanner />
 
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <TouchableOpacity style={{ backgroundColor: searchOption == "teams" ? 'grey' : 'transparent', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5, justifyContent: 'center', alignItems: 'center', margin: 3 }} activeOpacity={0.7} onPress={() => handlePressSearchOption('teams')}>
-                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular }}>Teams</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{ backgroundColor: searchOption == "leagues" ? 'grey' : 'transparent', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5, justifyContent: 'center', alignItems: 'center', margin: 3 }} activeOpacity={0.7} onPress={() => handlePressSearchOption('leagues')}>
-                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular }}>Leagues</Text>
-                    </TouchableOpacity>
+                <View style={{ marginVertical: 7 }}>
+                    <MultiTabBar tabsArray={["Teams", "Leagues"]} OnTabButtonPressed={handlePressSearchOption} currentTabKey={searchOption} />
                 </View>
 
-                {searchOption == "teams" && (
+                {searchOption == "Teams" && (
                     <TextInput
                         style={{
                             height: 40, margin: 12, borderRadius: 4,

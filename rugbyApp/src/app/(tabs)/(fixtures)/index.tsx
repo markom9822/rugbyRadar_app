@@ -1,10 +1,9 @@
 import { fontFamilies, fontSize } from "@/constants/tokens"
+import { CustomBottomPanel } from "@/store/components/CustomBottomPanel"
 import { FixturesHeaderBanner } from "@/store/components/FixturesHeaderBanner"
 import { FixturesPanel } from "@/store/components/FixturesPanel"
 import { MultiTabBar } from "@/store/components/MultiTabBar"
 import { ScorePanel } from "@/store/components/ScorePanel"
-import { BALionsAltLogo } from "@/store/InternationalTeamLogos/InternationalTeams"
-import { AutumnNationsAltLogo, ChallengeCupAltLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PremiershipAltLogo, RugbyChampAltLogo, SixNationsAltLogo, SuperRugbyAltLogo, Top14AltLogo, U20SixNationsAltLogo, URCAltLogo, WorldCupAltLogo } from "@/store/LeagueLogos/LeagueLogos"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "@/store/utils/fixturesGetter"
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles"
@@ -12,6 +11,7 @@ import { FontAwesome6 } from '@expo/vector-icons'
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
+import { useSharedValue } from "react-native-reanimated"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -42,11 +42,12 @@ const FixturesScreen = () => {
     const [datePickerOpen, setDatePickerOpen] = useState(false)
     const [selectedDate, setDate] = useState(new Date())
 
-    const [leagueName, setLeagueName] = useState<string>('all');
+    const [leagueName, setLeagueName] = useState<string>('urc');
     const [currentTab, setCurrentTab] = useState<string>('Today');
     const [currentDateArray, setCurrentDateArray] = useState<Date[]>([new Date()]);
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+    const leagueBottomSheetModalRef = useRef<BottomSheetModal>(null)
 
 
     const leagueSearchData = [
@@ -216,33 +217,14 @@ const FixturesScreen = () => {
         handlePressFetchData(currentDateArray, leagueValue)
     }
 
-    const leagueData = [
-        { label: 'All Leagues', value: 'all', logo: null },
-        { label: 'URC', value: 'urc', logo: URCAltLogo },
-        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
-        { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
-        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
-        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
-        { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-        { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo },
-        { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsAltLogo },
-        { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
-        { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
-        { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
-        { label: 'Pacific Nations Cup', value: 'pacificNationsCup', logo: PacificNationsCupAltLogo },
-
-        { label: 'Lions Tour', value: 'BILTour', logo: BALionsAltLogo },
-    ];
-
     const notFoundHeader = (eventsArray: MatchInfo[]) => {
 
         if (eventsArray == undefined || eventsArray.length == 0 && !isLoading) {
             return (
                 <View style={{ marginTop: 20, marginHorizontal: 5 }}>
-                    <Text style={{ fontSize: fontSize.sm, color: 'rgba(70,70,70,0.9)', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
-                        <FontAwesome6 name="list" size={80} color={'rgba(40,40,40,0.9)'} />
+                    <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', margin: 15 }}>
+                        <FontAwesome6 name="list" size={80} color='#424141' />
                     </View>
                 </View>
             )
@@ -327,6 +309,16 @@ const FixturesScreen = () => {
         bottomSheetModalRef.current?.present();
     }
 
+    const translateY = useSharedValue<number>(300);
+
+    const [leaguePanelOpen, setLeaguePanelOpen] = useState(false);
+
+    // custom bottom sheet
+    const handleChooseLeaguePress = () => {
+        translateY.value = 0;
+        setLeaguePanelOpen(true)
+    }
+
     // renders
     const renderBackdrop = useCallback(
         (props: any) => (
@@ -343,7 +335,9 @@ const FixturesScreen = () => {
 
     return <View style={defaultStyles.container}>
 
-        <FixturesHeaderBanner currentLeague={leagueName} OnPressLeague={handleOnChangeLeague} />
+        <FixturesHeaderBanner currentLeague={leagueName} OnPressLeague={handleChooseLeaguePress} />
+
+        <CustomBottomPanel panelOpen={leaguePanelOpen} handleLeagueChosen={handleOnChangeLeague} setPanelOpenState={setLeaguePanelOpen} translateY={translateY} />
 
         <View style={{ marginVertical: 7 }}>
             <MultiTabBar tabsArray={["Previous", "Today", "Upcoming"]} OnTabButtonPressed={handlePressedDateTab} currentTabKey={currentTab} />

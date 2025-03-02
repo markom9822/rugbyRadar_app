@@ -1,5 +1,6 @@
 import { fontFamilies, fontSize } from "@/constants/tokens"
-import { Fontisto, MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { useEffect } from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
@@ -36,7 +37,7 @@ export const CustomTabBarButton = ({ onPress, onLongPress, isFocused, routeName,
         }
         else if (tabName === "search") {
             return (
-                <Fontisto name="search" size={22} color={isFocused ? "white" : "grey"} />
+                <Ionicons name="search-sharp" size={28} color={isFocused ? "white" : "grey"} />
             )
         }
 
