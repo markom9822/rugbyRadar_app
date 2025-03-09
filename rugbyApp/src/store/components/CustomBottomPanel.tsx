@@ -88,25 +88,6 @@ export const carouselData: CarouselData[] = [
 
 ]
 
-/*export const leagueData: LeagueDataItem[] = [
-    { label: 'All Leagues', value: 'all', logo: null },
-    { label: 'URC', value: 'urc', logo: URCAltLogo },
-    { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo },
-    { label: 'Top 14', value: 'top14', logo: Top14AltLogo },
-    { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo },
-    { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo },
-    { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo },
-    { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo },
-    { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo },
-    { label: 'Autumn Nations Series', value: 'autumnNations', logo: AutumnNationsAltLogo },
-    { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo },
-    { label: 'Rugby World Cup', value: 'rugbyWorldCup', logo: WorldCupAltLogo },
-    { label: 'U20 Championship', value: 'u20Championship', logo: WorldCupAltLogo },
-    { label: 'Pacific Nations Cup', value: 'pacificNationsCup', logo: PacificNationsCupAltLogo },
-
-    { label: 'Lions Tour', value: 'BILTour', logo: BALionsAltLogo },
-];*/
-
 type CustomBottomPanelProps = {
     panelOpen: boolean,
     setPanelOpenState: (panelOpen: boolean) => void,

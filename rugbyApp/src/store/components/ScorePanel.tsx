@@ -141,8 +141,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         awayAbbreviation += " U20"
     }
 
-    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.2');
-    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.2');
+    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.7');
+    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.7');
     const matchLeagueLogo = getLeagueInfoFromDisplayName(matchLeague)?.leagueAltLogo
 
     const handlePressedScorePanel = () => {
@@ -153,7 +153,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     return (
         <View style={[fixtureStyles.card, { marginBottom: (isLastItem) ? 60 : 3 }]}>
 
-            <LinearGradient colors={[homeGradientColour, 'rgba(25, 26, 27, 0.5)', awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+            <LinearGradient colors={[homeGradientColour, 'rgba(25, 26, 27, 0.9)', awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+                locations={[0, 0.4, 1]}
                 style={[fixtureStyles.cardHeaderAllInfo, { borderColor: 'grey', borderWidth: 0.5, borderRadius: 12, padding: 3 }]}>
 
                 <TouchableOpacity activeOpacity={0.5} onPress={handlePressedScorePanel}>
@@ -166,19 +167,19 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                                     style={[fixtureStyles.teamLogo]}
                                     source={homeTeamInfo.logo} />
                             </View>
-                            <Text style={[fixtureStyles.teamName, { color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{homeAbbreviation}</Text>
+                            <Text style={[fixtureStyles.teamName, { color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{homeAbbreviation}</Text>
 
                         </View>
 
                         <View style={{ width: "60%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <ImageBackground resizeMode='contain' imageStyle={{ opacity: 0.04 }}
+                            <ImageBackground resizeMode='contain' imageStyle={{ opacity: 0.08 }}
                                 style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: "100%" }} source={matchLeagueLogo} >
 
-                                <Text style={{ textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%" }}>{matchLeague}</Text>
+                                <Text style={{ textAlign: 'center', fontSize: fontSize.xs, color: 'lightgrey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%" }}>{matchLeague}</Text>
 
                                 {scoreRender(eventState)}
 
-                                <Text style={{ textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%" }}>{matchVenue}</Text>
+                                <Text style={{ textAlign: 'center', fontSize: fontSize.xs, color: 'lightgrey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%" }}>{matchVenue}</Text>
                             </ImageBackground>
                         </View>
 
@@ -188,7 +189,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                                     style={[fixtureStyles.teamLogo]}
                                     source={awayTeamInfo.logo} />
                             </View>
-                            <Text style={[fixtureStyles.teamName, { color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{awayAbbreviation}</Text>
+                            <Text style={[fixtureStyles.teamName, { color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{awayAbbreviation}</Text>
                         </View>
 
                     </View>

@@ -255,10 +255,10 @@ export const GamePercentageStatsPanel = ({ homePercent, statTitle, awayPercent, 
                 <Text style={[statsPanelStyles.statsPanelRow, { width: "20%", fontFamily: awayStatFontFamily }]}>{awayPercent}</Text>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
-                <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 1, borderRightColor: 'lightgrey' }}>
+                <View style={{ width: `${homePercentNum}%`, height: 10, backgroundColor: homeColour, borderTopLeftRadius: 5, borderBottomLeftRadius: 5 }}>
                     <Text></Text>
                 </View>
-                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5, borderLeftWidth: 1, borderLeftColor: 'lightgrey' }}>
+                <View style={{ width: `${awayPercentNum}%`, height: 10, backgroundColor: awayColour, borderTopRightRadius: 5, borderBottomRightRadius: 5 }}>
                     <Text></Text>
                 </View>
             </View>

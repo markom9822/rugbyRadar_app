@@ -37,7 +37,7 @@ export const CarouselPanel = ({ itemList, currentIndex, setCurrentIndex }: Carou
                 renderItem={({ item, index }) => <CarouselItem item={item} index={index} isLastItem={index == itemList.length - 1} scrollX={scrollX} />}
                 horizontal={true}
                 snapToAlignment={"center"}
-                decelerationRate={"fast"}
+                decelerationRate={0.9}
                 scrollEventThrottle={16}
 
                 showsHorizontalScrollIndicator={false}

@@ -87,7 +87,7 @@ export const InternationalRugbyTeams = [
     abbreviation: 'ENG',
     logo: EnglandLogo,
     altLogo: EnglandAltLogo,
-    colour: '#751216',
+    colour: '#ffffff',
     id: '1',
     defaultLeague: 'Six Nations',
     foundedYear: '1871',

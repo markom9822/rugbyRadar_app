@@ -287,6 +287,11 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                 <FlatList
                     data={standingsArray}
                     scrollEnabled={false}
+                    ListEmptyComponent={
+                        <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}>
+                            <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: fontSize.xs, textAlign: 'center' }}>Not currently available</Text>
+                        </View>
+                    }
                     renderItem={({ item, index }) =>
                         <StandingPanel
                             index={index}

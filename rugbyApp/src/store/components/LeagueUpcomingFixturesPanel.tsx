@@ -1,4 +1,4 @@
-import { fontFamilies } from "@/constants/tokens"
+import { fontFamilies, fontSize } from "@/constants/tokens"
 import { Text, View } from "react-native"
 import { hexToRGB } from "../utils/helpers"
 
@@ -21,6 +21,7 @@ export const LeagueUpcomingFixturesPanel = ({ leagueName }: LeagueUpcomingFixtur
 
             <View style={{ backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15 }}>
 
+                <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontSize: fontSize.xs }}>Not currently available</Text>
 
             </View>
         </View>
