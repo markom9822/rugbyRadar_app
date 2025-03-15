@@ -6,7 +6,7 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { getLeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, hexToRGB } from "../utils/helpers"
 import { fetchRugbyVizKnockoutFixtures } from "../utils/knockoutFixturesGetter"
-import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz } from "../utils/standingsGetter"
+import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "../utils/standingsGetter"
 import { KnockoutsPanel } from "./KnockoutsPanel"
 import { StandingPanel } from "./StandingPanel"
 
@@ -119,7 +119,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
         const planetRugbyStandingsLeagueCodes = [
             { leagueName: 'top14', leagueCodes: ['1310036262'], playoffCutoffIndex: 6 },
             { leagueName: 'sixNations', leagueCodes: ['1310035506'], playoffCutoffIndex: -1 },
-            { leagueName: 'u20SixNations', leagueCodes: ['1310031586'], playoffCutoffIndex: -1 },
             { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1 },
             { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2 },
             { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2 },
@@ -139,6 +138,14 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
             console.info(newArray)
             setStandingsArray(newArray)
+        }
+        else if (leagueName == "u20SixNations") {
+            apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=d7d54b61-12b7-4c98-8fda-84f43efa0b9b';
+            const u20SixNationsMatches = await fetch(apiString,).then((res) => res.json())
+
+            const manualWRStandings = await getAllStandingsDataWorldRugbyAPI(u20SixNationsMatches, leagueName);
+
+            setStandingsArray(manualWRStandings)
         }
         // uses rugbyViz API
         else if (rugbyVizCode !== undefined) {

@@ -1,10 +1,9 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { lineupPanelStyles } from "@/styles";
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo";
 import { getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
@@ -298,7 +297,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
             const awayTeamGradientColour = hexToRGB(awayTeamInfo.colour, '0.6')
 
             return (
-                <>
+                <View>
                     <View style={[lineupPanelStyles.container, { paddingVertical: 8, justifyContent: 'center', alignItems: 'center' }]}>
                         <TouchableOpacity onPress={() => handlePressLineupTeam('home')}
                             style={[lineupPanelStyles.teamHeader,
@@ -330,7 +329,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                         </TouchableOpacity>
                     </View>
 
-                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1, marginBottom: 220 }}>
+                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1, marginBottom: 400 }}>
 
                         <LinearGradient colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']} start={{ x: gradientStartFraction, y: 0.5 }} end={{ x: gradientEndFraction, y: 0.5 }} >
 
@@ -359,7 +358,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                         </LinearGradient>
                     </BottomSheetScrollView>
 
-                </>
+                </View>
 
             )
         }
@@ -559,96 +558,102 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
         setModalPlayerName(playerName)
     }
 
-    const snapPoints = ["75%"];
+    const snapPoints = ["50%"];
 
     const teamBkgRBGA = hexToRGB(modalTeamColour, '0.25')
     const teamBorderRBGA = hexToRGB(modalTeamColour, '0.7')
 
     const teamHandleRBGA = hexToRGB(modalTeamColour, '0.5')
 
-    return (
-        <GestureHandlerRootView>
+    // renders
+    const renderBackdrop = useCallback(
+        (props: any) => (
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+            />
+        ),
+        []
+    );
 
-            <BottomSheetModalProvider>
+    return (<View>
+        {isShown &&
+            <View style={[]}>
 
-                <View>
-                    {isShown &&
-                        <View style={[]}>
+                {activityIndicatorHeader()}
+                {lineupsRender(homeTeamInfo, awayTeamInfo, bottomSheetModalRef)}
 
-                            {activityIndicatorHeader()}
-                            {lineupsRender(homeTeamInfo, awayTeamInfo, bottomSheetModalRef)}
+                <BottomSheetModal
+                    ref={bottomSheetModalRef}
+                    index={0}
+                    snapPoints={snapPoints}
+                    backdropComponent={renderBackdrop}
+                    enableDynamicSizing={false}
+                    handleComponent={null}
 
-                            <BottomSheetModal
-                                ref={bottomSheetModalRef}
-                                index={0}
-                                snapPoints={snapPoints}
-                                enableDynamicSizing={false}
-                                handleComponent={null}
+                    backgroundStyle={{ backgroundColor: colors.background }}
+                >
+                    <BottomSheetView style={{
+                        flex: 1, backgroundColor: teamBkgRBGA, flexDirection: 'row',
+                        borderWidth: 1, borderColor: teamBorderRBGA, borderTopLeftRadius: 10, borderTopRightRadius: 10
+                    }}>
+                        <ImageBackground resizeMode="cover" imageStyle={{ opacity: 0.05 }}
+                            style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} source={selectedTeam == "home" ? homeTeamInfo?.altLogo : awayTeamInfo?.altLogo} >
+                            <View style={{ width: "45%", padding: 10 }}>
+                                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 17, marginBottom: 10 }}>{modalPlayerName.toUpperCase()}</Text>
+                                <View style={{ borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 4 }}>
+                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, paddingLeft: 1, paddingVertical: 3 }}>{modalPlayerPosition.toUpperCase()}</Text>
+                                </View>
+                                <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
+                                    <View style={{ marginHorizontal: 2 }}>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>AGE</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerAge}</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>DATE OF BIRTH</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerDOB}</Text>
+                                    </View>
+                                </View>
+                                <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
+                                    <View style={{ marginHorizontal: 2 }}>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>HEIGHT</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerHeight}</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>WEIGHT</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerWeight}</Text>
+                                    </View>
+                                </View>
+                                <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
+                                    <View style={{ marginHorizontal: 2 }}>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>BIRTHPLACE</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerCountry}</Text>
+                                    </View>
+                                </View>
 
-                                backgroundStyle={{ backgroundColor: colors.background }}
-                            >
-                                <BottomSheetView style={{
-                                    flex: 1, backgroundColor: teamBkgRBGA, flexDirection: 'row',
-                                    borderWidth: 2, borderColor: teamBorderRBGA, borderTopLeftRadius: 10, borderTopRightRadius: 10
-                                }}>
-                                    <ImageBackground resizeMode="cover" imageStyle={{ opacity: 0.05 }}
-                                        style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} source={selectedTeam == "home" ? homeTeamInfo?.altLogo : awayTeamInfo?.altLogo} >
-                                        <View style={{ width: "45%", padding: 10 }}>
-                                            <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 17, marginBottom: 10 }}>{modalPlayerName.toUpperCase()}</Text>
-                                            <View style={{ borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 4 }}>
-                                                <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, paddingLeft: 1, paddingVertical: 3 }}>{modalPlayerPosition.toUpperCase()}</Text>
-                                            </View>
-                                            <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
-                                                <View style={{ marginHorizontal: 2 }}>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>AGE</Text>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerAge}</Text>
-                                                </View>
-                                                <View>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>DATE OF BIRTH</Text>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerDOB}</Text>
-                                                </View>
-                                            </View>
-                                            <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
-                                                <View style={{ marginHorizontal: 2 }}>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>HEIGHT</Text>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerHeight}</Text>
-                                                </View>
-                                                <View>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>WEIGHT</Text>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerWeight}</Text>
-                                                </View>
-                                            </View>
-                                            <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
-                                                <View style={{ marginHorizontal: 2 }}>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>BIRTHPLACE</Text>
-                                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerCountry}</Text>
-                                                </View>
-                                            </View>
+                            </View>
+                            <View style={{ width: "55%", alignItems: 'center' }}>
+                                <View style={{ padding: 4, margin: 4, marginTop: 25 }}>
+                                    <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }} src={modalPlayerImageSrc} />
+                                    <View style={{
+                                        position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
+                                        top: 190, bottom: 0, left: 18, right: 18, backgroundColor: colors.background
+                                    }}>
+                                        <Text style={{
+                                            flex: 1,
+                                            textAlign: 'center', color: colors.text, borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
+                                            fontFamily: fontFamilies.bold, fontSize: 14, backgroundColor: hexToRGB(modalTeamColour, '0.5')
+                                        }}>{getLastName(modalPlayerName).toUpperCase()}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </ImageBackground>
 
-                                        </View>
-                                        <View style={{ width: "55%", alignItems: 'center' }}>
-                                            <View style={{ padding: 4, margin: 4, marginTop: 25 }}>
-                                                <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }} src={modalPlayerImageSrc} />
-                                                <View style={{
-                                                    position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
-                                                    top: 190, bottom: 0, left: 18, right: 18, backgroundColor: colors.background
-                                                }}>
-                                                    <Text style={{
-                                                        flex: 1,
-                                                        textAlign: 'center', color: colors.text, borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
-                                                        fontFamily: fontFamilies.bold, fontSize: 14, backgroundColor: hexToRGB(modalTeamColour, '0.5')
-                                                    }}>{getLastName(modalPlayerName).toUpperCase()}</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </ImageBackground>
-
-                                </BottomSheetView>
-                            </BottomSheetModal>
-                        </View>}
-                </View>
-            </BottomSheetModalProvider>
-        </GestureHandlerRootView>
+                    </BottomSheetView>
+                </BottomSheetModal>
+            </View>}
+    </View>
     )
 }
 

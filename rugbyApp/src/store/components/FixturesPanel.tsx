@@ -1,16 +1,21 @@
 import { MatchInfo } from "@/app/(tabs)/(fixtures)"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
 import { LinearGradient } from "expo-linear-gradient"
-import { useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { getMatchInfoWorldRugbyAPI } from "../utils/getMatchInfo"
+import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "../utils/getTeamFormStats"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
-import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB } from "../utils/helpers"
+import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "../utils/helpers"
 import { FixtureLineups } from "./FixtureLineups"
 import { FixtureOverview } from "./FixtureOverview"
 import { FixtureStats } from "./FixtureStats"
 import { FixtureEvents } from "./FixturesEvents"
+import { MultiTabBar } from "./MultiTabBar"
+import { TeamEventsPanel, TeamEventStatsInfo } from "./TeamEventsPanel"
 
 type FixturesPanelProps = {
     matchInfo: MatchInfo,
@@ -19,6 +24,10 @@ type FixturesPanelProps = {
 }
 
 export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelProps) => {
+
+    const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+    const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
+    const [currentTeamFormArray, setCurrentTeamFormArray] = useState<TeamEventStatsInfo[]>();
 
     const leagueName = getLeagueNameFromDisplayName(matchInfo.matchLeague)
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfo.homeTeam, matchInfo.awayTeam);
@@ -51,71 +60,257 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
     const matchLeagueLogo = getLeagueInfoFromDisplayName(matchInfo.matchLeague)?.leagueAltLogo
 
-
-    const fadedGreyColour = hexToRGB('#a4a6a6', '0.8');
+    const panelColour = hexToRGB("#4d4b4b", '0.4')
 
     const handleCloseBottomSheet = () => {
 
         bottomSheetRef.current?.close();
     }
 
+    const eventID = new String(id).substring(0, 6);
+    const leagueID = new String(id).slice(6)
 
-    return (
-        <LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
-            style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12 }]}>
+    const handlePressFetchData = async () => {
+        console.info("Pressed Fetch Data")
 
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: "100%" }}>
-                <TouchableOpacity activeOpacity={0.5} style={{ marginHorizontal: 15, marginVertical: 5 }} onPress={handleCloseBottomSheet}>
-                    <View style={{ padding: 8, justifyContent: 'center', alignItems: 'center' }}>
-                        <Entypo name="chevron-thin-down" size={20} color="lightgrey" />
+        // handle differently - separate API
+        if (leagueID.indexOf("_RugbyViz") !== -1) {
+            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
+            console.info(apiString)
+
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+
+            const mainTeamFormStats = await getTeamFormStatsRugbyViz(matchDetails, true)
+            const opponentTeamFormStats = await getTeamFormStatsRugbyViz(matchDetails, false)
+
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
+            return;
+        }
+
+        // use world rugby API
+        if (id.indexOf("_WorldRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const worldRugbyAPIEventID = separatedArray[0];
+            const worldRugbyAPILeagueName = separatedArray[1]
+
+            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/' + worldRugbyAPIEventID + '/stats?language=en';
+            console.info(apiString)
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const matchInfo = await getMatchInfoWorldRugbyAPI(matchDetails)
+            const matchDate = new Date(matchInfo[0].matchDate)
+            const homeTeamName = matchInfo[0].homeTeamName
+            const awayTeamName = matchInfo[0].awayTeamName
+
+            // use planet rugby for head to head stats
+            const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeamName, awayTeamName);
+            const apiPlanetRugbyString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/' + planetRugbyMatchID;
+            const matchPlanetRugbyStats = await fetch(apiPlanetRugbyString,).then((res) => res.json())
+
+            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, true)
+            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, false)
+
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
+            return;
+        }
+
+        // use world rugby API
+        if (id.indexOf("_PlanetRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const planetRugbyAPIEventID = separatedArray[0];
+            const planetRugbyAPILeagueName = separatedArray[1]
+
+            const apiH2HString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/' + planetRugbyAPIEventID;
+
+            const matchH2HStats = await fetch(apiH2HString,).then((res) => res.json())
+
+            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, true)
+            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, false)
+
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
+
+            return;
+        }
+    }
+
+    useEffect(() => {
+        async function fetchMyAPI() {
+            await handlePressFetchData()
+        }
+        fetchMyAPI()
+    }, [])
+
+
+    const teamFormDisplay = (eventsArray: TeamEventStatsInfo[] | undefined) => {
+
+        if (eventsArray == undefined || eventsArray.length == 0) {
+            return null
+        }
+
+        const teamForm = []
+
+        for (let index = 0; index < eventsArray.length; index++) {
+
+            const homeWinner = new Number(eventsArray[index].homeTeamScore) > new Number(eventsArray[index].awayTeamScore);
+            const homeCurrentTeam = eventsArray[index].currentTeam === eventsArray[index].homeTeamName;
+
+            var winOrLoseText = '';
+
+            if (homeCurrentTeam) {
+                winOrLoseText = (homeWinner) ? ('W') : ('L');
+            }
+            else {
+                winOrLoseText = (!homeWinner) ? ('W') : ('L');
+            }
+            teamForm.push(winOrLoseText)
+        }
+
+        return (
+            <View style={{ flexDirection: 'row', marginHorizontal: 8 }}>
+                {teamForm.map((item, index) => (
+                    <View key={index} style={{ paddingHorizontal: 0.5 }}>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light, fontSize: fontSize.xs, textAlign: 'center' }}>{item}</Text>
                     </View>
-                </TouchableOpacity>
+                ))}
             </View>
+        )
+    }
 
-            <ImageBackground resizeMode='contain' imageStyle={{ opacity: 0.06 }}
-                style={{ justifyContent: 'center', alignItems: 'center' }} source={matchLeagueLogo} >
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+    const snapPoints = ["50%"];
 
-                <View style={{ paddingVertical: 4 }}>
-                    <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', fontSize: fontSize.xs }]}>{matchInfo.matchLeague}</Text>
-                </View>
+    // renders
+    const renderBackdrop = useCallback(
+        (props: any) => (
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                appearsOnIndex={0}
+            />
+        ),
+        []
+    );
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+    const handleOpenedTeamFormPanel = (teamFormArray: TeamEventStatsInfo[] | undefined) => {
 
-                    <View style={{ width: "25%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ paddingVertical: 5 }}>
-                            <Image
-                                style={[fixturesPanelStyles.teamLogo]}
-                                source={homeTeamInfo.logo} />
+        setCurrentTeamFormArray(teamFormArray)
+        bottomSheetModalRef.current?.present()
+    }
+
+    const teamFormPanelColour = hexToRGB("#4d4b4b", '0.5')
+
+
+    return (<GestureHandlerRootView>
+
+        <BottomSheetModalProvider>
+
+            <LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+                style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12 }]}>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: "100%" }}>
+                    <TouchableOpacity activeOpacity={0.5} style={{ marginHorizontal: 15, marginVertical: 5 }} onPress={handleCloseBottomSheet}>
+                        <View style={{ padding: 8, justifyContent: 'center', alignItems: 'center' }}>
+                            <Entypo name="chevron-thin-down" size={20} color="lightgrey" />
                         </View>
-                        <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{homeAbbreviation}</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ImageBackground resizeMode='contain' imageStyle={{ opacity: 0.06 }}
+                    style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10 }} source={matchLeagueLogo} >
+
+                    <View style={{ paddingVertical: 4 }}>
+                        <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', fontSize: fontSize.xs }]}>{matchInfo.matchLeague}</Text>
                     </View>
 
-                    <View style={{ width: "50%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
-                        {scoreRender(matchInfo.eventState, matchTime, matchInfo, homeFontFamily, awayFontFamily)}
-                    </View>
+                        <View style={{ width: "25%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ paddingVertical: 5 }}>
+                                <Image
+                                    style={[fixturesPanelStyles.teamLogo]}
+                                    source={homeTeamInfo.logo} />
+                            </View>
 
-                    <View style={{ width: "25%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ paddingVertical: 5 }}>
-                            <Image
-                                style={[fixturesPanelStyles.teamLogo]}
-                                source={awayTeamInfo.logo} />
+                            <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{homeAbbreviation}</Text>
+
+                            <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(mainTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "75%" }}>
+                                <Text style={{ color: 'lightgrey', fontSize: fontSize.xs, textAlign: 'center' }}>{teamFormDisplay(mainTeamFormStatsArray)}</Text>
+                            </TouchableOpacity>
                         </View>
-                        <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{awayAbbreviation}</Text>
+
+                        <View style={{ width: "50%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+
+                            {scoreRender(matchInfo.eventState, matchTime, matchInfo, homeFontFamily, awayFontFamily)}
+
+                        </View>
+
+                        <View style={{ width: "25%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ paddingVertical: 5 }}>
+                                <Image
+                                    style={[fixturesPanelStyles.teamLogo]}
+                                    source={awayTeamInfo.logo} />
+                            </View>
+                            <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{awayAbbreviation}</Text>
+
+                            <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(opponentTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "75%" }}>
+                                <Text style={{ color: 'lightgrey', fontSize: fontSize.xs, textAlign: 'center' }}>{teamFormDisplay(opponentTeamFormStatsArray)}</Text>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
 
-                </View>
+                    <View style={{ paddingVertical: 4 }}>
+                        <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', fontSize: fontSize.xs }]}>{matchInfo.matchVenue}</Text>
+                    </View>
 
-                <View style={{ paddingVertical: 4 }}>
-                    <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', fontSize: fontSize.xs }]}>{matchInfo.matchVenue}</Text>
-                </View>
+                </ImageBackground>
 
-            </ImageBackground>
-
-            <FixtureInfoPanel id={id} />
+                <FixtureInfoPanel id={id} />
 
 
-        </LinearGradient>
+                <BottomSheetModal
+                    ref={bottomSheetModalRef}
+                    index={0}
+                    snapPoints={snapPoints}
+                    backdropComponent={renderBackdrop}
+                    enableDynamicSizing={false}
+                    handleComponent={null}
+
+                    backgroundStyle={{ backgroundColor: colors.background }}
+                >
+                    <BottomSheetView style={{
+                        flex: 1, backgroundColor: teamFormPanelColour, flexDirection: 'row',
+                        borderWidth: 1, borderColor: 'grey', borderTopLeftRadius: 10, borderTopRightRadius: 10
+                    }}>
+
+                        {currentTeamFormArray != undefined && (
+                            <View>
+                                <TeamEventsPanel
+                                    teamEventArray={currentTeamFormArray}
+                                    matchID={id}
+                                    leagueName={leagueName}
+                                    panelTitle={`${currentTeamFormArray[0].currentTeam} Form`}
+                                    showWinLoss={true}
+                                    isLastItem={false}
+                                    teamName={currentTeamFormArray[0].currentTeam}
+                                />
+
+                            </View>
+
+                        )}
+
+
+
+                    </BottomSheetView>
+                </BottomSheetModal>
+
+
+
+            </LinearGradient>
+        </BottomSheetModalProvider>
+    </GestureHandlerRootView>
     )
 }
 
@@ -134,9 +329,15 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
         <LinearGradient colors={['#0d0c0c', 'transparent']} start={{ x: 0.5, y: 0.9 }} end={{ x: 0.5, y: 0 }}
             style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }]}>
 
-            <FixturesInfoTabBar OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} />
 
-            <FixturesInfoBox id={id} currentTabKey={currentTab} />
+            <View style={{ marginVertical: 4 }}>
+                <MultiTabBar tabsArray={["Overview", "Stats", "Events", "Lineups"]} OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} tabFontSize={14} />
+            </View>
+
+            <View style={{ width: "100%" }}>
+                <FixturesInfoBox id={id} currentTabKey={currentTab} />
+            </View>
+
 
         </LinearGradient>
     )

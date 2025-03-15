@@ -436,6 +436,7 @@ export const broadcasters = [
     { name: 'ITV X', logo: ITVXLogo},
     { name: 'STV HD', logo: STVHDLogo},
     { name: 'STV player', logo: STVPlayerLogo},
+    { name: 'RTE 2 HD', logo: RTELogo},
 
     { name: 'Sky Sport Plus', logo: SkySportsLogo},
     { name: 'Sky Sport MIX HD', logo: SkySportsLogo},

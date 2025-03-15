@@ -73,7 +73,7 @@ export const URCRugbyTeams = [
     abbreviation: 'CONN',
     logo: ConnachtLogo,
     altLogo: ConnachtAltLogo,
-    colour: '#00b446',
+    colour: '#03702e',
     id: '25923',
     defaultLeague: 'United Rugby Championship',
     foundedYear: '1885',

@@ -13,7 +13,6 @@ import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
 import { hexToRGB } from "@/store/utils/helpers"
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet"
-import { LinearGradient } from "expo-linear-gradient"
 import { useCallback, useRef, useState } from "react"
 import { Image, Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 
@@ -287,7 +286,7 @@ export const GridSearchPanel = ({ title, colour, logo, altLogo, id, index, OnPre
 
     return (
         <TouchableOpacity activeOpacity={0.7} onPress={handlePressedScorePanel}>
-            <LinearGradient colors={[bkgRBGA, 'transparent']} start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }}
+            <View
                 style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 5, backgroundColor: panelColour, borderRadius: 6, borderColor: 'grey', borderWidth: 0.5 }}>
                 <View style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
                     <Image
@@ -298,7 +297,7 @@ export const GridSearchPanel = ({ title, colour, logo, altLogo, id, index, OnPre
                     <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold }]}>{title}</Text>
                 </View>
 
-            </LinearGradient>
+            </View>
 
         </TouchableOpacity>
     )

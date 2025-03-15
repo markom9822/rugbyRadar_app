@@ -1,8 +1,7 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
-import { HeadToHeadEventsPanel, TeamEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
+import { HeadToHeadEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
-import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "@/store/utils/getTeamFormStats";
 import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
@@ -23,8 +22,6 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
     const [refereeName, setRefereeName] = useState<string>('-');
 
     const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
-    const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
-    const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
 
     const [isLoading, setIsLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -46,12 +43,8 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
             setMatchInfoArray(matchInfo)
 
             const headToHeadStats = await getHeadToHeadStatsRugbyViz(matchDetails)
-            const mainTeamFormStats = await getTeamFormStatsRugbyViz(matchDetails, true)
-            const opponentTeamFormStats = await getTeamFormStatsRugbyViz(matchDetails, false)
 
             setHeadToHeadStatsArray(headToHeadStats)
-            setMainTeamFormStatsArray(mainTeamFormStats)
-            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             if (matchDetails.data.officials.length > 0) {
                 const refName = matchDetails.data.officials[0].name;
@@ -85,12 +78,8 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
             const matchPlanetRugbyStats = await fetch(apiPlanetRugbyString,).then((res) => res.json())
 
             const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchPlanetRugbyStats)
-            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, true)
-            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchPlanetRugbyStats, false)
 
             setHeadToHeadStatsArray(headToHeadStats)
-            setMainTeamFormStatsArray(mainTeamFormStats)
-            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             const apiSummaryString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/' + worldRugbyAPIEventID + '/summary?language=en';
             const matchSummary = await fetch(apiSummaryString,).then((res) => res.json())
@@ -125,12 +114,8 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
             const matchH2HStats = await fetch(apiH2HString,).then((res) => res.json())
 
             const headToHeadStats = getHeadToHeadStatsPlanetRugbyAPI(matchH2HStats)
-            const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, true)
-            const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, false)
 
             setHeadToHeadStatsArray(headToHeadStats)
-            setMainTeamFormStatsArray(mainTeamFormStats)
-            setOpponentTeamFormStatsArray(opponentTeamFormStats)
 
             const refName = matchDetails.data.match.official_name;
             setRefereeName(refName === null ? "-" : refName)
@@ -178,36 +163,19 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
                         leagueName={leagueName}
                         refereeName={refereeName}
                     />
-                    <HeadToHeadEventsPanel
-                        teamEventArray={headToHeadStatsArray}
-                        matchID={id}
-                        leagueName={leagueName}
-                        panelTitle="Head to Head Matches"
-                        showWinLoss={false}
-                        isLastItem={false}
-                        teamName1={matchInfoArray[0].homeTeamName}
-                        teamName2={matchInfoArray[0].awayTeamName}
-                    />
+                    <View style={{ marginBottom: 100 }}>
+                        <HeadToHeadEventsPanel
+                            teamEventArray={headToHeadStatsArray}
+                            matchID={id}
+                            leagueName={leagueName}
+                            panelTitle="Head to Head Matches"
+                            showWinLoss={false}
+                            isLastItem={false}
+                            teamName1={matchInfoArray[0].homeTeamName}
+                            teamName2={matchInfoArray[0].awayTeamName}
+                        />
+                    </View>
 
-                    <TeamEventsPanel
-                        teamEventArray={mainTeamFormStatsArray}
-                        matchID={id}
-                        leagueName={leagueName}
-                        panelTitle={`${matchInfoArray[0].homeTeamName} Form`}
-                        showWinLoss={true}
-                        isLastItem={false}
-                        teamName={matchInfoArray[0].homeTeamName}
-                    />
-
-                    <TeamEventsPanel
-                        teamEventArray={opponentTeamFormStatsArray}
-                        matchID={id}
-                        leagueName={leagueName}
-                        panelTitle={`${matchInfoArray[0].awayTeamName} Form`}
-                        showWinLoss={true}
-                        isLastItem={true}
-                        teamName={matchInfoArray[0].awayTeamName}
-                    />
 
                 </BottomSheetScrollView>}
         </View>

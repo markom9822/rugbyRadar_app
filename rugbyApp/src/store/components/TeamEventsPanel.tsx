@@ -1,8 +1,6 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
-import Entypo from '@expo/vector-icons/Entypo'
 import { LinearGradient } from "expo-linear-gradient"
-import { useState } from "react"
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, StyleSheet, Text, View } from "react-native"
 import { getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo"
 import { hexToRGB } from "../utils/helpers"
 
@@ -39,8 +37,6 @@ export type HeadToHeadTeamEventPanelProps = {
 
 export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitle, showWinLoss, isLastItem, teamName }: TeamEventPanelProps) => {
 
-    const [isTabOpen, setIsTabOpen] = useState(false);
-
     if (teamEventArray === undefined) return
 
     const notFoundHeader = (eventsArray: TeamEventStatsInfo[]) => {
@@ -56,46 +52,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
         return null
     }
 
-    const teamFormDisplay = (eventsArray: TeamEventStatsInfo[]) => {
-
-        if (eventsArray == undefined || eventsArray.length == 0) {
-            return null
-        }
-
-        const teamForm = []
-
-        for (let index = 0; index < eventsArray.length; index++) {
-
-            const homeWinner = new Number(eventsArray[index].homeTeamScore) > new Number(eventsArray[index].awayTeamScore);
-            const homeCurrentTeam = eventsArray[index].currentTeam === eventsArray[index].homeTeamName;
-
-            var winOrLoseText = '';
-
-            if (homeCurrentTeam) {
-                winOrLoseText = (homeWinner) ? ('W') : ('L');
-            }
-            else {
-                winOrLoseText = (!homeWinner) ? ('W') : ('L');
-            }
-            teamForm.push(winOrLoseText)
-        }
-
-        return (
-            <View style={{ flexDirection: 'row', marginHorizontal: 8 }}>
-                {teamForm.map((item, index) => (
-                    <View key={index} style={{ paddingHorizontal: 0.5 }}>
-                        <Text style={{ color: colors.text, fontFamily: fontFamilies.light, fontSize: fontSize.xs, textAlign: 'center' }}>{item}</Text>
-                    </View>
-                ))}
-            </View>
-        )
-    }
-
     if (teamName === undefined) return;
-
-    const toggleFormTab = () => {
-        setIsTabOpen(!isTabOpen)
-    }
 
 
     const teamInfo = getTeamInfo(leagueName, teamName);
@@ -108,44 +65,15 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
     return (
         <View style={[teamEventsPanelStyles.container, { marginBottom: isLastItem ? 130 : 0 }]}>
 
-            <View style={{ backgroundColor: panelColour, margin: 4, borderRadius: 5, width: "95%" }}>
-
-                <TouchableOpacity onPress={toggleFormTab} activeOpacity={0.8}>
-                    <View style={{
-                        flexDirection: 'row', backgroundColor: teamBackgroundColour,
-                        alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5
-                    }}>
-                        <View style={{ margin: 4, padding: 4, justifyContent: 'center', alignItems: 'center', width: "10%" }}>
-                            <Image
-                                style={{
-                                    resizeMode: 'contain',
-                                    width: 25,
-                                    height: 25,
-                                    minHeight: 25,
-                                    minWidth: 25,
-                                }}
-                                source={teamInfo.teamInfo.altLogo} />
-                        </View>
-
-                        <View style={{ width: "55%" }}>
-                            <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4 }}>{teamName.toUpperCase()} FORM</Text>
-                        </View>
-
-                        <View style={{ width: "25%" }}>
-                            {teamFormDisplay(teamEventArray)}
-                        </View>
-
-                        <View style={{ width: "7%", justifyContent: 'center', alignItems: 'center' }}>
-                            <Entypo name={isTabOpen ? "chevron-thin-up" : "chevron-thin-down"} size={12} color="white" />
-                        </View>
-                    </View>
-                </TouchableOpacity>
+            <View style={{ margin: 4, borderRadius: 5, width: "95%" }}>
 
                 {notFoundHeader(teamEventArray)}
 
-                {isTabOpen && (<>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 4 }}>
+                    <Text style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold }}>{panelTitle.toUpperCase()}</Text>
+                </View>
 
-
+                <>
                     {teamEventArray.map((match, index) => {
                         return (
                             <TeamEventsItem
@@ -161,10 +89,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
                             />
                         );
                     })}
-
-                </>)}
-
-
+                </>
 
             </View>
         </View>

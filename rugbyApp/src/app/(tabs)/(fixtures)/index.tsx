@@ -312,6 +312,7 @@ const FixturesScreen = () => {
         return dates;
     }
 
+
     const handlePressedDateTab = (key: string) => {
 
         setCurrentTab(key)
@@ -321,21 +322,18 @@ const FixturesScreen = () => {
             setCurrentDateArray([new Date()])
 
             setMatchesArray(todayMatchesArray)
-            //handlePressFetchData([new Date()], leagueName)
         }
         else if (key == "Previous" && currentTab != "Previous") {
             console.info("Selected Previous")
             setCurrentDateArray(get7Days(true))
 
             setMatchesArray(previousMatchesArray)
-            //handlePressFetchData(get7Days(true), leagueName)
         }
         else if (key == "Upcoming" && currentTab != "Upcoming") {
             console.info("Selected Upcoming")
             setCurrentDateArray(get7Days(false))
 
             setMatchesArray(upcomingMatchesArray)
-            //handlePressFetchData(get7Days(false), leagueName)
         }
     }
 
