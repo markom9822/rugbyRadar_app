@@ -1,5 +1,4 @@
 import { SearchTeamInfo } from "@/app/(tabs)/search"
-import { SeasonDateInfo } from "@/app/(tabs)/standings"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { useEffect, useState } from "react"
@@ -7,7 +6,7 @@ import { ActivityIndicator, Image, ImageBackground, Text, View } from "react-nat
 import { FlatList } from "react-native-gesture-handler"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { getTeamSeasonFixtures } from "../utils/getTeamSeasonFixtures"
-import { generateSeasonList, getLeagueInfoFromDisplayName, hexToRGB } from "../utils/helpers"
+import { generateSeasonList, getLeagueInfoFromDisplayName, hexToRGB, SeasonDateInfo } from "../utils/helpers"
 import { SeasonYearPicker } from "./LeagueStandingsPanel"
 import { DropdownData } from "./SelectDropdown"
 

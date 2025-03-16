@@ -179,7 +179,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
     }
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
-    const snapPoints = ["50%"];
+    const snapPoints = ["40%"];
 
     // renders
     const renderBackdrop = useCallback(
@@ -199,7 +199,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
         bottomSheetModalRef.current?.present()
     }
 
-    const teamFormPanelColour = hexToRGB("#4d4b4b", '0.5')
+    const teamFormPanelColour = hexToRGB("#4d4b4b", '0.9')
 
 
     return (<GestureHandlerRootView>
@@ -277,8 +277,9 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                     backdropComponent={renderBackdrop}
                     enableDynamicSizing={false}
                     handleComponent={null}
+                    handleStyle={null}
 
-                    backgroundStyle={{ backgroundColor: colors.background }}
+                    backgroundStyle={{ backgroundColor: 'transparent' }}
                 >
                     <BottomSheetView style={{
                         flex: 1, backgroundColor: teamFormPanelColour, flexDirection: 'row',
@@ -286,18 +287,17 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                     }}>
 
                         {currentTeamFormArray != undefined && (
-                            <View>
-                                <TeamEventsPanel
-                                    teamEventArray={currentTeamFormArray}
-                                    matchID={id}
-                                    leagueName={leagueName}
-                                    panelTitle={`${currentTeamFormArray[0].currentTeam} Form`}
-                                    showWinLoss={true}
-                                    isLastItem={false}
-                                    teamName={currentTeamFormArray[0].currentTeam}
-                                />
 
-                            </View>
+                            <TeamEventsPanel
+                                teamEventArray={currentTeamFormArray}
+                                matchID={id}
+                                leagueName={leagueName}
+                                panelTitle={`${currentTeamFormArray[0].currentTeam} Form`}
+                                showWinLoss={true}
+                                isLastItem={false}
+                                teamName={currentTeamFormArray[0].currentTeam}
+                            />
+
 
                         )}
 

@@ -2,52 +2,7 @@
     "teams": [
         {
             "name": "Ireland",
-            "players": [
-                {
-                    "name": "Jack Boyle",
-                    "image": "https://media-cdn.incrowdsports.com/aeda85c1-4d55-4058-bfc1-a1ab30116023.png"
-                },
-                {
-                    "name": "Thomas Clarkson",
-                    "image": "https://media-cdn.incrowdsports.com/c89525ba-567e-4f35-80a3-dc39f641a166.png"
-                },
-                {
-                    "name": "Ciaran Frawley",
-                    "image": "https://all.rugby/photos/2024/irlande/ciaran-frawley_m.webp"
-                },
-                {
-                    "name": "Cian Healy",
-                    "image": "https://all.rugby/photos/2024/irlande/cian-healy_m.webp"
-                },
-                {
-                    "name": "Gus McCarthy",
-                    "image": "https://media-cdn.incrowdsports.com/f1ce4423-dda4-496d-a6b1-9fa492e4bf2c.png"
-                },
-                {
-                    "name": "Jamie Osborne",
-                    "image": "https://media-cdn.incrowdsports.com/453cd31d-2ba7-4422-b015-12fab8f7d67a.png"
-                },
-                {
-                    "name": "Sam Prendergast",
-                    "image": "https://media-cdn.incrowdsports.com/d36627ba-e4af-4ef1-88ce-45bd193d50d1.png"
-                },
-                {
-                    "name": "Cormac Izuchukwu",
-                    "image": "https://eu-cdn.rugbypass.com/webp-images/images/players/hero/5577.png.webp"
-                },
-                {
-                    "name": "Cian Prendergast",
-                    "image": "https://media-cdn.incrowdsports.com/7a8448f3-12ad-470f-82a0-71c98661cb34.png"
-                },
-                {
-                    "name": "Caolin Blade",
-                    "image": "https://media-cdn.incrowdsports.com/f1f73e92-2cc6-492a-8c91-ca5226ab9a55.png"
-                },
-                {
-                    "name": "Calvin Nash",
-                    "image": "https://all.rugby/photos/2024/irlande/calvin-nash_m.webp"
-                }
-            ]
+            "players": []
         },
         {
             "name": "France",
@@ -179,6 +134,10 @@
                 {
                     "name": "Alex Mitchell",
                     "image": "https://rfu.widen.net/content/43407707-03de-4805-a21e-c30537cb0b22/web/d6b8efdd-7168-4d8e-ad15-d2cd69194e17.png"
+                },
+                {
+                    "name": "Jamie George",
+                    "image": "https://rfu.widen.net/content/12feb19a-51fb-4beb-b6a3-3ec3a63aee98/web/Jamie-George-ans24.png"
                 }
             ]
         },

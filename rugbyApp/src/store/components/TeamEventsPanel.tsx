@@ -1,6 +1,6 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { LinearGradient } from "expo-linear-gradient"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, ImageBackground, StyleSheet, Text, View } from "react-native"
 import { getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo"
 import { hexToRGB } from "../utils/helpers"
 
@@ -63,35 +63,47 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
     const panelColour = hexToRGB("#4d4b4b", '0.5')
 
     return (
-        <View style={[teamEventsPanelStyles.container, { marginBottom: isLastItem ? 130 : 0 }]}>
+        <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
 
-            <View style={{ margin: 4, borderRadius: 5, width: "95%" }}>
 
-                {notFoundHeader(teamEventArray)}
+            <View style={{
+                justifyContent: 'center', alignItems: 'center', backgroundColor: teamBackgroundColour, width: "100%",
+                borderTopLeftRadius: 8, borderTopRightRadius: 8, height: "13%"
+            }}>
+                <View style={{ flexDirection: 'row', width: "100%", justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: "70%", justifyContent: 'center', alignItems: 'center' }}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold, paddingHorizontal: 5 }}>{panelTitle.toUpperCase()}</Text>
+                    </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 4 }}>
-                    <Text style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold }}>{panelTitle.toUpperCase()}</Text>
+                    <View style={{ width: "30%", justifyContent: 'center', alignItems: 'center' }}>
+                        <ImageBackground resizeMode="cover" source={teamInfo.teamInfo.altLogo} imageStyle={{ opacity: 0.5 }} style={{ justifyContent: 'center', alignItems: 'center', width: "100%" }}>
+                            <Text style={{ height: "100%" }}></Text>
+                        </ImageBackground>
+                    </View>
+
                 </View>
-
-                <>
-                    {teamEventArray.map((match, index) => {
-                        return (
-                            <TeamEventsItem
-                                key={index}
-                                leagueName={leagueName}
-                                currentTeam={match.currentTeam}
-                                homeTeam={match.homeTeamName}
-                                awayTeam={match.awayTeamName}
-                                homeTeamScore={match.homeTeamScore}
-                                awayTeamScore={match.awayTeamScore}
-                                matchDate={match.matchDate}
-                                showWinLoss={showWinLoss}
-                            />
-                        );
-                    })}
-                </>
-
             </View>
+
+            {notFoundHeader(teamEventArray)}
+
+            <>
+                {teamEventArray.map((match, index) => {
+                    return (
+                        <TeamEventsItem
+                            key={index}
+                            leagueName={leagueName}
+                            currentTeam={match.currentTeam}
+                            homeTeam={match.homeTeamName}
+                            awayTeam={match.awayTeamName}
+                            homeTeamScore={match.homeTeamScore}
+                            awayTeamScore={match.awayTeamScore}
+                            matchDate={match.matchDate}
+                            showWinLoss={showWinLoss}
+                        />
+                    );
+                })}
+            </>
+
         </View>
     )
 }
@@ -127,38 +139,32 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
     const panelColour = hexToRGB("#4d4b4b", '0.5')
 
     return (
-        <View style={[teamEventsPanelStyles.container, { marginBottom: isLastItem ? 55 : 0 }]}>
+        <View style={[teamEventsPanelStyles.container, { marginHorizontal: 5 }]}>
 
             <View style={{ backgroundColor: panelColour, margin: 4, borderRadius: 5 }}>
 
                 <LinearGradient colors={[teamBackgroundColour1, teamBackgroundColour2]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} locations={[0.4, 0.6]}
                     style={{
                         flexDirection: 'row', backgroundColor: 'transparent',
-                        alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignContent: 'center'
+                        alignItems: 'center', borderTopLeftRadius: 5, borderTopRightRadius: 5, justifyContent: 'center', alignContent: 'center',
                     }}>
 
-                    <View style={{ margin: 4, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: 25,
-                                height: 25,
-                                minHeight: 25,
-                                minWidth: 25,
-                            }}
-                            source={homeTeamInfo.altLogo} />
+                    <View style={{ width: "25%", justifyContent: 'center', alignItems: 'center' }}>
+                        <ImageBackground resizeMode="cover" source={homeTeamInfo.altLogo} imageStyle={{ opacity: 0.5 }} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, padding: 4, opacity: 0 }}>TEAM</Text>
+
+                        </ImageBackground>
                     </View>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4 }}>HEAD TO HEAD</Text>
-                    <View style={{ margin: 4, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
-                        <Image
-                            style={{
-                                resizeMode: 'contain',
-                                width: 25,
-                                height: 25,
-                                minHeight: 25,
-                                minWidth: 25,
-                            }}
-                            source={awayTeamInfo.altLogo} />
+
+                    <View style={{ width: "50%", justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4 }}>HEAD TO HEAD</Text>
+                    </View>
+
+                    <View style={{ width: "25%", justifyContent: 'center', alignItems: 'center' }}>
+                        <ImageBackground resizeMode="cover" source={awayTeamInfo.altLogo} imageStyle={{ opacity: 0.5 }} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, padding: 4, opacity: 0 }}>TEAM</Text>
+
+                        </ImageBackground>
                     </View>
 
                 </LinearGradient>
@@ -230,6 +236,7 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
                 </View>
             }
 
+
             <View style={{ flexDirection: 'row', width: "20%", justifyContent: 'flex-start' }}>
                 <Image
                     style={[teamEventsPanelStyles.teamLogo]}
@@ -237,7 +244,7 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
                 <Text style={[teamEventsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row', width: "25%", justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: "27%", justifyContent: 'center' }}>
                 <Text style={[teamEventsPanelStyles.matchScore]}>{homeTeamScore} - {awayTeamScore}</Text>
             </View>
 
@@ -248,7 +255,7 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
                     source={awayTeamInfo.altLogo} />
             </View>
 
-            <View style={{ flexDirection: 'row', width: "30%", justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: "28%", justifyContent: 'center' }}>
                 <Text style={[teamEventsPanelStyles.matchDate]}>{formattedDate}</Text>
             </View>
         </View>
@@ -258,9 +265,8 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
 export const teamEventsPanelStyles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        marginVertical: 10,
     },
     teamLogo: {
         resizeMode: 'contain',
