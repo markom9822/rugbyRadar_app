@@ -495,6 +495,163 @@
         {
             "name": "Fiji",
             "players": []
+        },
+        {
+            "name": "British & Irish Lions",
+            "players": [
+                {
+                    "name": "Tadhg Beirne",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/1XnXUc3kMzoEJNsuf7awlD/915b831af2acfb14f9311c12ead0956d/BB1_3490.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Ollie Chessum",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/iJnFobSnnXHnF3JkoFKxc/66b94b54c4192ff6ec7e798b75f928e0/Ollie_Chessum.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Jack Conan",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/1SGnr1kc2iC2zVbONYSNxW/28bb1ca9c5dfe04a093452675b3eec4e/BB1_3290.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Luke Cowan-Dickie",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/37JS4iXzRn0P8ODS2Ywh9c/269c60a68b47a511c2235c84cee51d0b/Luke_Cowan_Dickie.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Scott Cummings",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/4vWfZ6KBaaOElSnFTSIv3I/6a8999a653cc3c88580ccfc448f18f75/Scott_Cummings.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Tom Curry",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/76gZaR5l3da9YdwOcSBi4B/cdd6ec372cca59dd6b5a4c2a9e82f1f3/Tom_Curry.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Ben Earl",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/5saKhvRkKgNiP8yks7qhk1/7718edf9d2acd56deb7796de76a74ae8/Ben_Earl.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Zander Fagerson",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/4t5jVoDlG9QeiymRmYvAPm/9427558f466221f2bd2fc28dd9aa83c9/Zander_Fagerson.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Tadhg Furlong",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/47HbNMQrInk3w9ZEE2a3dK/89f747ff526c83d0558376fc8b31a8ee/BB1_3466.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Ellis Genge",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/1Ys3FuMXo6eaPG2iEUcoFq/4ef87b69e8851edf4306ae021b9760fc/Ellis_Genge.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Maro Itoje",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/QpnKcI0ORFGYxEogoIYuZ/b0d2337d222497fdf81b80c13d9c1729/Maro_Itoje.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Ronan Kelleher",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/19OY2Tw1dmUfxUAx6YvM4K/0c0217df4b4a142206b4fe4b012f7c0a/BB1_3540.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Joe McCarthy",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/5BNYfGmLAV8VE3O8pt69SP/b8e029c2f091214f627b8059bbd230c3/BB1_3516.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Jac Morgan",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/45MfZ0sDx8Zj0lwffyC3Bi/ef28ef0ecb6af9122eb525365c529e1a/Jac_Morgan.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Henry Pollock",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/5op4MHjwOoqKSnWr6euciY/cf77ffc3b5411102b236ed594ec025b0/Henry_Pollock.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Andrew Porter",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/2akA2tPY0b85PPT3IobwJv/fb6c71e8cea338996018551ad94bd7ef/BB1_3529.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "James Ryan",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/mz8WVeEwBW3IVQdsNbAwu/4d31dd9439b425dbd261318ea9cc387b/BB1_3637.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Pierre Schoeman",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/2Q7G8lAoWLTr5alLO6eSb0/b6edd5a30eb0bbf202d4b8791c4922d5/Pierre_Schoeman.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Dan Sheehan",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/4j7dpwGbvOQ7xvO9iDNXEU/8489f34f54fb3c61b1a80bef257bd3fc/Dan_Sheehan.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Will Stuart",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/0134SgKTUYF5kxK6AREA79/02b1a2b226091d7026906a8049faba9f/Will_Stuart.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Josh van der Flier",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/5qUtT0FD2DlICfG8RFJKqE/ae30f377c5247da381564954c774df14/BB1_3462.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Bundee Aki",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/4AQVxAwCKesHbfSd6Y5iE2/688b803c560f6e3e702f8753f80ced93/BB1_3577.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Elliot Daly",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/61UNjFeT89TP1HMDDYWU5i/9fa7a28ce29c1cd0fa7d399cd51627d5/Elliot_Daly.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Tommy Freeman",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/5nV4yoA5XcYSzPrP6JYz6a/c7dd78b701c5cb10c5e6ec8e48b1fcea/Tommy_Freeman.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Jamison Gibson-Park",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/3wIY6w52eQH2u6iodCu0MC/683b6817b0ba8275e165af76273f71c6/BB1_3357_B.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Mack Hansen",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/6KSQxdxLK7kzS9wv1a9apx/f7aa9e2dced8e6391b544242212f5189/BB1_2881.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Huw Jones",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/6qHrNXVmU39rbzHQZdAEnt/01e046a7df65005f64d417423d7128fd/Huw_Jones.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Hugo Keenan",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/7hbDN8yfxsgjSUZeAsoO92/98084655e5eb41049af91469a5db24c7/BB1_3503.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Blair Kinghorn",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/15r5q5EkeCnPoOHPrxhuPR/6cd89e9b0ce011f3b0590db532b64793/Blair_Kinghorn.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "James Lowe",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/59W1RsEHWN4Bg28KiuASKD/7a5c0d86f08dbda2fa514aca6227db56/James_Lowe.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Alex Mitchell",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/5OdrK9JFBf3aUKzcFcivmx/5dc874fc6fd060d5d6c6927ea8af95a5/Alex_Mitchell.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Garry Ringrose",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/2htUt6TNEcECEYPmbpVIyl/407ec68885cf36e70d00949a4bb58967/BB1_3565.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Finn Russell",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/6vqJrKjFQZUFtd4LuHCg6y/c08e36ea216a510ce377bb50c131d3ab/Finn_Russell.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Fin Smith",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/16YJx4lZ4hGo6l318j2Del/7feed45b309ea13775be0f4953c73b61/Finn_Smith.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Marcus Smith",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/6BoDRDylJ8kurY68uw4372/95792cfdf49bbbad06c28c2a25564c9a/Marcus_Smith__3_.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Sione Tuipulotu",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/506yqaSyP34psI0V4g73YE/db77787ff97f95d5fb7370a00ad29dde/Sione_Tuipulotu.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Duhan van der Merwe",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/3MtgFOnCvTlSZUe8MN0qE8/28b84c77750f7e7dd551e5abab1a7895/Duhan_Van_Der_Merwe.png?fm=webp&fit=fill&f=top"
+                },
+                {
+                    "name": "Tomos Williams",
+                    "image": "https://images.ctfassets.net/56wfhs3as56s/2nHXpzHOgfaMS7AhaSy7PI/b65f55426f3a51d1ff30849cf7074d43/Tomos_Williams.png?fm=webp&fit=fill&f=top"
+                }
+            ]
         }
     ]
 }
