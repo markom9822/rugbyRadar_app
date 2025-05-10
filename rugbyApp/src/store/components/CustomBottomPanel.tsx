@@ -92,10 +92,12 @@ type CustomBottomPanelProps = {
     panelOpen: boolean,
     setPanelOpenState: (panelOpen: boolean) => void,
     handleLeagueChosen: (leagueValue: string) => void,
+    handleDefaultLeagueSet: (leagueValue: string) => void,
+
     translateY: SharedValue<number>
 }
 
-export const CustomBottomPanel = ({ panelOpen, setPanelOpenState, handleLeagueChosen, translateY }: CustomBottomPanelProps) => {
+export const CustomBottomPanel = ({ panelOpen, setPanelOpenState, handleLeagueChosen, handleDefaultLeagueSet, translateY }: CustomBottomPanelProps) => {
 
     const [paginationIndex, setPaginationIndex] = useState(0)
 
@@ -132,9 +134,10 @@ export const CustomBottomPanel = ({ panelOpen, setPanelOpenState, handleLeagueCh
                     </TouchableOpacity>
                 </View>
 
-                <CarouselPanel setCurrentIndex={setPaginationIndex} currentIndex={paginationIndex} itemList={carouselData} />
+                <CarouselPanel setCurrentIndex={setPaginationIndex} handleDefaultLeagueSet={handleDefaultLeagueSet} currentIndex={paginationIndex} itemList={carouselData} />
 
-                <View style={{ marginVertical: 10 }}>
+                <View style={{ marginVertical: 10, flexDirection: 'row' }}>
+
                     <TouchableOpacity onPress={handlePressedConfirmButton} activeOpacity={0.7} style={{ backgroundColor: colors.background, borderRadius: 15, padding: 5, margin: 4 }}>
                         <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, paddingVertical: 2, paddingHorizontal: 6 }}>Confirm</Text>
                     </TouchableOpacity>

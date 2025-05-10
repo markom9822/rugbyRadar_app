@@ -4,6 +4,7 @@ import { FixturesHeaderBanner } from "@/store/components/FixturesHeaderBanner"
 import { FixturesPanel } from "@/store/components/FixturesPanel"
 import { MultiTabBar } from "@/store/components/MultiTabBar"
 import { ScorePanel } from "@/store/components/ScorePanel"
+import { getItem, setItem } from "@/store/utils/asyncStorage"
 import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "@/store/utils/fixturesGetter"
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles"
@@ -54,7 +55,6 @@ const FixturesScreen = () => {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
     const leagueBottomSheetModalRef = useRef<BottomSheetModal>(null)
 
-
     const leagueSearchData = [
         { name: 'urc', offSeasonMonths: [7, 8] },
         { name: 'prem', offSeasonMonths: [7, 8] },
@@ -72,6 +72,7 @@ const FixturesScreen = () => {
 
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
     ];
+
 
     const handlePressFetchData = async (datesArray: Date[], targetLeagueName: string, setCurrent: boolean) => {
         console.info("Pressed Fetch Data")
@@ -257,17 +258,43 @@ const FixturesScreen = () => {
         return null
     }
 
+    const getDefaultLeague = async () => {
+
+        const defaultLeague = await getItem('defaultLeague');
+
+        if (defaultLeague == null) {
+            await setDefaultLeague('urc');
+            console.info("Setting to default URC value")
+            return 'urc';
+        }
+
+        console.info("Returning stored league value")
+
+        return defaultLeague;
+    }
+
+    const setDefaultLeague = async (leagueValue: string) => {
+
+        await setItem('defaultLeague', leagueValue);
+    }
+
+
     useEffect(() => {
         async function fetchMyAPI() {
-            const todayMatchesArray = await handlePressFetchData([new Date()], leagueName, currentTab == "Today")
+
+            // get default league
+            const defaultLeague = await getDefaultLeague();
+            setLeagueName(defaultLeague);
+
+            const todayMatchesArray = await handlePressFetchData([new Date()], defaultLeague, currentTab == "Today")
             console.info('Setting today match array')
             setTodayMatchesArray(todayMatchesArray)
 
-            const previousMatchesArray = await handlePressFetchData(get7Days(true), leagueName, currentTab == "Previous")
+            const previousMatchesArray = await handlePressFetchData(get7Days(true), defaultLeague, currentTab == "Previous")
             console.info('Setting previous match array')
             setPreviousMatchesArray(previousMatchesArray)
 
-            const upcomingMatchesArray = await handlePressFetchData(get7Days(false), leagueName, currentTab == "Upcoming")
+            const upcomingMatchesArray = await handlePressFetchData(get7Days(false), defaultLeague, currentTab == "Upcoming")
             console.info('Setting upcoming match array')
             setUpcomingMatchesArray(upcomingMatchesArray)
 
@@ -370,10 +397,9 @@ const FixturesScreen = () => {
     const snapPoints = ["100%"];
 
     return <View style={defaultStyles.container}>
-
         <FixturesHeaderBanner currentLeague={leagueName} OnPressLeague={handleChooseLeaguePress} />
 
-        <CustomBottomPanel panelOpen={leaguePanelOpen} handleLeagueChosen={handleOnChangeLeague} setPanelOpenState={setLeaguePanelOpen} translateY={translateY} />
+        <CustomBottomPanel panelOpen={leaguePanelOpen} handleDefaultLeagueSet={setDefaultLeague} handleLeagueChosen={handleOnChangeLeague} setPanelOpenState={setLeaguePanelOpen} translateY={translateY} />
 
         <View style={{ marginVertical: 7 }}>
             <MultiTabBar tabsArray={["Previous", "Today", "Upcoming"]} OnTabButtonPressed={handlePressedDateTab} currentTabKey={currentTab} />

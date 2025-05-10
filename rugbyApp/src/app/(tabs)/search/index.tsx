@@ -1,6 +1,7 @@
 import { colors, fontFamilies } from "@/constants/tokens"
 import { GridView } from "@/store/components/GridView"
 import { MultiTabBar } from "@/store/components/MultiTabBar"
+import { SearchBar } from "@/store/components/SearchBar"
 import { SearchLeagueInfoPanel } from "@/store/components/SearchLeagueInfoPanel"
 import { SearchTeamInfoPanel } from "@/store/components/SearchTeamInfoPanel"
 import { StandingsHeaderBanner } from "@/store/components/StandingsHeaderBanner"
@@ -14,7 +15,7 @@ import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
 import { hexToRGB } from "@/store/utils/helpers"
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet"
 import { useCallback, useRef, useState } from "react"
-import { Image, Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { Image, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 
 export type SearchTeamInfo = {
     type: string;
@@ -220,18 +221,7 @@ const TeamsScreen = () => {
                 </View>
 
                 {searchOption == "Teams" && (
-                    <TextInput
-                        style={{
-                            height: 40, margin: 12, borderRadius: 4,
-                            borderColor: 'grey', borderWidth: 1, padding: 10, color: colors.text, fontFamily: fontFamilies.light
-                        }}
-                        returnKeyType="search"
-                        placeholder="Search teams"
-                        placeholderTextColor={colors.text}
-                        cursorColor={'lightgrey'}
-                        onChangeText={(search) => handleOnSearchTextChange(search)}
-                        value={teamSearch}
-                    />
+                    <SearchBar searchValue={teamSearch} OnChangeSearch={handleOnSearchTextChange} />
                 )}
 
                 <ScrollView>
