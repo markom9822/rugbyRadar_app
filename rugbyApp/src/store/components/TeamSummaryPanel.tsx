@@ -108,7 +108,5 @@ export const SummaryInfoItem = ({ icon, text }: SummaryInfoItemPanelProps) => {
 
             <Text style={{ width: "90%", paddingHorizontal: 10, color: colors.text, fontFamily: fontFamilies.light }}>{text}</Text>
         </View>
-
     )
-
 }

@@ -29,11 +29,9 @@ export type AllLineUpsInfo = {
     isAwayPlayerCaptain: boolean,
 }
 
-
 type FixtureLineups = {
     id: string,
     isShown: boolean,
-
 }
 
 export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
@@ -217,7 +215,6 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
             console.info(awayLineup)
             console.info(awayLineup.length)
 
-
             // need to remove duplicates
             const homeUniqueArray = unique(homeLineup, 'teamPlayerNum')
             // sort in jersey number order
@@ -247,7 +244,6 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
         else {
             return index === lineupArray.length - 1;
         }
-
     }
 
     const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any, bottomSheetRef: any) => {
@@ -258,12 +254,6 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
             )
         }
         else {
-
-            const homeTeamBkgRBGA = hexToRGB(homeTeamInfo.colour, '0.2')
-            const homeTeamBorderRBGA = hexToRGB(homeTeamInfo.colour, '0.8')
-
-            const awayTeamBkgRBGA = hexToRGB(awayTeamInfo.colour, '0.2')
-            const awayTeamBorderRBGA = hexToRGB(awayTeamInfo.colour, '0.8')
 
             const handlePressLineupTeam = (team: string) => {
 
@@ -656,4 +646,3 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
     </View>
     )
 }
-

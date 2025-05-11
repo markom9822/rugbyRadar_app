@@ -53,7 +53,6 @@ const FixturesScreen = () => {
     const [currentDateArray, setCurrentDateArray] = useState<Date[]>([new Date()]);
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
-    const leagueBottomSheetModalRef = useRef<BottomSheetModal>(null)
 
     const leagueSearchData = [
         { name: 'urc', offSeasonMonths: [7, 8] },
@@ -69,10 +68,8 @@ const FixturesScreen = () => {
         { name: 'rugbyWorldCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 8, 11, 12] },
         { name: 'u20Championship', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12] },
         { name: 'pacificNationsCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
-
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
     ];
-
 
     const handlePressFetchData = async (datesArray: Date[], targetLeagueName: string, setCurrent: boolean) => {
         console.info("Pressed Fetch Data")
@@ -99,7 +96,6 @@ const FixturesScreen = () => {
 
             if (rugbyVizFixtures !== undefined && rugbyVizFixtures.length > 0) {
                 tempArray.push(...rugbyVizFixtures)
-                //return (rugbyVizFixtures)
             }
         }
 
@@ -109,19 +105,15 @@ const FixturesScreen = () => {
 
             if (planetRugbyFixtures !== undefined && planetRugbyFixtures.length > 0) {
                 tempArray.push(...planetRugbyFixtures)
-                //return (planetRugbyFixtures)
             }
         }
 
         const handleGetWorldRugbyFixtures = async (thisLeagueName: string, thisDate: Date, tempArray: MatchInfo[]) => {
 
-            console.info(thisLeagueName)
-
             const worldRugbyFixtures: MatchInfo[] = await fetchWorldRugbyAPIData(thisLeagueName, thisDate);
 
             if (worldRugbyFixtures !== undefined && worldRugbyFixtures.length > 0) {
                 tempArray.push(...worldRugbyFixtures)
-                //return (worldRugbyFixtures)
             }
         }
 

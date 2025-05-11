@@ -29,7 +29,6 @@ const TeamsSearchLayout = () => {
             </View>
         </BottomSheetModalProvider>
     </GestureHandlerRootView>
-
 }
 
 export default TeamsSearchLayout

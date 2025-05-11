@@ -1,12 +1,9 @@
 import { View } from "react-native"
 import { CarouselData } from "./CustomBottomPanel"
 
-
 type PaginationProps = {
-
     items: CarouselData[],
     paginationIndex: number,
-
 }
 
 export const Pagination = ({ items, paginationIndex }: PaginationProps) => {

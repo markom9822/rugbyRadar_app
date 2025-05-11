@@ -5,7 +5,6 @@ import { useEffect } from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated"
 
-
 export const CustomTabBarButton = ({ onPress, onLongPress, isFocused, routeName, color, label }: { onPress: Function, onLongPress: Function, isFocused: boolean, routeName: string, color: string, label: string }) => {
 
 
@@ -44,7 +43,6 @@ export const CustomTabBarButton = ({ onPress, onLongPress, isFocused, routeName,
         return null
     }
 
-
     return (
         <Pressable
             key={routeName}
@@ -62,7 +60,6 @@ export const CustomTabBarButton = ({ onPress, onLongPress, isFocused, routeName,
 
         </Pressable>
     )
-
 }
 
 const styles = StyleSheet.create({

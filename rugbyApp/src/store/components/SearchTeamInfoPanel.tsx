@@ -46,7 +46,6 @@ export const SearchTeamInfoPanel = ({ teamInfo, bottomSheetRef }: SearchTeamInfo
                 <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }]}>{teamInfo.displayName}</Text>
             </View>
 
-
             <TeamSummaryPanel teamInfo={teamInfo} />
             <TeamResultsPanel teamInfo={teamInfo} />
 

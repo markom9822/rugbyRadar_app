@@ -13,7 +13,6 @@ type LeagueDataItem = {
 };
 
 type FixturesHeaderBannerProps = {
-
     currentLeague: string,
     OnPressLeague: () => void
 }

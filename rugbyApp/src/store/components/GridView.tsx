@@ -17,8 +17,6 @@ export const GridView = <T extends any>(props: GridViewProps<T>) => {
             </View>
         })}
     </View>
-
-
 }
 
 const styles = StyleSheet.create({

@@ -4,7 +4,6 @@ import { Image, ImageBackground, StyleSheet, Text, View } from "react-native"
 import { getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo"
 import { hexToRGB } from "../utils/helpers"
 
-
 export type TeamEventStatsInfo = {
     currentTeam: string,
     homeTeamName: string,
