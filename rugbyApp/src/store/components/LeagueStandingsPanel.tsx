@@ -358,10 +358,8 @@ type SeasonYearPickerProps = {
 export const SeasonYearPicker = ({ currentSeasonYear, seasonYearOptions, OnPressSeasonYear }: SeasonYearPickerProps) => {
 
     const [showDropdown, setShowDropdown] = useState(false);
-
     const seasonDropdownButtonColour = hexToRGB("#4d4b4b", '0.4')
     const seasonDropdownPanelColour = hexToRGB("#4d4b4b", '0.95')
-
     const dropdownIconText = showDropdown ? "chevron-up" : "chevron-down"
 
     const handlePressedPickerOption = (seasonYear: string) => {

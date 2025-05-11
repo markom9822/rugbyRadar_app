@@ -1,12 +1,11 @@
-import { colors, fontFamilies } from '@/constants/tokens'
-import { Stack } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import * as SystemUI from 'expo-system-ui';
-import { useFonts } from 'expo-font'
-import { useEffect } from 'react'
+import { colors } from '@/constants/tokens';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
+import { useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const App = () => {
 
@@ -18,10 +17,10 @@ const App = () => {
 
 	useEffect(() => {
 		if (loaded || error) {
-		  SplashScreen.hideAsync();
+			SplashScreen.hideAsync();
 		}
-	  }, [loaded, error]);
-	
+	}, [loaded, error]);
+
 	if (!loaded && !error) {
 		return null;
 	}
@@ -29,7 +28,7 @@ const App = () => {
 	return <SafeAreaProvider>
 		<RootNavigation />
 
-		<StatusBar style='light'/>
+		<StatusBar style='light' />
 	</SafeAreaProvider>
 
 }
@@ -38,10 +37,12 @@ const RootNavigation = () => {
 
 	SystemUI.setBackgroundColorAsync(colors.background);
 
-	return(
+	return (
 		<Stack>
-			<Stack.Screen  name='(tabs)' options={{headerShown: false, statusBarColor: colors.background,
-				 navigationBarColor: 'black'}}/>
+			<Stack.Screen name='(tabs)' options={{
+				headerShown: false, statusBarColor: colors.background,
+				navigationBarColor: 'black'
+			}} />
 		</Stack>
 	)
 }

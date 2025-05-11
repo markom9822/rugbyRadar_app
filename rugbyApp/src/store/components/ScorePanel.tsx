@@ -200,5 +200,4 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             {lastRefreshHeader(lastRefreshTime)}
         </View>
     )
-
 }

@@ -3,7 +3,6 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { TextInput, View } from "react-native"
 import { hexToRGB } from "../utils/helpers"
 
-
 type SearchBarProps = {
     searchValue: string,
     OnChangeSearch: (search: string) => void,

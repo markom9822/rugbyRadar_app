@@ -60,7 +60,6 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
         setSeasonName(year)
     }
 
-
     return (
         <BottomSheetScrollView>
             <LinearGradient colors={[teamGradientColour, 'transparent']} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 0.5 }}
@@ -73,7 +72,6 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
                         </View>
                     </TouchableOpacity>
                 </View>
-
 
                 <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ padding: 5 }}>

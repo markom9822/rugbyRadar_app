@@ -9,7 +9,6 @@ import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase"
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
 import { hexToRGB } from "../utils/helpers"
 
-
 type StandingPanelProps = {
     index: number
     league: string
@@ -64,7 +63,6 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
     if (teamInfo === undefined) return
 
     const altBackgroundColour = hexToRGB(colors.altBackground, "0.2")
-    const teamPDTextColour = (new Number(teamPD) >= new Number(0)) ? ('#31ad35') : ('#c22727');
     const panelBkgColour = (ranking % 2 == 0) ? (altBackgroundColour) : (colors.background);
 
     const standingsRender = (isHeader: boolean, isPlayoffCutoff: boolean) => {

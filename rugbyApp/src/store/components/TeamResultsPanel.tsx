@@ -20,7 +20,6 @@ export type TeamEvent = {
     eventState: string,
 }
 
-
 type TeamResultsPanelProps = {
     teamInfo: SearchTeamInfo,
 }
@@ -152,7 +151,6 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
                 </BottomSheetScrollView>
 
             </View>
-
         </View>
     )
 }

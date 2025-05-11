@@ -5,7 +5,6 @@ import { Stack } from "expo-router"
 import { View, } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
-
 const FavouritesScreenLayout = () => {
 
     return <GestureHandlerRootView>
@@ -34,6 +33,5 @@ const FavouritesScreenLayout = () => {
 
     </GestureHandlerRootView>
 }
-
 
 export default FavouritesScreenLayout

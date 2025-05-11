@@ -269,7 +269,6 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
                 <FixtureInfoPanel id={id} />
 
-
                 <BottomSheetModal
                     ref={bottomSheetModalRef}
                     index={0}
@@ -297,16 +296,10 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                                 isLastItem={false}
                                 teamName={currentTeamFormArray[0].currentTeam}
                             />
-
-
                         )}
-
-
 
                     </BottomSheetView>
                 </BottomSheetModal>
-
-
 
             </LinearGradient>
         </BottomSheetModalProvider>
@@ -316,7 +309,6 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
 type FixturesInfoPanel = {
     id: string,
-
 }
 
 export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
@@ -329,7 +321,6 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
         <LinearGradient colors={['#0d0c0c', 'transparent']} start={{ x: 0.5, y: 0.9 }} end={{ x: 0.5, y: 0 }}
             style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }]}>
 
-
             <View style={{ marginVertical: 4 }}>
                 <MultiTabBar tabsArray={["Overview", "Stats", "Events", "Lineups"]} OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} tabFontSize={14} />
             </View>
@@ -338,7 +329,6 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
                 <FixturesInfoBox id={id} currentTabKey={currentTab} />
             </View>
 
-
         </LinearGradient>
     )
 }
@@ -346,14 +336,11 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
 type FixturesInfoBox = {
     id: string,
     currentTabKey: string
-
 }
-
 
 export const FixturesInfoBox = ({ id, currentTabKey }: FixturesInfoBox) => {
 
     return (
-
         <View>
             <FixtureOverview id={id} isShown={currentTabKey == "Overview"} />
             <FixtureStats id={id} isShown={currentTabKey == "Stats"} />
@@ -366,14 +353,12 @@ export const FixturesInfoBox = ({ id, currentTabKey }: FixturesInfoBox) => {
 type FixturesInfoTabBar = {
     OnTabButtonPressed: (key: string) => void,
     currentTabKey: string,
-
 }
 
 
 export const FixturesInfoTabBar = ({ OnTabButtonPressed, currentTabKey }: FixturesInfoTabBar) => {
 
     return (
-
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 8, marginTop: 20 }}>
             <FixturesInfoTabButton title="Overview" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Overview"} />
             <FixturesInfoTabButton title="Stats" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Stats"} />
@@ -387,7 +372,6 @@ type FixturesInfoTabButton = {
     title: string,
     isTabSelected: boolean,
     OnPressTab: (key: string) => void
-
 }
 
 

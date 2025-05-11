@@ -85,7 +85,6 @@ export const carouselData: CarouselData[] = [
         value: "BILTour",
         image: BALionsLogo
     },
-
 ]
 
 type CustomBottomPanelProps = {
@@ -93,14 +92,12 @@ type CustomBottomPanelProps = {
     setPanelOpenState: (panelOpen: boolean) => void,
     handleLeagueChosen: (leagueValue: string) => void,
     handleDefaultLeagueSet: (leagueValue: string) => void,
-
     translateY: SharedValue<number>
 }
 
 export const CustomBottomPanel = ({ panelOpen, setPanelOpenState, handleLeagueChosen, handleDefaultLeagueSet, translateY }: CustomBottomPanelProps) => {
 
     const [paginationIndex, setPaginationIndex] = useState(0)
-
 
     const handleClose = () => {
         translateY.value = 300;

@@ -121,7 +121,6 @@ export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any, leagueName: 
 
             leagueArray.push(newMatchInfo)
         }
-        
     }
 
     console.info(leagueArray)

@@ -106,13 +106,6 @@ const TeamsScreen = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [searchOption, setSearchOption] = useState<string>('Teams');
 
-
-    const getLeagueLogoFromDisplayName = (displayName: string) => {
-
-        const result = teamLeagueLogos.find((element) => element.displayName == displayName)
-        return result
-    }
-
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
 
@@ -137,8 +130,6 @@ const TeamsScreen = () => {
     const snapPoints = ["100%"];
 
     const handlePresentModalPress = (id: string, index: number) => {
-
-        //setCurrentID(linkID)
         setCurrentIndex(index)
         bottomSheetModalRef.current?.present();
     }
@@ -208,7 +199,6 @@ const TeamsScreen = () => {
             )
         }
     }
-
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

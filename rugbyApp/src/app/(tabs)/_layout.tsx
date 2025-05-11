@@ -1,9 +1,7 @@
 import { CustomTabBar } from "@/store/components/CustomTabBar";
 import { Tabs } from "expo-router";
 
-
 const TabsNavigation = () => {
-
 
     return (
         <Tabs tabBar={({ key, ...props }: any) => <CustomTabBar {...props} key={key} />} screenOptions={{ headerShown: false, tabBarHideOnKeyboard: true }}>
@@ -19,8 +17,5 @@ const TabsNavigation = () => {
         </Tabs>
     )
 }
-
-
-
 
 export default TabsNavigation

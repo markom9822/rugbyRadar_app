@@ -12,7 +12,6 @@ import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 type FixtureOverview = {
     id: string,
     isShown: boolean
-
 }
 
 export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
@@ -176,10 +175,8 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
                         />
                     </View>
 
-
                 </BottomSheetScrollView>}
         </View>
-
     )
 }
 

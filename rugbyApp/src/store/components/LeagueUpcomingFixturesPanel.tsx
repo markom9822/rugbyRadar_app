@@ -4,11 +4,9 @@ import { hexToRGB } from "../utils/helpers"
 
 type LeagueUpcomingFixturesPanelProps = {
     leagueName: string,
-
 }
 
 export const LeagueUpcomingFixturesPanel = ({ leagueName }: LeagueUpcomingFixturesPanelProps) => {
-
 
     const panelColour = hexToRGB("#4d4b4b", '0.6')
 

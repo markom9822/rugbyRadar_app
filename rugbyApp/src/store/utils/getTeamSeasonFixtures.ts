@@ -196,7 +196,6 @@ export const getTeamSeasonFixturesWorldRugbyAPI = async (seasonStartDate: Date, 
     )
 }
 
-
 export const getTeamSeasonFixtures = async (teamID: string | string[] | undefined, seasonYear: string) => {
 
     if (teamID == undefined) return
@@ -291,8 +290,6 @@ export const getTeamSeasonFixtures = async (teamID: string | string[] | undefine
     }
 
     console.info(teamMatchesArray)
-
-
 
     const sortedArray = teamMatchesArray.sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
 

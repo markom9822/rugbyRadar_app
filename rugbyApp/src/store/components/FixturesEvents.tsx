@@ -12,7 +12,6 @@ import { hexToRGB } from "../utils/helpers";
 type FixtureEvents = {
     id: string,
     isShown: boolean,
-
 }
 
 export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
@@ -24,7 +23,6 @@ export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-
 
     const eventID = new String(id).substring(0, 6);
     const leagueID = new String(id).slice(6)
