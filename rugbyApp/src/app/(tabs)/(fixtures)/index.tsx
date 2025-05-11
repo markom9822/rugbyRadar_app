@@ -339,7 +339,6 @@ const FixturesScreen = () => {
         return dates;
     }
 
-
     const handlePressedDateTab = (key: string) => {
 
         setCurrentTab(key)
