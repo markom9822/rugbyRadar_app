@@ -96,7 +96,6 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
         teamFormArray.push(newArray)
     }
 
-
     const sortedTeamFormArray = teamFormArray.sort((a, b) =>  new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime())
 
     return(
@@ -120,7 +119,6 @@ export const getTeamFormStatsWorldRugbyAPI = (matchStats: any, isHomeTeam: boole
 
     teamFormArray.push(newArray)
 
-    
     return(
         teamFormArray
     )
@@ -157,7 +155,6 @@ export const getTeamFormStatsPlanetRugbyAPI = (matchStats: any, isHomeTeam: bool
 
         teamFormArray.push(newArray)
     }
-
 
     const sortedTeamFormArray = teamFormArray.sort((a, b) =>  new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime())
 

@@ -1,5 +1,4 @@
 import { DropGoalIcon, RedCardIcon, RugbyPostsIcon, RugbyTryIcon, YellowCardIcon } from "@/store/Icons/Icons";
-import { PlayerStatsItem } from "../components/TeamPlayerStatsPanel";
 
 
 export const getKeyEventIcon = (eventType: string) => {
@@ -210,7 +209,6 @@ export const getKeyEventIconWorldRugbyAPI = (eventType: string) => {
         case 'Red Card': return RedCardIcon
         case 'Drop goal': return DropGoalIcon
 
-
         default: { 
            break; 
         } 
@@ -417,9 +415,7 @@ export const getKeyEventsPlanetRugbyAPI = (matchStats: any, homeTeamName: string
     // sort events
     const sortedEventsArray = keyEventsArray.sort((a:any, b:any) =>  a.eventTime - b.eventTime)
 
-
     return(
         sortedEventsArray
     )
-
 }

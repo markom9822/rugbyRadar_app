@@ -52,9 +52,7 @@ export const getTeamStandingsInfo = (seasonStandings: any) => {
     return(
         newArray
     )
-
 }
-
 
 export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: string) => {
 
@@ -120,5 +118,4 @@ export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: s
     return(
         newArray
     )
-
 }

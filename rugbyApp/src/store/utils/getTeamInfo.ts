@@ -6,7 +6,6 @@ import { getTop14TeamInfoFromName } from "../Top14RugbyTeamsDatabase";
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase";
 import { getAnyTeamInfoFromName } from "./helpers";
 
-
 export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string, awayTeam: string) => {
 
     var homeInfo;
@@ -115,5 +114,4 @@ export const getTeamInfo = (league: string | undefined, teamName: string) => {
     return {
         teamInfo,
     }
-
 }

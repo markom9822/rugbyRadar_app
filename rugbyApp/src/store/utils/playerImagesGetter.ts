@@ -1,11 +1,9 @@
-
+import * as interTeamArrayJSONData from '@/store/PlayerImages/InternationalPlayerImages.json'
+import * as miscJSONData from '@/store/PlayerImages/MiscPlayerImages.json'
 import * as premJSONData from '@/store/PlayerImages/PremPlayerImages.json'
 import * as superRugbyJSONData from '@/store/PlayerImages/SuperRugbyPlayerImages.json'
 import * as top14JSONData from '@/store/PlayerImages/Top14PlayerImages.json'
 import * as urcJSONData from '@/store/PlayerImages/URCPlayerImages.json'
-
-import * as interTeamArrayJSONData from '@/store/PlayerImages/InternationalPlayerImages.json'
-import * as miscJSONData from '@/store/PlayerImages/MiscPlayerImages.json'
 
 import { getChampsCupShortNameFromFullName } from '../ChampionsCupRugbyTeamsDatabase'
 
@@ -56,7 +54,6 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
     leagueTeamArray = interTeamArray;
   }
 
-
   console.info(playerName)
   console.info(correctTeamName)
 
@@ -75,7 +72,6 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
       targetImgSrc = targetTeam.players[index].image ?? '';
         break;
     }
-    
   }
 
   console.info(targetImgSrc)

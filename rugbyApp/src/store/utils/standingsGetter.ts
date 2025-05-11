@@ -266,9 +266,7 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: b
     return (
         newArray
     )
-
 }
-
 
 export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolCodes: string[]) => {
 
