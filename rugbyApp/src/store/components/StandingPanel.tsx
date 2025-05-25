@@ -50,6 +50,7 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
         teamInfo = getTop14TeamInfoFromName(teamName)
     }
     else if (league === "superRugby") {
+        console.info(teamName)
         teamInfo = getSuperRugbyTeamInfoFromName(teamName)
     }
     else if (league === "championsCup" || league === "challengeCup") {
