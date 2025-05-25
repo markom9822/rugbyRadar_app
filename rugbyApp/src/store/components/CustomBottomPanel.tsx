@@ -3,6 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import { AllLeaguesIcon } from "../Icons/Icons";
 import { BALionsLogo } from "../InternationalTeamLogos/InternationalTeams";
 import { AutumnNationsLogo, ChallengeCupLogo, ChampionsCupAltLogo, PacificNationsCupLogo, PremiershipAltLogo, RugbyChampLogo, SixNationsLogo, SuperRugbyLogo, Top14Logo, U20SixNationsLogo, U20WorldChampsLogo, URCLogo, WorldCupLogo } from "../LeagueLogos/LeagueLogos";
 import { CarouselPanel } from "./Carousel";
@@ -15,6 +16,11 @@ export type CarouselData = {
 }
 
 export const carouselData: CarouselData[] = [
+    {
+        title: "All Leagues",
+        value: "all",
+        image: AllLeaguesIcon,
+    },
     {
         title: "URC",
         value: "urc",

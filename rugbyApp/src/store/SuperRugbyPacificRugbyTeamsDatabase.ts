@@ -1,5 +1,11 @@
-import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams"
-import { BluesAltLogo, BluesLogo, BrumbiesAltLogo, BrumbiesLogo, ChiefsAltLogo, ChiefsLogo, CrusadersAltLogo, CrusadersLogo, DruaAltLogo, DruaLogo, ForceAltLogo, ForceLogo, HighlandersAltLogo, HighlandersLogo, HurricanesAltLogo, HurricanesLogo, MoanaAltLogo, MoanaLogo, RebelsAltLogo, RebelsLogo, RedsAltLogo, RedsLogo, WaratahsAltLogo, WaratahsLogo } from "./SuperRugbyTeamLogos/SuperRugbyTeams"
+import { DefaultLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { BluesAltLogo, BluesLogo, BrumbiesAltLogo, BrumbiesLogo, ChiefsAltLogo, ChiefsLogo, CrusadersAltLogo, CrusadersLogo, DruaAltLogo, DruaLogo, ForceAltLogo, ForceLogo, HighlandersAltLogo, HighlandersLogo, HurricanesAltLogo, HurricanesLogo, MoanaAltLogo, MoanaLogo, RebelsAltLogo, RebelsLogo, RedsAltLogo, RedsLogo, WaratahsAltLogo, WaratahsLogo } from "./SuperRugbyTeamLogos/SuperRugbyTeams";
+
+
+export const rugbyVizSuperRugbyNames = [
+  { databaseName: 'Reds', rugbyVizName: 'Queensland Reds',},
+  { databaseName: 'Waratahs', rugbyVizName: 'New South Wales Waratahs',},
+];
 
 export const getSuperRugbyTeamInfoFromName = (name: string) => {
 
@@ -15,8 +21,20 @@ export const getSuperRugbyTeamInfoFromName = (name: string) => {
       foundedYear: '',
       seasonType: '',
     }
+
+    var searchName = '';
+
+    const superRugbyNameResult = rugbyVizSuperRugbyNames.find((element) => element.rugbyVizName == name)
+      if(superRugbyNameResult !== undefined)
+      {
+          searchName = superRugbyNameResult.databaseName;
+      }
+      else
+      {
+          searchName = name;
+      }
   
-      const match = SuperRugbyTeams.find((item) => item.displayName === name)
+      const match = SuperRugbyTeams.find((item) => item.displayName === searchName)
       if(match !== undefined)
       {
           return match
