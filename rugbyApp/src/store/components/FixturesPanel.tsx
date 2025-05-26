@@ -235,10 +235,11 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
                             <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{homeAbbreviation}</Text>
 
-                            <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(mainTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "75%" }}>
-                                <Text style={{ color: 'lightgrey', fontSize: fontSize.xs, textAlign: 'center' }}>{teamFormDisplay(mainTeamFormStatsArray)}</Text>
+                            <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(mainTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "85%" }}>
+                                <Text style={{ color: 'lightgrey', fontSize: 5, textAlign: 'center' }}>{teamFormDisplay(mainTeamFormStatsArray)}</Text>
                             </TouchableOpacity>
                         </View>
+
 
                         <View style={{ width: "50%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
@@ -254,7 +255,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                             </View>
                             <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{awayAbbreviation}</Text>
 
-                            <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(opponentTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "75%" }}>
+                            <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(opponentTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "85%" }}>
                                 <Text style={{ color: 'lightgrey', fontSize: fontSize.xs, textAlign: 'center' }}>{teamFormDisplay(opponentTeamFormStatsArray)}</Text>
                             </TouchableOpacity>
                         </View>
@@ -281,8 +282,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                     backgroundStyle={{ backgroundColor: 'transparent' }}
                 >
                     <BottomSheetView style={{
-                        flex: 1, backgroundColor: teamFormPanelColour, flexDirection: 'row',
-                        borderWidth: 1, borderColor: 'grey', borderTopLeftRadius: 10, borderTopRightRadius: 10
+                        flex: 1, backgroundColor: teamFormPanelColour, flexDirection: 'row', borderTopLeftRadius: 10, borderTopRightRadius: 10
                     }}>
 
                         {currentTeamFormArray != undefined && (
