@@ -42,8 +42,8 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
     var homeAbbreviation = homeTeamInfo.abbreviation;
     var awayAbbreviation = awayTeamInfo.abbreviation;
 
-    const homeFontFamily = (new Number(matchInfo.homeScore) >= new Number(matchInfo.awayScore)) ? (fontFamilies.bold) : (fontFamilies.light);
-    const awayFontFamily = (new Number(matchInfo.awayScore) >= new Number(matchInfo.homeScore)) ? (fontFamilies.bold) : (fontFamilies.light);
+    const homeTextColour = (new Number(matchInfo.homeScore) >= new Number(matchInfo.awayScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
+    const awayTextColour = (new Number(matchInfo.awayScore) >= new Number(matchInfo.homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
     const matchTime = matchInfo.matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
 
@@ -233,7 +233,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                                     source={homeTeamInfo.logo} />
                             </View>
 
-                            <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{homeAbbreviation}</Text>
+                            <Text style={[{ color: colors.text, fontFamily: fontFamilies.title, textAlign: 'center' }]}>{homeAbbreviation}</Text>
 
                             <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(mainTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "85%" }}>
                                 <Text style={{ color: 'lightgrey', fontSize: 5, textAlign: 'center' }}>{teamFormDisplay(mainTeamFormStatsArray)}</Text>
@@ -243,7 +243,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
                         <View style={{ width: "50%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-                            {scoreRender(matchInfo.eventState, matchTime, matchInfo, homeFontFamily, awayFontFamily)}
+                            {scoreRender(matchInfo.eventState, matchTime, matchInfo, homeTextColour, awayTextColour)}
 
                         </View>
 
@@ -253,7 +253,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                                     style={[fixturesPanelStyles.teamLogo]}
                                     source={awayTeamInfo.logo} />
                             </View>
-                            <Text style={[{ color: colors.text, fontFamily: fontFamilies.bold, textAlign: 'center' }]}>{awayAbbreviation}</Text>
+                            <Text style={[{ color: colors.text, fontFamily: fontFamilies.title, textAlign: 'center' }]}>{awayAbbreviation}</Text>
 
                             <TouchableOpacity onPress={() => handleOpenedTeamFormPanel(opponentTeamFormStatsArray)} activeOpacity={0.7} style={{ backgroundColor: panelColour, borderRadius: 5, marginVertical: 5, padding: 3, width: "85%" }}>
                                 <Text style={{ color: 'lightgrey', fontSize: fontSize.xs, textAlign: 'center' }}>{teamFormDisplay(opponentTeamFormStatsArray)}</Text>
@@ -387,7 +387,9 @@ export const FixturesInfoTabButton = ({ title, isTabSelected, OnPressTab }: Fixt
     )
 }
 
-export const scoreRender = (eventState: string, matchTime: string, matchInfo: MatchInfo, homeFontFamily: string, awayFontFamily: string) => {
+export const scoreRender = (eventState: string, matchTime: string, matchInfo: MatchInfo, homeTextColour: string, awayTextColour: string) => {
+
+    const scoreFontSize = 27;
 
     // not started yet
     if (eventState === "pre") {
@@ -395,7 +397,7 @@ export const scoreRender = (eventState: string, matchTime: string, matchInfo: Ma
             <View style={{ flexDirection: 'column', width: "100%", paddingVertical: 8 }}>
                 <Text style={{
                     color: colors.text, fontSize: 26,
-                    textAlign: 'center', fontFamily: fontFamilies.regular
+                    textAlign: 'center', fontFamily: fontFamilies.title
                 }}>{matchTime}</Text>
             </View>
         )
@@ -405,12 +407,12 @@ export const scoreRender = (eventState: string, matchTime: string, matchInfo: Ma
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8 }}>
                 <Text style={[
-                    { fontSize: 28, color: colors.text, fontFamily: homeFontFamily, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
+                    { fontSize: scoreFontSize, color: homeTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
 
-                <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: fontSize.base, width: "50%" }}>FT</Text>
+                <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: fontSize.base, width: "50%" }}>FT</Text>
 
                 <Text style={[
-                    { fontSize: 28, color: colors.text, fontFamily: awayFontFamily, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>
+                    { fontSize: scoreFontSize, color: awayTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>
             </View>
         )
     }
@@ -419,12 +421,12 @@ export const scoreRender = (eventState: string, matchTime: string, matchInfo: Ma
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8 }}>
                 <Text style={[
-                    { fontSize: 28, color: colors.text, fontFamily: homeFontFamily, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
+                    { fontSize: scoreFontSize, color: homeTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
 
-                <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: fontSize.base, width: "50%" }}>HT</Text>
+                <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: fontSize.base, width: "50%" }}>HT</Text>
 
                 <Text style={[
-                    { fontSize: 28, color: colors.text, fontFamily: awayFontFamily, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>
+                    { fontSize: scoreFontSize, color: awayTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>
             </View>
         )
     }
@@ -434,12 +436,12 @@ export const scoreRender = (eventState: string, matchTime: string, matchInfo: Ma
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8 }}>
                     <Text style={[
-                        { fontSize: 28, color: colors.text, fontFamily: homeFontFamily, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
+                        { fontSize: scoreFontSize, color: homeTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
 
-                    <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: 15, width: "50%" }}>{matchInfo.eventTime}'</Text>
+                    <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: 15, width: "50%" }}>{matchInfo.eventTime}'</Text>
 
                     <Text style={[
-                        { fontSize: 28, color: colors.text, fontFamily: awayFontFamily, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>
+                        { fontSize: scoreFontSize, color: awayTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>
                 </View>
 
             </View>

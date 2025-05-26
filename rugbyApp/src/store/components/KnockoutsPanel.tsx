@@ -659,7 +659,7 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
                             style={[knockoutPanelStyles.teamLogo]}
                             source={homeTeamInfo.logo} />
                     </View>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 11, textAlign: 'center' }}>{homeTeamName}</Text>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 10, textAlign: 'center' }}>{homeTeamName}</Text>
                 </View>
 
                 <View style={{ width: "60%" }}>
@@ -672,7 +672,7 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
                             style={[knockoutPanelStyles.teamLogo]}
                             source={awayTeamInfo.logo} />
                     </View>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 11, textAlign: 'center' }}>{awayTeamName}</Text>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 10, textAlign: 'center' }}>{awayTeamName}</Text>
                 </View>
             </View>
         </View>
@@ -739,11 +739,11 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
             return (
                 <View style={{ flexDirection: 'column' }}>
                     <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
 
                         <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 14 }}>FT</Text>
 
-                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
                     </View>
                     <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
                 </View>
@@ -754,11 +754,11 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
             return (
                 <View style={{ flexDirection: 'column' }}>
                     <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
 
                         <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 14 }}></Text>
 
-                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
                     </View>
                     <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
                 </View>
@@ -793,7 +793,7 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
                             style={[knockoutPanelStyles.teamLogo]}
                             source={homeTeamInfo.logo} />
                     </View>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13, textAlign: 'center' }}>{homeTeamName}</Text>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13, textAlign: 'center' }}>{homeTeamName}</Text>
                 </View>
 
                 <View style={{ width: "60%" }}>
@@ -806,7 +806,7 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
                             style={[knockoutPanelStyles.teamLogo]}
                             source={awayTeamInfo.logo} />
                     </View>
-                    <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13, textAlign: 'center' }}>{awayTeamName}</Text>
+                    <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13, textAlign: 'center' }}>{awayTeamName}</Text>
                 </View>
             </View>
         </View>
@@ -815,7 +815,7 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
 
 export const knockoutPanelStyles = StyleSheet.create({
     roundText: {
-        fontFamily: fontFamilies.bold,
+        fontFamily: fontFamilies.title,
         textAlign: 'center',
         fontSize: 11,
         padding: 6

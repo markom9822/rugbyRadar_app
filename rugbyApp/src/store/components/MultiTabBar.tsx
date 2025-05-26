@@ -10,7 +10,7 @@ type MultiTabBar = {
     tabFontSize?: number,
 }
 
-export const MultiTabBar = ({ tabsArray, OnTabButtonPressed, currentTabKey, tabFontSize = 15 }: MultiTabBar) => {
+export const MultiTabBar = ({ tabsArray, OnTabButtonPressed, currentTabKey, tabFontSize = 13 }: MultiTabBar) => {
 
     const tabBkgColour = hexToRGB("#4d4b4b", '0.5')
 
@@ -41,8 +41,8 @@ export const MultiTabButton = ({ title, isTabSelected, OnPressTab, tabFontSize }
     return (
         <TouchableOpacity style={{ marginVertical: 6, marginHorizontal: 4 }} activeOpacity={0.8} onPress={() => OnPressTab(title)}>
             <Text numberOfLines={1} style={{
-                color: isTabSelected ? colors.text : 'lightgrey', backgroundColor: isTabSelected ? tabPanelColour : 'transparent', borderRadius: 12,
-                fontFamily: isTabSelected ? fontFamilies.bold : fontFamilies.regular, textAlign: 'center', fontSize: tabFontSize, paddingVertical: 3, paddingHorizontal: 3,
+                color: isTabSelected ? colors.text : hexToRGB('#FFFFFF', '0.6'), backgroundColor: isTabSelected ? tabPanelColour : 'transparent', borderRadius: 12,
+                fontFamily: fontFamilies.title, textAlign: 'center', fontSize: tabFontSize, paddingVertical: 3, paddingHorizontal: 3,
             }}>{title}</Text>
         </TouchableOpacity>
     )
