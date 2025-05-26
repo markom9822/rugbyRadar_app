@@ -276,7 +276,7 @@ export const KeyEventItem = ({ leagueName, eventTime, eventType, eventPlayer, ev
 
         return (
             <View>
-                <Text style={{ color: colors.text, textAlign: 'center', fontSize: 17, fontFamily: fontFamilies.bold, padding: 3 }}>{eventScore}</Text>
+                <Text style={{ color: colors.text, textAlign: 'center', fontSize: 17, fontFamily: fontFamilies.title, padding: 3 }}>{eventScore}</Text>
                 <Text style={{ color: colors.text, textAlign: 'center', fontSize: 14, fontFamily: fontFamilies.regular, padding: 3 }}>{eventTime}'</Text>
             </View>
         )

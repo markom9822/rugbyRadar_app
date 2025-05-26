@@ -116,7 +116,7 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 3 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'flex-start', paddingHorizontal: 5, width: "50%" }}>
-                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, textAlign: 'left' }}>Results / Fixtures</Text>
+                    <Text style={{ color: 'grey', fontSize: 12, fontFamily: fontFamilies.title, textAlign: 'left' }}>Results / Fixtures</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "50%", paddingHorizontal: 5 }}>
@@ -189,8 +189,8 @@ export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, ho
 
     const homeScoreWeight = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? ('500') : ('300');
     const awayScoreWeight = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? ('500') : ('300');
-    const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
-    const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
+    const homeTextColour = (new Number(homeTeamScore) >= new Number(awayTeamScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
+    const awayTextColour = (new Number(awayTeamScore) >= new Number(homeTeamScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
     const itemPanelColour = hexToRGB(colors.background, '0.5')
 
@@ -202,14 +202,14 @@ export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, ho
                 <View style={{ width: "40%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{
                         paddingHorizontal: 5, fontWeight: homeScoreWeight,
-                        fontSize: fontSize.sm, textAlign: 'center', width: "50%", color: colors.text, fontFamily: homeFontFamily
+                        fontSize: fontSize.sm, textAlign: 'center', width: "50%", color: homeTextColour, fontFamily: fontFamilies.title
                     }}>{homeTeamScore}</Text>
 
                     <Text style={{ fontSize: fontSize.xs, color: colors.text, fontFamily: fontFamilies.light }}>{formattedDate}</Text>
 
                     <Text style={{
                         paddingHorizontal: 5, fontWeight: awayScoreWeight,
-                        fontSize: fontSize.sm, textAlign: 'center', width: "50%", color: colors.text, fontFamily: awayFontFamily
+                        fontSize: fontSize.sm, textAlign: 'center', width: "50%", color: awayTextColour, fontFamily: fontFamilies.title
                     }}>{awayTeamScore}</Text>
                 </View>
             )
@@ -217,7 +217,7 @@ export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, ho
         else {
             return (
                 <View style={{ width: "40%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 300, textAlign: 'center', color: colors.text, fontFamily: fontFamilies.regular }}>{eventTime}</Text>
+                    <Text style={{ paddingHorizontal: 5, fontSize: fontSize.sm, fontWeight: 300, textAlign: 'center', color: colors.text, fontFamily: fontFamilies.title }}>{eventTime}</Text>
 
                     <Text style={{ fontSize: fontSize.xs, color: colors.text, fontFamily: fontFamilies.light }}>{formattedDate}</Text>
                 </View>
@@ -247,7 +247,7 @@ export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, ho
                                     minWidth: 30,
                                 }} />
                         </View>
-                        <Text style={{ paddingHorizontal: 5, fontSize: fontSize.xs, fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold }}>{homeTeamInfo.abbreviation}</Text>
+                        <Text style={{ paddingHorizontal: 5, fontSize: 11, color: colors.text, fontFamily: fontFamilies.title }}>{homeTeamInfo.abbreviation}</Text>
 
                     </View>
 
@@ -266,7 +266,7 @@ export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, ho
                                 }} />
                         </View>
 
-                        <Text style={{ paddingHorizontal: 5, fontSize: fontSize.xs, fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold }}>{awayTeamInfo.abbreviation}</Text>
+                        <Text style={{ paddingHorizontal: 5, fontSize: 11, color: colors.text, fontFamily: fontFamilies.title }}>{awayTeamInfo.abbreviation}</Text>
 
                     </View>
 

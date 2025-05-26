@@ -19,7 +19,7 @@ const FavouritesScreenLayout = () => {
                     },
                     headerTitleStyle: {
                         color: colors.text,
-                        fontFamily: fontFamilies.bold,
+                        fontFamily: fontFamilies.title,
                     },
                     headerTintColor: colors.text
                 }}>

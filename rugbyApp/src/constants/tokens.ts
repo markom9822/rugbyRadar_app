@@ -28,6 +28,7 @@ export const fontFamilies = {
 	light: 'WorkSans-Light',
 	regular: 'WorkSans-Regular',
 	bold: 'WorkSans-SemiBold',
+	title: 'Avega-Italic'
 }
 
 

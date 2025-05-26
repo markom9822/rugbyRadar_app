@@ -591,33 +591,33 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                         <ImageBackground resizeMode="cover" imageStyle={{ opacity: 0.05 }}
                             style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} source={selectedTeam == "home" ? homeTeamInfo?.altLogo : awayTeamInfo?.altLogo} >
                             <View style={{ width: "45%", padding: 10 }}>
-                                <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 17, marginBottom: 10 }}>{modalPlayerName.toUpperCase()}</Text>
+                                <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 17, marginBottom: 10 }}>{modalPlayerName.toUpperCase()}</Text>
                                 <View style={{ borderTopColor: 'white', borderTopWidth: 1, borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 4 }}>
-                                    <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, paddingLeft: 1, paddingVertical: 3 }}>{modalPlayerPosition.toUpperCase()}</Text>
+                                    <Text style={{ color: hexToRGB('#FFFFFF', '0.7'), fontFamily: fontFamilies.title, paddingLeft: 1, paddingVertical: 3 }}>{modalPlayerPosition.toUpperCase()}</Text>
                                 </View>
                                 <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
                                     <View style={{ marginHorizontal: 2 }}>
-                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>AGE</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13 }}>AGE</Text>
                                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerAge}</Text>
                                     </View>
                                     <View>
-                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>DATE OF BIRTH</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13 }}>DATE OF BIRTH</Text>
                                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerDOB}</Text>
                                     </View>
                                 </View>
                                 <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
                                     <View style={{ marginHorizontal: 2 }}>
-                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>HEIGHT</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13 }}>HEIGHT</Text>
                                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerHeight}</Text>
                                     </View>
                                     <View>
-                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>WEIGHT</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13 }}>WEIGHT</Text>
                                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerWeight}</Text>
                                     </View>
                                 </View>
                                 <View style={{ marginVertical: 6, flexDirection: 'row', gap: 14 }}>
                                     <View style={{ marginHorizontal: 2 }}>
-                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, fontSize: 13 }}>BIRTHPLACE</Text>
+                                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, fontSize: 13 }}>BIRTHPLACE</Text>
                                         <Text style={{ color: colors.text, fontFamily: fontFamilies.light }}>{modalPlayerCountry}</Text>
                                     </View>
                                 </View>
@@ -633,7 +633,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                                         <Text style={{
                                             flex: 1,
                                             textAlign: 'center', color: colors.text, borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
-                                            fontFamily: fontFamilies.bold, fontSize: 14, backgroundColor: hexToRGB(modalTeamColour, '0.5')
+                                            fontFamily: fontFamilies.title, fontSize: 14, backgroundColor: hexToRGB(modalTeamColour, '0.5')
                                         }}>{getLastName(modalPlayerName).toUpperCase()}</Text>
                                     </View>
                                 </View>

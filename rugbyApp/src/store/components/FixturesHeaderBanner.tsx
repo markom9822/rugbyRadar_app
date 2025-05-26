@@ -31,16 +31,16 @@ export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesH
                     <Image
                         style={{
                             resizeMode: 'contain',
-                            width: 40,
-                            height: 40,
-                            minHeight: 40,
-                            minWidth: 40
+                            width: 36,
+                            height: 36,
+                            minHeight: 36,
+                            minWidth: 36
                         }}
                         source={RugbyRadarIconWhite} />
                 </View>
 
                 <View>
-                    <Text style={{ fontFamily: fontFamilies.bold, fontSize: 18, color: colors.text }}>Rugby Radar</Text>
+                    <Text style={{ fontFamily: fontFamilies.title, fontSize: 16, color: colors.text }}>Rugby Radar</Text>
                 </View>
             </View>
 

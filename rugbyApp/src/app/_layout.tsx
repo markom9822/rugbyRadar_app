@@ -13,6 +13,7 @@ const App = () => {
 		'WorkSans-Light': require('@/assets/fonts/WorkSans-Light.ttf'),
 		'WorkSans-Regular': require('@/assets/fonts/WorkSans-Regular.ttf'),
 		'WorkSans-SemiBold': require('@/assets/fonts/WorkSans-SemiBold.ttf'),
+		'Avega-Italic': require('@/assets/fonts/avega.italic.ttf'),
 	});
 
 	useEffect(() => {

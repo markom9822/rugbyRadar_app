@@ -64,14 +64,13 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
     return (
         <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
 
-
             <View style={{
                 justifyContent: 'center', alignItems: 'center', backgroundColor: teamBackgroundColour, width: "100%",
                 borderTopLeftRadius: 8, borderTopRightRadius: 8, height: "13%"
             }}>
                 <View style={{ flexDirection: 'row', width: "100%", justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ width: "70%", justifyContent: 'center', alignItems: 'center' }}>
-                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold, paddingHorizontal: 5 }}>{panelTitle.toUpperCase()}</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.title, paddingHorizontal: 5 }}>{panelTitle.toUpperCase()}</Text>
                     </View>
 
                     <View style={{ width: "30%", justifyContent: 'center', alignItems: 'center' }}>
@@ -156,7 +155,7 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
                     </View>
 
                     <View style={{ width: "50%", justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4 }}>HEAD TO HEAD</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, marginHorizontal: 4, paddingHorizontal: 4 }}>HEAD TO HEAD</Text>
                     </View>
 
                     <View style={{ width: "25%", justifyContent: 'center', alignItems: 'center' }}>
@@ -221,7 +220,7 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
         winOrLoseText = (!homeWinner) ? ('W') : ('L');
     }
 
-    const winLossColour = (winOrLoseText === 'W') ? ("#42c765") : ("#d94a4a");
+    const winLossColour = (winOrLoseText === 'W') ? (hexToRGB("#42c765", '0.8')) : (hexToRGB("#d94a4a", '0.8'));
 
     if (homeTeamInfo == undefined) return
     if (awayTeamInfo == undefined) return
@@ -230,8 +229,11 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 3 }}>
 
             {(showWinLoss) &&
-                <View style={{ flexDirection: 'row', width: "5%", justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: winLossColour, paddingHorizontal: 1, fontSize: 10, fontWeight: 600, fontFamily: fontFamilies.regular }}>{winOrLoseText}</Text>
+                <View style={{
+                    flexDirection: 'row', width: "5%", justifyContent: 'center', alignItems: 'center',
+                    backgroundColor: winLossColour, margin: 5, borderRadius: 20
+                }}>
+                    <Text style={{ textAlign: 'center', color: 'white', paddingHorizontal: 1, fontSize: 10, fontFamily: fontFamilies.bold }}>{winOrLoseText}</Text>
                 </View>
             }
 
@@ -243,7 +245,7 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
                 <Text style={[teamEventsPanelStyles.teamName]}>{homeTeamInfo?.abbreviation}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row', width: "27%", justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: "26%", justifyContent: 'center' }}>
                 <Text style={[teamEventsPanelStyles.matchScore]}>{homeTeamScore} - {awayTeamScore}</Text>
             </View>
 

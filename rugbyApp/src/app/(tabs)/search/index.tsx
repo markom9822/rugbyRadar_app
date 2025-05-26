@@ -274,12 +274,12 @@ export const GridSearchPanel = ({ title, colour, logo, altLogo, id, index, OnPre
                         source={logo} />
                 </View>
                 <View style={{ padding: 5 }}>
-                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold }]}>{title}</Text>
+                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ color: 'lightgrey', fontSize: 12, fontFamily: fontFamilies.title }]}>{title}</Text>
                 </View>
 
             </View>
 
-        </TouchableOpacity>
+        </TouchableOpacity >
     )
 }
 

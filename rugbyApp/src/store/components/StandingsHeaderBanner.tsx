@@ -25,7 +25,7 @@ export const StandingsHeaderBanner = ({ }: StandingsHeaderBannerProps) => {
                 </View>
 
                 <View>
-                    <Text style={{ fontFamily: fontFamilies.bold, fontSize: 20, color: colors.text }}>Rugby Radar</Text>
+                    <Text style={{ fontFamily: fontFamilies.title, fontSize: 19, color: colors.text }}>Rugby Radar</Text>
                 </View>
             </View>
         </View>

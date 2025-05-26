@@ -274,7 +274,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
             <View style={{ flexDirection: 'row', marginHorizontal: 15, marginVertical: 3 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'flex-start', paddingHorizontal: 5, width: "50%" }}>
-                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, textAlign: 'left' }}>Standings</Text>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.title, fontSize: 12, textAlign: 'left' }}>Standings</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "50%", paddingHorizontal: 5 }}>
@@ -327,7 +327,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             {shouldShowKnockouts && (
                 <View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5, width: "100%" }}>
-                        <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, textAlign: 'center' }}>Knockouts {seasonYear}</Text>
+                        <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.title, fontSize: 12, textAlign: 'center' }}>Knockouts {seasonYear}</Text>
                     </View>
                     <View style={{ backgroundColor: panelColour, paddingVertical: 10, paddingHorizontal: 4, borderRadius: 5, marginHorizontal: 15, marginBottom: 60 }}>
                         {activityIndicatorHeader()}
@@ -375,7 +375,7 @@ export const SeasonYearPicker = ({ currentSeasonYear, seasonYearOptions, OnPress
                     <View style={{ paddingHorizontal: 4, justifyContent: 'center', alignContent: 'center' }}>
                         <Entypo name={dropdownIconText} size={15} color="grey" />
                     </View>
-                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', paddingHorizontal: 2 }}>{currentSeasonYear}</Text>
+                    <Text style={{ color: 'lightgrey', fontSize: 12, fontFamily: fontFamilies.title, textAlign: 'center', paddingHorizontal: 2 }}>{currentSeasonYear}</Text>
                 </View>
             </TouchableOpacity>
             {showDropdown && (
@@ -401,7 +401,7 @@ export const SeasonYearOption = ({ yearTitle, OnPressButton }: SeasonYearOptionP
 
     return (
         <TouchableOpacity onPress={() => OnPressButton(yearTitle)} activeOpacity={0.7} style={{ paddingHorizontal: 5, paddingVertical: 2 }}>
-            <Text style={{ color: 'lightgrey', padding: 3, fontFamily: fontFamilies.regular, textAlign: 'right' }}>{yearTitle}</Text>
+            <Text style={{ color: 'lightgrey', padding: 3, fontSize: 12, fontFamily: fontFamilies.title, textAlign: 'right' }}>{yearTitle}</Text>
         </TouchableOpacity>
     )
 }
@@ -415,13 +415,13 @@ export const StandingsHeader = ({ }: StandingsHeaderProps) => {
     return (
         <View style={{ flexDirection: 'row', paddingVertical: 2 }}>
             <Text style={{ width: "6%", fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}></Text>
-            <Text style={{ width: "32%", textAlign: 'left', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>TEAM</Text>
-            <Text style={{ width: "10%", textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>GP</Text>
-            <Text style={{ width: "10%", textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>W</Text>
-            <Text style={{ width: "8%", textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>D</Text>
-            <Text style={{ width: "10%", textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>L</Text>
-            <Text style={{ width: "14%", textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>PD</Text>
-            <Text style={{ width: "10%", textAlign: 'center', fontSize: fontSize.xs, color: 'grey', fontFamily: fontFamilies.bold }}>P</Text>
+            <Text style={{ width: "32%", textAlign: 'left', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>TEAM</Text>
+            <Text style={{ width: "10%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>GP</Text>
+            <Text style={{ width: "10%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>W</Text>
+            <Text style={{ width: "8%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>D</Text>
+            <Text style={{ width: "10%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>L</Text>
+            <Text style={{ width: "14%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>PD</Text>
+            <Text style={{ width: "10%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>P</Text>
         </View>
     )
 
