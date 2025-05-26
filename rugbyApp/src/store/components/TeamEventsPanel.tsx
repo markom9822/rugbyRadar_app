@@ -70,7 +70,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
             }}>
                 <View style={{ flexDirection: 'row', width: "100%", justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ width: "70%", justifyContent: 'center', alignItems: 'center' }}>
-                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold, paddingHorizontal: 5 }}>{panelTitle.toUpperCase()}</Text>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.title, paddingHorizontal: 5 }}>{panelTitle.toUpperCase()}</Text>
                     </View>
 
                     <View style={{ width: "30%", justifyContent: 'center', alignItems: 'center' }}>
@@ -155,7 +155,7 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
                     </View>
 
                     <View style={{ width: "50%", justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: colors.text, fontFamily: fontFamilies.bold, marginHorizontal: 4, paddingHorizontal: 4 }}>HEAD TO HEAD</Text>
+                        <Text style={{ color: colors.text, fontFamily: fontFamilies.title, marginHorizontal: 4, paddingHorizontal: 4 }}>HEAD TO HEAD</Text>
                     </View>
 
                     <View style={{ width: "25%", justifyContent: 'center', alignItems: 'center' }}>

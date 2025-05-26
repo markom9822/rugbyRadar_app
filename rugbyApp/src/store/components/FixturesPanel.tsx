@@ -322,12 +322,13 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
             style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }]}>
 
             <View style={{ marginVertical: 4 }}>
-                <MultiTabBar tabsArray={["Overview", "Stats", "Events", "Lineups"]} OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} tabFontSize={14} />
+                <MultiTabBar tabsArray={["Overview", "Stats", "Events", "Lineups"]} OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} tabFontSize={11} />
             </View>
 
             <View style={{ width: "100%" }}>
                 <FixturesInfoBox id={id} currentTabKey={currentTab} />
             </View>
+
 
         </LinearGradient>
     )

@@ -313,7 +313,7 @@ export const statsPanelStyles = StyleSheet.create({
         borderBottomWidth: 1,
         width: "90%",
         color: 'grey',
-        fontFamily: fontFamilies.bold,
+        fontFamily: fontFamilies.title,
         fontSize: 14
     },
     teamName: {

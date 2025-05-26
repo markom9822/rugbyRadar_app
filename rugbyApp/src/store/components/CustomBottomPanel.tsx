@@ -129,7 +129,7 @@ export const CustomBottomPanel = ({ panelOpen, setPanelOpenState, handleLeagueCh
             <Animated.View style={[styles.bottomSheet, animatedTranslateStyles, { backgroundColor: "#2b2a2a" }]}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: "100%", height: "20%" }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.bold }}>Choose League</Text>
+                        <Text style={{ color: colors.text, textAlign: 'center', fontFamily: fontFamilies.title }}>Choose League</Text>
                     </View>
 
                     <TouchableOpacity activeOpacity={0.7} onPress={handleClose} style={{ position: 'absolute', right: 0, backgroundColor: colors.background, borderRadius: 15, padding: 5, margin: 4 }}>
@@ -142,7 +142,7 @@ export const CustomBottomPanel = ({ panelOpen, setPanelOpenState, handleLeagueCh
                 <View style={{ marginVertical: 10, flexDirection: 'row' }}>
 
                     <TouchableOpacity onPress={handlePressedConfirmButton} activeOpacity={0.7} style={{ backgroundColor: colors.background, borderRadius: 15, padding: 5, margin: 4 }}>
-                        <Text style={{ color: colors.text, fontFamily: fontFamilies.regular, paddingVertical: 2, paddingHorizontal: 6 }}>Confirm</Text>
+                        <Text style={{ color: colors.text, fontSize: 13, fontFamily: fontFamilies.title, paddingVertical: 2, paddingHorizontal: 6 }}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
 

@@ -273,9 +273,10 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
                         <View style={{ width: "15%", justifyContent: 'center', alignItems: 'center', marginRight: 8 }}>
                             <Feather name="tv" size={20} color={'lightgrey'} />
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'center', width: "80%" }}>
                             {broadcasterRender(matchInfoArray)}
                         </View>
+
                     </View>
 
                 </View>

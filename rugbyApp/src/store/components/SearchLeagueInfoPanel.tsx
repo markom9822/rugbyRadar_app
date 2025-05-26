@@ -79,7 +79,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
                             style={[searchInfoPanelStyles.teamLogo]}
                             source={leagueInfo.logo} />
                     </View>
-                    <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.bold, textAlign: 'center', padding: 5 }]}>{leagueInfo.displayName}</Text>
+                    <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.title, textAlign: 'center', padding: 5 }]}>{leagueInfo.displayName}</Text>
                 </View>
 
                 <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} />
