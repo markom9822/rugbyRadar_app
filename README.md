@@ -48,6 +48,13 @@ https://github.com/user-attachments/assets/431b1295-fa9c-4a27-97c9-285492efc5d7
 
 ---
 
+## 🪪 License
+
+This project is licensed under the [MIT License](./LICENSE).  
+You’re free to use, modify, and distribute it — just include attribution.
+
+---
+
 ## 📎 Links
 
 - GitHub Repository: [https://github.com/markom9822/rugbyRadar_app](https://github.com/markom9822/rugbyRadar_app)
