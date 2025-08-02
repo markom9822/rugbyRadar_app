@@ -1,17 +1,38 @@
 # Rugby Radar
 
-<img src="https://github.com/user-attachments/assets/6216e365-1677-410a-8f93-65f1e7881b81" alt="App Icon" width="250" height="250">
-
 Rugby Radar is a mobile app I created which provides real-time information on fixtures, stats, standings and more from 10+ rugby leagues around the world.
 
-This is sports mobile app was developed using:
+---
+
+## ✨ Features
+
+- Latest rugby fixtures from over 10 leagues worldwide.
+- Fixtures show live team/player stats, scores and more.
+- Can bookmark your favourite league to show it's fixtures when you first open the app.
+- Search for your favourite team, see their results and upcoming fixtures for the season.
+- Find the league you follow, check out the current standings and knockouts table.
+
+---
+
+## 🛠 Tech Stack
+
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
+- [Figma](https://www.figma.com/)
+  
+---
 
-If you would like to try out this app you can download the latest `.apk` file from the Releases section in this repo.
-These builds are for Android devices only (not available for iOS).
+## 📦 Getting Started
 
-## App Screenshots
+To run the app yourself:
+
+1. You can download the latest `.apk` file from the Releases section in this repo.
+  - These builds are for Android devices only (not available for iOS).
+
+---
+
+## 📷 App Demo
+
 Screenshots from the app in poster style.
 
 <img src="https://github.com/user-attachments/assets/681f575a-653d-403c-901b-9183fa670ad3" alt="Description" width="270" height="600">
@@ -24,4 +45,10 @@ Screenshots from the app in poster style.
 Walkthrough the main features of the app.
 
 https://github.com/user-attachments/assets/431b1295-fa9c-4a27-97c9-285492efc5d7
+
+---
+
+## 📎 Links
+
+- GitHub Repository: [https://github.com/markom9822/rugbyRadar_app](https://github.com/markom9822/rugbyRadar_app)
 
