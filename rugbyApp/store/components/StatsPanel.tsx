@@ -179,11 +179,11 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName }: StatsPanelPr
         }
     }
 
-    var homeAbbreviation = homeTeamInfo?.abbreviation;
-    var awayAbbreviation = awayTeamInfo?.abbreviation;
+    let homeAbbreviation = homeTeamInfo?.abbreviation;
+    let awayAbbreviation = awayTeamInfo?.abbreviation;
 
-    var homeFontSize = 18;
-    var awayFontSize = 18;
+    let homeFontSize = 18;
+    let awayFontSize = 18;
 
     if (matchInfoArray[0].homeTeamName.includes("U20")) {
         homeAbbreviation += " U20"
@@ -197,7 +197,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName }: StatsPanelPr
     const panelColour = hexToRGB("#4d4b4b", '0.5')
 
     return (
-        <View style={[statsPanelStyles.container, { marginBottom: 130 }]}>
+        <View style={[statsPanelStyles.container]}>
 
             <View style={{ backgroundColor: panelColour, padding: 10, borderRadius: 8, width: "95%" }}>
 

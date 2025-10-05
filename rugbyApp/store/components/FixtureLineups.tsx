@@ -57,7 +57,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
         // TODO: Fix issue with player numbers not being correct (Planet Rugby API)
         if (playerCount !== 23) return [];
 
-        var combinedArray = [];
+        let combinedArray = [];
 
         for (let index = 0; index < playerCount; index++) {
 
@@ -154,8 +154,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
             const espnMatchInfo = await getESPNMatchInfoFromDetails(matchDate, homeTeam, awayTeam)
             console.info(espnMatchInfo)
 
-            var homeLineup;
-            var awayLineup;
+            let homeLineup;
+            let awayLineup;
 
             if (espnMatchInfo != null) {
                 const espnAPIString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + espnMatchInfo?.leagueID + '/summary?contentorigin=espn&event=' + espnMatchInfo?.matchID + '&lang=en&region=gb'
@@ -263,10 +263,10 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                 }
             }
 
-            var homeAbbreviation = homeTeamInfo?.abbreviation;
-            var awayAbbreviation = awayTeamInfo?.abbreviation;
-            var homeFontSize = fontSize.base;
-            var awayFontSize = fontSize.base;
+            let homeAbbreviation = homeTeamInfo?.abbreviation;
+            let awayAbbreviation = awayTeamInfo?.abbreviation;
+            let homeFontSize = fontSize.base;
+            let awayFontSize = fontSize.base;
 
             if (homeTeamName.includes("U20")) {
                 homeAbbreviation += " U20"
@@ -319,7 +319,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                         </TouchableOpacity>
                     </View>
 
-                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1, marginBottom: 400 }}>
+                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1 }}>
 
                         <LinearGradient colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']} start={{ x: gradientStartFraction, y: 0.5 }} end={{ x: gradientEndFraction, y: 0.5 }} >
 

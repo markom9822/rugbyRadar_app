@@ -8,11 +8,11 @@ import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } fr
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles/index"
 import { FontAwesome6 } from '@expo/vector-icons'
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet"
+import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 
@@ -444,14 +444,12 @@ const FixturesScreen = () => {
                     backdropComponent={renderBackdrop}
                     handleComponent={null}
                     handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
-                    backgroundStyle={{ backgroundColor: "#0d0c0c" }}
+                    backgroundStyle={{ backgroundColor: "#0c0c0cff" }}
                 >
-                    <BottomSheetView style={{ flex: 1 }}>
-                        <FixturesPanel
-                            matchInfo={matchesArray[currentIndex]}
-                            id={currentID}
-                            bottomSheetRef={bottomSheetModalRef} />                        
-                    </BottomSheetView>
+                <FixturesPanel
+                    matchInfo={matchesArray[currentIndex]}
+                    id={currentID}
+                    bottomSheetRef={bottomSheetModalRef} />   
                 </BottomSheetModal>
     </View>
 }

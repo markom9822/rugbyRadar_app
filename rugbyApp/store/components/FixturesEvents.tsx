@@ -134,7 +134,7 @@ export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
     return (
         <View>
             {isShown &&
-                <BottomSheetScrollView style={{backgroundColor: 'white'}}>
+                <BottomSheetScrollView>
 
                    {activityIndicatorHeader()}
 
