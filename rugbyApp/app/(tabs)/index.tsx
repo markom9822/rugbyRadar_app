@@ -8,12 +8,10 @@ import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } fr
 import { dateCustomFormatting, getLeagueCode } from "@/store/utils/helpers"
 import { defaultStyles } from "@/styles/index"
 import { FontAwesome6 } from '@expo/vector-icons'
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
 
 
 export type MatchInfo = {
@@ -446,7 +444,7 @@ const FixturesScreen = () => {
                     handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
                     backgroundStyle={{ backgroundColor: "#0c0c0cff" }}
                 >
-                  
+
                 <FixturesPanel
                     matchInfo={matchesArray[currentIndex]}
                     id={currentID}

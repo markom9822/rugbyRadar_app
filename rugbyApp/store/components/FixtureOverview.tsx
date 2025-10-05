@@ -191,7 +191,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
     if (matchInfoArray == undefined) return
 
-    var matchAttendance = 'NA'
+    let matchAttendance = 'NA'
     if (matchInfoArray[0].matchAttendance !== undefined) {
         matchAttendance = new Number(matchInfoArray[0].matchAttendance).toLocaleString();
     }
@@ -207,8 +207,8 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
         }
         else {
 
-            var logosArray = [];
-            var namesArray = [];
+            let logosArray = [];
+            let namesArray = [];
 
             console.info(matchInfoArray[0].matchBroadcasters)
 

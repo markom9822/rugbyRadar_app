@@ -31,7 +31,7 @@ type StandingPanelProps = {
 export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPool, teamName,
     teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem, isEndOfList, isPlayoffCutoff }: StandingPanelProps) => {
 
-    var teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
+    let teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
 
     if (league === "urc") {
         teamInfo = getURCTeamInfoFromName(teamName)
@@ -64,7 +64,7 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
     if (teamInfo === undefined) return
 
     const altBackgroundColour = hexToRGB(colors.altBackground, "0.2")
-    const panelBkgColour = (ranking % 2 == 0) ? (altBackgroundColour) : (colors.background);
+    const panelBkgColour = (ranking % 2 === 0) ? (altBackgroundColour) : (colors.background);
 
     const standingsRender = (isHeader: boolean, isPlayoffCutoff: boolean) => {
 

@@ -29,7 +29,7 @@ export const getURCTeamInfoFromName = (name: string) => {
 
   // remove not needed parts of name
   const searchName = name.replace(" Rugby", "")
-
+  
     const match = URCRugbyTeams.find((item) => item.displayName === searchName)
     if(match !== undefined)
     {
@@ -213,7 +213,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Emirates Lions',
+    displayName: 'Lions',
     abbreviation: 'LION',
     logo: LionsLogo,
     altLogo: LionsAltLogo,

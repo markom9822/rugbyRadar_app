@@ -8,8 +8,8 @@ import { getAnyTeamInfoFromName } from "./helpers";
 
 export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string, awayTeam: string) => {
 
-    var homeInfo;
-    var awayInfo;
+    let homeInfo;
+    let awayInfo;
 
     if(league === "urc")
     {
@@ -79,7 +79,7 @@ export const getAnyHomeAwayTeamInfo = (homeTeam: string, awayTeam: string) => {
 
 export const getTeamInfo = (league: string | undefined, teamName: string) => {
 
-    var teamInfo;
+    let teamInfo;
 
     if (league === "urc") {
         teamInfo = getURCTeamInfoFromName(teamName)

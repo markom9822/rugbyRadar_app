@@ -1,4 +1,4 @@
-import { MatchInfo } from "@/app/(tabs)/(fixtures)"
+import { MatchInfo } from "@/app/(tabs)/index"
 import { colors, fontFamilies } from "@/constants/tokens"
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo"
 import { getLeagueDisplayNameFromValue, getLeagueLogoFromValue, getLeagueTrophyIconFromValue, hexToRGB, StandingInfo } from "@/store/utils/helpers"
@@ -51,7 +51,7 @@ export const KnockoutFixturePair = ({ firstMatch, secondMatch, thisLeagueName, h
 
 export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knockoutFixturesArray, leagueName, chosenKnockoutRound, handleChooseRound }: KnockoutsPanelProps) => {
 
-    var targetStandingsArray = standingsArray;
+    let targetStandingsArray = standingsArray;
 
     if (standingsArray.length == 0) return;
 
@@ -223,8 +223,8 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
         return;
     }
 
-    var homeTeamName;
-    var awayTeamName;
+    let homeTeamName;
+    let awayTeamName;
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, fixtureInfo.homeTeam, fixtureInfo.awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -344,8 +344,8 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
         return;
     }
 
-    var homeTeamName;
-    var awayTeamName;
+    let homeTeamName;
+    let awayTeamName;
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, fixtureInfo.homeTeam, fixtureInfo.awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;

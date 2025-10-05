@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface GridViewProps<T> {
