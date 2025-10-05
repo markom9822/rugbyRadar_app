@@ -34,7 +34,7 @@ export type TeamInfo = {
 export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
     const [teamEventsArray, setTeamEventsArray] = useState<TeamEvent[] | undefined>();
-    const [seasonYear, setSeasonYear] = useState<string>('2025');
+    const [seasonYear, setSeasonYear] = useState<string>('2026');
     const [seasonDates, setSeasonDates] = useState<SeasonDateInfo[]>(generateSeasonList());
     const [isLoading, setIsLoading] = useState(false);
 
@@ -109,7 +109,7 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
     }
 
-    const seasonManualData = ['2025', '2024', '2023', '2022'];
+    const seasonManualData = ['2026', '2025', '2024', '2023', '2022'];
 
     return (
         <View style={{ width: "100%", flex: 1 }}>

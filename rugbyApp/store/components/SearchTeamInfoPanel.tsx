@@ -11,7 +11,7 @@ import { TeamSummaryPanel } from "./TeamSummaryPanel"
 type SearchTeamInfoPanelProps = {
     teamInfo: SearchTeamInfo,
     //id: string,
-    bottomSheetRef: React.RefObject<BottomSheetModal>
+    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
 export const SearchTeamInfoPanel = ({ teamInfo, bottomSheetRef }: SearchTeamInfoPanelProps) => {

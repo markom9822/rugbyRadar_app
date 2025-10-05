@@ -13,7 +13,7 @@ import { LeagueUpcomingFixturesPanel } from "./LeagueUpcomingFixturesPanel"
 type SearchLeagueInfoPanelProps = {
     leagueInfo: SearchLeagueInfo,
     //id: string,
-    bottomSheetRef: React.RefObject<BottomSheetModal>
+    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
 export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeagueInfoPanelProps) => {

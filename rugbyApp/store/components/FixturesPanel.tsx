@@ -285,10 +285,10 @@ export const FixturesInfoBox = ({ id, currentTabKey }: FixturesInfoBox) => {
 
     return (
         <View>
-            <FixtureOverview id={id} isShown={currentTabKey == "Overview"} />
-            <FixtureStats id={id} isShown={currentTabKey == "Stats"} />
-            <FixtureEvents id={id} isShown={currentTabKey == "Events"} />
-            <FixtureLineups id={id} isShown={currentTabKey == "Lineups"} />
+            <FixtureOverview id={id} isShown={currentTabKey === "Overview"} />
+            <FixtureStats id={id} isShown={currentTabKey === "Stats"} />
+            <FixtureEvents id={id} isShown={currentTabKey === "Events"} />
+            <FixtureLineups id={id} isShown={currentTabKey === "Lineups"} />
         </View>
     )
 }
@@ -303,10 +303,10 @@ export const FixturesInfoTabBar = ({ OnTabButtonPressed, currentTabKey }: Fixtur
 
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 8, marginTop: 20 }}>
-            <FixturesInfoTabButton title="Overview" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Overview"} />
-            <FixturesInfoTabButton title="Stats" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Stats"} />
-            <FixturesInfoTabButton title="Events" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Events"} />
-            <FixturesInfoTabButton title="Lineups" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == "Lineups"} />
+            <FixturesInfoTabButton title="Overview" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey === "Overview"} />
+            <FixturesInfoTabButton title="Stats" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey === "Stats"} />
+            <FixturesInfoTabButton title="Events" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey === "Events"} />
+            <FixturesInfoTabButton title="Lineups" OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey === "Lineups"} />
         </View>
     )
 }
