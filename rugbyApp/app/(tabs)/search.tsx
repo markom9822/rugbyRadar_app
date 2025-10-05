@@ -252,9 +252,6 @@ type GridSearchPanelProps = {
 
 export const GridSearchPanel = ({ title, colour, logo, altLogo, id, index, OnPress }: GridSearchPanelProps) => {
 
-    const bkgRBGA = hexToRGB(colour, '0.1')
-    const borderRBGA = hexToRGB(colour, '0.4')
-
     const panelColour = hexToRGB("#4d4b4b", '0.5')
 
     const handlePressedScorePanel = () => {

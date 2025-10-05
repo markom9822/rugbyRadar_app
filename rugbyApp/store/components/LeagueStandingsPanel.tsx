@@ -52,8 +52,8 @@ const getWorldRankingsData = (todaysRankings: any): StandingInfo[] => {
             teamPD: '-',
             teamPoints: teamPoints,
             ranking: index,
-            isLastItem: index == rankListLength - 1,
-            isEndOfList: index == rankListLength - 1,
+            isLastItem: index === rankListLength - 1,
+            isEndOfList: index === rankListLength - 1,
             isPlayoffCutoff: false,
         };
 
@@ -130,7 +130,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             { leagueName: 'rugbyChamp', leagueCode: '244293', playoffCutoffIndex: -1 },
         ];
 
-        if (leagueName == "worldRankings") {
+        if (leagueName === "worldRankings") {
             apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/rankings/mru?language=en';
 
             const worldRankings = await fetch(apiString,).then((res) => res.json())
@@ -139,7 +139,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             console.info(newArray)
             setStandingsArray(newArray)
         }
-        else if (leagueName == "u20SixNations") {
+        else if (leagueName === "u20SixNations") {
             apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=d7d54b61-12b7-4c98-8fda-84f43efa0b9b';
             const u20SixNationsMatches = await fetch(apiString,).then((res) => res.json())
 
@@ -165,7 +165,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             console.info(newArray)
             setStandingsArray(newArray)
 
-            if (leagueName == "challengeCup") {
+            if (leagueName === "challengeCup") {
                 const champsCupCode = "1008"
                 // challenge cup needs secondary standings
                 const secondaryApiString = 'https://rugby-union-feeds.incrowdsports.com/v1/tables/' + champsCupCode + '?provider=rugbyviz&season=' + seasonNumber + '01';
@@ -175,8 +175,8 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             }
         }
         // ESPN rugby API
-        else if (ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined) {
-            const ESPNRugbyAPILeagueCode = ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCode;
+        else if (ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName) !== undefined) {
+            const ESPNRugbyAPILeagueCode = ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName)?.leagueCode;
 
             const seasonNumber = Number(targetSeasonName);
             apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + ESPNRugbyAPILeagueCode + '/standings?lang=en&region=gb&season=' + seasonNumber + '&seasontype=1&sort=rank:asc&type=0';
@@ -187,11 +187,11 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             setStandingsArray(newArray)
         }
         // use planet rugby API for standings
-        else if (planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName) !== undefined) {
-            const planetRugbyAPILeagueCodes = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.leagueCodes;
-            const planetRugbyAPIPlayoffCutoffIndex = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName == leagueName)?.playoffCutoffIndex;
+        else if (planetRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName) !== undefined) {
+            const planetRugbyAPILeagueCodes = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName)?.leagueCodes;
+            const planetRugbyAPIPlayoffCutoffIndex = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName)?.playoffCutoffIndex;
 
-            if (planetRugbyAPILeagueCodes == undefined) return;
+            if (planetRugbyAPILeagueCodes === undefined) return;
 
             if (planetRugbyAPILeagueCodes.length > 1) {
                 let pooledArray: StandingInfo[] = [];
@@ -201,7 +201,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                     apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/' + planetRugbyAPILeagueCodes[index];
 
                     const seasonStandingsPlanetRugby = await fetch(apiString,).then((res) => res.json())
-                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, true, index == planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex)
+                    const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, true, index === planetRugbyAPILeagueCodes.length - 1, planetRugbyAPIPlayoffCutoffIndex)
                     pooledArray.push(...newArray)
                 }
 
@@ -261,7 +261,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
         OnChangeSeasonYear(year)
 
-        if (year != seasonYear) {
+        if (year !== seasonYear) {
             await handlePressFetchData(year)
             const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, year)
             setKnockoutsArray(knockoutFixtures)
@@ -304,7 +304,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                             index={index}
                             league={leagueName}
                             isHeader={item.isHeader}
-                            isWorldRanking={leagueName == "worldRankings"}
+                            isWorldRanking={leagueName === "worldRankings"}
                             teamPool={item.teamPool}
                             teamName={item.teamName}
                             teamGP={item.teamGP}

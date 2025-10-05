@@ -18,16 +18,16 @@ type SearchLeagueInfoPanelProps = {
 
 export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeagueInfoPanelProps) => {
 
-    const seasonManualData = ['2025', '2024', '2023', '2022'];
-    const seasonSingleData = ['2025'];
+    const seasonManualData = ['2026', '2025', '2024', '2023', '2022'];
+    const seasonSingleData = ['2026'];
     const seasonSingleWorldCupData = ['2023'];
 
     const leagueData = [
-        { label: 'URC', value: 'urc', logo: URCAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
-        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024', '2023', '2022'] },
-        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: ['2025', '2024', '2023', '2022'] },
-        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024'] },
-        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2025', '2024'] },
+        { label: 'URC', value: 'urc', logo: URCAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024', '2023', '2022'] },
+        { label: 'Premiership', value: 'prem', logo: PremiershipAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024', '2023', '2022'] },
+        { label: 'Top 14', value: 'top14', logo: Top14AltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: ['2026', '2025', '2024', '2023', '2022'] },
+        { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024'] },
+        { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024'] },
 
         { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
@@ -47,7 +47,6 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
 
     const shouldShowKnockouts = leagueData[targetIndex].hasKnockouts && leagueData[targetIndex].knockoutsYears.includes(seasonName);
 
-    const fadedGreyColour = hexToRGB('#a4a6a6', '0.8');
     const teamGradientColour = hexToRGB(leagueInfo.colour, '0.4')
 
     const handleCloseBottomSheet = () => {
