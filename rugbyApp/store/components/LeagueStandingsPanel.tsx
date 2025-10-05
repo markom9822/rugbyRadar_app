@@ -1,4 +1,4 @@
-import { MatchInfo } from "@/app/(tabs)/(fixtures)"
+import { MatchInfo } from "@/app/(tabs)/index"
 import { fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
 import { useEffect, useState } from "react"
@@ -31,7 +31,7 @@ const getWorldRankingsData = (todaysRankings: any): StandingInfo[] => {
 
     const rankListLength = 15;
 
-    var newArray = [];
+    let newArray = [];
 
     for (let index = 0; index < rankListLength; index++) {
 
@@ -113,7 +113,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
         const currentLeagueCode = getLeagueCode(leagueName)
 
-        var apiString = '';
+        let apiString = '';
         const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
 
         const planetRugbyStandingsLeagueCodes = [
@@ -194,7 +194,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             if (planetRugbyAPILeagueCodes == undefined) return;
 
             if (planetRugbyAPILeagueCodes.length > 1) {
-                var pooledArray: StandingInfo[] = [];
+                let pooledArray: StandingInfo[] = [];
 
                 for (let index = 0; index < planetRugbyAPILeagueCodes.length; index++) {
 

@@ -4,7 +4,7 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
 
     const todaysEvents = todaysMatches.events;
 
-    var newArray = [];
+    let newArray = [];
 
     for (let index = 0; index < todaysEvents.length; index++) {
         console.info(todaysMatches.events[index].name)
@@ -23,7 +23,7 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
         const matchDate = new Date(todaysMatches.events[index].date)
 
         const detailsLength = Number(todaysMatches.events[index].competitions[0].details.length);
-        var eventTime = '0';
+        let eventTime = '0';
         if(detailsLength > 0)
         {
             eventTime = todaysMatches.events[index].competitions[0].details[detailsLength - 1].clock.displayValue;
@@ -68,9 +68,9 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
     const gamesCount = seasonAllMatches.data.length;
     console.info(gamesCount)
 
-    var sections = []
+    let sections = []
 
-    var leagueArray = []
+    let leagueArray = []
 
     for (let index = 0; index < gamesCount; index++) {
         
@@ -91,7 +91,7 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
             const homeTeamHalfScore = seasonAllMatches.data[index].homeTeam.halfTimeScore;
             const awayTeamHalfScore = seasonAllMatches.data[index].awayTeam.halfTimeScore;
 
-            var eventState;
+            let eventState;
             const matchStatus = seasonAllMatches.data[index].status;
             if(matchStatus === "result")
             {
@@ -105,7 +105,10 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
             {
                 eventState = "halfTime"
             }
-            // TODO: add event state for halftime
+            else if (matchStatus === "postponed")
+            {
+                eventState = "postponed"
+            }
             else
             {
                 eventState = "ongoing"
@@ -220,9 +223,9 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
     const gamesCount = seasonAllMatches.content.length;
     console.info(gamesCount)
 
-    var sections = []
+    let sections = []
 
-    var leagueArray = []
+    let leagueArray = []
 
     console.info(leagueDisplayName)
 
@@ -248,7 +251,7 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
             const eventTimeSeconds = Number(seasonAllMatches.content[index].clock.secs);
             const eventTime = Math.floor(eventTimeSeconds/60);
 
-            var eventState;
+            let eventState;
             const matchStatus = seasonAllMatches.content[index].status;
             if(matchStatus === "C" || matchStatus === "LFT")
             {
@@ -331,7 +334,7 @@ export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDa
 
 export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
 
-    var matchIDs = []
+    let matchIDs = []
 
     for (let compIndex = 0; compIndex < seasonAllMatches.data.length; compIndex++) {
 
@@ -349,9 +352,9 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
 
     console.info(matchIDs)
 
-    var sections = []
+    let sections = []
 
-    var leagueArray = []
+    let leagueArray = []
 
     for (let index = 0; index < matchIDs.length; index++) {
 
@@ -382,9 +385,9 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
             
             const eventTime = matchInfo.data.matchDetails.minutes;
             
-            var eventState;
-            var homeScore;
-            var awayScore;
+            let eventState;
+            let homeScore;
+            let awayScore;
             const matchStatus = matchInfo.data.matchDetails.status;
             
             if(matchStatus === "Finished")

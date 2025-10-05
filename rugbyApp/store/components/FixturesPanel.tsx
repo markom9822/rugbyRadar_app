@@ -1,11 +1,10 @@
 import { MatchInfo } from "@/app/(tabs)/index"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
+import {BottomSheetModal } from "@gorhom/bottom-sheet"
 import { LinearGradient } from "expo-linear-gradient"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { getMatchInfoWorldRugbyAPI } from "../utils/getMatchInfo"
 import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "../utils/getTeamFormStats"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
@@ -15,8 +14,7 @@ import { FixtureOverview } from "./FixtureOverview"
 import { FixtureStats } from "./FixtureStats"
 import { FixtureEvents } from "./FixturesEvents"
 import { MultiTabBar } from "./MultiTabBar"
-import { TeamEventsPanel, TeamEventStatsInfo } from "./TeamEventsPanel"
-import { SafeAreaView } from "react-native-safe-area-context"
+import {TeamEventStatsInfo } from "./TeamEventsPanel"
 
 type FixturesPanelProps = {
     matchInfo: MatchInfo,

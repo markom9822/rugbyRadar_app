@@ -25,10 +25,10 @@ type LineupPlayerPanelProps = {
 export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, hometeamPlayer, hometeamPlayerID, hometeamPlayerNum, isHomePlayerCaptain,
     awayteamPlayer, awayteamPlayerID, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem, bottomSheetRef, OnPlayerModalShown }: LineupPlayerPanelProps) => {
 
-    var playerName = ''
-    var playerNumber = ''
-    var playerID = ''
-    var isCaptain = false;
+    let playerName = ''
+    let playerNumber = ''
+    let playerID = ''
+    let isCaptain = false;
     if (selectedTeam == 'home') {
         playerName = hometeamPlayer;
         playerNumber = hometeamPlayerNum;

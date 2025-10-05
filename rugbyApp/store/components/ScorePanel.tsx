@@ -47,6 +47,9 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
     const scoreRender = (eventState: string) => {
 
+        console.log(homeAwayInfo?.homeInfo.displayName)
+        console.log(eventState)
+
         // not started yet
         if (eventState === "pre") {
             return (
@@ -55,6 +58,17 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         color: colors.text, fontSize: fontSize.lg,
                         textAlign: 'center', fontFamily: fontFamilies.title
                     }}>{matchTime}</Text>
+                </View>
+            )
+        }
+        // not started yet
+        if (eventState === "postponed") {
+            return (
+                <View style={{ flexDirection: 'column', width: "100%", paddingVertical: 8 }}>
+                    <Text style={{
+                        color: colors.text, fontSize: fontSize.base,
+                        textAlign: 'center', fontFamily: fontFamilies.title
+                    }}>Postponed</Text>
                 </View>
             )
         }

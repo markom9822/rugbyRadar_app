@@ -37,18 +37,19 @@ export default function RootLayout() {
 
 
   return (
-    <SafeAreaView style={defaultStyles.container}>
-      <GestureHandlerRootView style={{flex: 1}}>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <SafeAreaView style={[defaultStyles.container, { flex: 1 }]}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-              </Stack>
-              <StatusBar style="auto" />
-            </ThemeProvider>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+            </Stack>
+            <StatusBar style="auto" />
           </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </SafeAreaView>
+        </GestureHandlerRootView>
+      </SafeAreaView>
+    </ThemeProvider>
+     
   );
 }
