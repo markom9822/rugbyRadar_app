@@ -94,7 +94,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         <Text style={[fixtureStyles.teamScore,
                         { fontWeight: homeScoreWeight, color: homeTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{homeScore}</Text>
 
-                        <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: 16, width: "30%" }}>{eventTime}'</Text>
+                        <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: 16, width: "30%" }}>{eventTime} {"'"}</Text>
 
                         <Text style={[fixtureStyles.teamScore,
                         { fontWeight: awayScoreWeight, color: awayTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{awayScore}</Text>
@@ -117,7 +117,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         return null
     }
 
-    var linkID: string
+    let linkID: string
     if (isLeagueInRugbyViz(leagueDisplayName)) {
         linkID = matchID + leagueName + "_RugbyViz"
     }
@@ -131,8 +131,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         linkID = matchID;
     }
 
-    var homeAbbreviation = homeTeamInfo.abbreviation;
-    var awayAbbreviation = awayTeamInfo.abbreviation;
+    let homeAbbreviation = homeTeamInfo.abbreviation;
+    let awayAbbreviation = awayTeamInfo.abbreviation;
 
     if (homeTeam.includes("U20")) {
         homeAbbreviation += " U20"
@@ -151,7 +151,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     }
 
     return (
-        <View style={[fixtureStyles.card, { marginBottom: (isLastItem) ? 60 : 3 }]}>
+        <View style={[fixtureStyles.card]}>
 
             <LinearGradient colors={[homeGradientColour, 'rgba(25, 26, 27, 0.9)', awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
                 locations={[0, 0.4, 1]}

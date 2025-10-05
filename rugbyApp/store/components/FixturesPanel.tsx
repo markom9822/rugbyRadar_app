@@ -1,4 +1,4 @@
-import { MatchInfo } from "@/app/(tabs)/(fixtures)"
+import { MatchInfo } from "@/app/(tabs)/index"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet"
@@ -20,7 +20,7 @@ import { TeamEventsPanel, TeamEventStatsInfo } from "./TeamEventsPanel"
 type FixturesPanelProps = {
     matchInfo: MatchInfo,
     id: string,
-    bottomSheetRef: React.RefObject<BottomSheetModal>
+    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
 export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelProps) => {
@@ -34,13 +34,8 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
-    if (homeTeamInfo === null) return
-    if (awayTeamInfo === null) return
-    if (homeTeamInfo === undefined) return
-    if (awayTeamInfo === undefined) return
-
-    var homeAbbreviation = homeTeamInfo.abbreviation;
-    var awayAbbreviation = awayTeamInfo.abbreviation;
+    let homeAbbreviation = homeTeamInfo?.abbreviation;
+    let awayAbbreviation = awayTeamInfo?.abbreviation;
 
     const homeTextColour = (new Number(matchInfo.homeScore) >= new Number(matchInfo.awayScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
     const awayTextColour = (new Number(matchInfo.awayScore) >= new Number(matchInfo.homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
@@ -54,9 +49,8 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
         awayAbbreviation += " U20"
     }
 
-
-    const homeGradientColour = hexToRGB(homeTeamInfo.colour, '0.5');
-    const awayGradientColour = hexToRGB(awayTeamInfo.colour, '0.5');
+    const homeGradientColour = hexToRGB(homeTeamInfo?.colour, '0.5');
+    const awayGradientColour = hexToRGB(awayTeamInfo?.colour, '0.5');
 
     const matchLeagueLogo = getLeagueInfoFromDisplayName(matchInfo.matchLeague)?.leagueAltLogo
 
@@ -156,7 +150,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
             const homeWinner = new Number(eventsArray[index].homeTeamScore) > new Number(eventsArray[index].awayTeamScore);
             const homeCurrentTeam = eventsArray[index].currentTeam === eventsArray[index].homeTeamName;
 
-            var winOrLoseText = '';
+            let winOrLoseText = '';
 
             if (homeCurrentTeam) {
                 winOrLoseText = (homeWinner) ? ('W') : ('L');
@@ -178,35 +172,15 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
         )
     }
 
-    const bottomSheetModalRef = useRef<BottomSheetModal>(null)
-    const snapPoints = ["40%"];
-
-    // renders
-    const renderBackdrop = useCallback(
-        (props: any) => (
-            <BottomSheetBackdrop
-                {...props}
-                disappearsOnIndex={-1}
-                appearsOnIndex={0}
-            />
-        ),
-        []
-    );
-
     const handleOpenedTeamFormPanel = (teamFormArray: TeamEventStatsInfo[] | undefined) => {
 
         setCurrentTeamFormArray(teamFormArray)
-        bottomSheetModalRef.current?.present()
     }
 
     const teamFormPanelColour = hexToRGB("#4d4b4b", '0.9')
 
 
-    return (<GestureHandlerRootView>
-
-        <BottomSheetModalProvider>
-
-            <LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+    return (<LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
                 style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12 }]}>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: "100%" }}>
@@ -230,7 +204,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                             <View style={{ paddingVertical: 5 }}>
                                 <Image
                                     style={[fixturesPanelStyles.teamLogo]}
-                                    source={homeTeamInfo.logo} />
+                                    source={homeTeamInfo?.logo} />
                             </View>
 
                             <Text style={[{ color: colors.text, fontFamily: fontFamilies.title, textAlign: 'center' }]}>{homeAbbreviation}</Text>
@@ -251,7 +225,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                             <View style={{ paddingVertical: 5 }}>
                                 <Image
                                     style={[fixturesPanelStyles.teamLogo]}
-                                    source={awayTeamInfo.logo} />
+                                    source={awayTeamInfo?.logo} />
                             </View>
                             <Text style={[{ color: colors.text, fontFamily: fontFamilies.title, textAlign: 'center' }]}>{awayAbbreviation}</Text>
 
@@ -269,41 +243,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                 </ImageBackground>
 
                 <FixtureInfoPanel id={id} />
-
-                <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    index={0}
-                    snapPoints={snapPoints}
-                    backdropComponent={renderBackdrop}
-                    enableDynamicSizing={false}
-                    handleComponent={null}
-                    handleStyle={null}
-
-                    backgroundStyle={{ backgroundColor: 'transparent' }}
-                >
-                    <BottomSheetView style={{
-                        flex: 1, backgroundColor: teamFormPanelColour, flexDirection: 'row', borderTopLeftRadius: 10, borderTopRightRadius: 10
-                    }}>
-
-                        {currentTeamFormArray != undefined && (
-
-                            <TeamEventsPanel
-                                teamEventArray={currentTeamFormArray}
-                                matchID={id}
-                                leagueName={leagueName}
-                                panelTitle={`${currentTeamFormArray[0].currentTeam} Form`}
-                                showWinLoss={true}
-                                isLastItem={false}
-                                teamName={currentTeamFormArray[0].currentTeam}
-                            />
-                        )}
-
-                    </BottomSheetView>
-                </BottomSheetModal>
-
             </LinearGradient>
-        </BottomSheetModalProvider>
-    </GestureHandlerRootView>
     )
 }
 
@@ -439,7 +379,7 @@ export const scoreRender = (eventState: string, matchTime: string, matchInfo: Ma
                     <Text style={[
                         { fontSize: scoreFontSize, color: homeTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.homeScore}</Text>
 
-                    <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: 15, width: "50%" }}>{matchInfo.eventTime}'</Text>
+                    <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: 15, width: "50%" }}>{matchInfo.eventTime} {"'"}</Text>
 
                     <Text style={[
                         { fontSize: scoreFontSize, color: awayTextColour, fontFamily: fontFamilies.title, width: "25%", textAlign: 'center' }]}>{matchInfo.awayScore}</Text>

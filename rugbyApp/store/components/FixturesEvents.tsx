@@ -1,5 +1,5 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { BottomSheetFlatList, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from "react-native";
@@ -134,10 +134,9 @@ export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
     return (
         <View>
             {isShown &&
+                <BottomSheetScrollView style={{backgroundColor: 'white'}}>
 
-                <BottomSheetScrollView>
-
-                    {activityIndicatorHeader()}
+                   {activityIndicatorHeader()}
 
                     <KeyEventsPanel
                         keyEventArray={keyEventsArray}
@@ -145,10 +144,9 @@ export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
                         homeTeam={mainTeamName}
                         awayTeam={opponentTeamName}
                         leagueName={leagueName}
-                    />
-
-                </BottomSheetScrollView>}
-
+                    /> 
+                </BottomSheetScrollView>
+                }
         </View>
     )
 }
@@ -194,13 +192,13 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
     }
 
     return (
-        <View style={[keyEventsPanelStyles.container, { marginBottom: 130 }]}>
+        <View style={[keyEventsPanelStyles.container]}>
 
             <View style={{ backgroundColor: 'transparent', padding: 10, borderRadius: 5 }}>
 
                 <FlatList data={keyEventArray}
                     scrollEnabled={false}
-                    renderItem={({ item, index }) =>
+                    renderItem={({ item, index }: { item: KeyEventsInfo; index: number }) =>
                         <KeyEventItem
                             key={index}
                             leagueName={leagueName}
@@ -269,7 +267,7 @@ export const KeyEventItem = ({ leagueName, eventTime, eventType, eventPlayer, ev
                             source={RefereeWhistleIcon} />
                     </View>
 
-                    <Text style={{ color: colors.text, textAlign: 'center', fontSize: 14, fontFamily: fontFamilies.regular, padding: 3 }}>{eventTime}'</Text>
+                    <Text style={{ color: colors.text, textAlign: 'center', fontSize: 14, fontFamily: fontFamilies.regular, padding: 3 }}>{eventTime} {"'"}</Text>
                 </View>
             )
         }
@@ -277,7 +275,7 @@ export const KeyEventItem = ({ leagueName, eventTime, eventType, eventPlayer, ev
         return (
             <View>
                 <Text style={{ color: colors.text, textAlign: 'center', fontSize: 17, fontFamily: fontFamilies.title, padding: 3 }}>{eventScore}</Text>
-                <Text style={{ color: colors.text, textAlign: 'center', fontSize: 14, fontFamily: fontFamilies.regular, padding: 3 }}>{eventTime}'</Text>
+                <Text style={{ color: colors.text, textAlign: 'center', fontSize: 14, fontFamily: fontFamilies.regular, padding: 3 }}>{eventTime} {"'"}</Text>
             </View>
         )
     }

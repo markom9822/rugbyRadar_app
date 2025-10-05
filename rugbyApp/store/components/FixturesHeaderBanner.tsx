@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { RugbyRadarIconWhite } from "../Icons/Icons"
 import { hexToRGB } from "../utils/helpers"
-import { carouselData } from "./CustomBottomPanel"
 
 type LeagueDataItem = {
     label: string;
@@ -20,8 +19,6 @@ type FixturesHeaderBannerProps = {
 export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesHeaderBannerProps) => {
 
     const chooseLeagueButtonColour = hexToRGB("#4d4b4b", '0.6')
-
-    const currentLeagueImage = carouselData.find((item) => item.value === currentLeague)?.image;
 
     return (
 
@@ -48,7 +45,6 @@ export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesH
             <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "40%", paddingHorizontal: 10 }}>
                 <TouchableOpacity style={{ padding: 5, backgroundColor: chooseLeagueButtonColour, borderRadius: 5, flexDirection: 'row', alignItems: 'center' }} onPress={OnPressLeague}>
                     <View style={{ padding: 4, backgroundColor: chooseLeagueButtonColour, marginHorizontal: 3, borderRadius: 4 }}>
-                        <Image source={currentLeagueImage} style={{ resizeMode: 'contain', height: 20, width: 20, minHeight: 20, minWidth: 20 }} />
                     </View>
                     <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, fontSize: 13 }}>Choose League</Text>
                 </TouchableOpacity>

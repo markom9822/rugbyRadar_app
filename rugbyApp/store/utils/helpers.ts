@@ -489,7 +489,7 @@ export const generateSeasonList = () =>{
     const currentYear = new Date().getFullYear().valueOf();
     const startYear = "2021"
 
-    var seasonArray: SeasonDateInfo[] = []
+    let seasonArray: SeasonDateInfo[] = []
 
     for (let index = 0; index < Number(currentYear) - Number(startYear) + 1; index++) {
 
@@ -525,7 +525,13 @@ export function dateCustomFormatting(date: Date): string {
     return `${date.getFullYear()}${padStart(date.getMonth() + 1)}${padStart(date.getDate())}`;
 }
 
-export const hexToRGB = (hexValue: string, alpha: string) => {
+export const hexToRGB = (hexValue: string | undefined, alpha: string) => {
+
+    if(hexValue === undefined)
+    {
+        return '';
+    }
+
     const numericValue = parseInt(hexValue.slice(1), 16);
     const r = numericValue >> 16 & 0xFF;
     const g = numericValue >> 8 & 0xFF;
