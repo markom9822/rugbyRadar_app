@@ -4,6 +4,8 @@ import { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { RugbyRadarIconWhite } from "../Icons/Icons"
 import { hexToRGB } from "../utils/helpers"
+import { useRouter } from 'expo-router';
+
 
 type LeagueDataItem = {
     label: string;
@@ -18,7 +20,8 @@ type FixturesHeaderBannerProps = {
 
 export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesHeaderBannerProps) => {
 
-    const chooseLeagueButtonColour = hexToRGB("#4d4b4b", '0.6')
+    const chooseLeagueButtonColour = hexToRGB("#4d4b4b", '0.6');
+    const router = useRouter();
 
     return (
 
@@ -43,10 +46,8 @@ export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesH
 
 
             <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "40%", paddingHorizontal: 10 }}>
-                <TouchableOpacity style={{ padding: 5, backgroundColor: chooseLeagueButtonColour, borderRadius: 5, flexDirection: 'row', alignItems: 'center' }} onPress={OnPressLeague}>
-                    <View style={{ padding: 4, backgroundColor: chooseLeagueButtonColour, marginHorizontal: 3, borderRadius: 4 }}>
-                    </View>
-                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, fontSize: 13 }}>Choose League</Text>
+                <TouchableOpacity style={{ padding: 5, backgroundColor: chooseLeagueButtonColour, borderRadius: 5, flexDirection: 'row', alignItems: 'center' }} onPress={() => router.navigate('/modal')}>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.regular, fontSize: 13 }}>Choose League {currentLeague}</Text>
                 </TouchableOpacity>
             </View>
         </View>

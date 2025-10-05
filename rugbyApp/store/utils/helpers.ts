@@ -13,7 +13,7 @@ export const leagueCodes = [
     { value: 'urc', code: "270557",
          displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, trophyIcon: URCTrophyIcon},
     { value: 'prem', code: "267979",
-         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, trophyIcon: PremiershipTrophyIcon},
+         displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, trophyIcon: PremiershipTrophyIcon},
     { value: 'top14', code: "270559",
          displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo, trophyIcon: Top14TrophyIcon},
     { value: 'superRugby', code: "242041",

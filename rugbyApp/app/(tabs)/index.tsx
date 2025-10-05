@@ -184,7 +184,7 @@ const FixturesScreen = () => {
 
         const filteredArray = allFixturesArray.filter((item, index, array) => {
 
-            if (index == allFixturesArray.length - 1 && item.isDateHeader) {
+            if (index === allFixturesArray.length - 1 && item.isDateHeader) {
                 return null
             }
 
@@ -221,22 +221,22 @@ const FixturesScreen = () => {
     const handleOnChangeLeague = async (leagueValue: string) => {
         setLeagueName(leagueValue)
 
-        const todayMatchesArray = await handlePressFetchData([new Date()], leagueValue, currentTab == "Today")
+        const todayMatchesArray = await handlePressFetchData([new Date()], leagueValue, currentTab === "Today")
         console.info('Setting today match array')
         setTodayMatchesArray(todayMatchesArray)
 
-        const previousMatchesArray = await handlePressFetchData(get7Days(true), leagueValue, currentTab == "Previous")
+        const previousMatchesArray = await handlePressFetchData(get7Days(true), leagueValue, currentTab === "Previous")
         console.info('Setting previous match array')
         setPreviousMatchesArray(previousMatchesArray)
 
-        const upcomingMatchesArray = await handlePressFetchData(get7Days(false), leagueValue, currentTab == "Upcoming")
+        const upcomingMatchesArray = await handlePressFetchData(get7Days(false), leagueValue, currentTab === "Upcoming")
         console.info('Setting upcoming match array')
         setUpcomingMatchesArray(upcomingMatchesArray)
     }
 
     const notFoundHeader = (eventsArray: MatchInfo[]) => {
 
-        if (eventsArray == undefined || eventsArray.length == 0 && !isLoading) {
+        if (eventsArray === undefined || eventsArray.length === 0 && !isLoading) {
             return (
                 <View style={{ marginTop: 20, marginHorizontal: 5 }}>
                     <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Fixtures Found</Text>
@@ -277,15 +277,15 @@ const FixturesScreen = () => {
             const defaultLeague = await getDefaultLeague();
             setLeagueName(defaultLeague);
 
-            const todayMatchesArray = await handlePressFetchData([new Date()], defaultLeague, currentTab == "Today")
+            const todayMatchesArray = await handlePressFetchData([new Date()], defaultLeague, currentTab === "Today")
             console.info('Setting today match array')
             setTodayMatchesArray(todayMatchesArray)
 
-            const previousMatchesArray = await handlePressFetchData(get7Days(true), defaultLeague, currentTab == "Previous")
+            const previousMatchesArray = await handlePressFetchData(get7Days(true), defaultLeague, currentTab === "Previous")
             console.info('Setting previous match array')
             setPreviousMatchesArray(previousMatchesArray)
 
-            const upcomingMatchesArray = await handlePressFetchData(get7Days(false), defaultLeague, currentTab == "Upcoming")
+            const upcomingMatchesArray = await handlePressFetchData(get7Days(false), defaultLeague, currentTab === "Upcoming")
             console.info('Setting upcoming match array')
             setUpcomingMatchesArray(upcomingMatchesArray)
 
@@ -334,19 +334,19 @@ const FixturesScreen = () => {
 
         setCurrentTab(key)
 
-        if (key == "Today" && currentTab != "Today") {
+        if (key === "Today" && currentTab != "Today") {
             console.info("Selected Today")
             setCurrentDateArray([new Date()])
 
             setMatchesArray(todayMatchesArray)
         }
-        else if (key == "Previous" && currentTab != "Previous") {
+        else if (key === "Previous" && currentTab != "Previous") {
             console.info("Selected Previous")
             setCurrentDateArray(get7Days(true))
 
             setMatchesArray(previousMatchesArray)
         }
-        else if (key == "Upcoming" && currentTab != "Upcoming") {
+        else if (key === "Upcoming" && currentTab != "Upcoming") {
             console.info("Selected Upcoming")
             setCurrentDateArray(get7Days(false))
 
@@ -366,10 +366,9 @@ const FixturesScreen = () => {
 
     const [leaguePanelOpen, setLeaguePanelOpen] = useState(false);
 
-    // custom bottom sheet
     const handleChooseLeaguePress = () => {
-        translateY.value = 0;
-        setLeaguePanelOpen(true)
+        //setLeaguePanelOpen(true)
+
     }
 
     // renders
@@ -423,7 +422,7 @@ const FixturesScreen = () => {
                             eventState={item.eventState}
                             stateDetail={item.stateDetail}
                             eventTime={item.eventTime}
-                            isLastItem={index == matchesArray.length - 1}
+                            isLastItem={index === matchesArray.length - 1}
                             lastRefreshTime={lastRefresh}
                             OnPress={handlePresentModalPress}
                         />

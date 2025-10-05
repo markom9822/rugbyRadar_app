@@ -28,6 +28,7 @@ type ScorePanelProps = {
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
     index, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime, OnPress }: ScorePanelProps) => {
 
+    console.info(leagueDisplayName)
     const leagueName = getLeagueNameFromDisplayName(leagueDisplayName)
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
