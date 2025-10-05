@@ -1,0 +1,398 @@
+{
+    "teams": [
+        {
+            "name": "Black Lion",
+            "players": [
+                {
+                    "name": "Dato Abdushelishvili",
+                    "image": "https://media-cdn.incrowdsports.com/507b87fa-8281-4e15-b180-b49abd677150.png"
+                },
+                {
+                    "name": "Shalva Aptsiauri",
+                    "image": "https://media-cdn.incrowdsports.com/7f4adb7a-c239-4376-ba2d-8083762e2b4b.png"
+                },
+                {
+                    "name": "Gaga Arabuli",
+                    "image": "https://media-cdn.incrowdsports.com/cde7dee6-7ae9-4d32-a8db-ce345bf4adad.png"
+                },
+                {
+                    "name": "Mikheil Babunashvili",
+                    "image": "https://media-cdn.incrowdsports.com/89a32208-0834-4863-ab99-18a79292c263.png"
+                },
+                {
+                    "name": "Lado Chachanidze",
+                    "image": "https://media-cdn.incrowdsports.com/73b43aec-b7a3-4c23-bf30-42ebf68c0511.png"
+                },
+                {
+                    "name": "Tamaz Chamiashvili",
+                    "image": "https://media-cdn.incrowdsports.com/6c782713-efd0-4d65-a191-cfabaa589ead.png"
+                },
+                {
+                    "name": "Giorgi Chkhartishvili",
+                    "image": "https://media-cdn.incrowdsports.com/9a8f5dba-d669-4ecb-bf3d-da5d7e5d8c75.png"
+                },
+                {
+                    "name": "Nodari Dolidze",
+                    "image": "https://media-cdn.incrowdsports.com/f3a408b2-123a-41e2-a6dd-f6f7c260f31c.png"
+                },
+                {
+                    "name": "Demuri Epremidze",
+                    "image": "https://media-cdn.incrowdsports.com/df1fe41e-bab3-48e5-bbf8-0bf31aa49899.png"
+                },
+                {
+                    "name": "Mikheil Gachechiladze",
+                    "image": "https://media-cdn.incrowdsports.com/3ddc5016-1655-4d6b-bce7-d20a2cc3e1b2.png"
+                },
+                {
+                    "name": "Guram Ganiashvili",
+                    "image": "https://media-cdn.incrowdsports.com/73beccb9-12d1-47e7-bb54-e105b0613004.png"
+                },
+                {
+                    "name": "Beka Gelkhvidze",
+                    "image": "https://media-cdn.incrowdsports.com/ff52acef-3516-487b-a525-660a2d934728.png"
+                },
+                {
+                    "name": "Luka Ivanishvili",
+                    "image": "https://media-cdn.incrowdsports.com/0a3e96a6-043f-4059-b691-08630cad2e55.png"
+                },
+                {
+                    "name": "Alexander Jighauri",
+                    "image": "https://media-cdn.incrowdsports.com/252f1812-060e-414d-a8ba-8b2f41d9340f.png"
+                },
+                {
+                    "name": "Tornike Kakhoidze",
+                    "image": "https://media-cdn.incrowdsports.com/7d65ef11-b415-4287-96f6-49a77779b05a.png"
+                },
+                {
+                    "name": "Vasil Kakovin",
+                    "image": "https://media-cdn.incrowdsports.com/533382fe-d4f5-4e48-b4a2-e180a69110b6.png"
+                },
+                {
+                    "name": "Giorgi Kervalishvili",
+                    "image": "https://media-cdn.incrowdsports.com/76bff0f2-e67e-441b-9073-e854e5188678.png"
+                },
+                {
+                    "name": "Gaga Kevkhishvili",
+                    "image": "https://media-cdn.incrowdsports.com/1a875c5f-7929-4dac-aed8-4613029e2c83.png"
+                },
+                {
+                    "name": "Nugzar Kevkhishvili",
+                    "image": "https://media-cdn.incrowdsports.com/d7e4d65c-bc17-4a5b-b4ce-05b5441abe96.png"
+                },
+                {
+                    "name": "Mikheil Khakubia",
+                    "image": "https://media-cdn.incrowdsports.com/6d59a973-1863-43ec-8462-56398933ebc4.png"
+                },
+                {
+                    "name": "Nika Khatiashvili",
+                    "image": "https://media-cdn.incrowdsports.com/77cc16a6-9924-40a0-9eec-187fc12de05c.png"
+                },
+                {
+                    "name": "Gela Kheladze",
+                    "image": "https://media-cdn.incrowdsports.com/93410bc9-3767-4583-a3c9-049567192a2f.png"
+                },
+                {
+                    "name": "Davit Khuroshvili",
+                    "image": "https://media-cdn.incrowdsports.com/160745f6-d607-4bf4-a852-ed9fcb0dc6a8.png"
+                },
+                {
+                    "name": "Petre Khutsishvili",
+                    "image": "https://media-cdn.incrowdsports.com/6d759557-0bd0-4618-8f26-363e5c8fc2b9.png"
+                },
+                {
+                    "name": "Saba Kurtanidze",
+                    "image": "https://media-cdn.incrowdsports.com/bde6c4f0-885a-430c-8041-97ac14ebaacb.png"
+                },
+                {
+                    "name": "Vakhtang Kvatadze",
+                    "image": "https://media-cdn.incrowdsports.com/089c6cc5-92b3-4c40-9a2b-5517113011f7.png"
+                },
+                {
+                    "name": "Irakli Kvatadze",
+                    "image": "https://media-cdn.incrowdsports.com/6ce8a3ea-a699-4b48-b58e-79c25bbba49d.png"
+                },
+                {
+                    "name": "Davit Lazviashvili",
+                    "image": "https://media-cdn.incrowdsports.com/b57666ac-0d0d-41cb-ad75-c6310e2f00f5.png"
+                },
+                {
+                    "name": "Zaur Lutidze",
+                    "image": "https://media-cdn.incrowdsports.com/fe66935c-232b-4b61-acd9-1d5d6e091b1e.png"
+                },
+                {
+                    "name": "Sandro Mamamtavrishvili",
+                    "image": "https://media-cdn.incrowdsports.com/d257c3d5-726a-453d-85de-0b5fd579a73d.png"
+                },
+                {
+                    "name": "Shalva Mamukashvili",
+                    "image": "https://media-cdn.incrowdsports.com/176b681c-5fcf-48d0-baa5-dcc96295e55c.png"
+                },
+                {
+                    "name": "Luka Matkava",
+                    "image": "https://media-cdn.incrowdsports.com/731656e6-5e3b-467c-a1b5-338ef4dd94e0.png"
+                },
+                {
+                    "name": "Ioane Metreveli",
+                    "image": "https://media-cdn.incrowdsports.com/463787e2-cb9b-4909-b0b4-28fa40096ef1.png"
+                },
+                {
+                    "name": "Giorgi Nikoladze",
+                    "image": "https://media-cdn.incrowdsports.com/bee4a65e-3847-44f4-bf2f-4331ed639073.png"
+                },
+                {
+                    "name": "Tengiz Peranidze",
+                    "image": "https://media-cdn.incrowdsports.com/12f38b7b-4109-4fbf-8f2f-1a8e92c6aa57.png"
+                },
+                {
+                    "name": "Aliko Shamilishvili",
+                    "image": "https://media-cdn.incrowdsports.com/5875ed80-71dc-4494-b92f-c0a54843d745.png"
+                },
+                {
+                    "name": "Amiran Shvangiradze",
+                    "image": "https://media-cdn.incrowdsports.com/1902f74e-ae83-4061-8003-0e0f1589b5c9.png"
+                },
+                {
+                    "name": "Giorgi Sinauridze",
+                    "image": "https://media-cdn.incrowdsports.com/a1b1fdf8-462d-4d39-8288-ccd7b9c46efd.png"
+                },
+                {
+                    "name": "Akaki Tabutsadze",
+                    "image": "https://media-cdn.incrowdsports.com/bae2ca98-b034-4e2d-9515-a9efe66d3354.png"
+                },
+                {
+                    "name": "Demi Tapladze",
+                    "image": "https://media-cdn.incrowdsports.com/f9eaff90-8f24-4bcf-ad2d-3c6cc50f76fa.png"
+                },
+                {
+                    "name": "Bachuki Tchumbadze",
+                    "image": "https://media-cdn.incrowdsports.com/c3e0e201-7989-4044-a92d-37329635781e.png"
+                },
+                {
+                    "name": "Sandro Todua",
+                    "image": "https://media-cdn.incrowdsports.com/e0efef9d-42cf-4dbd-9cbc-ff32a7fc6130.png"
+                },
+                {
+                    "name": "Luka Tsirekidze",
+                    "image": "https://media-cdn.incrowdsports.com/aede5d77-0a3f-4f99-bf99-eeaf434cfcf4.png"
+                },
+                {
+                    "name": "Murtaz Tskhadadze",
+                    "image": "https://media-cdn.incrowdsports.com/1a3cc21b-930f-4566-8b65-1d4f021e8f41.png"
+                },
+                {
+                    "name": "Giorgi Tsutskiridze",
+                    "image": "https://media-cdn.incrowdsports.com/71a8c11d-cfcf-4d8f-a378-a23edbeb6fd5.png"
+                },
+                {
+                    "name": "Tengiz Zamtaradze",
+                    "img_src": "https://media-cdn.incrowdsports.com/ad5bc425-6dec-40d9-a55d-bbb616469269.png"
+                }
+            ]
+        },
+        {
+            "name": "Toyota Cheetahs",
+            "players": [
+                {
+                    "name": "Michael Annies",
+                    "image": "https://media-cdn.incrowdsports.com/93dcd55c-94d9-4d45-9fc7-69f96c2f390b.png"
+                },
+                {
+                    "name": "Banie Britz",
+                    "image": "https://media-cdn.incrowdsports.com/2d1b3c92-be04-4a61-ba80-99fea4eebf84.png"
+                },
+                {
+                    "name": "CJ Coetzee",
+                    "image": "https://media-cdn.incrowdsports.com/36baf3a2-ea48-4737-85c5-c10608cbd3ec.png"
+                },
+                {
+                    "name": "Aranos Coetzee",
+                    "image": "https://media-cdn.incrowdsports.com/4dcdb3c5-e867-460f-9fd4-11d5aec0a062.png"
+                },
+                {
+                    "name": "Aidon Davis",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Cammy Dawson",
+                    "image": "https://media-cdn.incrowdsports.com/477653f0-c621-4db7-8132-d01aaf13ba55.png"
+                },
+                {
+                    "name": "Ruben de Haas",
+                    "image": "https://media-cdn.incrowdsports.com/44ae4a80-1216-4e7c-9b28-53ab373ba1a2.png"
+                },
+                {
+                    "name": "Schalk Ferreira",
+                    "image": "https://media-cdn.incrowdsports.com/4418d67b-231f-4da0-b647-41b328ef9629.png"
+                },
+                {
+                    "name": "Corne Fourie",
+                    "image": "https://media-cdn.incrowdsports.com/a2985deb-d0f3-417a-ad97-e9ebd88b0166.png"
+                },
+                {
+                    "name": "Munier Hartzenberg",
+                    "image": "https://media-cdn.incrowdsports.com/9e5d1542-0419-4064-86a8-bbd964f8ebbc.png"
+                },
+                {
+                    "name": "Vice Hofmeyr",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Rob Hunt",
+                    "image": "https://media-cdn.incrowdsports.com/7f3280b4-113b-4ff2-af3c-378a6908a4cb.png"
+                },
+                {
+                    "name": "Marko Janse van Rensburg",
+                    "image": "https://media-cdn.incrowdsports.com/0d28866d-d16c-4584-8bec-80f68711fdde.png"
+                },
+                {
+                    "name": "Marco Jansen van Vuren",
+                    "image": "https://media-cdn.incrowdsports.com/b58853e4-3d20-4832-a25c-b1f687717da3.png"
+                },
+                {
+                    "name": "Pieter Jansen van Vuren",
+                    "image": "https://media-cdn.incrowdsports.com/4d7a7fc2-51e4-4f22-9481-c34441769920.png"
+                },
+                {
+                    "name": "Cohen Jasper",
+                    "image": "https://media-cdn.incrowdsports.com/6d151520-dc2f-46c6-ba5a-921d21502e31.png"
+                },
+                {
+                    "name": "Rewan Kruger",
+                    "image": "https://media-cdn.incrowdsports.com/dfd3dedf-d40c-4934-983b-2f5196deef24.png"
+                },
+                {
+                    "name": "Katlego Lobakeng",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Andell Loubser",
+                    "image": "https://media-cdn.incrowdsports.com/c4319b6e-15be-445f-bef1-05f4781e215d.png"
+                },
+                {
+                    "name": "George Lourens",
+                    "image": "https://media-cdn.incrowdsports.com/1da933b4-08f2-4e34-b593-efb02627384b.png"
+                },
+                {
+                    "name": "Daniel Maartens",
+                    "image": "https://media-cdn.incrowdsports.com/8b3d7d26-03d1-4c0d-9c4a-75d57a1689c5.png"
+                },
+                {
+                    "name": "Thabang Mahlasi",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Matome Manyama",
+                    "image": "https://media-cdn.incrowdsports.com/7840843f-b57e-416c-a73d-f43dfc5a6c1a.png"
+                },
+                {
+                    "name": "Ali Mgijima",
+                    "image": "https://media-cdn.incrowdsports.com/2c882009-7991-4aa6-b8e8-85bbecd57e10.png"
+                },
+                {
+                    "name": "Oupa Mohoje",
+                    "image": "https://media-cdn.incrowdsports.com/bc858d03-61a0-402d-b78b-3a325e6910c5.png"
+                },
+                {
+                    "name": "Banele Mthenjane",
+                    "image": "https://media-cdn.incrowdsports.com/ea335f6b-3c5c-4e19-b36d-ce97aecd56a4.png"
+                },
+                {
+                    "name": "Jooste Nel",
+                    "image": "https://media-cdn.incrowdsports.com/403cca71-340f-4364-8935-09c354999e88.png"
+                },
+                {
+                    "name": "Jandre Nel",
+                    "image": "https://media-cdn.incrowdsports.com/73c70feb-9fa5-4731-a75a-ed21b8d05e55.png"
+                },
+                {
+                    "name": "Prince Nkabinde",
+                    "image": "https://media-cdn.incrowdsports.com/1c6b9792-aee2-41f8-b8c0-ec8890b2f459.png"
+                },
+                {
+                    "name": "Litha Nkula",
+                    "image": "https://media-cdn.incrowdsports.com/9691f1d4-76ec-44c3-8103-b987888c0924.png"
+                },
+                {
+                    "name": "Andisa Ntsila",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Friedle Olivier",
+                    "image": "https://media-cdn.incrowdsports.com/94fad8e6-8810-43e9-9e2c-062856cab68f.png"
+                },
+                {
+                    "name": "Raegan Oranje",
+                    "image": "https://media-cdn.incrowdsports.com/ae14d53c-3513-4df6-9f08-331c5ccad2d5.png"
+                },
+                {
+                    "name": "Vernon Paulo",
+                    "image": "https://media-cdn.incrowdsports.com/d83cf6c9-415f-4eae-873d-79cceb8cd875.png"
+                },
+                {
+                    "name": "Shaun Ray Jr",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Jeandre Rudolph",
+                    "image": "https://media-cdn.incrowdsports.com/ee51bc9f-773e-41f7-a253-4060c3730e37.png"
+                },
+                {
+                    "name": "Victor Sekekete",
+                    "image": "https://media-cdn.incrowdsports.com/9499cd81-793f-4d10-9d15-38e5edc68242.png"
+                },
+                {
+                    "name": "Franco Smith",
+                    "image": "https://media-cdn.incrowdsports.com/30b26d50-c027-45be-ad3a-bbad44890ad8.png"
+                },
+                {
+                    "name": "Marno Stopforth",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Pierre-Raymond Uys",
+                    "image": "https://media-cdn.incrowdsports.com/01d2ebc1-03b2-410d-b2ce-564776c45116.png"
+                },
+                {
+                    "name": "Gideon van der Merwe",
+                    "image": "https://media-cdn.incrowdsports.com/20201e08-15f1-460f-b157-1320641b1819.png"
+                },
+                {
+                    "name": "Chris van der Westhuizen",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                },
+                {
+                    "name": "Louis van der Westhuizen",
+                    "image": "https://media-cdn.incrowdsports.com/0fc89b98-6324-43b4-b632-b86cf6f3fbd6.png"
+                },
+                {
+                    "name": "Hencus van Wyk",
+                    "image": "https://media-cdn.incrowdsports.com/46a6c976-05db-4908-916a-c2e5e21b535e.png"
+                },
+                {
+                    "name": "Laurence Victor",
+                    "image": "https://media-cdn.incrowdsports.com/88407548-fa17-4a76-9ed5-26147a126add.png"
+                },
+                {
+                    "name": "Neels Volschenk",
+                    "image": "https://media-cdn.incrowdsports.com/7ca66121-fcfa-4317-9196-dbeb75fcb701.png"
+                },
+                {
+                    "name": "Sisonke Vumazonke",
+                    "image": "https://media-cdn.incrowdsports.com/bb259783-16dd-4eaf-a974-dad6156b7128.png"
+                },
+                {
+                    "name": "Carl Wegner",
+                    "image": "https://media-cdn.incrowdsports.com/314c8af4-54b0-4e94-bc3d-12b3031cb52c.png"
+                },
+                {
+                    "name": "Ethan Wentzel",
+                    "image": "https://media-cdn.incrowdsports.com/534abcde-afa2-485e-9162-ac2608f5aa07.png"
+                },
+                {
+                    "name": "Mzwanele Zito",
+                    "image": "https://media-cdn.incrowdsports.com/3a982122-71c3-451c-9cc4-449c4fe721dd.png"
+                }
+            ]
+        }
+    ]
+}
