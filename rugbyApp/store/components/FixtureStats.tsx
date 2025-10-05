@@ -121,7 +121,6 @@ export const FixtureStats = ({ id, isShown }: FixtureStats) => {
     }
 
     return (
-
         <View>
             {isShown &&
                 <BottomSheetScrollView>

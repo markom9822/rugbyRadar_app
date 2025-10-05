@@ -319,7 +319,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                         </TouchableOpacity>
                     </View>
 
-                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1 }}>
+                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1, marginBottom: 180 }}>
 
                         <LinearGradient colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']} start={{ x: gradientStartFraction, y: 0.5 }} end={{ x: gradientEndFraction, y: 0.5 }} >
 
@@ -347,9 +347,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
 
                         </LinearGradient>
                     </BottomSheetScrollView>
-
                 </View>
-
             )
         }
 

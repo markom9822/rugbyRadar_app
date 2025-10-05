@@ -197,7 +197,7 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName }: StatsPanelPr
     const panelColour = hexToRGB("#4d4b4b", '0.5')
 
     return (
-        <View style={[statsPanelStyles.container]}>
+        <View style={[statsPanelStyles.container, {marginBottom: 20 }]}>
 
             <View style={{ backgroundColor: panelColour, padding: 10, borderRadius: 8, width: "95%" }}>
 

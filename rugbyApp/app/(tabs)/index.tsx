@@ -446,6 +446,7 @@ const FixturesScreen = () => {
                     handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
                     backgroundStyle={{ backgroundColor: "#0c0c0cff" }}
                 >
+                  
                 <FixturesPanel
                     matchInfo={matchesArray[currentIndex]}
                     id={currentID}

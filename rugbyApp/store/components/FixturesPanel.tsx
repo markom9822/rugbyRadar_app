@@ -16,6 +16,7 @@ import { FixtureStats } from "./FixtureStats"
 import { FixtureEvents } from "./FixturesEvents"
 import { MultiTabBar } from "./MultiTabBar"
 import { TeamEventsPanel, TeamEventStatsInfo } from "./TeamEventsPanel"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 type FixturesPanelProps = {
     matchInfo: MatchInfo,
@@ -180,8 +181,10 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
     const teamFormPanelColour = hexToRGB("#4d4b4b", '0.9')
 
 
-    return (<LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
-                style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12 }]}>
+    return (<View style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12, marginBottom: 30 }]}>
+
+    <LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+                >
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: "100%" }}>
                     <TouchableOpacity activeOpacity={0.5} style={{ marginHorizontal: 15, marginVertical: 5 }} onPress={handleCloseBottomSheet}>
@@ -192,7 +195,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
                 </View>
 
                 <ImageBackground resizeMode='contain' imageStyle={{ opacity: 0.06 }}
-                    style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10 }} source={matchLeagueLogo} >
+                    style={{ justifyContent: 'center', alignItems: 'center'}} source={matchLeagueLogo} >
 
                     <View style={{ paddingVertical: 4 }}>
                         <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.light, textAlign: 'center', fontSize: fontSize.xs }]}>{matchInfo.matchLeague}</Text>
@@ -244,6 +247,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
                 <FixtureInfoPanel id={id} />
             </LinearGradient>
+    </View>
     )
 }
 
@@ -265,7 +269,7 @@ export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
                 <MultiTabBar tabsArray={["Overview", "Stats", "Events", "Lineups"]} OnTabButtonPressed={setCurrentTab} currentTabKey={currentTab} tabFontSize={11} />
             </View>
 
-            <View style={{ width: "100%" }}>
+            <View style={{ width: "100%", height: "100%" }}>
                 <FixturesInfoBox id={id} currentTabKey={currentTab} />
             </View>
 
