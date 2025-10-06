@@ -4,7 +4,7 @@ import { getURCShortNameFromFullName } from "../URCRugbyTeamsDatabase";
 
 export const getTeamStandingsInfo = (seasonStandings: any) => {
 
-    var newArray = [];
+    let newArray = [];
 
     const standingsChildren = seasonStandings.children.length
 
@@ -15,7 +15,7 @@ export const getTeamStandingsInfo = (seasonStandings: any) => {
         for (let index = 0; index < standingsCount; index++) {
 
             const teamPool = seasonStandings.children[j].name;
-            if(index == 0 && standingsChildren > 1)
+            if(index === 0 && standingsChildren > 1)
             {
                 let headerRankingInfo = {
                     isHeader: true,
@@ -48,7 +48,6 @@ export const getTeamStandingsInfo = (seasonStandings: any) => {
     }
 
     console.info(newArray)
-
     return(
         newArray
     )
@@ -56,7 +55,7 @@ export const getTeamStandingsInfo = (seasonStandings: any) => {
 
 export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: string) => {
 
-    var newArray = [];
+    let newArray = [];
 
     const standingsChildren = seasonStandings.data.groups
 
@@ -67,7 +66,7 @@ export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: s
         for (let index = 0; index < teamsCount; index++) {
 
             const teamPool = standingsChildren[j].name;
-            if(index == 0 && standingsChildren.length > 1)
+            if(index === 0 && standingsChildren.length > 1)
             {
                 let headerRankingInfo = {
                     isHeader: true,
@@ -81,7 +80,7 @@ export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: s
                 newArray.push(headerRankingInfo)
             }
 
-            var teamName = '';
+            let teamName = '';
 
             if(leagueName === 'urc')
             {
@@ -114,7 +113,6 @@ export const getTeamStandingsInfoRugbyViz = (seasonStandings: any, leagueName: s
     }
 
     console.info(newArray)
-
     return(
         newArray
     )

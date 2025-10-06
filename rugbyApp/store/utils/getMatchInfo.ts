@@ -30,7 +30,7 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
     const matchVenue = matchDetails.gameInfo.venue.fullName;
     const matchAttendance = matchDetails.gameInfo.attendance;
 
-    if(matchDetails.boxscore.teams[0].statistics.length == 0 || matchDetails.boxscore.teams[1].statistics.length == 0 )
+    if(matchDetails.boxscore.teams[0].statistics.length === 0 || matchDetails.boxscore.teams[1].statistics.length === 0 )
     {
         const blankArray = [
             {
@@ -58,7 +58,6 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
         ];
 
         return blankArray
-
     }
 
     const homeTeamPossession = matchDetails.boxscore.teams[0].statistics[0].stats[20].value;
@@ -96,7 +95,6 @@ export const getMatchInfo = (matchDetails: any):MatchInfo[] => {
             matchVenue: matchVenue,
             matchAttendance: matchAttendance,
             matchBroadcasters: []
-        
         }
     ];
 
@@ -115,8 +113,6 @@ export const handleGetMatchStat = (stat: any) => {
     {
         return stat
     }
-
-
 }
 
 export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
@@ -146,7 +142,7 @@ export const getMatchInfoRugbyViz = (matchDetails: any):MatchInfo[] => {
     const homeTeamHalfScore = matchDetails.data.homeTeam.halfTimeScore;
     const awayTeamHalfScore = matchDetails.data.awayTeam.halfTimeScore;
 
-    var eventState;
+    let eventState;
     const matchStatus = matchDetails.data.status;
     if (matchStatus === "result") {
         eventState = "post"
@@ -205,7 +201,7 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
     const awayTeamScore = matchDetails.match.scores[1];
     const matchStatus = matchDetails.match.status;
 
-    var eventState;
+    let eventState;
     if (matchStatus === "C" || matchStatus === "LFT") {
         eventState = "post"
     }
@@ -237,7 +233,7 @@ export const getMatchInfoWorldRugbyAPI = async (matchDetails: any): Promise<Matc
 
     const statsAvailable = Object.keys(matchDetails.teamStats[0].stats).length !== 0 &&  Object.keys(matchDetails.teamStats[1].stats).length !== 0;
 
-    var matchBroadcasters = []
+    let matchBroadcasters = []
 
     // get broadcasters from planet rugby
     const planetRugbyMatchID = await getPlanetRugbyMatchIDFromDetails(matchDate, homeTeamName, awayTeamName);
@@ -290,9 +286,9 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
     const matchAttendance = matchDetails.data.match.attendance;
     const matchDate = new Date(matchDetails.data.match.datetime);
 
-    var eventState;
-    var homeScore;
-    var awayScore;
+    let eventState;
+    let homeScore;
+    let awayScore;
 
     const matchStatus = matchDetails.data.matchDetails.status;
 
@@ -310,7 +306,7 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
         eventState = "ongoing"
     }
 
-    var matchBroadcasters = []
+    let matchBroadcasters = []
     const broadcastersString = matchDetails.data.match.channel_name;
 
     if (broadcastersString !== null) {
@@ -328,7 +324,6 @@ export const getMatchInfoPlanetRugbyAPI = (matchDetails: any): MatchInfo[] => {
 
     const homeTeamMetres = '-'
     const awayTeamMetres = '-'
-
 
     const newArray = [
         {

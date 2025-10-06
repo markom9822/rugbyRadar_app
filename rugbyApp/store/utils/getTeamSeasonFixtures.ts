@@ -9,9 +9,9 @@ export const rugbyVizLeagueCodes = [
 
 export const getTeamSeasonFixturesRugViz = async (seasonStartDate: Date, teamInfo: any) => {
 
-    var teamMatchesArray = [];
+    let teamMatchesArray = [];
 
-    const leagueIDsResult = rugbyVizLeagueCodes.find((element) => element.teamType == teamInfo.type)
+    const leagueIDsResult = rugbyVizLeagueCodes.find((element) => element.teamType === teamInfo.type)
     const teamLeagueIDs = leagueIDsResult?.leagueCodes
     if(teamLeagueIDs === undefined) return
 
@@ -38,7 +38,7 @@ export const getTeamSeasonFixturesRugViz = async (seasonStartDate: Date, teamInf
             const awayTeamScore = gamesData[index].awayTeam.score;
             const matchStatus = gamesData[index].status;
 
-            var eventState = ''
+            let eventState = ''
 
             if (matchStatus === "result") {
                 eventState = "post"
@@ -96,11 +96,11 @@ export const getTeamSeasonFixturesWorldRugbyAPI = async (seasonStartDate: Date, 
 
     const monthDatesArray = generateMonthlyDates(seasonStartDate, seasonEndDate);
 
-    var teamMatchesArray = [];
+    let teamMatchesArray = [];
 
     for (let monthIndex = 1; monthIndex < monthDatesArray.length; monthIndex++) {
 
-        var startDate = '';
+        let startDate = '';
         if(monthIndex > 1)
         {
             const date = new Date(monthDatesArray[monthIndex - 1]);
@@ -143,7 +143,7 @@ export const getTeamSeasonFixturesWorldRugbyAPI = async (seasonStartDate: Date, 
             const homeTeamScore = gamesData[index].scores[0];
             const awayTeamScore = gamesData[index].scores[1];
 
-            var eventState;
+            let eventState;
             const matchStatus = gamesData[index].status;
             if (matchStatus === "C" || matchStatus === "LFT") {
                 eventState = "post"
@@ -198,21 +198,21 @@ export const getTeamSeasonFixturesWorldRugbyAPI = async (seasonStartDate: Date, 
 
 export const getTeamSeasonFixtures = async (teamID: string | string[] | undefined, seasonYear: string) => {
 
-    if (teamID == undefined) return
+    if (teamID === undefined) return
     const teamInfo = getAnyTeamInfoFromID(teamID.toString())
 
     // need to check for season type, northern or southern
     const seasonsArray = [Number(seasonYear) - 1, Number(seasonYear)]
 
-    var seasonStartDate = new Date();
-    var seasonEndDate = new Date();
-    if (teamInfo.seasonType == "north") {
+    let seasonStartDate = new Date();
+    let seasonEndDate = new Date();
+    if (teamInfo.seasonType === "north") {
         const startMonth = 8;
         const endMonth = 7;
         seasonStartDate = new Date(seasonsArray[0], startMonth, 0)
         seasonEndDate = new Date(seasonsArray[1], endMonth, 0)
     }
-    else if (teamInfo.seasonType == "south") {
+    else if (teamInfo.seasonType === "south") {
         const startMonth = 0;
         const endMonth = 11;
         seasonStartDate = new Date(seasonsArray[0], startMonth, 0)
@@ -222,7 +222,7 @@ export const getTeamSeasonFixtures = async (teamID: string | string[] | undefine
     console.info(seasonStartDate)
     console.info(seasonEndDate)
 
-    var teamMatchesArray = [];
+    let teamMatchesArray = [];
 
     for (let seasonIndex = 0; seasonIndex < seasonsArray.length; seasonIndex++) {
 
@@ -296,6 +296,4 @@ export const getTeamSeasonFixtures = async (teamID: string | string[] | undefine
     return (
         sortedArray
     )
-
 }
-

@@ -4,7 +4,7 @@ export const getFullMatchStats = (matchStats: any) => {
     const homeTeamName = matchStats.boxscore.teams[0].team.displayName;
     const awayTeamName = matchStats.boxscore.teams[1].team.displayName;
 
-    if (matchStats.boxscore.teams[0].statistics.length == 0 || matchStats.boxscore.teams[1].statistics.length == 0) {
+    if (matchStats.boxscore.teams[0].statistics.length === 0 || matchStats.boxscore.teams[1].statistics.length === 0) {
         const blankArray = [
             {
                 homeTeamName: homeTeamName,
@@ -256,7 +256,7 @@ export const getFullMatchStatsRugbyViz = (matchStats: any) => {
     const homeTeamRedCards = matchStats.data.homeTeam.stats.redCards;
     const awayTeamRedCards = matchStats.data.awayTeam.stats.redCards;
 
-    var eventState;
+    let eventState;
     const matchStatus = matchStats.data.status;
     if (matchStatus === "result") {
         eventState = "post"
@@ -321,7 +321,7 @@ export const getFullMatchStatsRugbyViz = (matchStats: any) => {
 
 export const handleGetWorldRugbyAPIStat = (stat: any) => {
 
-    if(stat == undefined)
+    if(stat === undefined)
     {
         return 0;
     }

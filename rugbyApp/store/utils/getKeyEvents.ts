@@ -1,6 +1,5 @@
 import { DropGoalIcon, RedCardIcon, RugbyPostsIcon, RugbyTryIcon, YellowCardIcon } from "@/store/Icons/Icons";
 
-
 export const getKeyEventIcon = (eventType: string) => {
     switch(eventType) { 
         case 'conversion': return RugbyPostsIcon
@@ -19,7 +18,7 @@ export const getKeyEventIcon = (eventType: string) => {
 
 export const getKeyEvents = (matchStats: any) => {
 
-    var keyEventsArray = [];
+    let keyEventsArray = [];
 
     const keyEventsLength = matchStats.header.competitions[0].details.length;
 
@@ -92,16 +91,16 @@ const getKeyEventPlayerRugbyViz = (matchStats: any, playerID: number, isHomeTeam
 
 export const getKeyEventsRugbyViz = (matchStats: any) => {
 
-    var keyEventsArray = [];
+    let keyEventsArray = [];
 
     const keyEvents= matchStats.data.events;
     if(keyEvents == null) return []
 
     const homeTeamID = matchStats.data.homeTeam.id;
-    const awayTeamID = matchStats.data.awayTeam.id;
+    //const awayTeamID = matchStats.data.awayTeam.id;
 
-    var homeScore = 0;
-    var awayScore = 0;
+    let homeScore = 0;
+    let awayScore = 0;
 
     const addScoreToTeam = (isHomeTeam: boolean, eventType: string) => {
 
@@ -151,8 +150,8 @@ export const getKeyEventsRugbyViz = (matchStats: any) => {
         const eventTime = keyEvents[index].optaMinute;
         const eventType = keyEvents[index].type;
 
-        var eventTeam = ''
-        var eventPlayer = ''
+        let eventTeam = ''
+        let eventPlayer = ''
         const eventTeamID = keyEvents[index].teamId;
         const eventPlayerID = keyEvents[index].playerId;
         const isHomeTeam = eventTeamID === homeTeamID;
@@ -225,7 +224,7 @@ export const getPlayersListWorldRugbyAPI = async (matchID: string, isHome: boole
     const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/'+matchID+'/summary?language=en';
     const teamDetails = await fetch( apiString,).then((res) => res.json())
 
-    var playersList: PlayerListItem[] = []
+    let playersList: PlayerListItem[] = []
 
     const teamList = isHome ? teamDetails.teams[0].teamList.list: teamDetails.teams[1].teamList.list;
 
@@ -250,18 +249,18 @@ export const getPlayersListWorldRugbyAPI = async (matchID: string, isHome: boole
 
 export const getKeyEventsWorldRugbyAPI = async (matchStats: any) => {
 
-    var keyEventsArray = [];
+    let keyEventsArray = [];
 
     const keyEvents= matchStats.timeline;
-    if(keyEvents == null || keyEvents.length == 0) return []
+    if(keyEvents == null || keyEvents.length === 0) return []
 
     const homePlayersList = await getPlayersListWorldRugbyAPI(matchStats.match.matchId, true)
     const awayPlayersList = await getPlayersListWorldRugbyAPI(matchStats.match.matchId, false)
 
     console.info(homePlayersList)
 
-    var homeScore = 0;
-    var awayScore = 0;
+    let homeScore = 0;
+    let awayScore = 0;
 
     const addScoreToTeam = (isHomeTeam: boolean, eventScore: number) => {
 
@@ -282,17 +281,17 @@ export const getKeyEventsWorldRugbyAPI = async (matchStats: any) => {
         const eventScore = keyEvents[index].points;
         const eventPlayerID = keyEvents[index].playerId;
 
-        var eventTeam = ''
-        var eventPlayer = ''
-        const isHomeTeam = keyEvents[index].teamIndex == 0;
+        let eventTeam = ''
+        let eventPlayer = ''
+        const isHomeTeam = keyEvents[index].teamIndex === 0;
 
         addScoreToTeam(isHomeTeam, eventScore)
 
         if(isHomeTeam)
         {
             eventTeam = matchStats.match.teams[0].name;
-            const playerItem = homePlayersList.find((element: PlayerListItem ) => element.id == eventPlayerID);
-            if(playerItem != undefined)
+            const playerItem = homePlayersList.find((element: PlayerListItem ) => element.id === eventPlayerID);
+            if(playerItem !== undefined)
             {
                 eventPlayer = playerItem.name;
             }
@@ -300,8 +299,8 @@ export const getKeyEventsWorldRugbyAPI = async (matchStats: any) => {
         else
         {
             eventTeam = matchStats.match.teams[1].name;;
-            const playerItem = awayPlayersList.find((element: PlayerListItem ) => element.id == eventPlayerID);
-            if(playerItem != undefined)
+            const playerItem = awayPlayersList.find((element: PlayerListItem ) => element.id === eventPlayerID);
+            if(playerItem !== undefined)
             {
                 eventPlayer = playerItem.name;
             }
@@ -323,17 +322,13 @@ export const getKeyEventsWorldRugbyAPI = async (matchStats: any) => {
                 eventTeam: eventTeam,
                 eventIcon: eventIcon,
             };
-
             keyEventsArray.push(newArray)
         }
-
     }
-
 
     return(
         keyEventsArray
     )
-
 }
 
 export const getKeyEventIconPlanetRugbyAPI = (eventType: string) => {
@@ -345,7 +340,6 @@ export const getKeyEventIconPlanetRugbyAPI = (eventType: string) => {
         case 'Red': return RedCardIcon
         case 'Drop goal': return DropGoalIcon
 
-
         default: { 
            break; 
         } 
@@ -355,7 +349,7 @@ export const getKeyEventIconPlanetRugbyAPI = (eventType: string) => {
 
 export const getKeyEventsPlanetRugbyAPI = (matchStats: any, homeTeamName: string, awayTeamName: string, homeTeamID: string, awayTeamID: string) => {
 
-    var keyEventsArray:any = [];
+    let keyEventsArray:any = [];
 
     const homeKeyEvents = matchStats.data.scorers.home;
     const awayKeyEvents = matchStats.data.scorers.away;
@@ -363,13 +357,13 @@ export const getKeyEventsPlanetRugbyAPI = (matchStats: any, homeTeamName: string
 
     const addKeyEventByType = (eventArray: any) => {
 
-        if(eventArray == undefined) return;
+        if(eventArray === undefined) return;
 
         for (let index = 0; index < eventArray.length; index++) {
             const eventTime = eventArray[index].minutes;
             const eventType = eventArray[index].type;
 
-            var playerFirstName = "";
+            let playerFirstName = "";
 
             if(eventArray[index].firstname !== undefined)
             {
@@ -385,7 +379,7 @@ export const getKeyEventsPlanetRugbyAPI = (matchStats: any, homeTeamName: string
             const eventScore = eventArray[index].score;
             const eventIcon = getKeyEventIconPlanetRugbyAPI(eventType);
             const eventTeamID = eventArray[index].teams_id;
-            const eventTeam = eventTeamID == homeTeamID ? homeTeamName : awayTeamName;
+            const eventTeam = eventTeamID === homeTeamID ? homeTeamName : awayTeamName;
 
             const newArray = {
                 eventTime: eventTime.toString(),
@@ -399,7 +393,6 @@ export const getKeyEventsPlanetRugbyAPI = (matchStats: any, homeTeamName: string
             keyEventsArray.push(newArray)
         }
     }
-
 
     addKeyEventByType(homeKeyEvents?.TRY);
     addKeyEventByType(homeKeyEvents?.CON);

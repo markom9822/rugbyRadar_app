@@ -1,8 +1,7 @@
-import { StatsInfo } from "../components/StatsPanel";
 
 export const getHeadToHeadStats = (matchStats: any) => {
 
-    var headToHeadArray = [];
+    let headToHeadArray = [];
 
     const gamesLength = matchStats.headToHeadGames[0].events.length;
 
@@ -15,14 +14,14 @@ export const getHeadToHeadStats = (matchStats: any) => {
         const mainTeamID = matchStats.headToHeadGames[0].team.id;
 
         const opponentTeam = matchStats.headToHeadGames[0].events[index].opponent.displayName;
-        const opponentID = matchStats.headToHeadGames[0].events[index].opponent.id;
+        //const opponentID = matchStats.headToHeadGames[0].events[index].opponent.id;
 
         const homeTeamID = matchStats.headToHeadGames[0].events[index].homeTeamId;
         const homeTeamScore = matchStats.headToHeadGames[0].events[index].homeTeamScore;
         const awayTeamScore = matchStats.headToHeadGames[0].events[index].awayTeamScore;
 
-        var homeTeam;
-        var awayTeam;
+        let homeTeam;
+        let awayTeam;
 
         if(homeTeamID === mainTeamID)
         {
@@ -58,7 +57,7 @@ export const getHeadToHeadStats = (matchStats: any) => {
 
 export const getHeadToHeadStatsRugbyViz = async (matchStats: any) => {
 
-    var headToHeadArray = [];
+    let headToHeadArray = [];
 
     const homeTeamID = matchStats.data.homeTeam.id;
     const awayTeamID = matchStats.data.awayTeam.id;
@@ -102,7 +101,7 @@ export const getHeadToHeadStatsRugbyViz = async (matchStats: any) => {
 
 export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
 
-    var headToHeadArray = [];
+    let headToHeadArray = [];
     const newArray = {
         currentTeam: '',
         homeTeamName: '',
@@ -122,7 +121,7 @@ export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
 
 export const getHeadToHeadStatsPlanetRugbyAPI = (matchStats: any) => {
 
-    var headToHeadArray = [];
+    let headToHeadArray = [];
     const thisMatchDate = new Date(matchStats.data.matchDetails.datetime);
 
     const previousMatches = matchStats.data.match;

@@ -1,7 +1,7 @@
 
 export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
 
-    var teamFormArray = [];
+    let teamFormArray = [];
 
     const gamesLength = matchStats.lastFiveGames[teamIndex].events.length;
     const currentTeam = matchStats.lastFiveGames[teamIndex].team.displayName;
@@ -16,14 +16,14 @@ export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
         const mainTeamID = matchStats.lastFiveGames[teamIndex].team.id;
 
         const opponentTeam = matchStats.lastFiveGames[teamIndex].events[index].opponent.displayName;
-        const opponentID = matchStats.lastFiveGames[teamIndex].events[index].opponent.id;
+        //const opponentID = matchStats.lastFiveGames[teamIndex].events[index].opponent.id;
 
         const homeTeamID = matchStats.lastFiveGames[teamIndex].events[index].homeTeamId;
         const homeTeamScore = matchStats.lastFiveGames[teamIndex].events[index].homeTeamScore;
         const awayTeamScore = matchStats.lastFiveGames[teamIndex].events[index].awayTeamScore;
 
-        var homeTeam;
-        var awayTeam;
+        let homeTeam;
+        let awayTeam;
 
         if(homeTeamID === mainTeamID)
         {
@@ -36,7 +36,6 @@ export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
             awayTeam = mainTeam;
         }
 
-
         console.info(eventScore)
 
         const newArray = {
@@ -48,7 +47,6 @@ export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
                 matchDate: matchDate,
         };
     
-
         teamFormArray.push(newArray)
     }
 
@@ -59,7 +57,7 @@ export const getTeamFormStats = (matchStats: any, teamIndex: number) => {
 
 export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: boolean) => {
 
-    var teamFormArray = [];
+    let teamFormArray = [];
 
     const formGames = isHomeTeam ? matchStats.data.homeTeam.form : matchStats.data.awayTeam.form;
     const gamesLength = formGames.length;
@@ -69,7 +67,7 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
     for (let index = 0; index < gamesLength; index++) {
 
         const matchID = formGames[index].matchId;
-        const isTeamHome = formGames[index].home;
+        //const isTeamHome = formGames[index].home;
 
         const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + matchID + '?provider=rugbyviz';
         const formMatchStats = await fetch(apiString,).then((res) => res.json())
@@ -106,7 +104,7 @@ export const getTeamFormStatsRugbyViz = async (matchStats: any, isHomeTeam: bool
 
 export const getTeamFormStatsWorldRugbyAPI = (matchStats: any, isHomeTeam: boolean) => {
 
-    var teamFormArray = [];
+    let teamFormArray = [];
 
     const newArray = {
         currentTeam: '',
@@ -126,7 +124,7 @@ export const getTeamFormStatsWorldRugbyAPI = (matchStats: any, isHomeTeam: boole
 
 export const getTeamFormStatsPlanetRugbyAPI = (matchStats: any, isHomeTeam: boolean) => {
 
-    var teamFormArray = [];
+    let teamFormArray = [];
 
     const formGames = isHomeTeam ? matchStats.data.lastFiveMatches.home.matches : matchStats.data.lastFiveMatches.away.matches;
     const gamesLength = formGames.length;
