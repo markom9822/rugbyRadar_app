@@ -32,9 +32,10 @@ export type AllLineUpsInfo = {
 type FixtureLineups = {
     id: string,
     isShown: boolean,
+    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
-export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
+export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineups) => {
 
     const [homeTeamName, setHomeTeamName] = useState<string>('');
     const [awayTeamName, setAwayTeamName] = useState<string>('');
@@ -238,7 +239,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
 
     const findLastItem = (lineupArray: AllLineUpsInfo[], index: number) => {
 
-        if (lineupArray == undefined || lineupArray.length == 0) {
+        if (lineupArray === undefined || lineupArray.length === 0) {
             return false;
         }
         else {
@@ -246,9 +247,9 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
         }
     }
 
-    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any, bottomSheetRef: any) => {
+    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any, bottomSheetRef: React.RefObject<BottomSheetModal | null>) => {
 
-        if (homeTeamInfo == undefined || awayTeamInfo == undefined) {
+        if (homeTeamInfo === undefined || awayTeamInfo === undefined) {
             return (
                 <></>
             )
@@ -340,11 +341,10 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
                                         isAwayPlayerCaptain={item.isAwayPlayerCaptain}
                                         teamColour={(selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour}
                                         isLastItem={findLastItem(allLineupsArray, index)}
-                                        bottomSheetRef={bottomSheetModalRef}
+                                        bottomSheetRef={bottomSheetRef}
                                         OnPlayerModalShown={handlePlayerModalShown}
                                     />}
                             />
-
                         </LinearGradient>
                     </BottomSheetScrollView>
                 </View>
@@ -570,7 +570,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineups) => {
             <View style={[]}>
 
                 {activityIndicatorHeader()}
-                {lineupsRender(homeTeamInfo, awayTeamInfo, bottomSheetModalRef)}
+                {lineupsRender(homeTeamInfo, awayTeamInfo, bottomSheetRef)}
 
                 <BottomSheetModal
                     ref={bottomSheetModalRef}

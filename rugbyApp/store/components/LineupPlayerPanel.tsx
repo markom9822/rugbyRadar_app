@@ -3,6 +3,8 @@ import { lineupPanelStyles } from "@/styles"
 import { useCallback } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { getFirstName, getLastName, hexToRGB } from "../utils/helpers"
+import { useRouter } from 'expo-router';
+import { BottomSheetModal } from "@gorhom/bottom-sheet"
 
 type LineupPlayerPanelProps = {
     selectedTeam: string,
@@ -17,13 +19,15 @@ type LineupPlayerPanelProps = {
     isAwayPlayerCaptain: boolean,
     teamColour: string,
     isLastItem: boolean,
-    bottomSheetRef: any,
+    bottomSheetRef: React.RefObject<BottomSheetModal | null>
     OnPlayerModalShown: (playerName: string, playerID: string, teamName: string, teamColour: string) => void
 }
 
 
 export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, hometeamPlayer, hometeamPlayerID, hometeamPlayerNum, isHomePlayerCaptain,
     awayteamPlayer, awayteamPlayerID, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem, bottomSheetRef, OnPlayerModalShown }: LineupPlayerPanelProps) => {
+
+    const router = useRouter();
 
     let playerName = ''
     let playerNumber = ''
@@ -46,9 +50,15 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
 
         console.info("pressed")
 
-        bottomSheetRef.current?.present();
+        //bottomSheetRef.current?.present();
+
+        bottomSheetRef.current?.close();
 
         await OnPlayerModalShown(playerName, playerID, selectedTeamDisplayName, teamColour)
+
+        router.navigate("/playerModal")
+
+
     }, [selectedTeam]);
 
     const displayPlayerName = (playerName: string, isCaptain: boolean) => {
