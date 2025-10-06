@@ -45,3 +45,6 @@ export const BordeauxAltLogo = require('@/store/Top14TeamLogos/Bordeaux_Rugby_Lo
 
 export const OyonnaxLogo = require('@/store/Top14TeamLogos/oyonnax_logo.png')
 export const OyonnaxAltLogo = require('@/store/Top14TeamLogos/oyonnax_logo_white.png')
+
+export const MontaubanLogo = require('@/store/Top14TeamLogos/Us_Montauban_logo.png')
+export const MontaubanAltLogo = require('@/store/Top14TeamLogos/Us_Montauban_logo_white.png')

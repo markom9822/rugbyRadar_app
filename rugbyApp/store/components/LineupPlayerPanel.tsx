@@ -29,7 +29,7 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
     let playerNumber = ''
     let playerID = ''
     let isCaptain = false;
-    if (selectedTeam == 'home') {
+    if (selectedTeam === 'home') {
         playerName = hometeamPlayer;
         playerNumber = hometeamPlayerNum;
         playerID = hometeamPlayerID;
@@ -70,14 +70,14 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
 
     if (hometeamPlayer === "Substitutes") {
         return (
-            <View style={{ flexDirection: selectedTeam == "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start', backgroundColor: 'transparent', borderBottomColor: 'grey', borderBottomWidth: 1 }}>
+            <View style={{ flexDirection: selectedTeam === "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start', backgroundColor: 'transparent', borderBottomColor: 'grey', borderBottomWidth: 1 }}>
                 <Text style={[lineupPanelStyles.substitutesHeader]}>{playerName.toUpperCase()}</Text>
             </View>
         )
     }
     else {
         return (
-            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{ flexDirection: selectedTeam == "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start', backgroundColor: 'transparent', paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 0.5, marginBottom: isLastItem ? 60 : 0 }]}>
+            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{ flexDirection: selectedTeam === "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start', backgroundColor: 'transparent', paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 0.5, marginBottom: isLastItem ? 60 : 0 }]}>
                 <Text style={{ paddingHorizontal: 4, fontSize: 11, color: 'lightgrey', width: "8%", textAlign: 'center', fontFamily: fontFamilies.bold }}>
                     {playerNumber}
                 </Text>
