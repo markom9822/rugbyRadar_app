@@ -9,12 +9,12 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 
-type FixtureOverview = {
+type FixtureOverviewProps = {
     id: string,
     isShown: boolean
 }
 
-export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
+export const FixtureOverview = ({ id, isShown }: FixtureOverviewProps) => {
 
     const [matchInfoArray, setMatchInfoArray] = useState<MatchInfo[] | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
@@ -146,7 +146,7 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverview) => {
         return null
     }
 
-    if (matchInfoArray == undefined) return
+    if (matchInfoArray === undefined) return
 
     return (
 
@@ -189,7 +189,7 @@ type GameInfoPanelProps = {
 
 export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName }: GameInfoPanelProps) => {
 
-    if (matchInfoArray == undefined) return
+    if (matchInfoArray === undefined) return
 
     let matchAttendance = 'NA'
     if (matchInfoArray[0].matchAttendance !== undefined) {

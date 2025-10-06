@@ -40,7 +40,7 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
 
     const notFoundHeader = (eventsArray: TeamEventStatsInfo[]) => {
 
-        if (eventsArray == undefined || eventsArray.length == 0) {
+        if (eventsArray === undefined || eventsArray.length === 0) {
             return (
                 <View style={{ margin: 10 }}>
                     <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Events Found</Text>
@@ -58,8 +58,6 @@ export const TeamEventsPanel = ({ teamEventArray, matchID, leagueName, panelTitl
     if (teamInfo === null) return;
 
     const teamBackgroundColour = hexToRGB(teamInfo.teamInfo.colour, "0.5")
-
-    const panelColour = hexToRGB("#4d4b4b", '0.5')
 
     return (
         <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
@@ -112,7 +110,7 @@ export const HeadToHeadEventsPanel = ({ teamEventArray, matchID, leagueName, pan
 
     const notFoundHeader = (eventsArray: TeamEventStatsInfo[]) => {
 
-        if (eventsArray == undefined || eventsArray.length == 0) {
+        if (eventsArray === undefined || eventsArray.length === 0) {
             return (
                 <View style={{ margin: 10 }}>
                     <Text style={{ fontSize: fontSize.xs, color: 'lightgrey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>No Events Found</Text>
@@ -202,7 +200,7 @@ type TeamEventsItemProps = {
 }
 
 export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, homeTeamScore, awayTeamScore, matchDate, showWinLoss, }: TeamEventsItemProps) => {
-
+    
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
@@ -211,7 +209,7 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
     const homeWinner = new Number(homeTeamScore) > new Number(awayTeamScore);
     const homeCurrentTeam = currentTeam === homeTeam;
 
-    var winOrLoseText = '';
+    let winOrLoseText = '';
 
     if (homeCurrentTeam) {
         winOrLoseText = (homeWinner) ? ('W') : ('L');
@@ -222,8 +220,8 @@ export const TeamEventsItem = ({ leagueName, currentTeam, homeTeam, awayTeam, ho
 
     const winLossColour = (winOrLoseText === 'W') ? (hexToRGB("#42c765", '0.8')) : (hexToRGB("#d94a4a", '0.8'));
 
-    if (homeTeamInfo == undefined) return
-    if (awayTeamInfo == undefined) return
+    if (homeTeamInfo === undefined) return
+    if (awayTeamInfo === undefined) return
 
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 3 }}>

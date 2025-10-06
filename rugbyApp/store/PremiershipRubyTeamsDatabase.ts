@@ -15,6 +15,8 @@ export const getPremShortNameFromFullName = (name: string) => {
 export const rugbyVizPremNames = [
   { databaseName: 'Sale', rugbyVizName: 'Sharks',},
   { databaseName: 'Harlequins', rugbyVizName: 'Quins',},
+  { databaseName: 'Newcastle Red Bulls', rugbyVizName: 'Newcastle Falcons',},
+
 ];
 
 export const getPremTeamInfoFromName = (name: string) => {
