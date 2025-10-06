@@ -132,7 +132,7 @@ export const PremRugbyTeams = [
   },
   {
     type: 'Prem Club',
-    displayName: 'Newcastle Falcons',
+    displayName: 'Newcastle Red Bulls',
     abbreviation: 'NEWC',
     logo: NewcastleLogo,
     altLogo: NewcastleAltLogo,

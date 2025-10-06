@@ -50,7 +50,7 @@ export const rugbyVizleagueCodes = [
     { value: 'urc', code: "1068",
          displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, playoffCutoffIndex: 8},
     { value: 'prem', code: "1011",
-         displayName: 'Gallagher Premiership', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4},
+         displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4},
     { value: 'championsCup', code: "1008",
          displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 4},
     { value: 'challengeCup', code: "1026",

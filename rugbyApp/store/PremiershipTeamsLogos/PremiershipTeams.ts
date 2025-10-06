@@ -13,8 +13,8 @@ export const GloucesterAltLogo = require('@/store/PremiershipTeamsLogos/Gloucest
 export const HarlequinsLogo = require('@/store/PremiershipTeamsLogos/Harlequin_FC_logo.png')
 export const HarlequinsAltLogo = require('@/store/PremiershipTeamsLogos/Harlequin_Rugby_Logo_White.png')
 
-export const NewcastleLogo = require('@/store/PremiershipTeamsLogos/Newcastle_Falcons_logo.png')
-export const NewcastleAltLogo = require('@/store/PremiershipTeamsLogos/Newcastle_Falcons_Logo_White.png')
+export const NewcastleLogo = require('@/store/PremiershipTeamsLogos/Newcastle_Red_Bulls_logo.png')
+export const NewcastleAltLogo = require('@/store/PremiershipTeamsLogos/Newcastle_Red_Bulls_logo_white.png')
 
 export const NorthamptonLogo = require('@/store/PremiershipTeamsLogos/Northampton_Saints_logo.png')
 export const NorthamptonAltLogo = require('@/store/PremiershipTeamsLogos/Northampton_Saints_Logo_White.png')

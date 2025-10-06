@@ -56,7 +56,7 @@ type StatsPanelProps = {
 
 export const StatsPanel = ({ matchInfoArray, matchID, leagueName }: StatsPanelProps) => {
 
-    if (matchInfoArray == undefined) return
+    if (matchInfoArray === undefined) return
 
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, matchInfoArray[0].homeTeamName, matchInfoArray[0].awayTeamName);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
@@ -198,13 +198,9 @@ export const StatsPanel = ({ matchInfoArray, matchID, leagueName }: StatsPanelPr
 
     return (
         <View style={[statsPanelStyles.container, {marginBottom: 20 }]}>
-
-            <View style={{ backgroundColor: panelColour, padding: 10, borderRadius: 8, width: "95%" }}>
-
+            <View style={{ backgroundColor: matchInfoArray[0].statsAvailable ? panelColour : 'transparent', padding: 10, borderRadius: 8, width: "95%" }}>
                 {statsPanelRender(matchInfoArray[0].statsAvailable)}
-
             </View>
-
         </View>
     )
 }
