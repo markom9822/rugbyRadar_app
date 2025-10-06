@@ -22,9 +22,9 @@ export const getSuperRugbyTeamInfoFromName = (name: string) => {
       seasonType: '',
     }
 
-    var searchName = '';
+    let searchName = '';
 
-    const superRugbyNameResult = rugbyVizSuperRugbyNames.find((element) => element.rugbyVizName == name)
+    const superRugbyNameResult = rugbyVizSuperRugbyNames.find((element) => element.rugbyVizName === name)
       if(superRugbyNameResult !== undefined)
       {
           searchName = superRugbyNameResult.databaseName;

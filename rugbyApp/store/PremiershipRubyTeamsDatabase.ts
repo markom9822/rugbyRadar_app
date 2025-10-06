@@ -32,9 +32,9 @@ export const getPremTeamInfoFromName = (name: string) => {
     seasonType: '',
   }
 
-  var searchName = '';
+  let searchName = '';
 
-  const premNameResult = rugbyVizPremNames.find((element) => element.rugbyVizName == name)
+  const premNameResult = rugbyVizPremNames.find((element) => element.rugbyVizName === name)
   if(premNameResult !== undefined)
   {
       searchName = premNameResult.databaseName;

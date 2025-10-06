@@ -13,8 +13,8 @@ export const rugbyVizTop14Names = [
 
 export const getTop14ShortNameFromFullName = (name: string) => {
 
-  var searchName = '';
-  const top14NameResult = rugbyVizTop14Names.find((element) => element.rugbyVizName == name)
+  let searchName = '';
+  const top14NameResult = rugbyVizTop14Names.find((element) => element.rugbyVizName === name)
   if(top14NameResult !== undefined)
   {
       searchName = top14NameResult.databaseName;
@@ -50,8 +50,8 @@ export const getTop14TeamInfoFromName = (name: string) => {
     seasonType: '',
   }
 
-  var searchName = '';
-  const top14NameResult = rugbyVizTop14Names.find((element) => element.rugbyVizName == name)
+  let searchName = '';
+  const top14NameResult = rugbyVizTop14Names.find((element) => element.rugbyVizName === name)
   if(top14NameResult !== undefined)
   {
       searchName = top14NameResult.databaseName;
