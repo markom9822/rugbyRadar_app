@@ -59,26 +59,26 @@ export const rugbyVizleagueCodes = [
 
 export const getRugbyVizLeagueCode = (name: string) => {
 
-    const result = rugbyVizleagueCodes.find((element) => element.value == name)
+    const result = rugbyVizleagueCodes.find((element) => element.value === name)
     return result?.code.toString()
 }
 
 export const getRugbyVizLeagueCodeFromLeagueDisplayName = (leagueDisplayName: string) => {
 
-    const result = rugbyVizleagueCodes.find((element) => element.displayName == leagueDisplayName)
+    const result = rugbyVizleagueCodes.find((element) => element.displayName === leagueDisplayName)
     return result?.code.toString()
 }
 
 export const getRugbyVizPlayoffCutoffFromLeagueName = (leagueName: string) => {
 
-    const result = rugbyVizleagueCodes.find((element) => element.value == leagueName)
+    const result = rugbyVizleagueCodes.find((element) => element.value === leagueName)
     return result?.playoffCutoffIndex;
 }
 
 export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
 
-    const result = rugbyVizleagueCodes.find((element) => element.code == code)
-    if(result == undefined)
+    const result = rugbyVizleagueCodes.find((element) => element.code === code)
+    if(result === undefined)
     {
         return ''
     }
@@ -87,8 +87,8 @@ export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
 
 export const getRugbyVizLeagueNameFromCode = (code: string) => {
 
-    const result = rugbyVizleagueCodes.find((element) => element.code == code)
-    if(result == undefined)
+    const result = rugbyVizleagueCodes.find((element) => element.code === code)
+    if(result === undefined)
     {
         return ''
     }
@@ -97,7 +97,7 @@ export const getRugbyVizLeagueNameFromCode = (code: string) => {
 
 export const isLeagueInRugbyViz = (displayName: string) => {
 
-    const result = rugbyVizleagueCodes.find((element) => element.displayName == displayName)
+    const result = rugbyVizleagueCodes.find((element) => element.displayName === displayName)
     return result !== undefined
 }
 
@@ -127,26 +127,26 @@ export const worldRugbyAPILeagueCodes = [
 
 export const isLeagueInWorldRugbyAPIFromLeagueName = (name: string) => {
 
-    const result = worldRugbyAPILeagueCodes.find((element) => element.value == name)
+    const result = worldRugbyAPILeagueCodes.find((element) => element.value === name)
     return result !== undefined
 }
 
 export const isLeagueInWorldRugbyAPI = (displayName: string) => {
 
-    const result = worldRugbyAPILeagueCodes.find((element) => element.displayName == displayName)
+    const result = worldRugbyAPILeagueCodes.find((element) => element.displayName === displayName)
     return result !== undefined
 }
 
 export const getWorldRugbyAPILeagueCode = (name: string) => {
 
-    const result = worldRugbyAPILeagueCodes.find((element) => element.value == name)
+    const result = worldRugbyAPILeagueCodes.find((element) => element.value === name)
     return result?.code.toString()
 }
 
 export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 
-    const result = worldRugbyAPILeagueCodes.find((element) => element.code == code)
-    if(result == undefined)
+    const result = worldRugbyAPILeagueCodes.find((element) => element.code === code)
+    if(result === undefined)
     {
         return ''
     }
@@ -165,26 +165,26 @@ export const planetRugbyAPILeagueCodes = [
 
 export const isLeagueInPlanetRugbyAPIFromLeagueName = (name: string) => {
 
-    const result = planetRugbyAPILeagueCodes.find((element) => element.value == name)
+    const result = planetRugbyAPILeagueCodes.find((element) => element.value === name)
     return result !== undefined
 }
 
 export const isLeagueInPlanetRugbyAPI = (displayName: string) => {
 
-    const result = planetRugbyAPILeagueCodes.find((element) => element.displayName == displayName)
+    const result = planetRugbyAPILeagueCodes.find((element) => element.displayName === displayName)
     return result !== undefined
 }
 
 export const getPlanetRugbyAPILeagueCode = (name: string) => {
 
-    const result = planetRugbyAPILeagueCodes.find((element) => element.value == name)
+    const result = planetRugbyAPILeagueCodes.find((element) => element.value === name)
     return result?.code.toString()
 }
 
 export const getPlanetRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 
-    const result = planetRugbyAPILeagueCodes.find((element) => element.code == code)
-    if(result == undefined)
+    const result = planetRugbyAPILeagueCodes.find((element) => element.code === code)
+    if(result === undefined)
     {
         return ''
     }
@@ -221,17 +221,15 @@ export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeT
             const awayTeam1 = awayParts[0]
             const awayTeam2 = parts2[parts2.length - 1]
 
-            const homeCheck = homeTeam1 == homeTeamName || homeTeam2 == homeTeamName;
-            const awayCheck = awayTeam1 == awayTeamName || awayTeam2 == awayTeamName;
+            const homeCheck = homeTeam1 === homeTeamName || homeTeam2 === homeTeamName;
+            const awayCheck = awayTeam1 === awayTeamName || awayTeam2 === awayTeamName;
 
             if(homeCheck && awayCheck)
             {
                 return thisMatch.id;
             }
-
         }
     }
-
     return null
 }
 
@@ -239,19 +237,19 @@ export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeT
 
 export const getLeagueCode = (name: string) => {
 
-    const result = leagueCodes.find((element) => element.value == name)
+    const result = leagueCodes.find((element) => element.value === name)
     return result?.code.toString()
 }
 
 export const getLeagueCodeFromDisplayName = (displayName: string) => {
 
-    const result = leagueCodes.find((element) => element.displayName == displayName)
+    const result = leagueCodes.find((element) => element.displayName === displayName)
     return result?.code.toString()
 }
 
 export const getLeagueName = (leagueCode: string) => {
     
-    const result = leagueCodes.find((element) => element.code == leagueCode)
+    const result = leagueCodes.find((element) => element.code === leagueCode)
     if(result !== undefined)
     {
         return result.value.toString()
@@ -265,37 +263,37 @@ export const getLeagueName = (leagueCode: string) => {
 
 export const getLeagueNameFromDisplayName = (displayName: string) => {
     
-    const result = leagueCodes.find((element) => element.displayName == displayName)
+    const result = leagueCodes.find((element) => element.displayName === displayName)
     return result?.value.toString()
 }
 
 export const getLeagueDisplayNameFromCode = (leagueCode: string) => {
     
-    const result = leagueCodes.find((element) => element.code == leagueCode)
+    const result = leagueCodes.find((element) => element.code === leagueCode)
     return result?.displayName.toString()
 }
 
 export const getLeagueDisplayNameFromValue = (leagueValue: string) => {
     
-    const result = leagueCodes.find((element) => element.value == leagueValue)
+    const result = leagueCodes.find((element) => element.value === leagueValue)
     return result?.displayName.toString()
 }
 
 export const getLeagueLogoFromValue = (leagueValue: string) => {
     
-    const result = leagueCodes.find((element) => element.value == leagueValue)
+    const result = leagueCodes.find((element) => element.value === leagueValue)
     return result?.leagueAltLogo.toString()
 }
 
 export const getLeagueTrophyIconFromValue = (leagueValue: string) => {
     
-    const result = leagueCodes.find((element) => element.value == leagueValue)
+    const result = leagueCodes.find((element) => element.value === leagueValue)
     return result?.trophyIcon
 }
 
 export const getLeagueInfoFromDisplayName  = (displayName: string) => {
     
-    const result = leagueCodes.find((element) => element.displayName == displayName)
+    const result = leagueCodes.find((element) => element.displayName === displayName)
     return result
 }
 
@@ -383,8 +381,8 @@ export const getESPNMatchInfoFromDetails = async (selectedDate: Date, homeTeamNa
             const homeTeam = thisMatch.competitions[0].competitors[0].team.name;
             const awayTeam = thisMatch.competitions[0].competitors[1].team.name;
 
-            const homeCheck = homeTeam == homeTeamName;
-            const awayCheck = awayTeam == awayTeamName;
+            const homeCheck = homeTeam === homeTeamName;
+            const awayCheck = awayTeam === awayTeamName;
 
             if(homeCheck && awayCheck)
             {
@@ -446,7 +444,7 @@ export const broadcasters = [
 
 export const getBroadcasterLogo = (broadcasterName: string) => {
 
-    const result = broadcasters.find((element) => element.name == broadcasterName)
+    const result = broadcasters.find((element) => element.name === broadcasterName)
     return result?.logo
 }
 
@@ -455,7 +453,7 @@ export const getClosestWorldCupYear = (year: number) => {
     const yearDifference = year - 1987;
     const remainder = yearDifference % 4;
 
-    if(remainder == 0)
+    if(remainder === 0)
     {
         return year;
     }

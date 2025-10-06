@@ -1,6 +1,5 @@
 import { getRugbyVizLeagueCode } from "./helpers";
 
-
 export const fetchRugbyVizKnockoutFixtures = async (thisLeagueName: string, seasonYear: string) => {
 
     const rugbyVizLeagueCode = getRugbyVizLeagueCode(thisLeagueName);
@@ -37,14 +36,14 @@ export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any, leagueName: 
     const gamesCount = seasonAllMatches.data.length;
     console.info(gamesCount)
 
-    var leagueArray = []
+    let leagueArray = []
 
     for (let index = 0; index < gamesCount; index++) {
         
         const roundTypeID = seasonAllMatches.data[index].roundTypeId;
 
         // knockout games only
-        if(roundTypeID == 2)
+        if(roundTypeID === 2)
         {
             const matchDate = new Date(seasonAllMatches.data[index].date);
             const homeTeamName = seasonAllMatches.data[index].homeTeam.name;
@@ -57,15 +56,15 @@ export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any, leagueName: 
 
             const sourceMatchTitle = seasonAllMatches.data[index].title;
 
-            var matchTitle = ''
+            let matchTitle = ''
 
-            if(leagueName == 'prem')
+            if(leagueName === 'prem')
             {
-                matchTitle = sourceMatchTitle == 'SF' ? 'GF' : 'SF'
+                matchTitle = sourceMatchTitle === 'SF' ? 'GF' : 'SF'
             }
-            else if(leagueName == 'championsCup' || leagueName == 'challengeCup')
+            else if(leagueName === 'championsCup' || leagueName === 'challengeCup')
             {
-                if(sourceMatchTitle == 'TF')
+                if(sourceMatchTitle === 'TF')
                 {
                     matchTitle = 'GF'
                 }
@@ -84,7 +83,7 @@ export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any, leagueName: 
             const homeTeamHalfScore = seasonAllMatches.data[index].homeTeam.halfTimeScore;
             const awayTeamHalfScore = seasonAllMatches.data[index].awayTeam.halfTimeScore;
 
-            var eventState;
+            let eventState;
             const matchStatus = seasonAllMatches.data[index].status;
             if(matchStatus === "result")
             {
@@ -124,11 +123,7 @@ export const getKnockoutFixturesAllRugViz = (seasonAllMatches: any, leagueName: 
     }
 
     console.info(leagueArray)
-
     return (
         leagueArray
     )
-
 }
-
-

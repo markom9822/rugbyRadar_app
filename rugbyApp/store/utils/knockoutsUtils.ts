@@ -1,10 +1,9 @@
 
-import { MatchInfo } from "@/app/(tabs)/(fixtures)"
+import { MatchInfo } from "@/app/(tabs)/index"
 import { StandingInfo } from "@/store/utils/helpers"
 import { getChampionsCupTeamInfoFromName } from "../ChampionsCupRugbyTeamsDatabase"
 import { getPremTeamInfoFromName } from "../PremiershipRubyTeamsDatabase"
 import { getURCTeamInfoFromName } from "../URCRugbyTeamsDatabase"
-
 
 export const getFixtureFromStandingIndex = (team1Index: number, team2Index: number,
     standingsArray: StandingInfo[], fixturesArray: MatchInfo[], league: string) => {
@@ -19,8 +18,8 @@ export const getFixtureFromStandingIndex = (team1Index: number, team2Index: numb
 
     for (let index = 0; index < fixturesArray.length; index++) {
 
-        var homeTeamSearchName;
-        var awayTeamSearchName;
+        let homeTeamSearchName;
+        let awayTeamSearchName;
 
         if (league === "urc") {
             homeTeamSearchName = getURCTeamInfoFromName(fixturesArray[index].homeTeam).displayName;
@@ -35,17 +34,15 @@ export const getFixtureFromStandingIndex = (team1Index: number, team2Index: numb
             console.info(`home team search name: ${homeTeamSearchName}, team1 Name: ${team1Name}`)
             awayTeamSearchName = getChampionsCupTeamInfoFromName(fixturesArray[index].awayTeam).displayName;
             console.info(`away team search name: ${awayTeamSearchName}, team2 Name: ${team2Name}`)
-
         }
 
-        const homeCheck = homeTeamSearchName == team1Name || homeTeamSearchName == team2Name;
-        const awayCheck = awayTeamSearchName == team1Name || awayTeamSearchName == team2Name;
+        const homeCheck = homeTeamSearchName === team1Name || homeTeamSearchName === team2Name;
+        const awayCheck = awayTeamSearchName === team1Name || awayTeamSearchName === team2Name;
 
         if (homeCheck && awayCheck) {
             console.info("Got here")
             return fixturesArray[index]
         }
-
     }
 
     return null
@@ -54,7 +51,7 @@ export const getFixtureFromStandingIndex = (team1Index: number, team2Index: numb
 export const findFixtureCombination = (indexCombinations: number[], rankedStandingsArray: StandingInfo[],
     fixturesArray: MatchInfo[], league: string) => {
 
-    var combinationsTeamNames = new Array(indexCombinations.length)
+    let combinationsTeamNames = new Array(indexCombinations.length)
 
     for (let index = 0; index < indexCombinations.length; index++) {
 
@@ -65,8 +62,8 @@ export const findFixtureCombination = (indexCombinations: number[], rankedStandi
 
     for (let index = 0; index < fixturesArray.length; index++) {
 
-        var homeTeamSearchName;
-        var awayTeamSearchName;
+        let homeTeamSearchName;
+        let awayTeamSearchName;
 
         if (league === "championsCup" || league === "challengeCup") {
             homeTeamSearchName = getChampionsCupTeamInfoFromName(fixturesArray[index].homeTeam).displayName;
@@ -78,7 +75,6 @@ export const findFixtureCombination = (indexCombinations: number[], rankedStandi
             return fixturesArray[index]
         }
     }
-
     return null
 }
 
@@ -166,7 +162,7 @@ export const pooledTableIntoRankedChallengeCup = (standingsArray: StandingInfo[]
 
     // last in rank3Array is first in rank4Array
     rank4Array.unshift(rank3Array[rank3Array.length - 1])
-    const lastElement = rank3Array.pop()
+    //const lastElement = rank3Array.pop()
 
     // need to include teams from champs cup in ranks 9 - 12
     // take 5th place team from each pool
@@ -205,19 +201,19 @@ export const pooledTableIntoRankedChallengeCup = (standingsArray: StandingInfo[]
 
 export const getR16KnockoutFixtures = (knockoutFixturesArray: MatchInfo[], targetStandingsArray: StandingInfo[], leagueName: string) => {
 
-    const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "R16");
+    const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle === "R16");
 
-    if (filteredArray.length == 0) {
+    if (filteredArray.length === 0) {
         return []
     }
 
     const R16Seedings = [[1, 16], [8, 9], [5, 12], [4, 13], [2, 15], [7, 10], [3, 14], [6, 11]]
 
-    var R16Fixtures = new Array(filteredArray.length);
+    let R16Fixtures = new Array(filteredArray.length);
 
     for (let index = 0; index < filteredArray.length; index++) {
 
-        if (filteredArray[index].homeTeam == "TBC" && filteredArray[index].awayTeam == "TBC") {
+        if (filteredArray[index].homeTeam === "TBC" && filteredArray[index].awayTeam === "TBC") {
             R16Fixtures[index] = filteredArray[index]
         }
         else {
@@ -236,25 +232,25 @@ export const getQFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
         return fixture !== null && fixture !== undefined;
     }
 
-    const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "QF");
+    const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle === "QF");
 
-    if (filteredArray.length == 0) {
+    if (filteredArray.length === 0) {
         return []
     }
 
-    var QFFixtures = new Array(filteredArray.length);
+    let QFFixtures = new Array(filteredArray.length);
 
-    if (leagueName == "championsCup" || leagueName === "challengeCup") {
+    if (leagueName === "championsCup" || leagueName === "challengeCup") {
         const QFSeedingOptions = [[1, 8], [1, 9], [16, 8], [16, 9],
         [5, 4], [5, 13], [12, 4], [12, 13],
         [2, 7], [2, 10], [15, 7], [15, 10],
         [3, 6], [3, 11], [14, 6], [14, 11]]
 
-        var QFFixturesTemp = new Array(QFSeedingOptions.length);
+        let QFFixturesTemp = new Array(QFSeedingOptions.length);
 
         for (let index = 0; index < filteredArray.length; index++) {
 
-            if (filteredArray[index].homeTeam == "TBC" && filteredArray[index].awayTeam == "TBC") {
+            if (filteredArray[index].homeTeam === "TBC" && filteredArray[index].awayTeam === "TBC") {
                 QFFixtures[index] = filteredArray[index]
             }
         }
@@ -272,11 +268,11 @@ export const getQFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
     else {
         const QFSeedings = [[1, 8], [4, 5], [2, 7], [3, 6]]
 
-        var QFFixtures = new Array(filteredArray.length);
+        let QFFixtures = new Array(filteredArray.length);
 
         for (let index = 0; index < filteredArray.length; index++) {
 
-            if (filteredArray[index].homeTeam == "TBC" && filteredArray[index].awayTeam == "TBC") {
+            if (filteredArray[index].homeTeam === "TBC" && filteredArray[index].awayTeam === "TBC") {
                 QFFixtures[index] = filteredArray[index]
             }
             else {
@@ -296,44 +292,43 @@ export const getSFKnockoutFixtures = (knockoutFixturesArray: MatchInfo[], target
         return fixture !== null && fixture !== undefined;
     }
 
-    const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "SF");
+    const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle === "SF");
 
-    if (filteredArray.length == 0) {
+    if (filteredArray.length === 0) {
         return []
     }
 
-    var SFSeedings: any;
+    let SFSeedings: any;
 
-    if (leagueName == "urc") {
+    if (leagueName === "urc") {
         SFSeedings = [[1, 4], [1, 5], [8, 4], [8, 5], [2, 3], [2, 6], [7, 3], [7, 6]]
     }
-    else if (leagueName == "prem") {
+    else if (leagueName === "prem") {
         SFSeedings = [[1, 4], [2, 3]]
     }
-    else if (leagueName == "championsCup" || leagueName === "challengeCup") {
+    else if (leagueName === "championsCup" || leagueName === "challengeCup") {
         SFSeedings = [[1, 16, 8, 9, 5, 12, 4, 13], [2, 15, 7, 10, 3, 14, 6, 11]]
     }
 
-    var SFFixtures = new Array(filteredArray.length);
-    var SFFixturesTemp = new Array(SFSeedings.length);
+    let SFFixtures = new Array(filteredArray.length);
+    let SFFixturesTemp = new Array(SFSeedings.length);
 
     for (let index = 0; index < filteredArray.length; index++) {
 
-        if (filteredArray[index].homeTeam == "TBC" && filteredArray[index].homeTeam == "TBC") {
+        if (filteredArray[index].homeTeam === "TBC" && filteredArray[index].homeTeam === "TBC") {
             SFFixtures[index] = filteredArray[index]
         }
     }
 
     for (let index = 0; index < SFSeedings.length; index++) {
 
-        if (leagueName == "championsCup" || leagueName === "challengeCup") {
+        if (leagueName === "championsCup" || leagueName === "challengeCup") {
             // need to find matching index
             SFFixturesTemp[index] = findFixtureCombination(SFSeedings[index], targetStandingsArray, filteredArray, leagueName)
         }
         else {
             SFFixturesTemp[index] = getFixtureFromStandingIndex(SFSeedings[index][0], SFSeedings[index][1], targetStandingsArray, filteredArray, leagueName);
         }
-
     }
 
     if (SFFixtures[0] == null && SFFixtures[1] == null) {

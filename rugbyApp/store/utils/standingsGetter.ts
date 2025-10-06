@@ -2,14 +2,12 @@ import { getChampsCupShortNameFromFullName } from "../ChampionsCupRugbyTeamsData
 import { getPremShortNameFromFullName } from "../PremiershipRubyTeamsDatabase";
 import { getURCShortNameFromFullName } from "../URCRugbyTeamsDatabase";
 
-
 export const getAllStandingsData = (seasonStandings: any) => {
 
-    var newArray = [];
+    let newArray = [];
 
     const standingsChildren = seasonStandings.children.length
     console.info(`Children count: ${standingsChildren}`)
-
 
     for (let j = 0; j < seasonStandings.children.length; j++) {
 
@@ -18,7 +16,7 @@ export const getAllStandingsData = (seasonStandings: any) => {
         for (let index = 0; index < standingsCount; index++) {
 
             const teamPool = seasonStandings.children[j].name;
-            if (index == 0 && standingsChildren > 1) {
+            if (index === 0 && standingsChildren > 1) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -46,7 +44,6 @@ export const getAllStandingsData = (seasonStandings: any) => {
             const teamPD = seasonStandings.children[j].standings.entries[index].stats[11].value;
             const teamPoints = seasonStandings.children[j].standings.entries[index].stats[12].value;
 
-
             let newRankingInfo = {
                 isHeader: false,
                 teamPool: teamPool,
@@ -58,8 +55,8 @@ export const getAllStandingsData = (seasonStandings: any) => {
                 teamPD: teamPD,
                 teamPoints: teamPoints,
                 ranking: index,
-                isLastItem: index == standingsCount - 1,
-                isEndOfList: (index == standingsCount - 1) && (j == seasonStandings.children.length - 1),
+                isLastItem: index === standingsCount - 1,
+                isEndOfList: (index === standingsCount - 1) && (j === seasonStandings.children.length - 1),
                 isPlayoffCutoff: false,
             };
 
@@ -70,12 +67,11 @@ export const getAllStandingsData = (seasonStandings: any) => {
     return (
         newArray
     )
-
 }
 
 export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: string, playoffCutoffIndex: number | undefined) => {
 
-    var newArray = [];
+    let newArray = [];
 
     const standingsChildren = seasonStandings.data.groups
 
@@ -86,7 +82,7 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
         for (let index = 0; index < teamsCount; index++) {
 
             const teamPool = standingsChildren[j].name;
-            if (index == 0 && standingsChildren.length > 1) {
+            if (index === 0 && standingsChildren.length > 1) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -127,7 +123,7 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
                 newArray.push(playoffsCutoffRankingInfo)
             }
 
-            var teamName = '';
+            let teamName = '';
 
             if (leagueName === 'urc') {
                 teamName = getURCShortNameFromFullName(standingsChildren[j].teams[index].name);
@@ -146,7 +142,6 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
             const teamPD = standingsChildren[j].teams[index].pointsDiff;
             const teamPoints = standingsChildren[j].teams[index].points;
 
-
             let newRankingInfo = {
                 isHeader: false,
                 teamPool: teamPool,
@@ -158,8 +153,8 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
                 teamPD: teamPD,
                 teamPoints: teamPoints,
                 ranking: index,
-                isLastItem: index == teamsCount - 1,
-                isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1),
+                isLastItem: index === teamsCount - 1,
+                isEndOfList: (index === teamsCount - 1) && (j === standingsChildren.length - 1),
                 isPlayoffCutoff: false,
             };
 
@@ -175,7 +170,7 @@ export const getAllStandingsDataRugbyViz = (seasonStandings: any, leagueName: st
 
 export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: boolean, isEndOfList: boolean, playoffCutoffIndex: number | undefined) => {
 
-    var newArray = [];
+    let newArray = [];
 
     function extractPool(text: string): string {
         const match = text.match(/pool\s+[A-Z]/i);
@@ -193,7 +188,7 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: b
             const teamPool = extractPool(standingsChildren[j].name);
 
 
-            if (index == 0 && isPooled) {
+            if (index === 0 && isPooled) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -242,7 +237,6 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: b
             const teamPD = standingsChildren[j].table[index].difference;
             const teamPoints = standingsChildren[j].table[index].points;
 
-
             let newRankingInfo = {
                 isHeader: false,
                 teamPool: teamPool,
@@ -254,8 +248,8 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: b
                 teamPD: teamPD,
                 teamPoints: teamPoints,
                 ranking: index,
-                isLastItem: index == teamsCount - 1,
-                isEndOfList: isEndOfList && index == teamsCount - 1,
+                isLastItem: index === teamsCount - 1,
+                isEndOfList: isEndOfList && index === teamsCount - 1,
                 isPlayoffCutoff: false,
             };
 
@@ -270,7 +264,7 @@ export const getAllStandingsDataPlanetRugby = (seasonStandings: any, isPooled: b
 
 export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolCodes: string[]) => {
 
-    var newArray = [];
+    let newArray = [];
 
     const standingsChildren = seasonStandings.data
 
@@ -281,7 +275,7 @@ export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolC
         for (let index = 0; index < teamsCount; index++) {
 
             const teamPool = standingsChildren[j].name;
-            if (index == 0 && standingsChildren.length > 1) {
+            if (index === 0 && standingsChildren.length > 1) {
                 let headerRankingInfo = {
                     isHeader: true,
                     teamPool: teamPool,
@@ -309,7 +303,6 @@ export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolC
             const teamPD = standingsChildren[j].table[index].difference;
             const teamPoints = standingsChildren[j].table[index].points;
 
-
             let newRankingInfo = {
                 isHeader: false,
                 teamPool: teamPool,
@@ -321,8 +314,8 @@ export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolC
                 teamPD: teamPD,
                 teamPoints: teamPoints,
                 ranking: index,
-                isLastItem: index == teamsCount - 1,
-                isEndOfList: (index == teamsCount - 1) && (j == standingsChildren.length - 1)
+                isLastItem: index === teamsCount - 1,
+                isEndOfList: (index === teamsCount - 1) && (j === standingsChildren.length - 1)
             };
 
             newArray.push(newRankingInfo)
@@ -332,7 +325,6 @@ export const getAllPooledStandingsDataPlanetRugby = (seasonStandings: any, poolC
     return (
         newArray
     )
-
 }
 
 export const getAllStandingsDataWorldRugbyAPI = async (seasonMatches: any, leagueName: string) => {
@@ -354,8 +346,8 @@ export const getAllStandingsDataWorldRugbyAPI = async (seasonMatches: any, leagu
             teamPD: '0',
             teamPoints: '0',
             ranking: index,
-            isLastItem: index == teamsArray.length - 1,
-            isEndOfList: index == teamsArray.length - 1,
+            isLastItem: index === teamsArray.length - 1,
+            isEndOfList: index === teamsArray.length - 1,
             isPlayoffCutoff: false,
         });
     });
@@ -380,8 +372,8 @@ export const getAllStandingsDataWorldRugbyAPI = async (seasonMatches: any, leagu
 
             if (!teamData) return Array.from(teamDataMap.values());
 
-            const firstIndex = j == 0 ? 0 : 1;
-            const secondIndex = j == 0 ? 1 : 0;
+            const firstIndex = j === 0 ? 0 : 1;
+            const secondIndex = j === 0 ? 1 : 0;
 
             teamData.teamGP = (Number(teamData.teamGP) + 1).toString();
             teamData.teamPD = (Number(teamData.teamPD) + (Number(match.scores[firstIndex]) - Number(match.scores[secondIndex]))).toString();
@@ -392,7 +384,7 @@ export const getAllStandingsDataWorldRugbyAPI = async (seasonMatches: any, leagu
                 teamData.teamPoints = (Number(teamData.teamPoints) + 1).toString();
             }
 
-            if (match.scores[0] == match.scores[1]) {
+            if (match.scores[0] === match.scores[1]) {
                 teamData.teamDraws = (Number(teamData.teamDraws) + 1).toString();
                 teamData.teamPoints = (Number(teamData.teamPoints) + 2).toString();
             } else if (match.scores[firstIndex] > match.scores[secondIndex]) {
@@ -420,10 +412,9 @@ export const getAllStandingsDataWorldRugbyAPI = async (seasonMatches: any, leagu
 
     for (let arrayIndex = 0; arrayIndex < newArray.length; arrayIndex++) {
         newArray[arrayIndex].ranking = arrayIndex;
-        newArray[arrayIndex].isLastItem = arrayIndex == newArray.length - 1;
-        newArray[arrayIndex].isEndOfList = arrayIndex == newArray.length - 1;
+        newArray[arrayIndex].isLastItem = arrayIndex === newArray.length - 1;
+        newArray[arrayIndex].isEndOfList = arrayIndex === newArray.length - 1;
     }
-
     return newArray;
 }
 
@@ -434,12 +425,11 @@ export const getTeamsInCompetition = (seasonMatches: any) => {
         }
     }
 
-    var teamArray: string[] = []
+    let teamArray: string[] = []
 
     for (let index = 0; index < seasonMatches.content.length; index++) {
         addUniqueToArray(teamArray, seasonMatches.content[index].teams[0].name)
         addUniqueToArray(teamArray, seasonMatches.content[index].teams[1].name)
     }
-
     return teamArray;
 }

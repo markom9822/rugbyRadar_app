@@ -4,9 +4,7 @@ import * as premJSONData from '@/store/PlayerImages/PremPlayerImages.json'
 import * as superRugbyJSONData from '@/store/PlayerImages/SuperRugbyPlayerImages.json'
 import * as top14JSONData from '@/store/PlayerImages/Top14PlayerImages.json'
 import * as urcJSONData from '@/store/PlayerImages/URCPlayerImages.json'
-
 import { getChampsCupShortNameFromFullName } from '../ChampionsCupRugbyTeamsDatabase'
-
 
 export const getPlayerImageSrc = (leagueName: string, teamName: string, playerName: string) => {
 
@@ -20,8 +18,8 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
 
   const champsCupTeamArray = [...urcTeamArray, ...premTeamArray, ...top14TeamArray, ...miscTeamArray]
 
-  var leagueTeamArray: any[] = [];
-  var correctTeamName = ''
+  let leagueTeamArray: any[] = [];
+  let correctTeamName = ''
 
   if(leagueName === 'urc')
   {
@@ -61,7 +59,7 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
 
   const targetTeam = leagueTeamArray.find(item => item.name === searchTeamName);
 
-  var targetImgSrc = ''
+  let targetImgSrc = ''
 
   if(targetTeam == null) return ''
 
@@ -75,7 +73,5 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
   }
 
   console.info(targetImgSrc)
-
   return targetImgSrc;
-
 }
