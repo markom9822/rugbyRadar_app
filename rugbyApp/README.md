@@ -1,50 +1,60 @@
-# Welcome to your Expo app 👋
+# Rugby Radar
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Rugby Radar is a mobile app I created which provides real-time information on fixtures, stats, standings and more from 10+ rugby leagues around the world.
 
-## Get started
+---
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- Latest rugby fixtures from over 10 leagues worldwide.
+- Fixtures show live team/player stats, scores and more.
+- Can bookmark your favourite league to show it's fixtures when you first open the app.
+- Search for your favourite team, see their results and upcoming fixtures for the season.
+- Find the league you follow, check out the current standings and knockouts table.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🛠 Tech Stack
 
-In the output, you'll find options to open the app in a
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Figma](https://www.figma.com/)
+  
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📦 Getting Started
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+To run the app yourself:
 
-## Get a fresh project
+1. You can download the latest `.apk` file from the Releases section in this repo.
+  - These builds are for Android devices only (not available for iOS).
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## 📷 App Demo
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Screenshots from the app in poster style.
 
-## Learn more
+<img src="https://github.com/user-attachments/assets/681f575a-653d-403c-901b-9183fa670ad3" alt="Description" width="270" height="600">
+<img src="https://github.com/user-attachments/assets/069f7571-0e0c-4335-97a3-61f136909f03" alt="Description" width="270" height="600">
+<img src="https://github.com/user-attachments/assets/44a611e0-edfd-4c2c-b0f1-3f5a03723608" alt="Description" width="270" height="600">
+<img src="https://github.com/user-attachments/assets/0d14553b-ca9e-4d86-80b0-e65abe5eb551" alt="Description" width="270" height="600">
+<img src="https://github.com/user-attachments/assets/a377d781-f881-4a92-85f0-263d8b0139bb" alt="Description" width="270" height="600">
 
-To learn more about developing your project with Expo, look at the following resources:
+## Video Walkthrough
+Walkthrough the main features of the app.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+https://github.com/user-attachments/assets/431b1295-fa9c-4a27-97c9-285492efc5d7
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 🪪 License
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is licensed under the [MIT License](./LICENSE).  
+You’re free to use, modify, and distribute it — just include attribution.
+
+---
+
+## 📎 Links
+
+- GitHub Repository: [https://github.com/markom9822/rugbyRadar_app](https://github.com/markom9822/rugbyRadar_app)

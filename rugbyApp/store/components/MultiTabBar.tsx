@@ -3,14 +3,14 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { hexToRGB } from "../utils/helpers"
 import { GridView } from "./GridView"
 
-type MultiTabBar = {
+type MultiTabBarProps = {
     tabsArray: string[]
     OnTabButtonPressed: (key: string) => void,
     currentTabKey: string,
     tabFontSize?: number,
 }
 
-export const MultiTabBar = ({ tabsArray, OnTabButtonPressed, currentTabKey, tabFontSize = 13 }: MultiTabBar) => {
+export const MultiTabBar = ({ tabsArray, OnTabButtonPressed, currentTabKey, tabFontSize = 13 }: MultiTabBarProps) => {
 
     const tabBkgColour = hexToRGB("#4d4b4b", '0.5')
 
@@ -20,13 +20,13 @@ export const MultiTabBar = ({ tabsArray, OnTabButtonPressed, currentTabKey, tabF
                 data={tabsArray}
                 col={tabsArray.length}
                 renderItem={(item, index) =>
-                    <MultiTabButton title={item} OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey == item} tabFontSize={tabFontSize} />}
+                    <MultiTabButton title={item} OnPressTab={OnTabButtonPressed} isTabSelected={currentTabKey === item} tabFontSize={tabFontSize} />}
             />
         </View>
     )
 }
 
-type MultiTabButton = {
+type MultiTabButtonProps = {
     title: string,
     isTabSelected: boolean,
     tabFontSize: number
@@ -34,7 +34,7 @@ type MultiTabButton = {
 }
 
 
-export const MultiTabButton = ({ title, isTabSelected, OnPressTab, tabFontSize }: MultiTabButton) => {
+export const MultiTabButton = ({ title, isTabSelected, OnPressTab, tabFontSize }: MultiTabButtonProps) => {
 
     const tabPanelColour = hexToRGB("#292828", '0.6')
 
