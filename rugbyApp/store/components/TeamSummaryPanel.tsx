@@ -20,9 +20,9 @@ export const getTeamBasicInfo = (teamDetails: any) => {
 
     const teamName = teamDetails.team.displayName;
 
-    var homeVenue;
-    var homeVenueCity;
-    var homeVenueState;
+    let homeVenue;
+    let homeVenueCity;
+    let homeVenueState;
 
     if (teamDetails.team.venue !== undefined) {
         homeVenue = teamDetails.team.venue.fullName

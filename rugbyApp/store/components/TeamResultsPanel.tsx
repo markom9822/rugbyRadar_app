@@ -8,7 +8,6 @@ import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { getTeamSeasonFixtures } from "../utils/getTeamSeasonFixtures"
 import { generateSeasonList, getLeagueInfoFromDisplayName, hexToRGB, SeasonDateInfo } from "../utils/helpers"
 import { SeasonYearPicker } from "./LeagueStandingsPanel"
-import { DropdownData } from "./SelectDropdown"
 
 export type TeamEvent = {
     eventDate: string,
@@ -61,14 +60,9 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
         fetchMyAPI()
     }, [])
 
-    const handleOnChangeSeason = (item: DropdownData) => {
-        setSeasonYear(item.value)
-        //handlePressFetchData(item.value)
-    }
-
     const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
 
-        if (eventsArray == undefined || eventsArray.length == 0 && !isLoading) {
+        if (eventsArray === undefined || eventsArray.length === 0 && !isLoading) {
             return (
                 <View style={{ marginHorizontal: 5, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 100, paddingVertical: 10 }}>
                     <Text style={{ fontSize: fontSize.sm, color: 'grey', fontWeight: 300, textAlign: 'center', fontFamily: fontFamilies.light }}>None found</Text>
@@ -81,7 +75,7 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
     const findLastItem = (eventsArray: TeamEvent[] | undefined, index: number) => {
 
-        if (eventsArray == undefined || eventsArray.length == 0) {
+        if (eventsArray === undefined || eventsArray.length === 0) {
             return false;
         }
         else {

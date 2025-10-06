@@ -19,7 +19,7 @@ type TeamStandingPanelProps = {
 
 export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamName, currentYear }: TeamStandingPanelProps) => {
 
-    if (standingsArray == undefined || standingsArray.length == 0) return
+    if (standingsArray === undefined || standingsArray.length === 0) return
 
     return (
         <View style={{
@@ -46,8 +46,8 @@ export const TeamStandingPanel = ({ standingsArray, teamLeagueName, currentTeamN
                             pointsDiff={match.teamPD}
                             points={match.teamPoints}
                             index={index}
-                            isCurrentTeam={currentTeamName == match.teamName}
-                            isLastItem={index == standingsArray.length - 1}
+                            isCurrentTeam={currentTeamName === match.teamName}
+                            isLastItem={index === standingsArray.length - 1}
                             isHeader={match.isHeader}
                             teamPool={match.teamPool}
                         />
@@ -99,7 +99,6 @@ export const TeamStandingItem = ({ teamName, gamesPlayed, pointsDiff, points, in
                 </View>
             )
         }
-
     }
 
     return (
