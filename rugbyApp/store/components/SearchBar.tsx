@@ -8,6 +8,7 @@ type SearchBarProps = {
     OnChangeSearch: (search: string) => void,
 }
 
+
 export const SearchBar = ({ searchValue, OnChangeSearch }: SearchBarProps) => {
 
     const searchBarBkgColour = hexToRGB("#4d4b4b", '0.7')

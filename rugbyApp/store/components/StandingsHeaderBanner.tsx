@@ -2,11 +2,7 @@ import { colors, fontFamilies } from "@/constants/tokens"
 import { Image, Text, View } from "react-native"
 import { RugbyRadarIconWhite } from "../Icons/Icons"
 
-type StandingsHeaderBannerProps = {
-
-}
-
-export const StandingsHeaderBanner = ({ }: StandingsHeaderBannerProps) => {
+export const StandingsHeaderBanner = () => {
 
     return (
 

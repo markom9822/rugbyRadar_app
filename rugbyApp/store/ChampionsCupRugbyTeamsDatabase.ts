@@ -16,15 +16,14 @@ export const rugbyVizChampsCupNames = [
   { databaseName: 'USA Perpignan', rugbyVizName: 'Perpignan',},
   { databaseName: 'Section Paloise', rugbyVizName: 'Pau',},
   { databaseName: 'Lyon', rugbyVizName: 'Lyon O.U.',},
-
 ];
 
 export const getChampsCupShortNameFromFullName = (name: string) => {
   const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams];
 
-  var searchName = '';
+  let searchName = '';
 
-  const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName == name)
+  const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName === name)
   if(champsCupNameResult !== undefined)
   {
       searchName = champsCupNameResult.databaseName;
@@ -63,9 +62,9 @@ export const getChampionsCupTeamInfoFromName = (name: string) => {
     }
 
     const champsCupTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...MiscRugbyTeams];
-    var searchName = '';
+    let searchName = '';
 
-    const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName == name)
+    const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName === name)
     if(champsCupNameResult !== undefined)
     {
         searchName = champsCupNameResult.databaseName;

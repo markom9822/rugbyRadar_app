@@ -75,7 +75,7 @@ export const LeaguePicker = ({ currentLeague, leagueOptions, OnPressLeague }: Le
         setShowDropdown(false)
     }
 
-    const currentOption = leagueOptions.find((element) => element.value == currentLeague)
+    const currentOption = leagueOptions.find((element) => element.value === currentLeague)
 
     return (
         <View>

@@ -137,7 +137,7 @@ const TeamsScreen = () => {
     const handlePressSearchOption = (option: string) => {
         setSearchOption(option)
 
-        if (option == "Leagues") {
+        if (option === "Leagues") {
             setSearchLeagueArray(leaguesArray)
         }
     }

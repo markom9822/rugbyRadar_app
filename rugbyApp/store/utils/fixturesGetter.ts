@@ -68,8 +68,6 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
     const gamesCount = seasonAllMatches.data.length;
     console.info(gamesCount)
 
-    let sections = []
-
     let leagueArray = []
 
     for (let index = 0; index < gamesCount; index++) {
@@ -223,8 +221,6 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
     const gamesCount = seasonAllMatches.content.length;
     console.info(gamesCount)
 
-    let sections = []
-
     let leagueArray = []
 
     console.info(leagueDisplayName)
@@ -352,8 +348,6 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
 
     console.info(matchIDs)
 
-    let sections = []
-
     let leagueArray = []
 
     for (let index = 0; index < matchIDs.length; index++) {
@@ -401,7 +395,7 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
             {
                 eventState = "pre"
             }
-            else if(eventTime == "HT")
+            else if(eventTime === "HT")
             {
                 homeScore = matchInfo.data.matchDetails.ht.split('-')[0];
                 awayScore = matchInfo.data.matchDetails.ht.split('-')[1];
