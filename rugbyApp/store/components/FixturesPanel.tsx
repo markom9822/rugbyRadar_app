@@ -1,7 +1,7 @@
 import { MatchInfo } from "@/app/(tabs)/index"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
-import {BottomSheetModal } from "@gorhom/bottom-sheet"
+import {BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { LinearGradient } from "expo-linear-gradient"
 import { useEffect, useState } from "react"
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
@@ -179,9 +179,10 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
     const teamFormPanelColour = hexToRGB("#4d4b4b", '0.9')
 
 
-    return (<View style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12, marginBottom: 30 }]}>
+    return (<BottomSheetScrollView>
 
     <LinearGradient colors={[homeGradientColour, awayGradientColour]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+    style={[{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', borderRadius: 12, marginBottom: 30 }]}
                 >
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: "100%" }}>
@@ -245,7 +246,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
                 <FixtureInfoPanel id={id}  bottomSheetRef={bottomSheetRef}/>
             </LinearGradient>
-    </View>
+    </BottomSheetScrollView>
     )
 }
 

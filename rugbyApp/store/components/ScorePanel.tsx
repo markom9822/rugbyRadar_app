@@ -54,7 +54,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         // not started yet
         if (eventState === "pre") {
             return (
-                <View style={{ flexDirection: 'column', width: "100%", paddingVertical: 8 }}>
+                <View style={{ flexDirection: 'column', width: "100%", paddingVertical: 8,}}>
                     <Text style={{
                         color: colors.text, fontSize: fontSize.lg,
                         textAlign: 'center', fontFamily: fontFamilies.title
@@ -172,7 +172,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 locations={[0, 0.4, 1]}
                 style={[fixtureStyles.cardHeaderAllInfo, { borderColor: 'grey', borderWidth: 0.5, borderRadius: 12, padding: 3 }]}>
 
-                <TouchableOpacity activeOpacity={0.5} onPress={handlePressedScorePanel}>
+                <TouchableOpacity activeOpacity={0.5} style={{width: "100%"}} onPress={handlePressedScorePanel}>
 
                     <View style={[fixtureStyles.cardHeaderGameInfo]}>
 
@@ -186,8 +186,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
 
                         </View>
 
-                        <View style={{ width: "60%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <ImageBackground resizeMode='contain' imageStyle={{ opacity: 0.08 }}
+                        <View style={{ width: "60%", flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                            <ImageBackground resizeMode='center' imageStyle={{ opacity: 0.08, flex: 1 }}
                                 style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', width: "100%" }} source={matchLeagueLogo} >
 
                                 <Text style={{ textAlign: 'center', fontSize: fontSize.xs, color: 'lightgrey', fontFamily: fontFamilies.light, paddingVertical: 2, width: "100%" }}>{matchLeague}</Text>

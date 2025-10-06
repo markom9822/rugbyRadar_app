@@ -87,7 +87,8 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
     }
     else {
         return (
-            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{ flexDirection: selectedTeam === "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start', backgroundColor: 'transparent', paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 0.5, marginBottom: isLastItem ? 60 : 0 }]}>
+            <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={[{ flexDirection: selectedTeam === "home" ? 'row' : 'row-reverse', justifyContent: 'flex-start',
+             backgroundColor: 'transparent', paddingVertical: 8, borderBottomColor: 'grey', borderBottomWidth: 0.5 }]}>
                 <Text style={{ paddingHorizontal: 4, fontSize: 11, color: 'lightgrey', width: "8%", textAlign: 'center', fontFamily: fontFamilies.bold }}>
                     {playerNumber}
                 </Text>

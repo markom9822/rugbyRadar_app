@@ -259,7 +259,6 @@ export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineups) 
             const handlePressLineupTeam = (team: string) => {
 
                 if (team !== selectedTeam) {
-                    bottomSheetRef.current?.close()
                     setSelectedTeam(team)
                 }
             }
@@ -320,7 +319,7 @@ export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineups) 
                         </TouchableOpacity>
                     </View>
 
-                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1, marginBottom: 180 }}>
+                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1 }}>
 
                         <LinearGradient colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']} start={{ x: gradientStartFraction, y: 0.5 }} end={{ x: gradientEndFraction, y: 0.5 }} >
 

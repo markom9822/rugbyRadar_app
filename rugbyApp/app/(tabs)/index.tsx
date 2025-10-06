@@ -432,7 +432,7 @@ const FixturesScreen = () => {
             }
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => handlePressFetchData(currentDateArray, leagueName, true)} />} />
 
-                    <BottomSheetModal
+                <BottomSheetModal
                     ref={bottomSheetModalRef}
                     index={0}
                     snapPoints={snapPoints}
