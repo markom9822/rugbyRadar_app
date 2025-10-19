@@ -90,14 +90,6 @@ const TeamsScreen = () => {
 
     const leaguesArray = RugbyLeagues;
 
-    const teamLeagueLogos = [
-        { displayName: 'United Rugby Championship', leagueLogo: URCAltLogo },
-        { displayName: 'Premiership', leagueLogo: PremiershipAltLogo },
-        { displayName: 'Top 14', leagueLogo: Top14AltLogo },
-        { displayName: 'Super Rugby', leagueLogo: SuperRugbyAltLogo },
-        { displayName: 'International', leagueLogo: InternationalLogo },
-    ];
-
     const [teamSearch, setTeamSearch] = useState<string>('');
     const [searchTeamArray, setSearchTeamArray] = useState<SearchTeamInfo[]>([]);
     const [searchLeagueArray, setSearchLeagueArray] = useState<SearchLeagueInfo[]>([]);

@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { ThemedView } from '@/components/themed-view';
 import { GridView } from '@/store/components/GridView';
-import { getAllRugbyEvents, RugbyLeagues } from '@/store/RugbyLeaguesDatabase';
+import { getAllRugbyEvents } from '@/store/RugbyLeaguesDatabase';
 import { GridSearchPanel } from './(tabs)/search';
 import { setItem } from '@/store/utils/asyncStorage';
 import { useRouter } from 'expo-router';

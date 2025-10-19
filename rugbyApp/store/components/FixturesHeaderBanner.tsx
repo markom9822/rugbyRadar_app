@@ -5,7 +5,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native"
 import { RugbyRadarIconWhite } from "../Icons/Icons"
 import { hexToRGB } from "../utils/helpers"
 import { useRouter } from 'expo-router';
-import { getRugbyEventInfoFromValue, RugbyLeagues } from "../RugbyLeaguesDatabase"
+import { getRugbyEventInfoFromValue } from "../RugbyLeaguesDatabase"
 
 
 type LeagueDataItem = {
