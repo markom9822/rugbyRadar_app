@@ -1,7 +1,7 @@
 import { BALionsAltLogo, BALionsLogo } from "./InternationalTeamLogos/InternationalTeams";
 import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PacificNationsCupLogo, PremiershipAltLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "./LeagueLogos/LeagueLogos";
 
-export const getRugbyLeagueTeamInfoFromValue = (name: string) => {
+export const getRugbyLeagueInfoFromValue = (name: string) => {
 
     const match = RugbyLeagues.find((item) => item.value === name)
     if(match !== undefined)
@@ -14,6 +14,22 @@ export const getRugbyLeagueTeamInfoFromValue = (name: string) => {
     }
 }
 
+export const getAllRugbyEvents = () => {
+  return RugbyLeagues.concat(RugbySeries)
+}
+
+export const getRugbyEventInfoFromValue = (name: string) => {
+
+    const match = getAllRugbyEvents().find((item) => item.value === name)
+    if(match !== undefined)
+    {
+        return match
+    }
+    else
+    {
+        return null
+    }
+}
 
 export const RugbyLeagues = [
   {

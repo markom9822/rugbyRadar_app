@@ -82,7 +82,7 @@ const FixturesScreen = () => {
         const formattedDate = dateCustomFormatting(selectedDate)
         const currentLeagueCode = getLeagueCode(targetLeagueName)
 
-        const leagueNameArray = targetLeagueName == "all" ?
+        const leagueNameArray = targetLeagueName === "all" ?
             ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby',
                 'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'pacificNationsCup', 'BILTour'] : [targetLeagueName]
 
@@ -361,10 +361,6 @@ const FixturesScreen = () => {
         setCurrentIndex(index)
         bottomSheetModalRef.current?.present();
     }
-
-    const translateY = useSharedValue<number>(300);
-
-    const [leaguePanelOpen, setLeaguePanelOpen] = useState(false);
 
     const handleChooseLeaguePress = () => {
         //setLeaguePanelOpen(true)
