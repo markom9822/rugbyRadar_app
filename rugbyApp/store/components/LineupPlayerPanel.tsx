@@ -49,15 +49,7 @@ export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, homet
     const handlePresentModalPress = useCallback(async () => {
 
         console.info("pressed")
-
-        //bottomSheetRef.current?.present();
-
-        bottomSheetRef.current?.close();
-
         await OnPlayerModalShown(playerName, playerID, selectedTeamDisplayName, teamColour)
-
-        router.navigate("/playerModal")
-
 
     }, [selectedTeam]);
 
