@@ -1,23 +1,17 @@
 {
-	"extends": "expo/tsconfig.base",
-	"compilerOptions": {
-		"strict": true,
-		"target": "ES6",
-		"module": "commonjs",
-		"moduleResolution": "Node",
-		"jsx": "react-jsx",
-		"lib": ["dom", "esnext"],
-		"noEmit": true,
-		"allowSyntheticDefaultImports": true,
-		"skipLibCheck": true,
-		"baseUrl": ".",
-		"esModuleInterop": true,
-      	"resolveJsonModule": true,
-		"paths": {
-			"@/*": ["./src/*"],
-			"@/assets/*": ["./assets/*"]
-		}
-	},
-	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
-	"exclude": ["node_modules"]
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
 }
