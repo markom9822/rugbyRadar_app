@@ -39,8 +39,6 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
     const teamIDNum = teamInfo.id;
     const panelColour = hexToRGB("#4d4b4b", '0.8')
-    const seasonDropdownColour = hexToRGB("#4d4b4b", '0.4')
-
 
     const handlePressFetchData = async (year: string) => {
         console.info("Pressed Fetch Team Results")

@@ -59,7 +59,7 @@ export const TeamSummaryPanel = ({ teamInfo }: TeamSummaryPanelProps) => {
 
         const teamDetails = await fetch(apiString,).then((res) => res.json())
         const basicTeamInfo = getTeamBasicInfo(teamDetails)
-        const teamName = teamInfo.displayName;
+        //const teamName = teamInfo.displayName;
         setTeamSummaryInfo(basicTeamInfo)
 
     }

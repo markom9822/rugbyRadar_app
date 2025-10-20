@@ -6,12 +6,12 @@ import { getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatc
 import { StatsInfo, StatsPanel } from "./StatsPanel";
 
 
-type FixtureStats = {
+type FixtureStatsProps = {
     id: string,
     isShown: boolean,
 }
 
-export const FixtureStats = ({ id, isShown }: FixtureStats) => {
+export const FixtureStats = ({ id, isShown }: FixtureStatsProps) => {
 
     const [matchStatsArray, setMatchStatsArray] = useState<StatsInfo[] | undefined>();
 
@@ -19,7 +19,6 @@ export const FixtureStats = ({ id, isShown }: FixtureStats) => {
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
 
     const eventID = new String(id).substring(0, 6);
     const leagueID = new String(id).slice(6)

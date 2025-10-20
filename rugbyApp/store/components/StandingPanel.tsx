@@ -50,7 +50,6 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
         teamInfo = getTop14TeamInfoFromName(teamName)
     }
     else if (league === "superRugby") {
-        console.info(teamName)
         teamInfo = getSuperRugbyTeamInfoFromName(teamName)
     }
     else if (league === "championsCup" || league === "challengeCup") {
@@ -130,14 +129,11 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
                         <Text style={[standingsPanelStyles.teamStat, { width: '10%' }]}>{teamLosses}</Text>
                         <Text style={[standingsPanelStyles.teamStat, { width: '14%' }]}>{teamPD}</Text>
                         <Text style={[standingsPanelStyles.teamStat, { width: '10%' }]}>{teamPoints}</Text>
-
                     </>
                 )
-
             }
         }
     }
-
 
     return (
         <View style={[standingsPanelStyles.container,
@@ -147,5 +143,4 @@ export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPoo
             {standingsRender(isHeader, isPlayoffCutoff)}
         </View>
     )
-
 }

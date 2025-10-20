@@ -4,7 +4,7 @@ import Entypo from '@expo/vector-icons/Entypo'
 import { useEffect, useState } from "react"
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
-import { getLeagueCode, getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, hexToRGB } from "../utils/helpers"
+import { getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, hexToRGB } from "../utils/helpers"
 import { fetchRugbyVizKnockoutFixtures } from "../utils/knockoutFixturesGetter"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "../utils/standingsGetter"
 import { KnockoutsPanel } from "./KnockoutsPanel"
@@ -39,7 +39,7 @@ const getWorldRankingsData = (todaysRankings: any): StandingInfo[] => {
         const rawPoints = todaysRankings.entries[index].pts;
         const teamPoints = parseFloat(rawPoints).toFixed(2);
 
-        const teamPosition = todaysRankings.entries[index].pos;
+        //const teamPosition = todaysRankings.entries[index].pos;
 
         let newRankingInfo = {
             isHeader: false,
@@ -71,9 +71,7 @@ type LeagueStandingsPanelProps = {
     leagueSeasonData: string[],
     shouldShowKnockouts: boolean,
     OnChangeSeasonYear: (year: string) => void
-
 }
-
 
 export const getDefaultRoundButton = (knockoutsArray: MatchInfo[]) => {
 
@@ -98,7 +96,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
     const [standingsArray, setStandingsArray] = useState<StandingInfo[]>([]);
     const [secondaryStandingsArray, setSecondaryStandingsArray] = useState<StandingInfo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false);
 
     const [knockoutsArray, setKnockoutsArray] = useState<MatchInfo[]>([]);
     const [knockoutRoundName, setKnockoutRoundName] = useState<string>(getDefaultRoundButton(knockoutsArray));
@@ -110,8 +107,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             return;
         }
         setIsLoading(true)
-
-        const currentLeagueCode = getLeagueCode(leagueName)
 
         let apiString = '';
         const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
@@ -154,7 +149,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             console.info(apiString)
 
             const seasonStandingsRugViz = await fetch(apiString,).then((res) => res.json())
-            if (seasonStandingsRugViz.data == undefined) {
+            if (seasonStandingsRugViz.data === undefined) {
                 setIsLoading(false)
                 return;
             }
@@ -406,11 +401,7 @@ export const SeasonYearOption = ({ yearTitle, OnPressButton }: SeasonYearOptionP
     )
 }
 
-type StandingsHeaderProps = {
-
-}
-
-export const StandingsHeader = ({ }: StandingsHeaderProps) => {
+export const StandingsHeader = () => {
 
     return (
         <View style={{ flexDirection: 'row', paddingVertical: 2 }}>
@@ -424,5 +415,4 @@ export const StandingsHeader = ({ }: StandingsHeaderProps) => {
             <Text style={{ width: "10%", textAlign: 'center', fontSize: 10, color: 'grey', fontFamily: fontFamilies.title }}>P</Text>
         </View>
     )
-
 }

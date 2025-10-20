@@ -5,7 +5,6 @@ import { RugbyRadarIconWhite } from "../Icons/Icons"
 export const StandingsHeaderBanner = () => {
 
     return (
-
         <View style={{ flexDirection: 'row', height: "10%", alignItems: 'center' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', width: "60%", paddingHorizontal: 5 }}>
                 <View style={{ padding: 4 }}>
@@ -19,7 +18,6 @@ export const StandingsHeaderBanner = () => {
                         }}
                         source={RugbyRadarIconWhite} />
                 </View>
-
                 <View>
                     <Text style={{ fontFamily: fontFamilies.title, fontSize: 19, color: colors.text }}>Rugby Radar</Text>
                 </View>

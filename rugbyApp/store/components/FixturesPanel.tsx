@@ -85,7 +85,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
         if (id.indexOf("_WorldRugbyAPI") !== -1) {
             const separatedArray = id.toString().split("_");
             const worldRugbyAPIEventID = separatedArray[0];
-            const worldRugbyAPILeagueName = separatedArray[1]
+            //const worldRugbyAPILeagueName = separatedArray[1]
 
             const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/' + worldRugbyAPIEventID + '/stats?language=en';
             console.info(apiString)
@@ -112,7 +112,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
         if (id.indexOf("_PlanetRugbyAPI") !== -1) {
             const separatedArray = id.toString().split("_");
             const planetRugbyAPIEventID = separatedArray[0];
-            const planetRugbyAPILeagueName = separatedArray[1]
+            //const planetRugbyAPILeagueName = separatedArray[1]
 
             const apiH2HString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/' + planetRugbyAPIEventID;
 
@@ -138,7 +138,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
     const teamFormDisplay = (eventsArray: TeamEventStatsInfo[] | undefined) => {
 
-        if (eventsArray == undefined || eventsArray.length == 0) {
+        if (eventsArray === undefined || eventsArray.length === 0) {
             return null
         }
 
@@ -175,9 +175,6 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
         setCurrentTeamFormArray(teamFormArray)
     }
-
-    const teamFormPanelColour = hexToRGB("#4d4b4b", '0.9')
-
 
     return (<BottomSheetScrollView>
 
@@ -278,13 +275,13 @@ export const FixtureInfoPanel = ({ id, bottomSheetRef }: FixturesInfoPanel) => {
     )
 }
 
-type FixturesInfoBox = {
+type FixturesInfoBoxProps = {
     id: string,
     currentTabKey: string
     bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
-export const FixturesInfoBox = ({ id, currentTabKey, bottomSheetRef }: FixturesInfoBox) => {
+export const FixturesInfoBox = ({ id, currentTabKey, bottomSheetRef }: FixturesInfoBoxProps) => {
 
     return (
         <View>
@@ -296,13 +293,13 @@ export const FixturesInfoBox = ({ id, currentTabKey, bottomSheetRef }: FixturesI
     )
 }
 
-type FixturesInfoTabBar = {
+type FixturesInfoTabBarProps = {
     OnTabButtonPressed: (key: string) => void,
     currentTabKey: string,
 }
 
 
-export const FixturesInfoTabBar = ({ OnTabButtonPressed, currentTabKey }: FixturesInfoTabBar) => {
+export const FixturesInfoTabBar = ({ OnTabButtonPressed, currentTabKey }: FixturesInfoTabBarProps) => {
 
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 8, marginTop: 20 }}>
@@ -314,14 +311,14 @@ export const FixturesInfoTabBar = ({ OnTabButtonPressed, currentTabKey }: Fixtur
     )
 }
 
-type FixturesInfoTabButton = {
+type FixturesInfoTabButtonProps = {
     title: string,
     isTabSelected: boolean,
     OnPressTab: (key: string) => void
 }
 
 
-export const FixturesInfoTabButton = ({ title, isTabSelected, OnPressTab }: FixturesInfoTabButton) => {
+export const FixturesInfoTabButton = ({ title, isTabSelected, OnPressTab }: FixturesInfoTabButtonProps) => {
 
     return (
         <TouchableOpacity style={{ margin: 4, width: "22%" }} activeOpacity={0.8} onPress={() => OnPressTab(title)}>

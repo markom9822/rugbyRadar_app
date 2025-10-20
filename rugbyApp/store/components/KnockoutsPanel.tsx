@@ -1,7 +1,7 @@
 import { MatchInfo } from "@/app/(tabs)/index"
 import { colors, fontFamilies } from "@/constants/tokens"
 import { getHomeAwayTeamInfo } from "@/store/utils/getTeamInfo"
-import { getLeagueDisplayNameFromValue, getLeagueLogoFromValue, getLeagueTrophyIconFromValue, hexToRGB, StandingInfo } from "@/store/utils/helpers"
+import { getLeagueTrophyIconFromValue, hexToRGB, StandingInfo } from "@/store/utils/helpers"
 import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getQFKnockoutFixtures, getR16KnockoutFixtures, getSFKnockoutFixtures, pooledTableIntoRankedChallengeCup, pooledTableIntoRankedChampsCup } from "../utils/knockoutsUtils"
 import { GridView } from "./GridView"
@@ -53,9 +53,9 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
 
     let targetStandingsArray = standingsArray;
 
-    if (standingsArray.length == 0) return;
+    if (standingsArray.length === 0) return;
 
-    if (leagueName == "championsCup") {
+    if (leagueName === "championsCup") {
         // turn pooled table into ranked table
         targetStandingsArray = pooledTableIntoRankedChampsCup(standingsArray);
     }
@@ -68,7 +68,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
 
     const knockoutRoundRender = (knockoutRoundName: string) => {
 
-        if (knockoutRoundName == "r16") {
+        if (knockoutRoundName === "r16") {
 
             const R16Fixtures = getR16KnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
 
@@ -88,7 +88,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
                 </View>
             )
         }
-        else if (knockoutRoundName == "quaterFinals") {
+        else if (knockoutRoundName === "quaterFinals") {
 
             const QFFixtures = getQFKnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
 
@@ -103,7 +103,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
 
             )
         }
-        else if (knockoutRoundName == "semiFinals") {
+        else if (knockoutRoundName === "semiFinals") {
 
             const SFFixtures = getSFKnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
 
@@ -114,10 +114,10 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
                 </View>
             )
         }
-        else if (knockoutRoundName == "final") {
+        else if (knockoutRoundName === "final") {
 
-            const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle == "GF");
-            if (filteredArray.length == 0) {
+            const filteredArray = knockoutFixturesArray.filter(item => item.matchTitle === "GF");
+            if (filteredArray.length === 0) {
                 return null
             }
 
@@ -178,9 +178,9 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
                 col={filteredButtonsArray.length}
                 renderItem={(item, index) =>
                     <View>
-                        <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound == item.code ? 'lightgrey' : 'transparent' }]}
+                        <TouchableOpacity style={[knockoutPanelStyles.roundButton, { backgroundColor: chosenKnockoutRound === item.code ? 'lightgrey' : 'transparent' }]}
                             onPress={() => handlePressRoundButton(item.code)}>
-                            <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound == item.code ? 'black' : 'white' }]}>{item.title}</Text>
+                            <Text style={[knockoutPanelStyles.roundText, { color: chosenKnockoutRound === item.code ? 'black' : 'white' }]}>{item.title}</Text>
                         </TouchableOpacity>
                     </View>} />
         )
@@ -190,13 +190,13 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
         handleChooseRound(roundName)
     }
 
-    const leagueDisplayName = getLeagueDisplayNameFromValue(leagueName)
-    const leagueLogo = getLeagueLogoFromValue(leagueName)
+    //const leagueDisplayName = getLeagueDisplayNameFromValue(leagueName)
+    //const leagueLogo = getLeagueLogoFromValue(leagueName)
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'column' }}>
 
-            {knockoutFixturesArray.length == 0 && (
+            {knockoutFixturesArray.length === 0 && (
                 <View style={{ marginVertical: 20 }}>
                     <ActivityIndicator size='large' color='lightgrey' />
                 </View>
@@ -205,9 +205,7 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
             <View style={{ marginVertical: 8 }}>
                 {knockoutRoundButtonsRender(knockoutFixturesArray)}
             </View>
-
             {knockoutRoundRender(chosenKnockoutRound)}
-
         </View>
     )
 }
@@ -219,7 +217,7 @@ type KnockoutsFixtureProps = {
 
 export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixtureProps) => {
 
-    if (fixtureInfo == undefined || fixtureInfo == null) {
+    if (fixtureInfo === undefined || fixtureInfo == null) {
         return;
     }
 
@@ -233,10 +231,10 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
     homeTeamName = homeTeamInfo?.abbreviation;
     awayTeamName = awayTeamInfo?.abbreviation;
 
-    if (fixtureInfo.homeTeam == "TBC") {
+    if (fixtureInfo.homeTeam === "TBC") {
         homeTeamName = fixtureInfo.homeTeam;
     }
-    if (fixtureInfo.awayTeam == "TBC") {
+    if (fixtureInfo.awayTeam === "TBC") {
         awayTeamName = fixtureInfo.awayTeam;
     }
 
@@ -340,7 +338,7 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
 
 export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtureProps) => {
 
-    if (fixtureInfo == undefined || fixtureInfo == null) {
+    if (fixtureInfo === undefined || fixtureInfo == null) {
         return;
     }
 
@@ -354,10 +352,10 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
     homeTeamName = homeTeamInfo?.abbreviation;
     awayTeamName = awayTeamInfo?.abbreviation;
 
-    if (fixtureInfo.homeTeam == "TBC") {
+    if (fixtureInfo.homeTeam === "TBC") {
         homeTeamName = fixtureInfo.homeTeam;
     }
-    if (fixtureInfo.awayTeam == "TBC") {
+    if (fixtureInfo.awayTeam === "TBC") {
         awayTeamName = fixtureInfo.awayTeam;
     }
 
@@ -370,10 +368,7 @@ export const KnockoutsFinalMatch = ({ leagueName, fixtureInfo }: KnockoutsFixtur
     if (homeTeamInfo === undefined) return
     if (awayTeamInfo === undefined) return
 
-    const homeFontFamily = (new Number(homeTeamScore) > new Number(awayTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
-    const awayFontFamily = (new Number(awayTeamScore) > new Number(homeTeamScore)) ? (fontFamilies.bold) : (fontFamilies.light);
     const panelColour = hexToRGB("#4d4b4b", '0.6')
-
 
     const renderScoreTime = (eventState: string) => {
 

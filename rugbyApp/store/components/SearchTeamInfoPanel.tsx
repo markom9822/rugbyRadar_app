@@ -16,11 +16,8 @@ type SearchTeamInfoPanelProps = {
 
 export const SearchTeamInfoPanel = ({ teamInfo, bottomSheetRef }: SearchTeamInfoPanelProps) => {
 
-    const fadedGreyColour = hexToRGB('#a4a6a6', '0.8');
     const teamGradientColour = hexToRGB(teamInfo.colour, '0.5')
-
     const handleCloseBottomSheet = () => {
-
         bottomSheetRef.current?.close();
     }
 
