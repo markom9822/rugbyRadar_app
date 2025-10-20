@@ -69,7 +69,7 @@ export const TeamSummaryPanel = ({ teamInfo }: TeamSummaryPanelProps) => {
             await handlePressFetchData()
         }
         fetchMyAPI()
-    }, [])
+    })
 
     const foundedYear = Number(teamInfo.foundedYear);
     const currentYear = Number(new Date().getFullYear().valueOf());

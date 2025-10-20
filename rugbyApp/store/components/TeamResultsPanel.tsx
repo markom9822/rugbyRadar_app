@@ -56,7 +56,7 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
             await handlePressFetchData(seasonYear)
         }
         fetchMyAPI()
-    }, [])
+    })
 
     const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
 
