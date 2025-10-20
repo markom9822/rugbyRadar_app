@@ -1,16 +1,15 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { lineupPanelStyles } from "@/styles";
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
+import { BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo";
 import { getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
 import { getPlayerImageSrc } from "../utils/playerImagesGetter";
 import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
-
 
 export type LineUpInfo = {
     teamPlayer: string,
@@ -610,11 +609,6 @@ export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineupsPr
 
         setModalPlayerName(playerName)
     }
-
-    const teamBkgRBGA = hexToRGB(modalTeamColour, '0.25')
-    const teamBorderRBGA = hexToRGB(modalTeamColour, '0.7')
-
-    const teamHandleRBGA = hexToRGB(modalTeamColour, '0.5')
 
     return (<View>
         {isShown &&

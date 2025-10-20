@@ -1,5 +1,5 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
-import { BottomSheetFlatList, BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from "react-native";
@@ -8,21 +8,18 @@ import { getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugb
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { hexToRGB } from "../utils/helpers";
 
-
-type FixtureEvents = {
+type FixtureEventsProps = {
     id: string,
     isShown: boolean,
 }
 
-export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
+export const FixtureEvents = ({ id, isShown }: FixtureEventsProps) => {
 
     const [keyEventsArray, setKeyEventsArray] = useState<KeyEventsInfo[] | undefined>();
-
     const [mainTeamName, setMainTeamName] = useState<string | undefined>();
     const [opponentTeamName, setOpponentTeamName] = useState<string | undefined>();
     const [leagueName, setLeagueName] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
 
     const eventID = new String(id).substring(0, 6);
     const leagueID = new String(id).slice(6)
@@ -67,7 +64,7 @@ export const FixtureEvents = ({ id, isShown }: FixtureEvents) => {
             const matchStats = await fetch(apiString,).then((res) => res.json())
             const homeTeam = matchStats.match.teams[0].name;
             const awayTeam = matchStats.match.teams[1].name;
-            const matchDate = new Date(matchStats.match.time.millis)
+            //const matchDate = new Date(matchStats.match.time.millis)
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)
@@ -177,7 +174,7 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
 
     const homeAwayTeamInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam)
 
-    if (keyEventArray.length == 0) {
+    if (keyEventArray.length === 0) {
         return (
             <View style={[keyEventsPanelStyles.container]}>
 
@@ -208,8 +205,8 @@ export const KeyEventsPanel = ({ keyEventArray, homeTeam, awayTeam, matchID, lea
                             eventScore={item.eventScore}
                             eventTeam={item.eventTeam}
                             eventIcon={item.eventIcon}
-                            isHomeTeam={item.eventTeam == homeTeam}
-                            teamColour={item.eventTeam == homeTeam ? homeAwayTeamInfo?.homeInfo.colour : homeAwayTeamInfo?.awayInfo.colour}
+                            isHomeTeam={item.eventTeam === homeTeam}
+                            teamColour={item.eventTeam === homeTeam ? homeAwayTeamInfo?.homeInfo.colour : homeAwayTeamInfo?.awayInfo.colour}
                             homeAwayInfo={homeAwayTeamInfo}
                         />}
                 />
@@ -234,7 +231,7 @@ type KeyEventItemProps = {
 
 export const KeyEventItem = ({ leagueName, eventTime, eventType, eventPlayer, eventScore, eventTeam, eventIcon, isHomeTeam, teamColour, homeAwayInfo }: KeyEventItemProps) => {
 
-    if (teamColour == undefined) return;
+    if (teamColour === undefined) return;
 
     const panelColour = hexToRGB("#4d4b4b", '0.5')
     const teamGradientColour = hexToRGB(teamColour, '0.3')
@@ -259,7 +256,7 @@ export const KeyEventItem = ({ leagueName, eventTime, eventType, eventPlayer, ev
 
     const renderScoreCard = (type: string) => {
 
-        if (type == "Yellow" || type == "Yellow card" || type == "Yellow Card" || type == "Red" || type == "Red card" || type == "Red Card") {
+        if (type === "Yellow" || type === "Yellow card" || type === "Yellow Card" || type === "Red" || type === "Red card" || type === "Red Card") {
             return (
                 <View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', padding: 3 }}>

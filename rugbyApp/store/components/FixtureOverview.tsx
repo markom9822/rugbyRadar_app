@@ -23,7 +23,6 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverviewProps) => {
     const [headToHeadStatsArray, setHeadToHeadStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
 
     const eventID = new String(id).substring(0, 6);
     const leagueID = new String(id).slice(6)
@@ -198,7 +197,7 @@ export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName
 
     const broadcasterRender = (matchInfoArray: MatchInfo[]) => {
 
-        if (matchInfoArray[0].matchBroadcasters == undefined || matchInfoArray[0].matchBroadcasters == null || matchInfoArray[0].matchBroadcasters.length == 0) {
+        if (matchInfoArray[0].matchBroadcasters === undefined || matchInfoArray[0].matchBroadcasters == null || matchInfoArray[0].matchBroadcasters.length === 0) {
             return (
                 <View>
                     <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: fontSize.xs }}>No Broadcasters Found</Text>

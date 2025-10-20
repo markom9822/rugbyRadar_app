@@ -10,9 +10,7 @@ import { defaultStyles } from "@/styles/index"
 import { FontAwesome6 } from '@expo/vector-icons'
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
-import { useSharedValue } from "react-native-reanimated"
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
-
 
 export type MatchInfo = {
     homeTeam: string,
@@ -334,19 +332,19 @@ const FixturesScreen = () => {
 
         setCurrentTab(key)
 
-        if (key === "Today" && currentTab != "Today") {
+        if (key === "Today" && currentTab !== "Today") {
             console.info("Selected Today")
             setCurrentDateArray([new Date()])
 
             setMatchesArray(todayMatchesArray)
         }
-        else if (key === "Previous" && currentTab != "Previous") {
+        else if (key === "Previous" && currentTab !== "Previous") {
             console.info("Selected Previous")
             setCurrentDateArray(get7Days(true))
 
             setMatchesArray(previousMatchesArray)
         }
-        else if (key === "Upcoming" && currentTab != "Upcoming") {
+        else if (key === "Upcoming" && currentTab !== "Upcoming") {
             console.info("Selected Upcoming")
             setCurrentDateArray(get7Days(false))
 
@@ -362,11 +360,6 @@ const FixturesScreen = () => {
         bottomSheetModalRef.current?.present();
     }
 
-    const handleChooseLeaguePress = () => {
-        //setLeaguePanelOpen(true)
-
-    }
-
     // renders
     const renderBackdrop = useCallback(
         (props: any) => (
@@ -379,11 +372,10 @@ const FixturesScreen = () => {
         []
     );
 
-
     const snapPoints = ["100%"];
 
     return <View style={defaultStyles.container}>
-        <FixturesHeaderBanner currentLeague={leagueName} OnPressLeague={handleChooseLeaguePress} />
+        <FixturesHeaderBanner currentLeague={leagueName} />
 
         <View style={{ marginVertical: 7 }}>
             <MultiTabBar tabsArray={["Previous", "Today", "Upcoming"]} OnTabButtonPressed={handlePressedDateTab} currentTabKey={currentTab} />

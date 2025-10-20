@@ -16,10 +16,9 @@ type LeagueDataItem = {
 
 type FixturesHeaderBannerProps = {
     currentLeague: string,
-    OnPressLeague: () => void
 }
 
-export const FixturesHeaderBanner = ({ currentLeague, OnPressLeague }: FixturesHeaderBannerProps) => {
+export const FixturesHeaderBanner = ({ currentLeague }: FixturesHeaderBannerProps) => {
 
     const chooseLeagueButtonColour = hexToRGB("#4d4b4b", '0.6');
     const router = useRouter();
