@@ -1,7 +1,7 @@
 import { SearchTeamInfo } from "@/app/(tabs)/search"
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, Image, ImageBackground, Text, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
@@ -40,23 +40,26 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
     const teamIDNum = teamInfo.id;
     const panelColour = hexToRGB("#4d4b4b", '0.8')
 
-    const handlePressFetchData = async (year: string) => {
-        console.info("Pressed Fetch Team Results")
-        setTeamEventsArray([])
+    const handlePressFetchData = useCallback(async (year: string) => {
+        try {
+            console.info("Pressed Fetch Team Results");
+            setTeamEventsArray([]);
+            setIsLoading(true);
 
-        setIsLoading(true)
-        const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, year)
-        console.info(teamSeasonFixtures)
-        setTeamEventsArray(teamSeasonFixtures)
-        setIsLoading(false)
-    }
+            const teamSeasonFixtures = await getTeamSeasonFixtures(teamIDNum, year);
+            console.info(teamSeasonFixtures);
+            setTeamEventsArray(teamSeasonFixtures);
+
+            setIsLoading(false);
+        } catch (error) {
+            setIsLoading(false);
+            console.error("Error fetching team season fixtures:", error);
+        }
+    }, [teamIDNum]);
 
     useEffect(() => {
-        async function fetchMyAPI() {
-            await handlePressFetchData(seasonYear)
-        }
-        fetchMyAPI()
-    })
+        handlePressFetchData(seasonYear);
+    }, [handlePressFetchData, seasonYear]);
 
     const notFoundHeader = (eventsArray: TeamEvent[] | undefined) => {
 
@@ -98,7 +101,6 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
 
         setSeasonYear(year)
         await handlePressFetchData(year)
-
     }
 
     const seasonManualData = ['2026', '2025', '2024', '2023', '2022'];
@@ -141,7 +143,6 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
                             />}
                     />
                 </BottomSheetScrollView>
-
             </View>
         </View>
     )
@@ -257,11 +258,8 @@ export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, ho
                                     minWidth: 30,
                                 }} />
                         </View>
-
                         <Text style={{ paddingHorizontal: 5, fontSize: 11, color: colors.text, fontFamily: fontFamilies.title }}>{awayTeamInfo.abbreviation}</Text>
-
                     </View>
-
                 </View>
             </ImageBackground>
         </View>

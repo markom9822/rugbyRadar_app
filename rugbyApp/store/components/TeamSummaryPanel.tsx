@@ -1,7 +1,7 @@
 import { SearchTeamInfo } from "@/app/(tabs)/search"
 import { colors, fontFamilies } from "@/constants/tokens"
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import { hexToRGB } from "../utils/helpers"
 
@@ -51,25 +51,17 @@ export const TeamSummaryPanel = ({ teamInfo }: TeamSummaryPanelProps) => {
 
     const [teamSummaryInfo, setTeamSummaryInfo] = useState<TeamInfo | undefined>();
 
-    const handlePressFetchData = async () => {
-        console.info("Pressed Fetch Team Info")
-
-        // getting basic team info
-        const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/' + teamInfo.id;
-
-        const teamDetails = await fetch(apiString,).then((res) => res.json())
-        const basicTeamInfo = getTeamBasicInfo(teamDetails)
-        //const teamName = teamInfo.displayName;
-        setTeamSummaryInfo(basicTeamInfo)
-
-    }
+    const handlePressFetchData = useCallback(async () => {
+        const response = await fetch(
+            `https://site.web.api.espn.com/apis/site/v2/sports/rugby/teams/${teamInfo.id}`
+        );
+        const data = await response.json();
+        setTeamSummaryInfo(getTeamBasicInfo(data));
+    }, [teamInfo.id]);
 
     useEffect(() => {
-        async function fetchMyAPI() {
-            await handlePressFetchData()
-        }
-        fetchMyAPI()
-    })
+        handlePressFetchData();
+    }, [handlePressFetchData]);
 
     const foundedYear = Number(teamInfo.foundedYear);
     const currentYear = Number(new Date().getFullYear().valueOf());
