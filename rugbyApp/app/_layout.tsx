@@ -44,7 +44,6 @@ export default function RootLayout() {
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Choose League' }} />
-              <Stack.Screen name="playerModal" options={{ presentation: 'modal', title: 'Player Info' }} />
             </Stack>
             <StatusBar style="auto" />
           </BottomSheetModalProvider>

@@ -49,13 +49,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 4,
-    // Could use 'height: Dimensions.get("window").height' if needed
   },
   scrollContainer: {
     flex: 1,
   },
   contentContainer: {
     paddingBottom: 20,
-    alignItems: 'center', // or stretch based on layout needs
+    alignItems: 'center',
   },
 });
