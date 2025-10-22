@@ -16,7 +16,20 @@ const leagueSearchData = [
         { name: 'u20Championship', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12] },
         { name: 'pacificNationsCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
-    ];
+];
+
+export function get7Days(previous: boolean): Date[] {
+        const dates: Date[] = [];
+        const today = new Date();
+
+        for (let i = 1; i < 8; i++) {
+            const date = new Date();
+            date.setDate(today.getDate() + i * (previous ? -1 : 1)); // Subtract days from today
+            dates.push(date);
+        }
+
+        return dates;
+}
 
 export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: string) => {
 

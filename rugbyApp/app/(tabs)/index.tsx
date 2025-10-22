@@ -9,7 +9,7 @@ import { FontAwesome6 } from '@expo/vector-icons'
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
-import { getLeagueFixtures } from "@/store/utils/getLeagueFixtures"
+import { get7Days, getLeagueFixtures } from "@/store/utils/getLeagueFixtures"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -178,19 +178,6 @@ const FixturesScreen = () => {
                 <Text style={{ color: 'grey', fontFamily: fontFamilies.bold, fontSize: 13 }}>{dateString.toUpperCase()}</Text>
             </View>
         )
-    }
-
-    function get7Days(previous: boolean): Date[] {
-        const dates: Date[] = [];
-        const today = new Date();
-
-        for (let i = 1; i < 8; i++) {
-            const date = new Date();
-            date.setDate(today.getDate() + i * (previous ? -1 : 1)); // Subtract days from today
-            dates.push(date);
-        }
-
-        return dates;
     }
 
     const handlePressedDateTab = (key: string) => {

@@ -80,7 +80,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
                     <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.title, textAlign: 'center', padding: 5 }]}>{leagueInfo.displayName}</Text>
                 </View>
 
-                <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} />
+                <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} fixturesLimit={5} />
 
                 <LeagueStandingsPanel leagueName={leagueInfo.value} seasonYear={seasonName} leagueSeasonData={leagueSeasonData} shouldShowKnockouts={shouldShowKnockouts} OnChangeSeasonYear={handleChangedSeasonYear} />
 
