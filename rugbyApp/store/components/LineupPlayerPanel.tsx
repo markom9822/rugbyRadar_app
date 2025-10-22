@@ -17,14 +17,11 @@ type LineupPlayerPanelProps = {
     awayteamPlayerNum: string,
     isAwayPlayerCaptain: boolean,
     teamColour: string,
-    isLastItem: boolean,
-    bottomSheetRef: React.RefObject<BottomSheetModal | null>
     OnPlayerModalShown: (playerName: string, playerID: string, teamName: string, teamColour: string) => void
 }
 
-
 export const LineupPlayerPanel = ({ selectedTeam, selectedTeamDisplayName, hometeamPlayer, hometeamPlayerID, hometeamPlayerNum, isHomePlayerCaptain,
-    awayteamPlayer, awayteamPlayerID, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, isLastItem, bottomSheetRef, OnPlayerModalShown }: LineupPlayerPanelProps) => {
+    awayteamPlayer, awayteamPlayerID, awayteamPlayerNum, isAwayPlayerCaptain, teamColour, OnPlayerModalShown }: LineupPlayerPanelProps) => {
 
     let playerName = ''
     let playerNumber = ''

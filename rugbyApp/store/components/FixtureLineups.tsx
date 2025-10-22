@@ -1,15 +1,15 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { lineupPanelStyles } from "@/styles";
-import { BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Modal, Text, TouchableOpacity, View } from "react-native";
-import { getHomeAwayTeamInfo, getTeamInfo } from "../utils/getTeamInfo";
+import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
-import { getPlayerImageSrc } from "../utils/playerImagesGetter";
 import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { getPlayerInfo } from "../utils/playerInfoGetter";
 
 export type LineUpInfo = {
     teamPlayer: string,
@@ -33,10 +33,9 @@ export type AllLineUpsInfo = {
 type FixtureLineupsProps = {
     id: string,
     isShown: boolean,
-    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
-export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineupsProps) => {
+export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
     const [homeTeamName, setHomeTeamName] = useState<string>('');
     const [awayTeamName, setAwayTeamName] = useState<string>('');
@@ -239,17 +238,7 @@ export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineupsPr
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
-    const findLastItem = (lineupArray: AllLineUpsInfo[], index: number) => {
-
-        if (lineupArray === undefined || lineupArray.length === 0) {
-            return false;
-        }
-        else {
-            return index === lineupArray.length - 1;
-        }
-    }
-
-    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any, bottomSheetRef: React.RefObject<BottomSheetModal | null>) => {
+    const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any) => {
 
         if (homeTeamInfo === undefined || awayTeamInfo === undefined) {
             return (
@@ -341,8 +330,6 @@ export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineupsPr
                                         awayteamPlayerNum={item.awayteamPlayerNum}
                                         isAwayPlayerCaptain={item.isAwayPlayerCaptain}
                                         teamColour={(selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour}
-                                        isLastItem={findLastItem(allLineupsArray, index)}
-                                        bottomSheetRef={bottomSheetRef}
                                         OnPlayerModalShown={handlePlayerModalShown}
                                     />}
                             />
@@ -463,159 +450,22 @@ export const FixtureLineups = ({ id, isShown, bottomSheetRef }: FixtureLineupsPr
         setModalTeamColour(teamColour)
         setModalPlayerCountry('-')
 
-        if (playerName === "-") {
-            return;
-        }
-
-        const calculateAge = (birthDate: Date): number => {
-            const today = new Date();
-
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDifference = today.getMonth() - birthDate.getMonth();
-
-            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-
-            return age;
-        }
-
-        function formatDate(date: Date): string {
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        }
-
-        const handleNullHeightOutput = (playerHeight: string) => {
-
-            if (playerHeight == null) {
-                return "-"
-            }
-
-            return cmToMeters(Number(playerHeight)) + " m";
-        }
-
-        const handleNullWeightOutput = (playerWeight: string) => {
-
-            if (playerWeight == null) {
-                return "-"
-            }
-
-            return playerWeight + " kg";
-        }
-
-        const handleNullOutput = (playerStat: string) => {
-
-            if (playerStat == null) {
-                return "-"
-            }
-
-            return playerStat;
-        }
-
-        const cmToMeters = (centimeters: number): string => {
-            return (centimeters / 100).toFixed(2);
-        }
-
-        // handle differently - separate API
-        if (leagueID.indexOf("_RugbyViz") !== -1) {
-            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/players/' + playerID + '?provider=rugbyviz'
-            const playerInfo = await fetch(apiString,).then((res) => res.json())
-
-            const playerPosition = playerInfo.data.position;
-            const playerDOB = new Date(playerInfo.data.dateOfBirth);
-            const playerAge = calculateAge(playerDOB).toString()
-
-            const playerHeight = handleNullHeightOutput(playerInfo.data.height);
-            const playerWeight = handleNullWeightOutput(playerInfo.data.weight);
-
-            const playerCountry = handleNullOutput(playerInfo.data.country);
-
-            setModalPlayerPosition(playerPosition)
-            setModalPlayerAge(playerAge)
-            setModalPlayerDOB(formatDate(playerDOB))
-            setModalPlayerHeight(playerHeight)
-            setModalPlayerWeight(playerWeight)
-            setModalPlayerCountry(playerCountry)
-            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
-            setModalPlayerImageSrc(playerImageSrc)
-        }
-        else if (id.indexOf("_PlanetRugbyAPI") !== -1) {
-            if (leagueName === "top14") {
-                const teamID = getTeamInfo("championsCup", teamName)?.teamInfo.id;
-                console.info(teamName)
-                const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/teams/' + teamID + '/players?provider=rugbyviz&competitionId=1008&seasonId=202401&images=true'
-                console.info(apiString)
-                const teamPlayersInfo = await fetch(apiString,).then((res) => res.json())
-
-                for (let index = 0; index < teamPlayersInfo.data.length; index++) {
-
-                    if (teamPlayersInfo.data[index].knownName === playerName) {
-
-                        const playerPosition = teamPlayersInfo.data[index].position;
-                        const playerDOB = new Date(teamPlayersInfo.data[index].dateOfBirth);
-                        const playerAge = calculateAge(playerDOB).toString()
-
-                        const playerHeight = handleNullHeightOutput(teamPlayersInfo.data[index].height);
-                        const playerWeight = handleNullWeightOutput(teamPlayersInfo.data[index].weight);
-
-                        const playerCountry = handleNullOutput(teamPlayersInfo.data[index].country);
-                        setModalPlayerPosition(playerPosition)
-                        setModalPlayerAge(playerAge)
-                        setModalPlayerDOB(formatDate(playerDOB))
-                        setModalPlayerHeight(playerHeight)
-                        setModalPlayerWeight(playerWeight)
-                        setModalPlayerCountry(playerCountry)
-                        break;
-                    }
-                }
-            }
-
-            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
-            setModalPlayerImageSrc(playerImageSrc)
-        }
-        else if (id.indexOf("_WorldRugbyAPI") !== -1) {
-            // get player image using id
-            console.info(playerID)
-            const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/player/' + playerID + '?language=en'
-            const playerInfo = await fetch(apiString,).then((res) => res.json())
-
-            console.info(playerInfo)
-
-            //const playerPosition = playerInfo.data.position;
-            const playerDOB = new Date(playerInfo.dob.millis);
-            const playerAge = calculateAge(playerDOB).toString()
-
-            const playerHeight = handleNullHeightOutput(playerInfo.height);
-            const playerWeight = handleNullWeightOutput(playerInfo.weight);
-            const playerCountry = handleNullOutput(playerInfo.country);
-            //setModalPlayerPosition(playerPosition)
-
-            setModalPlayerAge(playerAge)
-            setModalPlayerDOB(formatDate(playerDOB))
-            setModalPlayerHeight(playerHeight)
-            setModalPlayerWeight(playerWeight)
-            setModalPlayerCountry(playerCountry)
-            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
-
-            if (playerImageSrc.length === 0) {
-                setModalPlayerImageSrc('https://www.rugbyworldcup.com/rwc2023/person-images-site/player-profile/' + playerID + '.png')
-            }
-            else {
-                setModalPlayerImageSrc(playerImageSrc)
-            }
-        }
-
-        setModalPlayerName(playerName)
+        const playerInfoResult = await getPlayerInfo(playerName, playerID, teamName, leagueID, leagueName, id);
+        setModalPlayerName(playerInfoResult.playerName)
+        setModalPlayerPosition(playerInfoResult.playerPosition)
+        setModalPlayerAge(playerInfoResult.playerAge)
+        setModalPlayerDOB(playerInfoResult.playerDOB)
+        setModalPlayerHeight(playerInfoResult.playerHeight)
+        setModalPlayerWeight(playerInfoResult.playerWeight)
+        setModalPlayerImageSrc(playerInfoResult.playerImageSrc)
+        setModalPlayerCountry(playerInfoResult.playerCountry)
     }
 
     return (<View>
         {isShown &&
-            <View style={[]}>
-
+            <View>
                 {activityIndicatorHeader()}
-                {lineupsRender(homeTeamInfo, awayTeamInfo, bottomSheetRef)}
+                {lineupsRender(homeTeamInfo, awayTeamInfo)}
             </View>}
     </View>
     )

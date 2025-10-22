@@ -241,7 +241,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
                 </ImageBackground>
 
-                <FixtureInfoPanel id={id}  bottomSheetRef={bottomSheetRef}/>
+                <FixtureInfoPanel id={id}/>
             </LinearGradient>
     </BottomSheetScrollView>
     )
@@ -249,10 +249,9 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
 
 type FixturesInfoPanel = {
     id: string,
-    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
-export const FixtureInfoPanel = ({ id, bottomSheetRef }: FixturesInfoPanel) => {
+export const FixtureInfoPanel = ({ id }: FixturesInfoPanel) => {
 
     const [currentTab, setCurrentTab] = useState<string>('Overview');
 
@@ -267,7 +266,7 @@ export const FixtureInfoPanel = ({ id, bottomSheetRef }: FixturesInfoPanel) => {
             </View>
 
             <View style={{ width: "100%", height: "100%" }}>
-                <FixturesInfoBox id={id} currentTabKey={currentTab} bottomSheetRef={bottomSheetRef} />
+                <FixturesInfoBox id={id} currentTabKey={currentTab} />
             </View>
 
 
@@ -278,17 +277,16 @@ export const FixtureInfoPanel = ({ id, bottomSheetRef }: FixturesInfoPanel) => {
 type FixturesInfoBoxProps = {
     id: string,
     currentTabKey: string
-    bottomSheetRef: React.RefObject<BottomSheetModal | null>
 }
 
-export const FixturesInfoBox = ({ id, currentTabKey, bottomSheetRef }: FixturesInfoBoxProps) => {
+export const FixturesInfoBox = ({ id, currentTabKey }: FixturesInfoBoxProps) => {
 
     return (
         <View>
             <FixtureOverview id={id} isShown={currentTabKey === "Overview"} />
             <FixtureStats id={id} isShown={currentTabKey === "Stats"} />
             <FixtureEvents id={id} isShown={currentTabKey === "Events"} />
-            <FixtureLineups id={id} isShown={currentTabKey === "Lineups"} bottomSheetRef={bottomSheetRef} />
+            <FixtureLineups id={id} isShown={currentTabKey === "Lineups"} />
         </View>
     )
 }
