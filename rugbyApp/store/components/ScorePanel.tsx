@@ -39,8 +39,6 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     if (homeTeamInfo === undefined) return
     if (awayTeamInfo === undefined) return
 
-    const homeScoreWeight = (new Number(homeScore) >= new Number(awayScore)) ? ('600') : ('300');
-    const awayScoreWeight = (new Number(awayScore) >= new Number(homeScore)) ? ('600') : ('300');
     const homeTextColour = (new Number(homeScore) >= new Number(awayScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
     const awayTextColour = (new Number(awayScore) >= new Number(homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
@@ -78,12 +76,12 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8 }}>
                     <Text style={[fixtureStyles.teamScore,
-                    { fontWeight: homeScoreWeight, color: homeTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{homeScore}</Text>
+                    { color: homeTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{homeScore}</Text>
 
                     <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: fontSize.base, width: "30%" }}>FT</Text>
 
                     <Text style={[fixtureStyles.teamScore,
-                    { fontWeight: awayScoreWeight, color: awayTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{awayScore}</Text>
+                    { color: awayTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{awayScore}</Text>
                 </View>
             )
         }
@@ -92,12 +90,12 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8 }}>
                     <Text style={[fixtureStyles.teamScore,
-                    { fontWeight: homeScoreWeight, color: homeTextColour, fontFamily: fontFamilies.title, width: "30%", textAlign: 'center' }]}>{homeScore}</Text>
+                    { color: homeTextColour, fontFamily: fontFamilies.title, width: "30%", textAlign: 'center' }]}>{homeScore}</Text>
 
                     <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.bold, padding: 2, fontSize: fontSize.base, width: "40%" }}>HT</Text>
 
                     <Text style={[fixtureStyles.teamScore,
-                    { fontWeight: awayScoreWeight, color: awayTextColour, fontFamily: fontFamilies.title, width: "30%", textAlign: 'center' }]}>{awayScore}</Text>
+                    { color: awayTextColour, fontFamily: fontFamilies.title, width: "30%", textAlign: 'center' }]}>{awayScore}</Text>
                 </View>
             )
         }
@@ -107,12 +105,12 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 <View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: "100%", paddingVertical: 8 }}>
                         <Text style={[fixtureStyles.teamScore,
-                        { fontWeight: homeScoreWeight, color: homeTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{homeScore}</Text>
+                        { color: homeTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{homeScore}</Text>
 
                         <Text style={{ textAlign: 'center', fontWeight: 500, color: colors.text, fontFamily: fontFamilies.regular, padding: 2, fontSize: 16, width: "30%" }}>{eventTime} {"'"}</Text>
 
                         <Text style={[fixtureStyles.teamScore,
-                        { fontWeight: awayScoreWeight, color: awayTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{awayScore}</Text>
+                        { color: awayTextColour, fontFamily: fontFamilies.title, width: "35%", textAlign: 'center' }]}>{awayScore}</Text>
                     </View>
                 </View>
             )
@@ -208,9 +206,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                         </View>
 
                     </View>
-
                 </TouchableOpacity>
-
             </LinearGradient>
             {lastRefreshHeader(lastRefreshTime)}
         </View>

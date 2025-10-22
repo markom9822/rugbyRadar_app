@@ -71,7 +71,6 @@ export const LeagueUpcomingFixturesPanel = ({ leagueName, fixturesLimit }: Leagu
                             fixtureInfo={item}
                         />}
                 />
-
             </View>
         </View>
     )
@@ -103,8 +102,6 @@ export const LeagueUpcomingFixture = ({ fixtureInfo }: LeagueUpcomingFixtureProp
     if (homeTeamInfo == null) return
     if (awayTeamInfo == null) return
 
-    const homeScoreWeight = (new Number(fixtureInfo.homeScore) > new Number(fixtureInfo.awayScore)) ? ('500') : ('300');
-    const awayScoreWeight = (new Number(fixtureInfo.awayScore) > new Number(fixtureInfo.homeScore)) ? ('500') : ('300');
     const homeTextColour = (new Number(fixtureInfo.homeScore) >= new Number(fixtureInfo.awayScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
     const awayTextColour = (new Number(fixtureInfo.awayScore) >= new Number(fixtureInfo.homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
@@ -115,15 +112,13 @@ export const LeagueUpcomingFixture = ({ fixtureInfo }: LeagueUpcomingFixtureProp
             return (
                 <View style={{ width: "40%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{
-                        paddingHorizontal: 5, fontWeight: homeScoreWeight,
-                        fontSize: fontSize.xs, textAlign: 'center', width: "50%", color: homeTextColour, fontFamily: fontFamilies.title
+                        paddingHorizontal: 5,fontSize: fontSize.xs, textAlign: 'center', width: "50%", color: homeTextColour, fontFamily: fontFamilies.title
                     }}>{fixtureInfo.homeScore}</Text>
 
                     <Text style={{ fontSize: fontSize.xs, color: colors.text, fontFamily: fontFamilies.light }}>{formattedDate}</Text>
 
                     <Text style={{
-                        paddingHorizontal: 5, fontWeight: awayScoreWeight,
-                        fontSize: fontSize.xs, textAlign: 'center', width: "50%", color: awayTextColour, fontFamily: fontFamilies.title
+                        paddingHorizontal: 5, fontSize: fontSize.xs, textAlign: 'center', width: "50%", color: awayTextColour, fontFamily: fontFamilies.title
                     }}>{fixtureInfo.homeScore}</Text>
                 </View>
             )
@@ -182,5 +177,4 @@ export const LeagueUpcomingFixture = ({ fixtureInfo }: LeagueUpcomingFixtureProp
                 </View>
         </View>
     )
-
 }

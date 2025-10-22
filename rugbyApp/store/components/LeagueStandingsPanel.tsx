@@ -309,8 +309,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                             teamPD={item.teamPD}
                             teamPoints={item.teamPoints}
                             ranking={item.ranking}
-                            isLastItem={item.isLastItem}
-                            isEndOfList={item.isEndOfList}
                             isPlayoffCutoff={item.isPlayoffCutoff} />}
                 />
 

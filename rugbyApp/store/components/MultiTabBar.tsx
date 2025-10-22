@@ -33,7 +33,6 @@ type MultiTabButtonProps = {
     OnPressTab: (key: string) => void
 }
 
-
 export const MultiTabButton = ({ title, isTabSelected, OnPressTab, tabFontSize }: MultiTabButtonProps) => {
 
     const tabPanelColour = hexToRGB("#292828", '0.6')

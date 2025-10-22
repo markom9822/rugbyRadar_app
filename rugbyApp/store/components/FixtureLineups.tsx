@@ -10,6 +10,7 @@ import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRu
 import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { getPlayerInfo } from "../utils/playerInfoGetter";
+import { DefaultPlayerImg } from "../utils/playerImagesGetter";
 
 export type LineUpInfo = {
     teamPlayer: string,
@@ -347,7 +348,9 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
                                     <View style={{ alignItems: 'center' }}>
                                         <View style={{ padding: 4, margin: 4, marginTop: 25 }}>
-                                            <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }} src={modalPlayerImageSrc} />
+                                            <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }}  
+                                            source={modalPlayerImageSrc !== "" ? { uri: modalPlayerImageSrc } : DefaultPlayerImg} />
+                                            
                                             <View style={{
                                                 position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
                                                 top: 190, bottom: 0, left: 18, right: 18, backgroundColor: colors.background
