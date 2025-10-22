@@ -138,6 +138,42 @@
                 {
                     "name": "Jamie George",
                     "image": "https://rfu.widen.net/content/12feb19a-51fb-4beb-b6a3-3ec3a63aee98/web/Jamie-George-ans24.png"
+                },
+                {
+                    "name": "Alex Coles",
+                    "image": "https://rfu.widen.net/content/5571ecca-38d1-4e02-9d0b-82fccb2fb90a/web/Alex%20Coles%20headshot%202025.png"
+                },
+                {
+                    "name": "Afolabi Fasogbon",
+                    "image": "https://rfu.widen.net/content/d35c6f14-e9ad-4839-b7d6-8696c2492013/web/Afolabi%20Fasogbon%20headshot%202025.png"
+                },
+                {
+                    "name": "Ted Hill",
+                    "image": "https://rfu.widen.net/content/70814f5f-bf67-4d3b-b551-77715c7508a2/web/Ted%20Hill%20headshot%202025%20cropped.png"
+                },
+                {
+                    "name": "Curtis Langdon",
+                    "image": "https://rfu.widen.net/content/55207de7-7109-4f16-9c88-9b97d0f5db47/web/Curtis%20Landon%20headshot%202025.png"
+                },
+                {
+                    "name": "Asher Opoku-Fordjour",
+                    "image": "https://rfu.widen.net/content/c10cc953-9639-4d25-82a1-b566eaef7575/web/Asher%20Opoku-Fordjour%20headshot.png"
+                },
+                {
+                    "name": "Immanuel Feyi-Waboso",
+                    "image": "https://rfu.widen.net/content/665d982f-dec7-4654-aadd-96df2a9f13b6/web/Immanuel%20Feyi-Waboso%20headshot.png"
+                },
+                {
+                    "name": "Will Muir",
+                    "image": "https://rfu.widen.net/content/33fd3a59-d029-4b83-9b04-820fdf939d81/web/Will%20Muir%20headshot%202025.png"
+                },
+                {
+                    "name": "Cadan Murley",
+                    "image": "https://rfu.widen.net/content/83a49ec8-8b95-4f55-a706-a74b8d62ec47/web/Cadan%20Murley%20headshot%202025.png"
+                },
+                {
+                    "name": "Max Ojomoh",
+                    "image": "https://rfu.widen.net/content/3dbb9783-bfc0-4fd0-a0f6-d33273f207d9/web/Max%20Ojomoh%20headshot%202025.png"
                 }
             ]
         },
@@ -187,10 +223,6 @@
                 {
                     "name": "Tommy Reffell",
                     "image": "https://d2cx26qpfwuhvu.cloudfront.net/wales/wp-content/uploads/2018/09/04134945/Tommy_Reffell.png"
-                },
-                {
-                    "name": "Will Rowlands",
-                    "image": "https://d2cx26qpfwuhvu.cloudfront.net/wales/wp-content/uploads/2018/09/04134957/Will_Rolands.png"
                 },
                 {
                     "name": "Nicky Smith",
@@ -295,6 +327,58 @@
                 {
                     "name": "Max Llewellyn",
                     "image": "https://d2cx26qpfwuhvu.cloudfront.net/wales/wp-content/uploads/2018/09/04134857/Max_Llewellyn.png"
+                },
+                {
+                    "name": "Liam Belcher",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Liam%20Belcher.png"
+                },
+                {
+                    "name": "Ben Carter",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Ben%20Carter.png"
+                },
+                {
+                    "name": "Keelan Giles",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Keelan%20Giles.png"
+                },
+                {
+                    "name": "Archie Griffin",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/archie-griffin.png"
+                },
+                {
+                    "name": "Dewi Lake",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Dewi_Lake-390x548.png"
+                },
+                {
+                    "name": "Josh Macleod",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Josh%20Macleod.png"
+                },
+                {
+                    "name": "Alex Mann",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Alex%20Mann.png"
+                },
+                {
+                    "name": "Taine Plumtree",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Taine_Plumtree-390x548.png"
+                },
+                {
+                    "name": "James Ratti",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/James%20Ratti.png"
+                },
+                {
+                    "name": "Reuben Morgan-Williams",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Reuben%20Morgan-Williams.png"
+                },
+                {
+                    "name": "Kieran Hardy",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Kieran%20Hardy.png"
+                },
+                {
+                    "name": "Macs Page",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/Head%20shots/Macs%20Page.png"
+                },
+                {
+                    "name": "Cam Winnett",
+                    "image": "https://defr2m2jfy429.cloudfront.net/wru2023/images/player/headShot/cameron-winnett.png"
                 }
             ]
         },
@@ -323,164 +407,124 @@
             "name": "New Zealand",
             "players": [
                 {
-                    "name": "Anton Lienert-Brown",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Anton-Lienert-Brown__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
-                },
-                {
-                    "name": "Ardie Savea",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Ardie-Savea__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
-                },
-                {
-                    "name": "Asafo Aumua",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Asafo-Aumua__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Beauden Barrett",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Beauden-Barrett__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Billy Proctor",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Billy-Proctor__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Caleb Clarke",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Caleb-Clarke__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Cameron Roigard",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2023/Cam-Roigard__FocusFillWyItMC4wMiIsIi0wLjUzIiwyNjAsMzEwXQ.png"
-                },
-                {
-                    "name": "Codie Taylor",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Codie-Taylor__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Cortez Ratima",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Cortez-Ratima__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Dalton Papali'i",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Dalton-Papalii__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Damian McKenzie",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Damian-McKenzie__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "David Havili",
-                    "image": "https://www.allblacks.com/assets/Uploads/David-Havili3__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Ethan Blackadder",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Ethan-Blackadder__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
+                    "name": "Scott Barrett",
+                    "image": "https://www.allblacks.com/assets/Uploads/Barrett-Scott-v2.png"
                 },
                 {
                     "name": "Ethan de Groot",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Ethan-de-Groot__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Fletcher Newell",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Fletcher-Newell__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "George Bell",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/George-Bell__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Harry Plummer",
-                    "image": "https://www.allblacks.com/assets/Uploads/Harry-Plummer-copy__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Jordie Barrett",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Jordie-Barrett__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Josh Lord",
-                    "image": "https://www.allblacks.com/assets/Uploads/Josh-Lord3__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Luke Jacobson",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Luke-Jacobson__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Mark Tele'a",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Mark-Telea__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Noah Hotham",
-                    "image": "https://www.allblacks.com/assets/Uploads/Noah-Hotham3__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Ofa Tu'ungafasi",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Ofa-Tuungafasi__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Pasilio Tosi",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Pasilio-Tosi__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Patrick Tuipulotu",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Patrick-Tuipulotu__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Peter Lakai",
-                    "image": "https://www.allblacks.com/assets/Uploads/PL__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Rieko Ioane",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Rieko-Ioane__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Ruben Love",
-                    "image": "https://www.allblacks.com/assets/Uploads/Reuben-Love3__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Sam Cane",
-                    "image": "https://www.allblacks.com/assets/Uploads/Sam-Cane3__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Sam Darry",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Sam-Darry__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
+                    "image": "https://www.allblacks.com/assets/Uploads/DeGroot-Ethan-v2.png"
                 },
                 {
                     "name": "Samipeni Finau",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Samipeni-Finau__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
+                    "image": "https://www.allblacks.com/assets/Uploads/Finau-Samipeni-v2.png"
                 },
                 {
-                    "name": "Scott Barrett",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Scott-Barrett__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
+                    "name": "Fabian Holland",
+                    "image": "https://www.allblacks.com/assets/Uploads/Holland-Fabian-v2.png"
                 },
                 {
-                    "name": "Sevu Reece",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Sevu-Reece__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
+                    "name": "Luke Jacobson",
+                    "image": "https://www.allblacks.com/assets/Uploads/Jacobson-Luke-v2.png"
                 },
                 {
-                    "name": "Stephen Perofeta",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Stephen-Perofeta__FocusFillWyIwLjAwIiwiMC4wMCIsMjYwLDMxMF0.png"
-                },
-                {
-                    "name": "Tamaiti Williams",
-                    "image": "https://www.allblacks.com/assets/uploads/Tamaiti-Williams__FocusFillWyIwLjAwIiwiMcowcCwxMyywwMiwzMTA_LCMzMTA_.png"
-                },
-                {
-                    "name": "TJ Perenara",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/TJ-Perenara__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
-                },
-                {
-                    "name": "Tupou Vaa'i",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Tupou-Vaai__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
+                    "name": "Du'Plessis Kirifi",
+                    "image": "https://www.allblacks.com/assets/Uploads/Kirifi-DuPlessis-v2.png"
                 },
                 {
                     "name": "Tyrel Lomax",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Tyrel-Lomax__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
+                    "image": "https://www.allblacks.com/assets/Uploads/Lomax-Tyrel-v2.png"
+                },
+                {
+                    "name": "Brodie McAlister",
+                    "image": "https://www.allblacks.com/assets/Uploads/McAlister-Brodie-v2.png"
+                },
+                {
+                    "name": "Fletcher Newell",
+                    "image": "https://www.allblacks.com/assets/Uploads/Newell-Fletcher-v2.png"
+                },
+                {
+                    "name": "Ollie Norris",
+                    "image": "https://www.allblacks.com/assets/Uploads/Norris-Ollie.png"
+                },
+                {
+                    "name": "Ardie Savea",
+                    "image": "https://www.allblacks.com/assets/Uploads/Savea-Ardie-v2.png"
                 },
                 {
                     "name": "Wallace Sititi",
-                    "image": "https://www.allblacks.com/assets/Uploads/Players/All-Blacks/2024_cropped/Wallace-Sititi__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
+                    "image": "https://www.allblacks.com/assets/Uploads/Sititi-Wallace-v2.png"
+                },
+                {
+                    "name": "Samisoni Taukei'aho",
+                    "image": "https://www.allblacks.com/assets/Uploads/Taukeiaho-Samisoni-v2.png"
+                },
+                {
+                    "name": "Codie Taylor",
+                    "image": "https://www.allblacks.com/assets/Uploads/Taylor-Codie-v2.png"
+                },
+                {
+                    "name": "Pasilio Tosi",
+                    "image": "https://www.allblacks.com/assets/Uploads/Tosi-Pasilio-v2.png"
+                },
+                {
+                    "name": "Patrick Tuipulotu",
+                    "image": "https://www.allblacks.com/assets/Uploads/Tuipulotu-Patrick-v2.png"
+                },
+                {
+                    "name": "Tupou Vaa'i",
+                    "image": "https://www.allblacks.com/assets/Uploads/Vaai-Tupou-v2.png"
+                },
+                {
+                    "name": "Tamaiti Williams",
+                    "image": "https://www.allblacks.com/assets/Uploads/Williams-Tamaiti-v2.png"
+                },
+                {
+                    "name": "Beauden Barrett",
+                    "image": "https://www.allblacks.com/assets/Uploads/Barrett-Beauden-v2.png"
+                },
+                {
+                    "name": "Jordie Barrett",
+                    "image": "https://www.allblacks.com/assets/Uploads/Barrett-Jordie-v2.png"
+                },
+                {
+                    "name": "Caleb Clarke",
+                    "image": "https://www.allblacks.com/assets/Uploads/Clarke-Caleb.png"
+                },
+                {
+                    "name": "Noah Hotham",
+                    "image": "https://www.allblacks.com/assets/Uploads/Hotham-Noah-v2.png"
+                },
+                {
+                    "name": "Rieko Ioane",
+                    "image": "https://www.allblacks.com/assets/Uploads/Ioane-Rieko-v2.png"
                 },
                 {
                     "name": "Will Jordan",
-                    "image": "https://www.allblacks.com/assets/Uploads/Will-Jordan3__FocusFillWyIwLjAwIiwiMC4wMCIsMzUwLDQ2MF0.png"
+                    "image": "https://www.allblacks.com/assets/Uploads/Jordan-Will-v2.png"
+                },
+                {
+                    "name": "Ruben Love",
+                    "image": "https://www.allblacks.com/assets/Uploads/Love-Ruben-v2.png"
+                },
+                {
+                    "name": "Cortez Ratima",
+                    "image": "https://www.allblacks.com/assets/Uploads/Ratima-Cortez-v2.png"
+                },
+                {
+                    "name": "Damian McKenzie",
+                    "image": "https://www.allblacks.com/assets/Uploads/McKenzie-Damian-v2.png"
+                },
+                {
+                    "name": "Timoci Tavatavanawai",
+                    "image": "https://www.allblacks.com/assets/Uploads/Tavatavanawai-Timoci-v2.png"
+                },
+                {
+                    "name": "Cameron Roigard",
+                    "image": "https://www.allblacks.com/assets/Uploads/Roigard-Cam-v2.png"
+                },
+                {
+                    "name": "Quinn Tupaea",
+                    "image": "https://www.allblacks.com/assets/Uploads/Tupaea-Quinn-v2.png"
                 }
             ]
         },
