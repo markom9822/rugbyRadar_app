@@ -6,6 +6,9 @@ import * as top14JSONData from '@/store/PlayerImages/Top14PlayerImages.json'
 import * as urcJSONData from '@/store/PlayerImages/URCPlayerImages.json'
 import { getChampsCupShortNameFromFullName } from '../ChampionsCupRugbyTeamsDatabase'
 
+export const DefaultPlayerImg = require('@/store/PlayerImages/default_player.png')
+
+
 export const getPlayerImageSrc = (leagueName: string, teamName: string, playerName: string) => {
 
   const urcTeamArray = Array.from(urcJSONData.teams);
@@ -59,9 +62,9 @@ export const getPlayerImageSrc = (leagueName: string, teamName: string, playerNa
 
   const targetTeam = leagueTeamArray.find(item => item.name === searchTeamName);
 
-  let targetImgSrc = ''
+  let targetImgSrc = '';
 
-  if(targetTeam == null) return ''
+  if(targetTeam == null) return '';
 
   for (let index = 0; index < targetTeam.players.length; index++) {
     

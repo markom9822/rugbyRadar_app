@@ -23,13 +23,11 @@ type StandingPanelProps = {
     teamPD: string
     teamPoints: string
     ranking: number
-    isLastItem: boolean
-    isEndOfList: boolean
     isPlayoffCutoff: boolean,
 }
 
 export const StandingPanel = ({ index, league, isHeader, isWorldRanking, teamPool, teamName,
-    teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isLastItem, isEndOfList, isPlayoffCutoff }: StandingPanelProps) => {
+    teamGP, teamWins, teamDraws, teamLosses, teamPD, teamPoints, ranking, isPlayoffCutoff }: StandingPanelProps) => {
 
     let teamInfo: { type: string; displayName: string; abbreviation: string; logo: any; altLogo: any; colour: string } | null | undefined;
 
