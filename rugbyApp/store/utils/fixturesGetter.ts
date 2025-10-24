@@ -281,10 +281,8 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
                 eventTime: eventTime.toString(),
                 isDateHeader: false,
             };
-
             leagueArray.push(newMatchInfo)
         }
-        
     }
 
     console.info(leagueArray)
@@ -294,7 +292,6 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
         sortedLeagueArray
     )
 }
-
 
 export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDate: Date) => {
 
@@ -324,7 +321,6 @@ export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDa
         const allFixturesArray = await getFixturesForAllPlanetRugbyAPI(seasonsAllMatches, selectedDate, getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode) )
         return allFixturesArray;
     }
-
     return []
 }
 
@@ -344,8 +340,6 @@ export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, sel
             }
         } 
     }
-
-
     console.info(matchIDs)
 
     let leagueArray = []
