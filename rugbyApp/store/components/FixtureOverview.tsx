@@ -2,11 +2,12 @@ import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { HeadToHeadEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
-import { getBroadcasterLogo, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
+import { getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import { getBroadcasterLogo } from "../utils/broadcastGetter";
 
 
 type FixtureOverviewProps = {
@@ -189,11 +190,6 @@ type GameInfoPanelProps = {
 export const GameInfoPanel = ({ matchInfoArray, matchID, leagueName, refereeName }: GameInfoPanelProps) => {
 
     if (matchInfoArray === undefined) return
-
-    let matchAttendance = 'NA'
-    if (matchInfoArray[0].matchAttendance !== undefined) {
-        matchAttendance = new Number(matchInfoArray[0].matchAttendance).toLocaleString();
-    }
 
     const broadcasterRender = (matchInfoArray: MatchInfo[]) => {
 

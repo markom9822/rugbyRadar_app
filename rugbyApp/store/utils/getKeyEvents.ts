@@ -8,8 +8,6 @@ export const getKeyEventIcon = (eventType: string) => {
         case 'yellow card': return YellowCardIcon
         case 'red card': return RedCardIcon
         case 'drop goal': return DropGoalIcon
-
-
         default: { 
            break; 
         } 
@@ -66,7 +64,6 @@ export const getKeyEventIconRugbyViz = (eventType: string) => {
         case 'Yellow card': return YellowCardIcon
         case 'Red card': return RedCardIcon
         case 'Drop goal': return DropGoalIcon
-
 
         default: { 
            break; 
@@ -188,14 +185,11 @@ export const getKeyEventsRugbyViz = (matchStats: any) => {
 
             keyEventsArray.push(newArray)
         }
-
     }
-
 
     return(
         keyEventsArray
     )
-
 }
 
 export const getKeyEventIconWorldRugbyAPI = (eventType: string) => {

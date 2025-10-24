@@ -33,8 +33,6 @@ export const getHeadToHeadStats = (matchStats: any) => {
             homeTeam = opponentTeam;
             awayTeam = mainTeam;
         }
-
-
         console.info(eventScore)
 
         const newArray = {
@@ -45,7 +43,6 @@ export const getHeadToHeadStats = (matchStats: any) => {
                 awayTeamScore: awayTeamScore,
                 matchDate: matchDate,
         };
-    
 
         headToHeadArray.push(newArray)
     }
@@ -92,12 +89,10 @@ export const getHeadToHeadStatsRugbyViz = async (matchStats: any) => {
 
         headToHeadArray.push(newArray)
     }
-
     return(
         headToHeadArray
     )
 }
-
 
 export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
 
@@ -112,12 +107,10 @@ export const getHeadToHeadStatsWorldRugbyAPI = (matchStats: any) => {
     };
 
     headToHeadArray.push(newArray)
-
     return(
         headToHeadArray
     )
 }
-
 
 export const getHeadToHeadStatsPlanetRugbyAPI = (matchStats: any) => {
 
@@ -150,7 +143,6 @@ export const getHeadToHeadStatsPlanetRugbyAPI = (matchStats: any) => {
 
         headToHeadArray.push(newArray)
     }
-
     return(
         headToHeadArray
     )

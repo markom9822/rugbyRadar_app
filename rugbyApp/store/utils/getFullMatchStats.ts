@@ -540,10 +540,7 @@ export const getFullMatchStatsPlanetRugbyAPI = (matchStats: any) => {
             awayTeamYellowCards: '-',
             homeTeamRedCards: '-',
             awayTeamRedCards: '-',
-
         }
     ];
-
     return blankArray
-
 }
