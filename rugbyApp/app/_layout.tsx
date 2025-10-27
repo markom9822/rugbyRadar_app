@@ -38,11 +38,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <SafeAreaView style={[defaultStyles.container, { flex: 1 }]}>
+      <SafeAreaView edges={['top']} style={[defaultStyles.container, { flex: 1 }]}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
             <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }}/>
               <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Choose League' }} />
             </Stack>
             <StatusBar style="auto" />
