@@ -6,7 +6,7 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, hexToRGB } from "../utils/helpers"
 import { fetchRugbyVizKnockoutFixtures } from "../utils/knockoutFixturesGetter"
-import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI } from "../utils/standingsGetter"
+import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI, getLeagueStandingsDataPlanetRugby } from "../utils/standingsGetter"
 import { KnockoutsPanel } from "./KnockoutsPanel"
 import { StandingPanel } from "./StandingPanel"
 
@@ -112,8 +112,8 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
         const rugbyVizCode = getRugbyVizLeagueCode(leagueName);
 
         const planetRugbyStandingsLeagueCodes = [
-            { leagueName: 'top14', leagueCodes: ['1310036262'], playoffCutoffIndex: 6 },
-            { leagueName: 'sixNations', leagueCodes: ['1310035506'], playoffCutoffIndex: -1 },
+            { leagueName: 'top14', leagueCodes: ['x7jq191p'], playoffCutoffIndex: 6 },
+            { leagueName: 'sixNations', leagueCodes: ['krjd4j3q'], playoffCutoffIndex: -1 },
             { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1 },
             { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2 },
             { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2 },
@@ -206,10 +206,10 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                 return;
             }
 
-            apiString = 'https://rugbylivecenter.yormedia.com/api/all-league-tables/' + planetRugbyAPILeagueCodes[0];
+            apiString = 'https://sdms.planetsport.com/api/rugby/union/standing/single-competition/'+ seasonYear+'/'+ planetRugbyAPILeagueCodes[0] + '/overall';
 
             const seasonStandingsPlanetRugby = await fetch(apiString,).then((res) => res.json())
-            const newArray = getAllStandingsDataPlanetRugby(seasonStandingsPlanetRugby, false, true, planetRugbyAPIPlayoffCutoffIndex)
+            const newArray = getLeagueStandingsDataPlanetRugby(seasonStandingsPlanetRugby, false, true, planetRugbyAPIPlayoffCutoffIndex)
 
             console.info(newArray)
             setStandingsArray(newArray)

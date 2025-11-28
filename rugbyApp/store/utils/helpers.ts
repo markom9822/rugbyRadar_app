@@ -234,6 +234,29 @@ export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeT
 
 //---------------------------------------------------------------------------------------------------
 
+
+export const ESPNleagueCodes = [
+    { value: 'top14', code: "270559",
+        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
+    { value: 'superRugby', code: "242041",
+         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
+];
+
+export const getESPNLeagueCode = (name: string) => {
+
+    const result = ESPNleagueCodes.find((element) => element.value === name)
+    return result?.code.toString()
+}
+
+export const getESPNLeagueDisplayNameFromValue = (leagueValue: string) => {
+    
+    const result = ESPNleagueCodes.find((element) => element.value === leagueValue)
+    return result?.displayName.toString()
+}
+
+//-----------------------------------------------------------------------------------------------------
+
+
 export const getLeagueCode = (name: string) => {
 
     const result = leagueCodes.find((element) => element.value === name)

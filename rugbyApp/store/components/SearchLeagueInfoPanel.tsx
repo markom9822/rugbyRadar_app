@@ -28,7 +28,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024'] },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024'] },
 
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
