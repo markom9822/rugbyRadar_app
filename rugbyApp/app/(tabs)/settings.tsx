@@ -1,15 +1,12 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { StandingsHeaderBanner } from "@/store/components/StandingsHeaderBanner";
 import { hexToRGB } from "@/store/utils/helpers";
-import { defaultStyles } from "@/styles/index"
 import { Entypo } from "@expo/vector-icons";
 import { useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 
 
 const SettingsScreen = () => {
-
-    const [lastRefresh, setLastRefresh] = useState('');
 
     const handlePressedTimeZoneOption = () => {
 
