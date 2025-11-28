@@ -4,6 +4,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
+import { getItem } from "../utils/asyncStorage";
+import { useEffect, useState } from "react";
+import { getDefaultTimezone } from "@/app/(tabs)/settings";
 
 type ScorePanelProps = {
     leagueDisplayName: string
@@ -34,6 +37,17 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
 
+    const [currentTimezone, setCurrentTimezone] = useState<string>('Europe/London');
+
+    useEffect(() => {
+        async function fetchTimezone() {
+            // get default timezone
+            const defaultTimezone = await getDefaultTimezone();
+            setCurrentTimezone(defaultTimezone);
+        }
+        fetchTimezone()
+    }, [])
+
     if (homeTeamInfo === null) return
     if (awayTeamInfo === null) return
     if (homeTeamInfo === undefined) return
@@ -42,7 +56,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     const homeTextColour = (new Number(homeScore) >= new Number(awayScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
     const awayTextColour = (new Number(awayScore) >= new Number(homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
-    const matchTime = matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+    // add in time zone here
+    const matchTime = matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: currentTimezone })
 
     const scoreRender = (eventState: string) => {
 
@@ -52,7 +67,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         // not started yet
         if (eventState === "pre") {
             return (
-                <View style={{ flexDirection: 'column', width: "100%", paddingVertical: 8,}}>
+                <View style={{ flexDirection: 'column', width: "100%", paddingVertical: 8, }}>
                     <Text style={{
                         color: colors.text, fontSize: fontSize.lg,
                         textAlign: 'center', fontFamily: fontFamilies.title
@@ -170,7 +185,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
                 locations={[0, 0.4, 1]}
                 style={[fixtureStyles.cardHeaderAllInfo, { borderColor: 'grey', borderWidth: 0.5, borderRadius: 12, padding: 3 }]}>
 
-                <TouchableOpacity activeOpacity={0.5} style={{width: "100%"}} onPress={handlePressedScorePanel}>
+                <TouchableOpacity activeOpacity={0.5} style={{ width: "100%" }} onPress={handlePressedScorePanel}>
 
                     <View style={[fixtureStyles.cardHeaderGameInfo]}>
 

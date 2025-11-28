@@ -1,38 +1,83 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { StandingsHeaderBanner } from "@/store/components/StandingsHeaderBanner";
+import { getItem, setItem } from "@/store/utils/asyncStorage";
 import { hexToRGB } from "@/store/utils/helpers";
 import { Entypo } from "@expo/vector-icons";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
+
+export const TIMEZONES = [
+    'Europe/London', 'Europe/Paris', 'Europe/Madrid', 'Pacific/Auckland',
+    'Asia/Hong_Kong', 'Asia/Seoul', 'Asia/Tokyo',
+    'America/New_York', 'Australia/Sydney', 'UTC'
+    
+];
+
+export const getDefaultTimezone = async () => {
+
+        const defaultTimezone = await getItem('defaultTimezone');
+
+        if (defaultTimezone == null) {
+            await setDefaultTimezone('Europe/London');
+            console.info("Setting to default timezone")
+            return 'Europe/London';
+        }
+
+        console.info("Returning stored timezone")
+
+        return defaultTimezone;
+}
+
+const setDefaultTimezone = async (timezone: string) => {
+
+        await setItem('defaultTimezone', timezone);
+}
 
 
 const SettingsScreen = () => {
 
-    const handlePressedTimeZoneOption = () => {
+    const [currentTimezone, setCurrentTimezone] = useState<string>('');
 
+    const handlePressedTimeZoneOption = (timezone: string) => {
+
+        setCurrentTimezone(timezone)
+        setDefaultTimezone(timezone)
     }
-    
 
-   return (
-            <View style={{ flex: 1, backgroundColor: colors.background }}>
+    const setDefaultTimezone = async (timezone: string) => {
 
-                <StandingsHeaderBanner />
+        await setItem('defaultTimezone', timezone);
+    }
 
-                <View style={{padding: 10, borderWidth: 1, borderColor: 'grey', borderRadius: 4, marginVertical: 5}}>
-                    <Text style={{color: 'white', fontFamily: fontFamilies.title, fontSize: fontSize.sm, paddingBottom: 10}}>Settings</Text>
+    useEffect(() => {
+        async function fetchMyAPI() {
+            // get default timezone
+            const defaultTimezone = await getDefaultTimezone();
+            setCurrentTimezone(defaultTimezone);
+        }
+        fetchMyAPI()
+    }, [])
 
-                    <View style={{padding: 4, paddingVertical: 10, marginVertical: 5, borderBottomWidth: 0.5, borderColor: 'grey', flexDirection: 'row', justifyContent: 'space-between'}}>
-                        
-                        <View style={{width: "50%"}}>
-                          <Text style={{color: 'white', fontFamily: fontFamilies.regular}}>Timezone</Text>  
-                        </View>
-                        
-                        <View style={{ width: "50%"}}>
-                            <SettingsDropdown currentOption="GMT" allOptions={["GMT", "EST", "PST"]} OnPressOption={handlePressedTimeZoneOption}/>
-                        </View>
+    return (
+        <View style={{ flex: 1, backgroundColor: colors.background }}>
+
+            <StandingsHeaderBanner />
+
+            <View style={{ padding: 10, borderRadius: 4, marginVertical: 5 }}>
+                <Text style={{ color: 'white', fontFamily: fontFamilies.title, fontSize: fontSize.sm, paddingBottom: 10 }}>Settings</Text>
+
+                <View style={{ padding: 4, paddingVertical: 10, marginVertical: 5, borderBottomWidth: 0.5, borderColor: 'grey', flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                    <View style={{ width: "50%" }}>
+                        <Text style={{ color: 'white', fontFamily: fontFamilies.regular }}>Timezone</Text>
+                    </View>
+
+                    <View style={{ width: "50%" }}>
+                        <SettingsDropdown currentOption={currentTimezone} allOptions={TIMEZONES} OnPressOption={handlePressedTimeZoneOption} />
                     </View>
                 </View>
             </View>
+        </View>
     )
 }
 
@@ -67,7 +112,7 @@ export const SettingsDropdown = ({ currentOption, allOptions, OnPressOption }: S
                 </View>
             </TouchableOpacity>
             {showDropdown && (
-                <View style={{ position: 'absolute', width: "100%", top: 25, zIndex: 10, borderRadius: 5,  backgroundColor: '#4d4b4b'}}>
+                <View style={{ position: 'absolute', width: "100%", top: 25, zIndex: 10, borderRadius: 5, backgroundColor: '#4d4b4b' }}>
                     <View style={{ justifyContent: 'center', flexDirection: 'column' }}>
                         {allOptions.map((item, index) => {
                             return <SettingsDropdownOption OnPressButton={handlePressedPickerOption} key={index} optionText={item} />
@@ -88,7 +133,7 @@ type SettingsDropdownOptionProps = {
 export const SettingsDropdownOption = ({ optionText, OnPressButton }: SettingsDropdownOptionProps) => {
 
     return (
-        <TouchableOpacity onPress={() => OnPressButton(optionText)} activeOpacity={0.7} style={{ paddingHorizontal: 5, paddingVertical: 2}}>
+        <TouchableOpacity onPress={() => OnPressButton(optionText)} activeOpacity={0.7} style={{ paddingHorizontal: 5, paddingVertical: 2 }}>
             <Text style={{ color: 'lightgrey', padding: 3, fontSize: 12, fontFamily: fontFamilies.regular, textAlign: 'right' }}>{optionText}</Text>
         </TouchableOpacity>
     )
