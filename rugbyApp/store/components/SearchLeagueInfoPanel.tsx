@@ -13,9 +13,10 @@ import { LeagueUpcomingFixturesPanel } from "./LeagueUpcomingFixturesPanel"
 type SearchLeagueInfoPanelProps = {
     leagueInfo: SearchLeagueInfo,
     bottomSheetRef: React.RefObject<BottomSheetModal | null>
+    currentTimezone: string
 }
 
-export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeagueInfoPanelProps) => {
+export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef, currentTimezone }: SearchLeagueInfoPanelProps) => {
 
     const seasonManualData = ['2026', '2025', '2024', '2023', '2022'];
     const seasonSingleData = ['2026'];
@@ -28,7 +29,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
         { label: 'Champions Cup', value: 'championsCup', logo: ChampionsCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024'] },
         { label: 'Challenge Cup', value: 'challengeCup', logo: ChallengeCupAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024'] },
 
-        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
+        { label: 'Super Rugby', value: 'superRugby', logo: SuperRugbyAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Six Nations', value: 'sixNations', logo: SixNationsAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'U20 Six Nations', value: 'u20SixNations', logo: U20SixNationsAltLogo, seasonData: seasonSingleData, hasKnockouts: false, knockoutsYears: [] },
         { label: 'Rugby Championship', value: 'rugbyChamp', logo: RugbyChampAltLogo, seasonData: seasonManualData, hasKnockouts: false, knockoutsYears: [] },
@@ -80,7 +81,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
                     <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.title, textAlign: 'center', padding: 5 }]}>{leagueInfo.displayName}</Text>
                 </View>
 
-                <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} fixturesLimit={5} />
+                <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} fixturesLimit={5} currentTimezone={currentTimezone} />
 
                 <LeagueStandingsPanel leagueName={leagueInfo.value} seasonYear={seasonName} leagueSeasonData={leagueSeasonData} shouldShowKnockouts={shouldShowKnockouts} OnChangeSeasonYear={handleChangedSeasonYear} />
 

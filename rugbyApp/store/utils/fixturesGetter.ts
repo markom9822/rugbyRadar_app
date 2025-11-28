@@ -1,6 +1,6 @@
-import { getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode } from "./helpers";
+import { getESPNLeagueCode, getESPNLeagueDisplayNameFromValue, getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode } from "./helpers";
 
-export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: string, leagueDisplayName: string) => {
+export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: string | undefined) => {
 
     const todaysEvents = todaysMatches.events;
 
@@ -12,7 +12,7 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
         const matchTitle = todaysMatches.events[index].name;
         const matchVenue = todaysMatches.events[index].competitions[0].venue.fullName;
         const eventID = todaysMatches.events[index].id;
-        const matchID = eventID + currentLeagueCode;
+        const matchID = eventID;
         const eventState = todaysMatches.events[index].status.type.state;
         const stateDetail = todaysMatches.events[index].status.type.shortDetail;
 
@@ -35,12 +35,12 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
             homeScore: homeTeamScore,
             awayScore: awayTeamScore,
             matchDate: matchDate,
-            matchTitle: matchTitle,
+            matchTitle: '',
             matchVenue: matchVenue,
             matchLeague: leagueDisplayName,
             matchID: matchID,
             eventState: eventState,
-            stateDetail: stateDetail,
+            stateDetail: 'FT',
             eventTime: eventTime,
             isDateHeader: false,
         };
@@ -50,17 +50,36 @@ export const getFixturesForLeague = (todaysMatches: any, currentLeagueCode: stri
 
     const sortedArray = newArray.sort((a, b) => a.matchDate.getTime() - b.matchDate.getTime())
 
-    const sections = [
-        {
-            title: leagueDisplayName,
-            data: sortedArray
-        }
-    ]
-
     return (
-        sections
+        sortedArray
     )
+}
 
+export const fetchESPNAPIData = async (thisLeagueName: string, selectedDate: Date) => {
+
+    const ESPNLeagueCode = getESPNLeagueCode(thisLeagueName);
+
+    const formattedDateNumber = selectedDate.getFullYear() * 1e4 + (selectedDate.getMonth() + 1) * 100 + selectedDate.getDate();
+    const formattedDateString = formattedDateNumber.toString();
+
+
+    // use separate API for club leagues
+    if(ESPNLeagueCode !== undefined)
+    {
+        const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ {ESPNLeagueCode} +'/scoreboard?region=us&lang=en&contentorigin=espn&dates=' + {formattedDateString}
+        console.info(apiStringAll)
+        const todayAllMatches = await fetch( apiStringAll, {
+            headers: {
+                'Cache-control': 'no-cache'
+            }
+        }
+        ).then((res) => res.json())
+
+        const allFixturesArray = getFixturesForESPNAPI(todayAllMatches, getESPNLeagueDisplayNameFromValue(thisLeagueName) )
+        return allFixturesArray;
+    }
+
+    return []
 }
 
 export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {

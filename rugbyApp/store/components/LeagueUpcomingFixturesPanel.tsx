@@ -9,9 +9,10 @@ import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 type LeagueUpcomingFixturesPanelProps = {
     leagueName: string,
     fixturesLimit: number,
+    currentTimezone: string
 }
 
-export const LeagueUpcomingFixturesPanel = ({ leagueName, fixturesLimit }: LeagueUpcomingFixturesPanelProps) => {
+export const LeagueUpcomingFixturesPanel = ({ leagueName, fixturesLimit, currentTimezone }: LeagueUpcomingFixturesPanelProps) => {
 
     const [matchesArray, setMatchesArray] = useState<MatchInfo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +70,7 @@ export const LeagueUpcomingFixturesPanel = ({ leagueName, fixturesLimit }: Leagu
                         <LeagueUpcomingFixture
                             key={index}
                             fixtureInfo={item}
+                            currentTimezone={currentTimezone}
                         />}
                 />
             </View>
@@ -78,14 +80,16 @@ export const LeagueUpcomingFixturesPanel = ({ leagueName, fixturesLimit }: Leagu
 
 type LeagueUpcomingFixtureProps = {
     fixtureInfo: MatchInfo,
+    currentTimezone: string
 }
 
 // show the upcoming fixtures
-export const LeagueUpcomingFixture = ({ fixtureInfo }: LeagueUpcomingFixtureProps) => {
+export const LeagueUpcomingFixture = ({ fixtureInfo, currentTimezone }: LeagueUpcomingFixtureProps) => {
 
     const formattedDate = new Date(fixtureInfo.matchDate).toLocaleDateString('en-GB', {
         day: '2-digit',
-        month: '2-digit'
+        month: '2-digit',
+        timeZone: currentTimezone
     });
 
     const eventTime = new Date(fixtureInfo.matchDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })

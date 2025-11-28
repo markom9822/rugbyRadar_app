@@ -21,6 +21,7 @@ export type TeamEvent = {
 
 type TeamResultsPanelProps = {
     teamInfo: SearchTeamInfo,
+    currentTimezone: string
 }
 
 export type TeamInfo = {
@@ -30,7 +31,7 @@ export type TeamInfo = {
     teamForm: string
 }
 
-export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
+export const TeamResultsPanel = ({ teamInfo, currentTimezone }: TeamResultsPanelProps) => {
 
     const [teamEventsArray, setTeamEventsArray] = useState<TeamEvent[] | undefined>();
     const [seasonYear, setSeasonYear] = useState<string>('2026');
@@ -140,6 +141,7 @@ export const TeamResultsPanel = ({ teamInfo }: TeamResultsPanelProps) => {
                                 leagueName={item.leagueName}
                                 eventState={item.eventState}
                                 isLastItem={findLastItem(teamEventsArray, index)}
+                                currentTimezone={currentTimezone}
                             />}
                     />
                 </BottomSheetScrollView>
@@ -157,12 +159,14 @@ type TeamResultsPanelItemProps = {
     leagueName: string,
     eventState: string,
     isLastItem: boolean,
+    currentTimezone: string
 }
 
-export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, homeTeamScore, awayTeamScore, leagueName, eventState, isLastItem }: TeamResultsPanelItemProps) => {
+export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, homeTeamScore, awayTeamScore, leagueName, eventState, isLastItem, currentTimezone }: TeamResultsPanelItemProps) => {
     const formattedDate = new Date(eventDate).toLocaleDateString('en-GB', {
         day: '2-digit',
-        month: '2-digit'
+        month: '2-digit',
+        timeZone: currentTimezone
     });
 
     const eventTime = new Date(eventDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
