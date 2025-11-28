@@ -12,9 +12,10 @@ type SearchTeamInfoPanelProps = {
     teamInfo: SearchTeamInfo,
     //id: string,
     bottomSheetRef: React.RefObject<BottomSheetModal | null>
+    currentTimezone: string
 }
 
-export const SearchTeamInfoPanel = ({ teamInfo, bottomSheetRef }: SearchTeamInfoPanelProps) => {
+export const SearchTeamInfoPanel = ({ teamInfo, bottomSheetRef, currentTimezone }: SearchTeamInfoPanelProps) => {
 
     const teamGradientColour = hexToRGB(teamInfo.colour, '0.5')
     const handleCloseBottomSheet = () => {
@@ -44,7 +45,7 @@ export const SearchTeamInfoPanel = ({ teamInfo, bottomSheetRef }: SearchTeamInfo
             </View>
 
             <TeamSummaryPanel teamInfo={teamInfo} />
-            <TeamResultsPanel teamInfo={teamInfo} />
+            <TeamResultsPanel teamInfo={teamInfo} currentTimezone={currentTimezone}/>
 
         </LinearGradient>
     )

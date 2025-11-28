@@ -13,9 +13,10 @@ import { LeagueUpcomingFixturesPanel } from "./LeagueUpcomingFixturesPanel"
 type SearchLeagueInfoPanelProps = {
     leagueInfo: SearchLeagueInfo,
     bottomSheetRef: React.RefObject<BottomSheetModal | null>
+    currentTimezone: string
 }
 
-export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeagueInfoPanelProps) => {
+export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef, currentTimezone }: SearchLeagueInfoPanelProps) => {
 
     const seasonManualData = ['2026', '2025', '2024', '2023', '2022'];
     const seasonSingleData = ['2026'];
@@ -80,7 +81,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef }: SearchLeag
                     <Text style={[{ color: 'lightgrey', fontFamily: fontFamilies.title, textAlign: 'center', padding: 5 }]}>{leagueInfo.displayName}</Text>
                 </View>
 
-                <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} fixturesLimit={5} />
+                <LeagueUpcomingFixturesPanel leagueName={leagueInfo.value} fixturesLimit={5} currentTimezone={currentTimezone} />
 
                 <LeagueStandingsPanel leagueName={leagueInfo.value} seasonYear={seasonName} leagueSeasonData={leagueSeasonData} shouldShowKnockouts={shouldShowKnockouts} OnChangeSeasonYear={handleChangedSeasonYear} />
 

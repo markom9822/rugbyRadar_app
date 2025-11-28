@@ -13,8 +13,9 @@ import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
 import { hexToRGB } from "@/store/utils/helpers"
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Image, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { getDefaultTimezone } from "./settings"
 
 export type SearchTeamInfo = {
     type: string;
@@ -97,6 +98,17 @@ const TeamsScreen = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [searchOption, setSearchOption] = useState<string>('Teams');
 
+    const [currentTimezone, setCurrentTimezone] = useState<string>('Europe/London');
+
+    useEffect(() => {
+        async function fetchTimezone() {
+            // get default timezone
+            const defaultTimezone = await getDefaultTimezone();
+            setCurrentTimezone(defaultTimezone);
+        }
+        fetchTimezone()
+    }, [])
+
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
 
@@ -178,6 +190,7 @@ const TeamsScreen = () => {
                 <SearchTeamInfoPanel
                     teamInfo={searchTeamArray[currentIndex]}
                     bottomSheetRef={bottomSheetModalRef}
+                    currentTimezone={currentTimezone}
                 />
             )
         }
@@ -186,6 +199,7 @@ const TeamsScreen = () => {
                 <SearchLeagueInfoPanel
                     leagueInfo={searchLeagueArray[currentIndex]}
                     bottomSheetRef={bottomSheetModalRef}
+                    currentTimezone={currentTimezone}
                 />
             )
         }
@@ -222,7 +236,7 @@ const TeamsScreen = () => {
                     handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
                     backgroundStyle={{ backgroundColor: "#0d0c0c" }}
                 >
-                        {handleRenderBottomSheet(searchOption)}
+                    {handleRenderBottomSheet(searchOption)}
                 </BottomSheetModal>
 
             </View>
