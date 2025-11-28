@@ -10,33 +10,32 @@ export const TIMEZONES = [
     'Europe/London', 'Europe/Paris', 'Europe/Madrid', 'Pacific/Auckland',
     'Asia/Hong_Kong', 'Asia/Seoul', 'Asia/Tokyo',
     'America/New_York', 'Australia/Sydney', 'UTC'
-    
+
 ];
 
 export const getDefaultTimezone = async () => {
 
-        const defaultTimezone = await getItem('defaultTimezone');
+    const defaultTimezone = await getItem('defaultTimezone');
 
-        if (defaultTimezone == null) {
-            await setDefaultTimezone('Europe/London');
-            console.info("Setting to default timezone")
-            return 'Europe/London';
-        }
+    if (defaultTimezone == null) {
+        await setDefaultTimezone('Europe/London');
+        console.info("Setting to default timezone")
+        return 'Europe/London';
+    }
 
-        console.info("Returning stored timezone")
+    console.info("Returning stored timezone")
 
-        return defaultTimezone;
+    return defaultTimezone;
 }
 
 const setDefaultTimezone = async (timezone: string) => {
 
-        await setItem('defaultTimezone', timezone);
+    await setItem('defaultTimezone', timezone);
 }
-
 
 const SettingsScreen = () => {
 
-    const [currentTimezone, setCurrentTimezone] = useState<string>('');
+    const [currentTimezone, setCurrentTimezone] = useState<string>('Europe/London');
 
     const handlePressedTimeZoneOption = (timezone: string) => {
 
