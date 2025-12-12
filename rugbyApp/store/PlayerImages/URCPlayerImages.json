@@ -1865,235 +1865,346 @@
         {
             "name": "Hollywoodbets Sharks",
             "players": [
-                
+                {
+                    "name": "Ethan Bester",
+                    "image": "https://media-cdn.cortextech.io/ac546667-f6df-4510-a5ee-fff9563ee652.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Ross Braude",
+                    "image": "https://media-cdn.cortextech.io/53b811a6-9252-4a9f-aaf1-f5e70fcee841.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Phepsi Buthelezi",
+                    "image": "https://media-cdn.cortextech.io/b15050a6-fc4e-4539-b12e-f9e88bc0fc62.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Cebo Dlamini",
+                    "image": "https://media-cdn.cortextech.io/fad9ce7b-21e8-4781-b194-e022e08d7920.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Andre Esterhuizen",
+                    "image": "https://media-cdn.cortextech.io/a582b347-2ab7-4787-9920-b081664e8921.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Ceano Everson",
+                    "image": "https://media-cdn.cortextech.io/7a7e9d37-0942-42bf-bc95-bb720a163c91.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Aphelele Fassi",
+                    "image": "https://media-cdn.cortextech.io/ac0f081b-9177-4739-b758-fb58f8688ad8.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Phatu Ganyane",
+                    "image": "https://media-cdn.cortextech.io/fdde30cc-582b-4274-8156-246703c18a77.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Nick Hatton",
+                    "image": "https://media-cdn.cortextech.io/60afcb7a-493c-413a-82cb-51d266055325.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jordan Hendrikse",
+                    "image": "https://media-cdn.cortextech.io/7480ab63-8a8e-4a62-ae49-0c38b5869515.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jaden Hendrikse",
+                    "image": "https://media-cdn.cortextech.io/c418e512-0714-40d6-9cc0-e7f58ae52cec.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Batho Hlekani",
+                    "image": "https://media-cdn.cortextech.io/6c5bd7a9-c5ab-472a-909f-0c448f4af98f.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Ethan Hooker",
+                    "image": "https://media-cdn.cortextech.io/fa012954-e772-47df-b449-21ff332f5921.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Hanro Jacobs",
+                    "image": "https://media-cdn.cortextech.io/5fb81692-a8d0-464f-a2bb-75033c82a632.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jason Jenkins",
+                    "image": "https://media-cdn.cortextech.io/992eb99e-9efc-4276-a6ca-62c755fb6f60.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jurenzo Julius",
+                    "image": "https://media-cdn.cortextech.io/89b37d5b-1f98-4a4e-84d3-c80d7cd33e6a.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Vincent Koch",
+                    "image": "https://media-cdn.cortextech.io/5f17ae3a-c719-458d-9cbe-123b5d3bf4be.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Siya Kolisi",
+                    "image": "https://media-cdn.cortextech.io/feda429d-d8dd-4c60-8416-7db27aede759.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Hakeem Kunene",
+                    "image": "https://media-cdn.cortextech.io/f33f78eb-5066-47fc-9fcf-44d4ac1522f1.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Le Roux Malan",
+                    "image": "https://media-cdn.cortextech.io/bbb5fe8a-c6ba-4542-afb0-7b80a6b6da6a.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Makazole Mapimpi",
+                    "image": "https://media-cdn.cortextech.io/5edbae1f-3902-49b5-94d8-8a8c3cfc0cd7.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Tino Mavesere",
+                    "image": "https://media-cdn.cortextech.io/9caafed1-c7a0-46b0-ab28-73fb87c81d27.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Lee-Marvin Mazibuko",
+                    "image": "https://media-cdn.cortextech.io/2cd9555b-3ba3-43ff-8c7b-ebbef0027174.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Fez Mbatha",
+                    "image": "https://media-cdn.cortextech.io/1985b18f-e433-455d-82cb-3949bba8ab47.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Bongi Mbonambi",
+                    "image": "https://media-cdn.cortextech.io/b1bc316b-56e4-4907-93c6-946f61785150.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Mawande Mdanda",
+                    "image": "https://media-cdn.cortextech.io/46a00d4d-8eeb-4214-9d14-d41726f5c0f9.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Simphiwe Ngobese",
+                    "image": "https://media-cdn.cortextech.io/b5982d28-5964-44b6-8593-16a32a184ace.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Marvin Orie",
+                    "image": "https://media-cdn.cortextech.io/31e97e29-9f97-4086-ab0e-cdd8680db698.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Yaw Penxe",
+                    "image": "https://media-cdn.cortextech.io/98056e38-e817-49de-bbae-50f451500d36.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Marnus Potgieter",
+                    "image": "https://media-cdn.cortextech.io/fd793269-6656-4200-afc5-e05c76def2eb.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jannes Potgieter",
+                    "image": "https://media-cdn.cortextech.io/d7a101ae-9f3a-4d80-9a27-9ab1da55b26c.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Matt Romao",
+                    "image": "https://media-cdn.cortextech.io/9c1f73c8-12bd-44c8-bd01-6d57cdb1a54b.png?format=webp&width=1920"
+                },
+                {
+                    "name": "JJ Scheepers",
+                    "image": "https://media-cdn.cortextech.io/53b142c8-3a42-4425-9e38-ee015554c1fe.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jean Smith",
+                    "image": "https://media-cdn.cortextech.io/f56640b2-2533-479c-a85d-306cb1cbfd8f.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Phiko Sobahle",
+                    "image": "https://media-cdn.cortextech.io/6539587d-bcdd-434a-8ad8-f0f2ff48466e.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Eddie Swart",
+                    "image": "https://media-cdn.cortextech.io/d03c95c9-d125-4dc1-b029-92bd787a1ef2.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Vincent Tshituka",
+                    "image": "https://media-cdn.cortextech.io/5df76c67-322b-4530-9a5b-738c7281d3ab.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Edwill van der Merwe",
+                    "image": "https://media-cdn.cortextech.io/2e20b6e3-e3c7-45c0-9f6b-7b42d834ad42.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Emile van Heerden",
+                    "image": "https://media-cdn.cortextech.io/8630d4e2-92be-4b83-8856-64e0730da797.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Francois Venter",
+                    "image": "https://media-cdn.cortextech.io/5fedac98-2508-4df4-9503-e96d27f7c006.png?format=webp&width=1920"
+                },
+                {
+                    "name": "George Whitehead",
+                    "image": "https://media-cdn.cortextech.io/1d97f598-7aff-4349-ac74-8857496b3e16.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Grant Williams",
+                    "image": "https://media-cdn.cortextech.io/967acb74-bc19-43b6-838d-0ec29abb89dd.png?format=webp&width=1920"
+                }
             ]
         },
         {
             "name": "Ospreys",
             "players": [
                 {
-                    "name": "Adam Beard",
-                    "image": "https://media-cdn.incrowdsports.com/c9799268-efd1-45a9-af0e-08b14ffe20f5.png"
-                },
-                {
                     "name": "Evradi Boshoff",
-                    "image": "https://media-cdn.incrowdsports.com/15237c59-67ee-4fe6-91ad-51535eb2f7ba.png"
+                    "image": "https://media-cdn.cortextech.io/a197540d-b0ff-428e-9224-326e4b879883.png?format=webp&width=1920"
                 },
                 {
                     "name": "Tom Botha",
-                    "image": "https://media-cdn.incrowdsports.com/1513a123-9955-436f-b300-8f494c0a6a5b.png"
-                },
-                {
-                    "name": "Freddie Chapman",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/2abfa5ea-881d-4c03-8d24-5db397ea0b7f.png?format=webp&width=1920"
                 },
                 {
                     "name": "Phil Cokanasiga",
-                    "image": "https://media-cdn.incrowdsports.com/9f80796f-5a11-41ac-a522-0de1eecc06f2.png"
+                    "image": "https://media-cdn.cortextech.io/d0c962cc-2041-4f72-80c1-0d9d300b25d0.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ryan Conbeer",
-                    "image": "https://media-cdn.incrowdsports.com/312a8ea1-c45c-44b6-ad22-9b6b3992e44d.png"
+                    "image": "https://media-cdn.cortextech.io/c7f001e6-c33c-446b-adcd-97cd7050a754.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Efan Daniel",
+                    "image": "https://media-cdn.cortextech.io/2edaf6b9-9da9-48b1-988a-f27015bba5a7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Luke Davies",
-                    "image": "https://media-cdn.incrowdsports.com/531e07b3-81c7-47c5-b75d-e19331d43a87.png"
+                    "image": "https://media-cdn.cortextech.io/e65701ff-1797-4161-ada7-4db5292aa730.png?format=webp&width=1920"
                 },
                 {
                     "name": "Rhys Davies",
-                    "image": "https://media-cdn.incrowdsports.com/a9077a03-fdd4-4547-b889-d434e2700e25.png"
-                },
-                {
-                    "name": "Tristan Davies",
-                    "image": "https://media-cdn.incrowdsports.com/5253618b-649e-4e96-a522-090e6be3d322.png"
+                    "image": "https://media-cdn.cortextech.io/3b39c06d-029c-41ba-a74c-7df16d4176d9.png?format=webp&width=1920"
                 },
                 {
                     "name": "Harri Deaves",
-                    "image": "https://media-cdn.incrowdsports.com/9b92ff43-4a15-42e4-bf11-8ff376e76cb3.png"
-                },
-                {
-                    "name": "Lewis Edwards",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/c44dca14-4ef8-4a43-b745-d9f9604e0c17.png?format=webp&width=1920"
                 },
                 {
                     "name": "Dan Edwards",
-                    "image": "https://media-cdn.incrowdsports.com/e343ed91-b1a4-4a97-8ef9-0e0e1d5e49e2.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Liam Edwards",
-                    "image": "https://media-cdn.incrowdsports.com/d98791da-8cc9-4148-b217-1b50beac53fe.png"
-                },
-                {
-                    "name": "Owen Erasmus",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "name": "Gwilym Evans",
+                    "image": "https://media-cdn.cortextech.io/38ec855e-4ad8-46e3-9daa-3262c74b6145.png?format=webp&width=1920"
                 },
                 {
                     "name": "James Fender",
-                    "image": "https://media-cdn.incrowdsports.com/d9a313a0-891f-41a5-aa0c-4613f10f2863.png"
-                },
-                {
-                    "name": "Tom Florence",
-                    "image": "https://media-cdn.incrowdsports.com/50c17325-3c7d-48fb-958d-8a272c138119.png"
-                },
-                {
-                    "name": "Dan Gemine",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/86678477-a94b-4844-b6f1-de75cffc23d0.png?format=webp&width=1920"
                 },
                 {
                     "name": "Keelan Giles",
-                    "image": "https://media-cdn.incrowdsports.com/57c652fa-f646-4e7c-a7a3-100d5fad48d3.png"
-                },
-                {
-                    "name": "Will Greatbanks",
-                    "image": "https://media-cdn.incrowdsports.com/002d77d4-ef8f-4d26-9731-f19ce22dbdbf.png"
-                },
-                {
-                    "name": "Will Griffiths",
-                    "image": "https://media-cdn.incrowdsports.com/0e0f00f6-d3b9-4b56-9e5e-a6f011a9157f.png"
+                    "image": "https://media-cdn.cortextech.io/f90ffd0f-fc69-4f0e-b7d3-241f790503ab.png?format=webp&width=1920"
                 },
                 {
                     "name": "Kieran Hardy",
-                    "image": "https://media-cdn.incrowdsports.com/2ecd3330-fb0d-441e-a240-f7e673f58897.png"
+                    "image": "https://media-cdn.cortextech.io/2c477266-73a7-4eff-92b1-e5e9782d1be6.png?format=webp&width=1920"
                 },
                 {
                     "name": "Rhys Henry",
-                    "image": "https://media-cdn.incrowdsports.com/1d6c0dd1-5b4f-444a-97e0-f1f0340517d0.png"
+                    "image": "https://media-cdn.cortextech.io/562f0d62-b54b-402f-8871-bd4be76086d3.png?format=webp&width=1920"
                 },
                 {
                     "name": "Kian Hire",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Iestyn Hopkins",
-                    "image": "https://media-cdn.incrowdsports.com/191b4ed0-5a5d-4f80-89f8-92014d0c472e.png"
-                },
-                {
-                    "name": "Harri Houston",
-                    "image": "https://media-cdn.incrowdsports.com/1cc89d55-f65c-48b9-a66d-06700907adfe.png"
-                },
-                {
-                    "name": "Math Iorwerth-Scott",
-                    "image": "https://media-cdn.incrowdsports.com/89821284-abe7-4d34-ad06-a3a2d7489b9a.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Cameron Jones",
-                    "image": "https://media-cdn.incrowdsports.com/05f39965-def6-469b-8326-2ef19826f90a.png"
+                    "image": "https://media-cdn.cortextech.io/508dbf5a-c042-4bad-a2a2-3e3d8a1e9917.png?format=webp&width=1920"
                 },
                 {
                     "name": "Lewis Jones",
-                    "image": "https://media-cdn.incrowdsports.com/7200b5a5-db87-44c1-871a-5934f244487d.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Daniel Kasende",
-                    "image": "https://media-cdn.incrowdsports.com/afb95258-5fc6-49c8-87d0-d771395e2459.png"
+                    "image": "https://media-cdn.cortextech.io/21406768-e584-4d12-9d89-5e7cbe985aa8.png?format=webp&width=1920"
                 },
                 {
                     "name": "Dewi Lake",
-                    "image": "https://media-cdn.incrowdsports.com/50b1487b-e727-4eff-9d1a-9671989edaa6.png"
+                    "image": "https://media-cdn.cortextech.io/60366bce-e1e3-4f24-a4b0-f081e6f98904.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ethan Lewis",
-                    "image": "https://media-cdn.incrowdsports.com/6783eeba-5697-44f1-b1c7-2bbd263c0762.png"
-                },
-                {
-                    "name": "Cory Lewis-Jenkins",
-                    "image": "https://media-cdn.incrowdsports.com/c057c595-41a8-495e-bd19-ead1ef9cb153.png"
+                    "image": "https://media-cdn.cortextech.io/5d1b4acb-eb18-46be-8007-a53cb1cbabb3.png?format=webp&width=1920"
                 },
                 {
                     "name": "Lewis Lloyd",
-                    "image": "https://media-cdn.incrowdsports.com/a41a4ee3-4eef-4120-b7bf-4718184ace0a.png"
+                    "image": "https://media-cdn.cortextech.io/e98559b3-58fc-43b4-8711-cca9b0285d15.png?format=webp&width=1920"
                 },
                 {
                     "name": "Luke Morgan",
-                    "image": "https://media-cdn.incrowdsports.com/cf39359d-f575-42e7-8a00-816d3c13873c.png"
-                },
-                {
-                    "name": "Jac Morgan",
-                    "image": "https://media-cdn.incrowdsports.com/3355df7c-e8c8-4421-8d2c-d4eabed92fad.png"
+                    "image": "https://media-cdn.cortextech.io/2de92339-9b57-429b-8f04-0b8fc56b2e9d.png?format=webp&width=1920"
                 },
                 {
                     "name": "Reuben Morgan-Williams",
-                    "image": "https://media-cdn.incrowdsports.com/7900b684-9164-4544-ac81-25da5cd28013.png"
+                    "image": "https://media-cdn.cortextech.io/808d409d-cc34-4ee4-9d34-55fae9dc324f.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Ross Moriarty",
+                    "image": "https://media-cdn.cortextech.io/fc758b8c-50c9-4341-ace8-1fb3af37ef36.png?format=webp&width=1920"
                 },
                 {
                     "name": "Morgan Morris",
-                    "image": "https://media-cdn.incrowdsports.com/fa5e22cc-ebd8-4794-9cd5-744fe5d0780e.png"
+                    "image": "https://media-cdn.cortextech.io/333d83c3-a274-4c16-bafc-1272b98bf772.png?format=webp&width=1920"
                 },
                 {
                     "name": "Morgan Morse",
-                    "image": "https://media-cdn.incrowdsports.com/71e234cd-5f60-4810-8d62-e07c9aa3c2a5.png"
+                    "image": "https://media-cdn.cortextech.io/124e61b0-4d2e-4101-9f95-4aae41ef3412.png?format=webp&width=1920"
                 },
                 {
                     "name": "Connor Moyse",
-                    "image": "https://media-cdn.incrowdsports.com/7810929a-f7e1-453c-a14b-ebba515fd609.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Max Nagy",
-                    "image": "https://media-cdn.incrowdsports.com/0aeec778-f48a-4b78-b790-cecf52d20a64.png"
+                    "image": "https://media-cdn.cortextech.io/f117ecd4-775d-4b03-9f50-e851b921db95.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sam Parry",
-                    "image": "https://media-cdn.incrowdsports.com/3988cb4f-160d-400e-b7b5-345e1d77a569.png"
+                    "image": "https://media-cdn.cortextech.io/31e0175e-691a-4b27-86e1-43d80336b4bd.png?format=webp&width=1920"
                 },
                 {
                     "name": "Garyn Phillips",
-                    "image": "https://media-cdn.incrowdsports.com/5c32daad-ca21-41f6-b204-4549efb27657.png"
+                    "image": "https://media-cdn.cortextech.io/f3ebd9c3-7e20-466e-8b1c-e10e1619bbd9.png?format=webp&width=1920"
                 },
                 {
                     "name": "James Ratti",
-                    "image": "https://media-cdn.incrowdsports.com/dcc20f56-3bea-4606-a025-472ad7e3b6c4.png"
+                    "image": "https://media-cdn.cortextech.io/b9da2b39-b680-4c3c-af63-e262702968b8.png?format=webp&width=1920"
                 },
                 {
                     "name": "Luke Scully",
-                    "image": "https://media-cdn.incrowdsports.com/e540ec62-c162-4dd0-83d1-aedd4d0d04d6.png"
+                    "image": "https://media-cdn.cortextech.io/01f54949-c94e-4948-be28-98cce45acf56.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Will Spencer",
-                    "image": "https://media-cdn.incrowdsports.com/65c99c24-3a24-4579-b168-f924438ed858.png"
+                    "name": "Ryan Smith",
+                    "image": "https://media-cdn.cortextech.io/ccfbbc75-be32-463d-a7d1-f1395f1a09ec.png?format=webp&width=1920"
                 },
                 {
                     "name": "Huw Sutton",
-                    "image": "https://media-cdn.incrowdsports.com/9864ed0e-706b-4b83-84f1-440dbc38503d.png"
-                },
-                {
-                    "name": "Gareth Thomas",
-                    "image": "https://media-cdn.incrowdsports.com/b1caaf27-3943-4e29-8f9a-fe8baa4f5ed4.png"
+                    "image": "https://media-cdn.cortextech.io/85e1cd76-9bfa-4fe4-a10d-7cab3ea59f43.png?format=webp&width=1920"
                 },
                 {
                     "name": "Steff Thomas",
-                    "image": "https://media-cdn.incrowdsports.com/30b7e97b-60ed-450b-a3e8-9806b4b833ec.png"
+                    "image": "https://media-cdn.cortextech.io/d72495de-443f-4391-87ff-ca32082afdd8.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Rhys Thomas",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
-                },
-                {
-                    "name": "Justin Tipuric",
-                    "image": "https://media-cdn.incrowdsports.com/fbe981a3-b61e-473a-b632-145f46dee502.png"
+                    "name": "Gareth Thomas",
+                    "image": "https://media-cdn.cortextech.io/30ddad0d-f23d-4320-ae2f-cc2aa8a076af.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jack Walsh",
-                    "image": "https://media-cdn.incrowdsports.com/9ed244ed-da04-432e-b340-c3fb916d64ab.png"
+                    "image": "https://media-cdn.cortextech.io/91232f4d-c0ca-4eef-94af-8bb572a1b6b8.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ben Warren",
-                    "image": "https://media-cdn.incrowdsports.com/c2770ec0-0e31-477a-b1d8-82df05cdf931.png"
+                    "image": "https://media-cdn.cortextech.io/08bc2c73-c8c4-4a84-a58f-d582eaff1369.png?format=webp&width=1920"
                 },
                 {
                     "name": "Owen Watkin",
-                    "image": "https://media-cdn.incrowdsports.com/81580d06-be79-4762-8df9-0c7840e759b1.png"
-                },
-                {
-                    "name": "Scott Whitlock",
-                    "image": "https://media-cdn.incrowdsports.com/544b54cd-c0da-409b-b01b-13b2b1d27cc1.png"
+                    "image": "https://media-cdn.cortextech.io/861d7a56-0dcd-44d7-b568-b5ee9c94544b.png?format=webp&width=1920"
                 },
                 {
                     "name": "Keiran Williams",
-                    "image": "https://media-cdn.incrowdsports.com/0d422c40-2af0-453e-8681-f679aefa5ebd.png"
+                    "image": "https://media-cdn.cortextech.io/f1c4cb0d-7e75-40de-8be6-08f9d2de5005.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Owen Williams",
-                    "image": "https://media-cdn.incrowdsports.com/081e7fd7-4787-4cfe-a1ca-8af230c370b2.png"
+                    "name": "Harri Williams",
+                    "image": "https://media-cdn.cortextech.io/4592b5fd-e6c5-41e8-a6ff-b360d5c742fe.png?format=webp&width=1920"
                 }
             ]
         },
@@ -2101,232 +2212,172 @@
             "name": "Scarlets",
             "players": [
                 {
-                    "name": "Iori Badham",
-                    "image": "https://media-cdn.incrowdsports.com/bfc84978-6536-4837-bde8-3d909cd16303.png"
+                    "name": "Fletcher Anderson",
+                    "image": "https://media-cdn.cortextech.io/03eb6649-4c93-41da-9bea-233f4a597911.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Ollie Close",
-                    "image": "https://media-cdn.incrowdsports.com/fbd5d597-b3ca-437e-8c70-65e710d5322e.png"
+                    "name": "Jake Ball",
+                    "image": "https://media-cdn.cortextech.io/355e76d8-74ea-45ea-a782-8ee5e742bf9b.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Dane Blacker",
+                    "image": "https://media-cdn.cortextech.io/be3e6229-2793-42d6-8a71-1fc6095b451f.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sam Costelow",
-                    "image": "https://media-cdn.incrowdsports.com/03912a2d-64cc-40b6-9cc2-43f5f6c8f936.png"
-                },
-                {
-                    "name": "Alex Craig",
-                    "image": "https://media-cdn.incrowdsports.com/63db9bf3-c8f6-4645-aae0-3b3ee348c1cd.png"
+                    "image": "https://media-cdn.cortextech.io/439271c2-7d9a-4747-83a6-6d5c95409a5e.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jac Davies",
-                    "image": "https://media-cdn.incrowdsports.com/0b3072c2-fb96-4c4d-9cdc-80d12cb068a1.png"
+                    "image": "https://media-cdn.cortextech.io/a3e856f6-f0f3-4e19-a843-b4255bf554cb.png?format=webp&width=1920"
                 },
                 {
                     "name": "Gareth Davies",
-                    "image": "https://media-cdn.incrowdsports.com/dfd3c0a8-705d-459a-8ac0-f09f2fe77621.png"
+                    "image": "https://media-cdn.cortextech.io/093d8270-cba7-412d-8c6c-3114f567d255.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Tristan Davies",
+                    "image": "https://media-cdn.cortextech.io/6b53b4cd-1fb0-48fa-bce3-029c0554d601.png?format=webp&width=1920"
                 },
                 {
                     "name": "Dan Davis",
-                    "image": "https://media-cdn.incrowdsports.com/c070642a-5e39-4777-840c-a9335afbf6e9.png"
+                    "image": "https://media-cdn.cortextech.io/1366afb7-eeea-4690-aef0-4a42c6e14dcc.png?format=webp&width=1920"
                 },
                 {
                     "name": "Max Douglas",
-                    "image": "https://media-cdn.incrowdsports.com/f3288ffb-3ced-4afa-9d2d-eac868a36e82.png"
+                    "image": "https://media-cdn.cortextech.io/c976a3eb-353d-4d8d-a049-73807b7a8173.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ryan Elias",
-                    "image": "https://media-cdn.incrowdsports.com/0ca4b2e3-cfc0-4b59-be2c-f7ac46cba30a.png"
-                },
-                {
-                    "name": "Steff Evans",
-                    "image": "https://media-cdn.incrowdsports.com/98539e2c-afb7-4b0c-aed3-c2e7d56eb2e0.png"
-                },
-                {
-                    "name": "Shaun Evans",
-                    "image": "https://media-cdn.incrowdsports.com/bad9bf9a-d5a1-4ba4-8339-a376f5d40e21.png"
+                    "image": "https://media-cdn.cortextech.io/7b2e14c4-4abd-4649-8b84-7788cb2dca5c.png?format=webp&width=1920"
                 },
                 {
                     "name": "Will Evans",
-                    "image": "https://media-cdn.incrowdsports.com/f9a78308-b3a2-4335-b5a0-4bbdd75817d6.png"
+                    "image": "https://media-cdn.cortextech.io/2453e77c-efeb-434d-a293-80e2b528e1b3.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Keanu Evans",
-                    "image": "https://media-cdn.incrowdsports.com/21643540-f97e-47ca-b9ab-434a7064c460.png"
+                    "name": "Dan Gemine",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Rhys Fawcett",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
-                },
-                {
-                    "name": "Vaea Fifita",
-                    "image": "https://media-cdn.incrowdsports.com/818cacee-9681-40e5-883d-23c30b8551c7.png"
+                    "name": "Joe Hawkins",
+                    "image": "https://media-cdn.cortextech.io/1fc8e941-975b-46aa-a037-20bcad31fae6.png?format=webp&width=1920"
                 },
                 {
                     "name": "Gabe Hawley",
-                    "image": "https://media-cdn.incrowdsports.com/03001c82-0c4f-4bf7-9741-70da8d940f31.png"
+                    "image": "https://media-cdn.cortextech.io/0fc3b6e1-08df-4c2d-b6d5-1ac35e92fcc2.png?format=webp&width=1920"
                 },
                 {
                     "name": "Alec Hepburn",
-                    "image": "https://media-cdn.incrowdsports.com/4b4bb3ce-60e1-4fb1-ac53-8c81d1a1986e.png"
+                    "image": "https://media-cdn.cortextech.io/acc561ca-95c4-4b9a-a8bc-e711441cd5d9.png?format=webp&width=1920"
                 },
                 {
                     "name": "Archer Holz",
-                    "image": "https://media-cdn.incrowdsports.com/40750b25-d01b-4037-aa7b-322feb05270a.png"
+                    "image": "https://media-cdn.cortextech.io/b2a28da0-0e23-40aa-9bbb-450dfe8f1ce1.png?format=webp&width=1920"
                 },
                 {
                     "name": "Archie Hughes",
-                    "image": "https://media-cdn.incrowdsports.com/5118f02e-cf58-4794-942e-800041421fbc.png"
-                },
-                {
-                    "name": "Jamie Hughes",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/e07928b9-b864-4cd4-a1bf-a868a2db2100.png?format=webp&width=1920"
                 },
                 {
                     "name": "Eddie James",
-                    "image": "https://media-cdn.incrowdsports.com/acb45c39-ea5b-4de6-9bd2-91d4079de4b2.png"
+                    "image": "https://media-cdn.cortextech.io/330c5954-5c7f-42b3-a29a-021b91e3281b.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Efan Jones",
-                    "image": "https://media-cdn.incrowdsports.com/cc4f6d68-356c-4bfe-a0dd-93798b7a6cc0.png"
-                },
-                {
-                    "name": "Morgan Jones",
-                    "image": "https://media-cdn.incrowdsports.com/cf19a181-927d-4d83-9308-b3d376f95de0.png"
-                },
-                {
-                    "name": "Dom Kossouth",
-                    "image": "https://media-cdn.incrowdsports.com/622c1072-fb5b-48c8-89a5-5f0844bbc126.png"
+                    "name": "Carwyn Leggatt-Jones",
+                    "image": "https://media-cdn.cortextech.io/48981b78-5504-4835-b4bb-428887bd8f79.png?format=webp&width=1920"
                 },
                 {
                     "name": "Tomi Lewis",
-                    "image": "https://media-cdn.incrowdsports.com/cde83885-ec87-400e-a964-948db5d169ac.png"
-                },
-                {
-                    "name": "Rhodri Lewis",
-                    "image": "https://media-cdn.incrowdsports.com/8de995eb-664a-4b82-8b45-635fcfb411cc.png"
-                },
-                {
-                    "name": "Ioan Lloyd",
-                    "image": "https://media-cdn.incrowdsports.com/fedfbd1c-8dec-4d1a-85cc-ba76ff616726.png"
+                    "image": "https://media-cdn.cortextech.io/7757771e-f660-4b5d-9522-caa5dfa46cc4.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sam Lousi",
-                    "image": "https://media-cdn.incrowdsports.com/c756dae0-8adf-4d83-b9df-4b63c9fca2e2.png"
+                    "image": "https://media-cdn.cortextech.io/2eae0f49-7f49-4a74-b51d-031b6a771451.png?format=webp&width=1920"
                 },
                 {
                     "name": "Josh Macleod",
-                    "image": "https://media-cdn.incrowdsports.com/865f264a-c3b7-4d8b-93be-33bfbae15bb2.png"
+                    "image": "https://media-cdn.cortextech.io/71eba63e-70a0-45a6-8482-9d51c4cd0d12.png?format=webp&width=1920"
                 },
                 {
                     "name": "Kemsley Mathias",
-                    "image": "https://media-cdn.incrowdsports.com/56fd0714-8e8b-4cb6-adb5-ad2cef81e6a2.png"
-                },
-                {
-                    "name": "Gabe McDonald",
-                    "image": "https://media-cdn.incrowdsports.com/3b268619-8c8c-4988-ae70-23c596ec2af9.png"
+                    "image": "https://media-cdn.cortextech.io/1bcb97fa-f1d2-4bae-b242-ba270730f58a.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ellis Mee",
-                    "image": "https://media-cdn.incrowdsports.com/26ce425c-41c0-408a-91f3-903c3eba5b90.png"
+                    "image": "https://media-cdn.cortextech.io/be03b48d-f5de-42f9-a55f-d53c0cc09bc6.png?format=webp&width=1920"
                 },
                 {
                     "name": "Josh Morse",
-                    "image": "https://media-cdn.incrowdsports.com/7fc0ac38-ce37-481f-a085-55beadd3f197.png"
+                    "image": "https://media-cdn.cortextech.io/30ae8256-1fba-4560-ba8b-7bde3c893b63.png?format=webp&width=1920"
                 },
                 {
                     "name": "Blair Murray",
-                    "image": "https://media-cdn.incrowdsports.com/177e848e-ce7c-4172-bfe6-40164d8dfa80.png"
+                    "image": "https://media-cdn.cortextech.io/2a54c5de-fd81-48b1-b65c-d5073c1ac729.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ioan Nicholas",
-                    "image": "https://media-cdn.incrowdsports.com/a9936f5c-9306-46e2-874d-6b2dde34d6ff.png"
+                    "image": "https://media-cdn.cortextech.io/419ff376-9295-41a0-b9ea-8f6125f52f69.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sam O'Connor",
-                    "image": "https://media-cdn.incrowdsports.com/f5fbd35a-bc5f-4e63-a8c8-d1763f26e4cf.png"
+                    "image": "https://media-cdn.cortextech.io/e538151c-2953-422e-9f8d-108d6d97ce89.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Harri O'Connor",
+                    "image": "https://media-cdn.cortextech.io/62ee9e25-63d1-401b-a7df-9b173ceeb5e2.png?format=webp&width=1920"
                 },
                 {
                     "name": "Macs Page",
-                    "image": "https://media-cdn.incrowdsports.com/fe20691f-e1e2-4835-916b-52818afc6ab7.png"
-                },
-                {
-                    "name": "Will Plessis",
-                    "image": "https://media-cdn.incrowdsports.com/f8d3ad19-a47d-429c-942d-b44b7944b23e.png"
+                    "image": "https://media-cdn.cortextech.io/e682c0df-a87b-44f9-98f2-fbb154d1b8d5.png?format=webp&width=1920"
                 },
                 {
                     "name": "Taine Plumtree",
-                    "image": "https://media-cdn.incrowdsports.com/26057157-af3a-429c-9d64-f3bcff08aa89.png"
+                    "image": "https://media-cdn.cortextech.io/e3437a0b-2968-40a7-9a87-96dae1866f83.png?format=webp&width=1920"
                 },
                 {
                     "name": "Elis Price",
-                    "image": "https://media-cdn.incrowdsports.com/1371559d-cb66-41c8-835d-5c6fdbc3a2ea.png"
+                    "image": "https://media-cdn.cortextech.io/e68c8b8d-d067-42b1-830b-8bec6d96eed5.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jac Price",
-                    "image": "https://media-cdn.incrowdsports.com/67301825-8395-4712-b3fe-68b6eba0219c.png"
+                    "image": "https://media-cdn.cortextech.io/afeaa5de-d64a-4583-9b08-ecbed825a900.png?format=webp&width=1920"
                 },
                 {
                     "name": "Joe Roberts",
-                    "image": "https://media-cdn.incrowdsports.com/e3238a1c-8d87-4cdc-b074-07170e55c833.png"
+                    "image": "https://media-cdn.cortextech.io/1cc2b376-9492-4f14-8eef-cb23a5eee386.png?format=webp&width=1920"
                 },
                 {
                     "name": "Tom Rogers",
-                    "image": "https://media-cdn.incrowdsports.com/32bb6007-f0bf-433e-b3c6-fd2c5254223f.png"
-                },
-                {
-                    "name": "Ed Scragg",
-                    "image": "https://media-cdn.incrowdsports.com/c863ae72-69e0-4db5-a6cc-fd1c2e022227.png"
-                },
-                {
-                    "name": "Tiaan Sparrow",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/43c98684-3e8c-4272-b912-e33dd9e4a219.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jarrod Taylor",
-                    "image": "https://media-cdn.incrowdsports.com/d3202386-32d7-4357-ba94-dfc79c862f00.png"
+                    "image": "https://media-cdn.cortextech.io/4583e57d-e27d-4120-a921-babaa02fa934.png?format=webp&width=1920"
                 },
                 {
                     "name": "Henry Thomas",
-                    "image": "https://media-cdn.incrowdsports.com/299ce7da-5f03-412a-9d46-57a051acd815.png"
+                    "image": "https://media-cdn.cortextech.io/00da0404-6e7a-4781-8c8c-a400cd33edd9.png?format=webp&width=1920"
                 },
                 {
                     "name": "Harry Thomas",
-                    "image": "https://media-cdn.incrowdsports.com/0c70030e-c317-47b7-826f-51b6d14c502c.png"
-                },
-                {
-                    "name": "Charlie Titcombe",
-                    "image": "https://media-cdn.incrowdsports.com/da796973-a89b-44f4-af6b-a3b5690836a7.png"
-                },
-                {
-                    "name": "Carwyn Tuipulotu",
-                    "image": "https://media-cdn.incrowdsports.com/e1005adf-27c5-4053-ba00-c61db5f5d5bc.png"
+                    "image": "https://media-cdn.cortextech.io/f6733bcc-2dc0-459f-8487-3445a2529b9f.png?format=webp&width=1920"
                 },
                 {
                     "name": "Marnus van der Merwe",
-                    "image": "https://media-cdn.incrowdsports.com/fcb20a2a-8781-4b57-9b56-ea5a2fab0807.png"
-                },
-                {
-                    "name": "Sam Wainwright",
-                    "image": "https://media-cdn.incrowdsports.com/aa93e192-b12c-4399-97f3-da202feaf655.png"
+                    "image": "https://media-cdn.cortextech.io/d8fc09a5-c626-4f01-a4a4-5bd229800f20.png?format=webp&width=1920"
                 },
                 {
                     "name": "Johnny Williams",
-                    "image": "https://media-cdn.incrowdsports.com/0acf099a-5163-474b-a481-e22e40bef7c3.png"
-                },
-                {
-                    "name": "Ben Williams",
-                    "image": "https://media-cdn.incrowdsports.com/f07b0686-bfdd-428e-9e7d-6ef6ae68ac5b.png"
+                    "image": "https://media-cdn.cortextech.io/3343ed0e-f7bf-4d3f-adca-17a00dfe3938.png?format=webp&width=1920"
                 },
                 {
                     "name": "Osian Williams",
-                    "image": "https://media-cdn.incrowdsports.com/d3750c75-8773-4068-ac3d-af8623510611.png"
-                },
-                {
-                    "name": "Callum Woolley",
-                    "image": "https://media-cdn.incrowdsports.com/34869d19-530b-4676-8abe-8c7a6e3f103d.png"
+                    "image": "https://media-cdn.cortextech.io/94d16bd7-ffe8-4439-bf0b-e268f8ea6c70.png?format=webp&width=1920"
                 },
                 {
                     "name": "Isaac Young",
-                    "image": "https://media-cdn.incrowdsports.com/13714946-f812-4cd4-8728-4037de2f5c50.png"
+                    "image": "https://media-cdn.cortextech.io/d3173b2c-ff20-4352-8f69-2897f49049d3.png?format=webp&width=1920"
                 }
             ]
         },
@@ -2335,235 +2386,171 @@
             "players": [
                 {
                     "name": "Kurt-Lee Arendse",
-                    "image": "https://media-cdn.incrowdsports.com/2ebb9a68-6109-41c4-8d8b-a55fd31169aa.png"
-                },
-                {
-                    "name": "Chris Barend Smit",
-                    "image": "https://media-cdn.incrowdsports.com/cd4120d5-0d7e-4c49-a83e-6f9f5f13104b.png"
-                },
-                {
-                    "name": "Cyle Brink",
-                    "image": "https://media-cdn.incrowdsports.com/72d108ad-afa0-4036-9727-04b41545bb8e.png"
+                    "image": "https://media-cdn.cortextech.io/29f91ffe-ba66-47e6-8be9-30c710ffd726.png?format=webp&width=1920"
                 },
                 {
                     "name": "Zak Burger",
-                    "image": "https://media-cdn.incrowdsports.com/15bfe34f-795e-4dfd-8f86-998d0ffa5860.png"
+                    "image": "https://media-cdn.cortextech.io/20e98844-0e33-405b-8453-e334022bb9e9.png?format=webp&width=1920"
                 },
                 {
                     "name": "Nizaam Carr",
-                    "image": "https://media-cdn.incrowdsports.com/df4ab2be-124d-4e26-a460-d1cf1a0d5087.png"
-                },
-                {
-                    "name": "Boeta Chamberlain",
-                    "image": "https://media-cdn.incrowdsports.com/2519f565-0c66-4ec9-9654-faffe8787ee2.png"
+                    "image": "https://media-cdn.cortextech.io/0eefab56-d8ee-40eb-b8b7-b1d287038fce.png?format=webp&width=1920"
                 },
                 {
                     "name": "Marcell Coetzee",
-                    "image": "https://media-cdn.incrowdsports.com/214c520d-0af9-46a7-a3c3-698e8ef7f4d9.png"
+                    "image": "https://media-cdn.cortextech.io/96b992b6-fd5d-4cd5-aad3-f0554995f9ba.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sebastian de Klerk",
-                    "image": "https://media-cdn.incrowdsports.com/158b7742-675d-423c-be4d-4e7a2778e4c5.png"
+                    "image": "https://media-cdn.cortextech.io/62d3d34a-1b67-46b2-b399-b35b34d9ed19.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Aphiwe Dyantyi",
-                    "image": "https://media-cdn.incrowdsports.com/3d5a47fe-690e-4338-bfd2-a8aa82538dfa.png"
+                    "name": "Paul de Wet",
+                    "image": "https://media-cdn.cortextech.io/b4046d2c-4526-4416-ae5a-8873eeaadaff.png?format=webp&width=1920"
                 },
                 {
                     "name": "Juann Else",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/927dcbf6-525d-421f-9217-cbcc7a93022f.png?format=webp&width=1920"
+                },
+                {
+                    "name": "JD Erasmus",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Stedman Gans",
-                    "image": "https://media-cdn.incrowdsports.com/c56740e5-f775-4fba-bd67-496a7a751c01.png"
-                },
-                {
-                    "name": "Johan Goosen",
-                    "image": "https://media-cdn.incrowdsports.com/a2013305-1631-47d9-94e3-91420f83c65d.png"
+                    "image": "https://media-cdn.cortextech.io/bf0eb022-d953-4a85-9f30-a07d1ff32143.png?format=webp&width=1920"
                 },
                 {
                     "name": "Johann Grobbelaar",
-                    "image": "https://media-cdn.incrowdsports.com/b930eece-60b7-464a-8af0-c325afcc4d0b.png"
+                    "image": "https://media-cdn.cortextech.io/3ce5d9fd-df66-49f2-9756-4c53c9af91fb.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Jaco Grobbelaar",
+                    "image": "https://media-cdn.cortextech.io/8d2c6dc0-0816-433b-89d2-9fa516406ea1.png?format=webp&width=1920"
                 },
                 {
                     "name": "Mpilo Gumede",
-                    "image": "https://media-cdn.incrowdsports.com/69939dc6-14dd-4bc2-9a02-8ad240a851d4.png"
+                    "image": "https://media-cdn.cortextech.io/079cf4ef-3b45-40b9-8c3a-09c75201b06c.png?format=webp&width=1920"
                 },
                 {
                     "name": "Cameron Hanekom",
-                    "image": "https://media-cdn.incrowdsports.com/fe6a00e3-d06b-4fa5-aff5-153bdf3a97ae.png"
-                },
-                {
-                    "name": "Henry Immelman",
-                    "image": "https://media-cdn.incrowdsports.com/c7ecf321-a5d1-4366-876f-4c689f75eae4.png"
+                    "image": "https://media-cdn.cortextech.io/6d13340d-54ca-457d-93d2-71a0341d2d82.png?format=webp&width=1920"
                 },
                 {
                     "name": "Stravino Jacobs",
-                    "image": "https://media-cdn.incrowdsports.com/7a44df42-926f-4369-a0c8-adc0c4f9d91d.png"
+                    "image": "https://media-cdn.cortextech.io/8fa700f0-c987-44b0-9d24-0135e51a4139.png?format=webp&width=1920"
                 },
                 {
                     "name": "Keagan Johannes",
-                    "image": "https://media-cdn.incrowdsports.com/f35e63d5-54d8-4ab0-9b6e-ede630124784.png"
-                },
-                {
-                    "name": "Jannes Kirsten",
-                    "image": "https://media-cdn.incrowdsports.com/77369648-3795-47aa-9548-ef51f211a540.png"
-                },
-                {
-                    "name": "Francois Klopper",
-                    "image": "https://media-cdn.incrowdsports.com/a3c06e3a-040d-4cfb-9dcf-60a102849949.png"
+                    "image": "https://media-cdn.cortextech.io/6fc0b6f6-259f-4e48-a233-7980ed40b015.png?format=webp&width=1920"
                 },
                 {
                     "name": "David Kriel",
-                    "image": "https://media-cdn.incrowdsports.com/aaef71de-012e-492e-a866-fc4bf1f9e647.png"
+                    "image": "https://media-cdn.cortextech.io/769399f5-6c05-4a1c-a42a-0e23a8efada4.png?format=webp&width=1920"
                 },
                 {
                     "name": "Willie le Roux",
-                    "image": "https://media-cdn.incrowdsports.com/d3ac3947-2e82-4fc4-8774-7b4d5b16f273.png"
-                },
-                {
-                    "name": "Katlego Letebele",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
-                },
-                {
-                    "name": "Sebastian Lombard",
-                    "image": "https://media-cdn.incrowdsports.com/baae5ab8-e620-487b-b96f-da8ca4d5352d.png"
+                    "image": "https://media-cdn.cortextech.io/acf53458-0c1c-4ed5-851f-b82053187c6a.png?format=webp&width=1920"
                 },
                 {
                     "name": "Wilco Louw",
-                    "image": "https://media-cdn.incrowdsports.com/c69e0d96-6584-41b6-86a8-7e82c6f90ca7.png"
+                    "image": "https://media-cdn.cortextech.io/47548ac4-362f-4e4b-ae98-69d2f3fb6432.png?format=webp&width=1920"
                 },
                 {
                     "name": "Elrigh Louw",
-                    "image": "https://media-cdn.incrowdsports.com/9e1122ab-f7d2-4ecb-aaad-a9936c3d9c7a.png"
+                    "image": "https://media-cdn.cortextech.io/1fa08716-94f4-4f84-90a7-6009b7ceee65.png?format=webp&width=1920"
                 },
                 {
                     "name": "Reinhardt Ludwig",
-                    "image": "https://media-cdn.incrowdsports.com/b11d3435-199a-4c1f-9e49-ac937e0a1835.png"
-                },
-                {
-                    "name": "Sintu Manjezi",
-                    "image": "https://media-cdn.incrowdsports.com/5f8a8ed5-aad7-4d9c-b30f-bdfdf2488067.png"
-                },
-                {
-                    "name": "Simphiwe Matanzima",
-                    "image": "https://media-cdn.incrowdsports.com/d08d1747-9d21-4d3b-9d46-c60d7a12c945.png"
+                    "image": "https://media-cdn.cortextech.io/c07c79a7-23ec-4ceb-80a6-35da3b7beb53.png?format=webp&width=1920"
                 },
                 {
                     "name": "Khutha Mchunu",
-                    "image": "https://media-cdn.incrowdsports.com/fe401c80-69bb-4e3b-acab-c6b9baf5ebdb.png"
+                    "image": "https://media-cdn.cortextech.io/28d47c5c-3130-482f-92f3-ae6c43e79c0d.png?format=webp&width=1920"
                 },
                 {
                     "name": "Canan Moodie",
-                    "image": "https://media-cdn.incrowdsports.com/1dcf2c6a-1946-4f27-b3c9-68f41fe20e9d.png"
-                },
-                {
-                    "name": "Mihlali Mosi",
-                    "image": "https://media-cdn.incrowdsports.com/91808078-500b-4806-94a6-1fef62a5dc23.png"
-                },
-                {
-                    "name": "Tielman Nieuwoudt",
-                    "image": "https://media-cdn.incrowdsports.com/c4c97634-5bde-4a59-878b-3de49a59b20d.png"
+                    "image": "https://media-cdn.cortextech.io/bd1de81b-9a13-409d-883c-81903795c351.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ruan Nortje",
-                    "image": "https://media-cdn.incrowdsports.com/587cac6d-5970-450d-a673-2f0229daa27d.png"
-                },
-                {
-                    "name": "Sibongile Novuka",
-                    "image": "https://media-cdn.incrowdsports.com/ff9bfede-f218-42b9-b972-b9f574e75dbf.png"
+                    "image": "https://media-cdn.cortextech.io/e52f9b56-45d3-44ba-9bb2-8fe9bb4aea78.png?format=webp&width=1920"
                 },
                 {
                     "name": "Embrose Papier",
-                    "image": "https://media-cdn.incrowdsports.com/3a6ab21a-3b4b-4dd7-87ca-264a72dd5551.png"
+                    "image": "https://media-cdn.cortextech.io/4b995b55-5adf-4610-b35c-22ade122ea21.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sergeal Petersen",
-                    "image": "https://media-cdn.incrowdsports.com/9f00b31c-0052-4ef0-97b2-13fc872b1c45.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Deon Slabbert",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "name": "Handre Pollard",
+                    "image": "https://media-cdn.cortextech.io/48e75e97-7bb9-4790-916c-afc0c60dc944.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Cornel Smit",
-                    "image": "https://media-cdn.incrowdsports.com/d2adc653-4720-4aba-863f-9197ef169a21.png"
+                    "name": "Jeandre Rudolph",
+                    "image": "https://media-cdn.cortextech.io/5470ab11-26d6-43cb-8042-125b5e31f25b.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Dylan Smith",
-                    "image": "https://media-cdn.incrowdsports.com/d7ba0a13-2512-4c6a-8b7f-6e2c2b41d2ab.png"
+                    "name": "Sti Sithole",
+                    "image": "https://media-cdn.cortextech.io/e933d751-3948-41a5-b2ba-1b8bf6e8a780.png?format=webp&width=1920"
                 },
                 {
                     "name": "Mornay Smith",
-                    "image": "https://media-cdn.incrowdsports.com/c7a3404f-a847-4f0d-919c-8eb14d93156d.png"
+                    "image": "https://media-cdn.cortextech.io/5f8e90cc-5d8d-46c0-af97-e5b72a899a3c.png?format=webp&width=1920"
                 },
                 {
                     "name": "Gerhard Steenekamp",
-                    "image": "https://media-cdn.incrowdsports.com/a9a59602-2354-4258-af93-a3dc3872215e.png"
+                    "image": "https://media-cdn.cortextech.io/9cc5898a-ae33-4e81-8d85-17a6c79b606e.png?format=webp&width=1920"
                 },
                 {
                     "name": "JJ Theron",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "image": "https://media-cdn.cortextech.io/185d8f6c-1f65-4a9a-b2ae-eb92992949b6.png?format=webp&width=1920"
                 },
                 {
                     "name": "Alulutho Tshakweni",
-                    "image": "https://media-cdn.incrowdsports.com/28673a55-6635-490b-baa5-37a5170ea86e.png"
-                },
-                {
-                    "name": "Muller Uys",
-                    "image": "https://media-cdn.incrowdsports.com/05914a10-e506-4def-bd44-510d622bded5.png"
-                },
-                {
-                    "name": "Bernard van der Linde",
-                    "image": "https://media-cdn.incrowdsports.com/40717190-7b8b-4c6b-aae5-c646f41c18fc.png"
+                    "image": "https://media-cdn.cortextech.io/6df6a2b2-21f1-4d26-86af-461c5ef9bf32.png?format=webp&width=1920"
                 },
                 {
                     "name": "Akker van der Merwe",
-                    "image": "https://media-cdn.incrowdsports.com/0ff64e20-fb3d-4afa-8f0f-1cf93887a0b4.png"
-                },
-                {
-                    "name": "Jaco van der Walt",
-                    "image": "https://media-cdn.incrowdsports.com/25d759ba-edca-4b60-b96b-71be5392b08e.png"
+                    "image": "https://media-cdn.cortextech.io/3f133fdc-26bd-4720-a25f-2e386d8ef53d.png?format=webp&width=1920"
                 },
                 {
                     "name": "JF van Heerden",
-                    "image": "https://media-cdn.incrowdsports.com/81c31ac0-69ab-45af-b982-b4e8acd6f116.png"
+                    "image": "https://media-cdn.cortextech.io/8119aebf-1e5f-4724-a86d-fb72291333ee.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Ghudian van Reenen",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png"
+                    "name": "Phillip-Albert van Niekerk",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Marco van Staden",
-                    "image": "https://media-cdn.incrowdsports.com/31e32f09-b35d-4ab8-ab9c-ad7dca7415a5.png"
-                },
-                {
-                    "name": "Joe van Zyl",
-                    "image": "https://media-cdn.incrowdsports.com/dd015af6-479a-4dc1-88d7-b5d97d41f8ec.png"
-                },
-                {
-                    "name": "Ruan Vermaak",
-                    "image": "https://media-cdn.incrowdsports.com/dcbfeba7-d5e1-4fdb-a572-0d0ea8eceb83.png"
+                    "image": "https://media-cdn.cortextech.io/c2dae21c-02fd-4a87-9df8-d727f2cd9ca7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Harold Vorster",
-                    "image": "https://media-cdn.incrowdsports.com/78bccc3c-1164-41bf-86c0-47f276ca8500.png"
+                    "image": "https://media-cdn.cortextech.io/2b4177fe-5045-434a-88e0-751f5261fe2b.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jan-Hendrik Wessels",
-                    "image": "https://media-cdn.incrowdsports.com/43d22104-55cf-4ac1-b3eb-0392d4756b9d.png"
+                    "image": "https://media-cdn.cortextech.io/ca47085a-7f03-4a9f-b6ed-9b360c3a34ab.png?format=webp&width=1920"
                 },
                 {
                     "name": "Cobus Wiese",
-                    "image": "https://media-cdn.incrowdsports.com/66fdf2c0-e611-473f-8e52-5bad434029e8.png"
+                    "image": "https://media-cdn.cortextech.io/1af60bb9-11d9-4c71-9679-4edec18fe36e.png?format=webp&width=1920"
                 },
                 {
                     "name": "Devon Williams",
-                    "image": "https://media-cdn.incrowdsports.com/1eccab47-e183-49d7-b12e-d12ccc3084c0.png"
+                    "image": "https://media-cdn.cortextech.io/e65538b0-3d68-4da1-8f5b-993156bb03e8.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Kade Wolhuter",
+                    "image": "https://media-cdn.cortextech.io/3ac1cebf-dec7-42e9-9132-00abe30b43dd.png?format=webp&width=1920"
                 },
                 {
                     "name": "Nama Xaba",
-                    "image": "https://media-cdn.incrowdsports.com/0cc3e477-1100-47bb-bc58-845db023ba6d.png"
+                    "image": "https://media-cdn.cortextech.io/61c2e9ec-04ce-4ef3-b81a-55862bd73b2c.png?format=webp&width=1920"
                 }
             ]
         },
@@ -2571,216 +2558,172 @@
             "name": "Zebre Parma",
             "players": [
                 {
-                    "name": "Luca Andreani",
-                    "image": "https://media-cdn.incrowdsports.com/3f8325d0-d119-415b-9ce0-fdb996a9e32f.png"
-                },
-                {
-                    "name": "Patricio Baronio Gauna",
-                    "image": "https://media-cdn.incrowdsports.com/8be5c252-2ea7-4633-ba38-0a2fdbef898c.png"
-                },
-                {
                     "name": "Albert Batista",
-                    "image": "https://media-cdn.incrowdsports.com/f2e968a1-83b0-4d95-8699-dfce432fccd5.png"
+                    "image": "https://media-cdn.cortextech.io/ffe82a61-9160-4716-92ad-aaad360543e2.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Mirko Belloni",
+                    "image": "https://media-cdn.cortextech.io/836923de-7916-4ced-b897-9616e5a1a736.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giulio Bertaccini",
-                    "image": "https://media-cdn.incrowdsports.com/a1ef43c5-099e-47ac-ae86-14725db1ff89.png"
-                },
-                {
-                    "name": "Cosimo Beveridge",
-                    "image": "https://media-cdn.incrowdsports.com/0fb7ed38-8757-4ad0-8ed2-e264fc4e2b5b.png"
+                    "image": "https://media-cdn.cortextech.io/ae3c4003-374a-487e-81cd-b616ad5d591b.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jacopo Bianchi",
-                    "image": "https://media-cdn.incrowdsports.com/91441f4b-68bc-4460-8716-2d67e8e3b4a5.png"
-                },
-                {
-                    "name": "Luca Bigi",
-                    "image": "https://media-cdn.incrowdsports.com/a6bec450-cd4a-40b7-8fc2-9dc367a5d09b.png"
-                },
-                {
-                    "name": "Filippo Bozzoni",
-                    "image": "https://media-cdn.incrowdsports.com/e6f002d0-a0e0-4bbe-9127-0ef8b7802263.png"
+                    "image": "https://media-cdn.cortextech.io/1a1ce14c-096f-48dd-ae19-ad4869450f27.png?format=webp&width=1920"
                 },
                 {
                     "name": "Paolo Buonfiglio",
-                    "image": "https://media-cdn.incrowdsports.com/64ee4367-8d24-41ba-8ec4-4889474afa50.png"
-                },
-                {
-                    "name": "Ben Cambriani",
-                    "image": "https://media-cdn.incrowdsports.com/3aee4892-d6f7-477c-a2cb-b0a753610d4b.png"
+                    "image": "https://media-cdn.cortextech.io/d1a575b1-2140-4f2e-a47e-2565edb8b0e1.png?format=webp&width=1920"
                 },
                 {
                     "name": "Matteo Canali",
-                    "image": "https://media-cdn.incrowdsports.com/8b787ac7-a86b-4669-ab85-6a213c5887d2.png"
+                    "image": "https://media-cdn.cortextech.io/fd6519bc-68c3-44a8-b99d-764e0c34ab15.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Franco Carrera",
+                    "image": "https://media-cdn.cortextech.io/db6d779d-9d68-4ccf-a55a-8a24b6c5b2de.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giacomo da Re",
-                    "image": "https://media-cdn.incrowdsports.com/293cc1c9-2071-4f41-b49c-7948b8dbeed5.png"
-                },
-                {
-                    "name": "Dylan de Leeuw",
-                    "image": "https://media-cdn.incrowdsports.com/7d107409-7962-41af-bbff-33895610cd8e.png"
+                    "image": "https://media-cdn.cortextech.io/89d08ddf-7898-4a33-8b49-e9a2ba0ab5c9.png?format=webp&width=1920"
                 },
                 {
                     "name": "Tommaso di Bartolomeo",
-                    "image": "https://media-cdn.incrowdsports.com/1c5d12e0-f6c9-4f86-9439-a0da27796b00.png"
+                    "image": "https://media-cdn.cortextech.io/9b585313-690e-405b-b1fe-a31cb17c990d.png?format=webp&width=1920"
                 },
                 {
                     "name": "Thomas Dominguez",
-                    "image": "https://media-cdn.incrowdsports.com/ca9b1667-b284-4cb1-bbef-dbc9da203be9.png"
+                    "image": "https://media-cdn.cortextech.io/c5b86ce1-159e-4b84-9cea-6f40164abea8.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Malik Faissal",
+                    "image": "https://media-cdn.cortextech.io/3f955d00-e89c-46e5-b920-58fcbf45a305.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giacomo Ferrari",
-                    "image": "https://media-cdn.incrowdsports.com/db3a9c12-ae7d-4886-b2c9-3093361ecbd0.png"
-                },
-                {
-                    "name": "Danilo Fischetti",
-                    "image": "https://media-cdn.incrowdsports.com/4f844c33-03e3-417a-aa51-21857ae063bb.png"
+                    "image": "https://media-cdn.cortextech.io/6e456c1a-dbeb-40e0-b3cc-f21da7bb6021.png?format=webp&width=1920"
                 },
                 {
                     "name": "Luca Franceschetto",
-                    "image": "https://media-cdn.incrowdsports.com/163da5e8-19cf-449a-b471-cf5d34bae95f.png"
+                    "image": "https://media-cdn.cortextech.io/4316f2fc-4280-460d-8cf0-5cf02bd5e11c.png?format=webp&width=1920"
                 },
                 {
                     "name": "Alessandro Fusco",
-                    "image": "https://media-cdn.incrowdsports.com/508a793f-fcef-44d0-b953-ac11e9b5407d.png"
+                    "image": "https://media-cdn.cortextech.io/d89c4673-d8a5-4493-bdbf-631b234bfbb7.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Gonzalo Garcia",
-                    "image": "https://media-cdn.incrowdsports.com/6ea6649c-5f72-4d76-929a-a203536c7609.png"
+                    "name": "Riccardo Genovese",
+                    "image": "https://media-cdn.cortextech.io/be488d43-f17a-4ab6-bfa6-52b9caf3f396.png?format=webp&width=1920"
                 },
                 {
                     "name": "Simone Gesi",
-                    "image": "https://media-cdn.incrowdsports.com/3adb0435-eb18-4e51-82e1-df560bab6a6b.png"
-                },
-                {
-                    "name": "Alessandro Gesi",
-                    "image": "https://media-cdn.incrowdsports.com/245e6d4d-aaf3-4112-b840-f82cb96602c6.png"
-                },
-                {
-                    "name": "Scott Gregory",
-                    "image": "https://media-cdn.incrowdsports.com/4c730240-bb8b-4a50-a5cd-627fffd5a0c0.png"
+                    "image": "https://media-cdn.cortextech.io/c4a37995-62d6-4996-9044-1341130c11c2.png?format=webp&width=1920"
                 },
                 {
                     "name": "Muhamed Hasa",
-                    "image": "https://media-cdn.incrowdsports.com/d0cf2a7f-54e2-40fd-854f-f5225c472e5b.png"
+                    "image": "https://media-cdn.cortextech.io/6d019c20-1997-447b-8520-45e30f2113cb.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Ratko Jelic",
-                    "image": "https://media-cdn.incrowdsports.com/b87c3e5f-d7d2-41ef-951d-a97900c32852.png"
+                    "name": "Shilo Klein",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Leonardo Krumov",
-                    "image": "https://media-cdn.incrowdsports.com/8075dbb4-6631-4bdc-bb06-ae4b101cb6aa.png"
+                    "image": "https://media-cdn.cortextech.io/38685d25-5452-45d1-a71a-a298fd6286ce.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giovanni Licata",
-                    "image": "https://media-cdn.incrowdsports.com/bdc17db6-f061-448c-b791-8cacf6978318.png"
+                    "image": "https://media-cdn.cortextech.io/b2136305-5cc1-4e88-af3d-05c1df4a11b7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Samuele Locatelli",
-                    "image": "https://media-cdn.incrowdsports.com/e51c9743-1511-4d25-9b4a-b8deb422d9d5.png"
+                    "image": "https://media-cdn.cortextech.io/3ae871ee-1c44-43dd-a81b-f8adab670730.png?format=webp&width=1920"
                 },
                 {
                     "name": "Enrico Lucchin",
-                    "image": "https://media-cdn.incrowdsports.com/13ef8210-5a09-4cfb-be3c-0d5f1e78130a.png"
-                },
-                {
-                    "name": "Thomas Manca",
-                    "image": "https://media-cdn.incrowdsports.com/704b9975-db22-451e-852f-f1b36ab8994f.png"
+                    "image": "https://media-cdn.cortextech.io/d4c8fb94-0b7d-4ab2-960b-f0fc48160e43.png?format=webp&width=1920"
                 },
                 {
                     "name": "Damiano Mazza",
-                    "image": "https://media-cdn.incrowdsports.com/e5a1548c-bd10-4c8b-a5ea-91b2640942f1.png"
+                    "image": "https://media-cdn.cortextech.io/a3d26ae9-ee67-4224-9ae6-404580ded3f5.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giacomo Milano",
-                    "image": "https://media-cdn.incrowdsports.com/e23677b3-5e63-4fac-8a74-c32da44b7566.png"
-                },
-                {
-                    "name": "Samuele Mirenzi",
-                    "image": "https://media-cdn.incrowdsports.com/50125920-7ecf-4f09-a100-4a8cf770093d.png"
+                    "image": "https://media-cdn.cortextech.io/8dcad190-363b-46e9-9acc-9daffe95a2c7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giovanni Montemauri",
-                    "image": "https://media-cdn.incrowdsports.com/fa2d5aa8-e63a-4c33-a42b-2f0efb1051c6.png"
+                    "image": "https://media-cdn.cortextech.io/5d5be679-dd54-4050-aa29-4f365c616512.png?format=webp&width=1920"
                 },
                 {
                     "name": "Luca Morisi",
-                    "image": "https://media-cdn.incrowdsports.com/f8d75504-d248-46d2-b721-ff6337fa5e6a.png"
-                },
-                {
-                    "name": "Rusiate Nasove",
-                    "image": "https://media-cdn.incrowdsports.com/57ab263c-c00e-41fc-a3aa-a87f6c139bae.png"
+                    "image": "https://media-cdn.cortextech.io/a8fb5390-b1a7-4f9f-b479-ef5159d87a41.png?format=webp&width=1920"
                 },
                 {
                     "name": "Ion Neculai",
-                    "image": "https://media-cdn.incrowdsports.com/cf0ee859-b66b-4338-8020-1ec138c71596.png"
+                    "image": "https://media-cdn.cortextech.io/393009e8-0371-4a49-844c-6b17dd0a3905.png?format=webp&width=1920"
                 },
                 {
                     "name": "Matteo Nocera",
-                    "image": "https://media-cdn.incrowdsports.com/bf9e2930-e18a-48d5-b2c6-0bf95fa13d14.png"
+                    "image": "https://media-cdn.cortextech.io/844da700-697b-40f8-b570-20bf2b489e41.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Fetuli Paea",
-                    "image": "https://media-cdn.incrowdsports.com/3922f224-bf43-4581-b694-1ed5ffccc480.png"
+                    "name": "Davide Odiase",
+                    "image": "https://media-cdn.cortextech.io/e27f6d4d-0d62-48a3-b676-45f453ac740e.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Alessandro Ortombina",
+                    "image": "https://media-cdn.cortextech.io/43c31ebb-a62a-498f-82ae-35a48f0e0a35.png?format=webp&width=1920"
                 },
                 {
                     "name": "Lorenzo Pani",
-                    "image": "https://media-cdn.incrowdsports.com/1d6a7b86-72c9-482a-8978-7b31f26fb5b9.png"
+                    "image": "https://media-cdn.cortextech.io/411338e7-7f9b-4346-973e-3ca13b2e4ae6.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Juan Pitinari",
-                    "image": "https://media-cdn.incrowdsports.com/4824a5e6-b215-435d-9d02-47560c31c3dd.png"
+                    "name": "Juan-Manuel Pitinari",
+                    "image": "https://media-cdn.cortextech.io/0db6574d-bfe1-4d79-9ac5-cc6e2db7fb2f.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Geronimo Prisciantelli",
-                    "image": "https://media-cdn.incrowdsports.com/9701a6fb-312f-46b3-b11d-c70daf0c7a8e.png"
+                    "name": "Migael Prinsloo",
+                    "image": "https://media-cdn.cortextech.io/bf68481d-fde6-427a-a014-c1c0cf253c5e.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giovanni Quattrini",
-                    "image": "https://media-cdn.incrowdsports.com/0e141f55-9551-4e87-99a1-d1682fad7246.png"
+                    "image": "https://media-cdn.cortextech.io/02be45c6-3055-4917-b969-9a0e40cca4ed.png?format=webp&width=1920"
                 },
                 {
                     "name": "Giampietro Ribaldi",
-                    "image": "https://media-cdn.incrowdsports.com/f2fbe227-fd2b-437a-98c1-705b8198474e.png"
+                    "image": "https://media-cdn.cortextech.io/c843b991-c3f2-4ed3-8808-ee25b7dc6b47.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Luca Rizzoli",
-                    "image": "https://media-cdn.incrowdsports.com/a2a776d5-f06d-4e7c-a4c6-b97b3fea65e6.png"
-                },
-                {
-                    "name": "Francesco Ruffolo",
-                    "image": "https://media-cdn.incrowdsports.com/afd0f2e3-3583-46c4-b9d1-8872b3e64272.png"
+                    "name": "Martin Roger Farias",
+                    "image": "https://media-cdn.cortextech.io/389d392e-d9e4-4e64-b86a-b58f182c466d.png?format=webp&width=1920"
                 },
                 {
                     "name": "Davide Ruggeri",
-                    "image": "https://media-cdn.incrowdsports.com/fd030a82-1644-4d50-94dd-ee3eed8af42d.png"
+                    "image": "https://media-cdn.cortextech.io/5bf33fbb-da0c-4fe8-94eb-d5b84921874d.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Davide Salvan",
-                    "image": "https://media-cdn.incrowdsports.com/ebb79107-9ede-4672-b0bd-a891e6573d60.png"
-                },
-                {
-                    "name": "Bautista Stavile Bravin",
-                    "image": "https://media-cdn.incrowdsports.com/b334935f-4b6a-40b8-8094-43ec6b24d298.png"
-                },
-                {
-                    "name": "Samuele Taddei",
-                    "image": "https://media-cdn.incrowdsports.com/41b09d62-72a1-4c00-ab51-5bb9a7a73e53.png"
+                    "name": "Bautista Stavile",
+                    "image": "https://media-cdn.cortextech.io/8c9780db-b0ee-4364-8e78-c9c0d7f28df5.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jacopo Trulla",
-                    "image": "https://media-cdn.incrowdsports.com/f7816889-51fb-4fcb-847f-9028b9cb147c.png"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Nikolaj Varottoj",
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Guido Volpi",
-                    "image": "https://media-cdn.incrowdsports.com/8810e01e-d8af-4bc9-a72a-331795e7b44d.png"
+                    "image": "https://media-cdn.cortextech.io/cbf6cc4b-8871-419f-99da-bbf669a15366.png?format=webp&width=1920"
                 },
                 {
-                    "name": "Andrea Zambonin",
-                    "image": "https://media-cdn.incrowdsports.com/73dad70e-6963-4398-b4e0-6e4104a98552.png"
+                    "name": "Marco Zanon",
+                    "image": "https://media-cdn.cortextech.io/360a7910-9f2a-4a56-ada1-e19cc3a10943.png?format=webp&width=1920"
                 }
             ]
         }
