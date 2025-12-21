@@ -273,7 +273,7 @@ export const Top14RugbyTeams = [
     logo: MontaubanLogo,
     altLogo: MontaubanAltLogo,
     colour: '#298560',
-    id: '',
+    id: '2068',
     defaultLeague: 'Top 14',
     foundedYear: '1903',
     seasonType: 'north',

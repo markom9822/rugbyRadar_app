@@ -1,5 +1,7 @@
 import { getTeamInfo } from "./getTeamInfo";
 import { getPlayerImageSrc } from "./playerImagesGetter";
+import { findBestPlayerMatch, TeamPlayer } from "./playerNameMatcher";
+import { getTop14TeamPlayersInfo } from "./top14PlayerInfoGetter";
 
 type PlayerInfo = {
     playerName: string
@@ -108,35 +110,42 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
         if (leagueName === "top14") {
             const teamID = getTeamInfo("championsCup", teamName)?.teamInfo.id;
             console.info(teamName)
-            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/teams/' + teamID + '/players?provider=rugbyviz&competitionId=1008&seasonId=202401&images=true'
-            console.info(apiString)
-            const teamPlayersInfo = await fetch(apiString,).then((res) => res.json())
 
-            const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+            const { competitionId, data: teamPlayersInfo } = await getTop14TeamPlayersInfo(teamID);
 
-            for (let index = 0; index < teamPlayersInfo.data.length; index++) {
+            const players: TeamPlayer[] = teamPlayersInfo.data;
+            const { index, player } = findBestPlayerMatch(playerName, teamPlayersInfo.data);
 
-                if (teamPlayersInfo.data[index].knownName === playerName) {
+            console.info(index)
+            console.info(player?.knownName)
+        
+            if (index !== -1 && player) {
 
-                    const playerPosition = teamPlayersInfo.data[index].position;
-                    const playerDOB = new Date(teamPlayersInfo.data[index].dateOfBirth);
-                    const playerAge = calculateAge(playerDOB).toString()
+                let playerImageSrc = '';
 
-                    const playerHeight = handleNullHeightOutput(teamPlayersInfo.data[index].height);
-                    const playerWeight = handleNullWeightOutput(teamPlayersInfo.data[index].weight);
+                if(player.knownName !== null)
+                {
+                    playerImageSrc = getPlayerImageSrc(leagueName, teamName, player.knownName)
+                }
 
-                    const playerCountry = handleNullOutput(teamPlayersInfo.data[index].country);
+                const playerPosition = teamPlayersInfo.data[index].position;
+                const playerDOB = new Date(teamPlayersInfo.data[index].dateOfBirth);
+                const playerAge = calculateAge(playerDOB).toString()
 
-                    return {
-                        playerName: playerName,
-                        playerPosition: playerPosition,
-                        playerAge: playerAge,
-                        playerDOB: formatDate(playerDOB),
-                        playerHeight: playerHeight,
-                        playerWeight: playerWeight,
-                        playerCountry: playerCountry,
-                        playerImageSrc: playerImageSrc
-                    }
+                const playerHeight = handleNullHeightOutput(teamPlayersInfo.data[index].height);
+                const playerWeight = handleNullWeightOutput(teamPlayersInfo.data[index].weight);
+
+                const playerCountry = handleNullOutput(teamPlayersInfo.data[index].country);
+
+                return {
+                    playerName: playerName,
+                    playerPosition: playerPosition,
+                    playerAge: playerAge,
+                    playerDOB: formatDate(playerDOB),
+                    playerHeight: playerHeight,
+                    playerWeight: playerWeight,
+                    playerCountry: playerCountry,
+                    playerImageSrc: playerImageSrc
                 }
             }
         }
