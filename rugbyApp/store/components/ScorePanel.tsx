@@ -4,9 +4,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
-import { getItem } from "../utils/asyncStorage";
-import { useEffect, useState } from "react";
-import { getDefaultTimezone } from "@/app/(tabs)/settings";
 
 type ScorePanelProps = {
     leagueDisplayName: string
@@ -25,28 +22,18 @@ type ScorePanelProps = {
     eventTime: string,
     isLastItem: boolean,
     lastRefreshTime: string,
+    currentTimeZone: string,
     OnPress: (index: number, id: string) => void
 }
 
 export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, awayScore, matchDate,
-    index, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime, OnPress }: ScorePanelProps) => {
+    index, matchTitle, matchVenue, matchLeague, matchID, eventState, stateDetail, eventTime, isLastItem, lastRefreshTime, currentTimeZone, OnPress }: ScorePanelProps) => {
 
     console.info(leagueDisplayName)
     const leagueName = getLeagueNameFromDisplayName(leagueDisplayName)
     const homeAwayInfo = getHomeAwayTeamInfo(leagueName, homeTeam, awayTeam);
     const homeTeamInfo = homeAwayInfo?.homeInfo;
     const awayTeamInfo = homeAwayInfo?.awayInfo;
-
-    const [currentTimezone, setCurrentTimezone] = useState<string>('Europe/London');
-
-    useEffect(() => {
-        async function fetchTimezone() {
-            // get default timezone
-            const defaultTimezone = await getDefaultTimezone();
-            setCurrentTimezone(defaultTimezone);
-        }
-        fetchTimezone()
-    }, [])
 
     if (homeTeamInfo === null) return
     if (awayTeamInfo === null) return
@@ -57,7 +44,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     const awayTextColour = (new Number(awayScore) >= new Number(homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
     // add in time zone here
-    const matchTime = matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: currentTimezone })
+    const matchTime = matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: currentTimeZone })
 
     const scoreRender = (eventState: string) => {
 
@@ -138,6 +125,7 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
             return (
                 <View style={{ marginVertical: 10, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ textAlign: 'center', color: 'grey', fontSize: fontSize.xs, fontFamily: fontFamilies.light }}>Last Refresh: {time}</Text>
+                    <Text style={{ textAlign: 'center', color: 'grey', fontSize: fontSize.xs, fontFamily: fontFamilies.light }}>Timezone: {currentTimeZone}</Text>
                 </View>
             )
         }

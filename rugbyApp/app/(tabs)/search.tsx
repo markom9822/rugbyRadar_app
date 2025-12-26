@@ -15,7 +15,7 @@ import { hexToRGB } from "@/store/utils/helpers"
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Image, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
-import { getDefaultTimezone } from "./settings"
+import { getDefaultTimezone, getDeviceLocalTimezone, isTimeSyncEnabled } from "./settings"
 
 export type SearchTeamInfo = {
     type: string;
@@ -100,15 +100,6 @@ const TeamsScreen = () => {
 
     const [currentTimezone, setCurrentTimezone] = useState<string>('Europe/London');
 
-    useEffect(() => {
-        async function fetchTimezone() {
-            // get default timezone
-            const defaultTimezone = await getDefaultTimezone();
-            setCurrentTimezone(defaultTimezone);
-        }
-        fetchTimezone()
-    }, [])
-
     const handleOnSearchTextChange = (search: string) => {
         setTeamSearch(search)
 
@@ -132,8 +123,23 @@ const TeamsScreen = () => {
 
     const snapPoints = ["100%"];
 
-    const handlePresentModalPress = (id: string, index: number) => {
+    const handlePresentModalPress = async (id: string, index: number) => {
         setCurrentIndex(index)
+
+        // Fetch fresh timezone when bottom sheet opens
+        const timeSyncEnabled = await isTimeSyncEnabled();
+        let timezone: string;
+
+        if (timeSyncEnabled) {
+            const deviceTimeZone = getDeviceLocalTimezone();
+            console.info(`Device time zone: ${deviceTimeZone}`);
+            timezone = deviceTimeZone || 'Europe/London'; // fallback
+        } else {
+            timezone = await getDefaultTimezone();
+            console.info(`Using Manual time zone - ${timezone}`);
+        }
+
+        setCurrentTimezone(timezone);
         bottomSheetModalRef.current?.present();
     }
 

@@ -163,13 +163,18 @@ type TeamResultsPanelItemProps = {
 }
 
 export const TeamResultsPanelItem = ({ eventDate, homeTeamName, awayTeamName, homeTeamScore, awayTeamScore, leagueName, eventState, isLastItem, currentTimezone }: TeamResultsPanelItemProps) => {
+
     const formattedDate = new Date(eventDate).toLocaleDateString('en-GB', {
         day: '2-digit',
         month: '2-digit',
         timeZone: currentTimezone
     });
 
-    const eventTime = new Date(eventDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+    const eventTime = new Date(eventDate).toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: currentTimezone
+    });
 
     const leagueInfo = getLeagueInfoFromDisplayName(leagueName);
     if (leagueInfo == null) return;

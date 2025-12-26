@@ -20,9 +20,10 @@ type FixturesPanelProps = {
     matchInfo: MatchInfo,
     id: string,
     bottomSheetRef: React.RefObject<BottomSheetModal | null>
+    currentTimezone: string,
 }
 
-export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelProps) => {
+export const FixturesPanel = ({ matchInfo, id, bottomSheetRef, currentTimezone }: FixturesPanelProps) => {
 
     const [mainTeamFormStatsArray, setMainTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
     const [opponentTeamFormStatsArray, setOpponentTeamFormStatsArray] = useState<TeamEventStatsInfo[] | undefined>();
@@ -39,7 +40,7 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef }: FixturesPanelPr
     const homeTextColour = (new Number(matchInfo.homeScore) >= new Number(matchInfo.awayScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
     const awayTextColour = (new Number(matchInfo.awayScore) >= new Number(matchInfo.homeScore)) ? (colors.text) : (hexToRGB('#FFFFFF', '0.5'));
 
-    const matchTime = matchInfo.matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+    const matchTime = matchInfo.matchDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: currentTimezone })
 
     if (matchInfo.homeTeam.includes("U20")) {
         homeAbbreviation += " U20"

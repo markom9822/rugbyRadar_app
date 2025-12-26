@@ -92,7 +92,7 @@ export const LeagueUpcomingFixture = ({ fixtureInfo, currentTimezone }: LeagueUp
         timeZone: currentTimezone
     });
 
-    const eventTime = new Date(fixtureInfo.matchDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+    const eventTime = new Date(fixtureInfo.matchDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: currentTimezone })
 
     const leagueInfo = getLeagueInfoFromDisplayName(fixtureInfo.matchLeague);
     if (leagueInfo == null) return;

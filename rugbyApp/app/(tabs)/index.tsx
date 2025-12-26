@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native"
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
 import { get7Days, getLeagueFixtures } from "@/store/utils/getLeagueFixtures"
+import { getDefaultTimezone, getDeviceLocalTimezone, isTimeSyncEnabled } from "./settings"
 
 export type MatchInfo = {
     homeTeam: string,
@@ -49,9 +50,13 @@ const FixturesScreen = () => {
     const [currentTab, setCurrentTab] = useState<string>('Today');
     const [currentDateArray, setCurrentDateArray] = useState<Date[]>([new Date()]);
 
+    const [currentTimezone, setCurrentTimezone] = useState<string>('Europe/London');
+
     const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
     const handlePressFetchData = async (datesArray: Date[], targetLeagueName: string, setCurrent: boolean) => {
+        
+        
         console.info("Pressed Fetch Data")
 
         if (setCurrent) {
@@ -132,6 +137,31 @@ const FixturesScreen = () => {
 
         await setItem('defaultLeague', leagueValue);
     }
+
+    useEffect(() => {
+        async function fetchTimezone() {
+
+            const timeSyncEnabled = await isTimeSyncEnabled();
+
+            if (timeSyncEnabled) {
+                // need to get timezone from device
+                const deviceTimeZone = getDeviceLocalTimezone();
+                console.info(`Device time zone: ${deviceTimeZone}`)
+                if (deviceTimeZone != null) {
+                    setCurrentTimezone(deviceTimeZone)
+                    return;
+                }
+            }
+
+            // get default timezone
+            const defaultTimezone = await getDefaultTimezone();
+
+            console.info(`Using Manual time zone - ${defaultTimezone}`)
+
+            setCurrentTimezone(defaultTimezone);
+        }
+        fetchTimezone()
+    }, [lastRefresh])
 
     useEffect(() => {
         async function fetchMyAPI() {
@@ -264,6 +294,7 @@ const FixturesScreen = () => {
                             eventTime={item.eventTime}
                             isLastItem={index === matchesArray.length - 1}
                             lastRefreshTime={lastRefresh}
+                            currentTimeZone={currentTimezone}
                             OnPress={handlePresentModalPress}
                         />
                     )
@@ -272,23 +303,24 @@ const FixturesScreen = () => {
             }
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => handlePressFetchData(currentDateArray, leagueName, true)} />} />
 
-                <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    index={0}
-                    snapPoints={snapPoints}
-                    enableDynamicSizing={false}
-                    enableOverDrag={false}
-                    backdropComponent={renderBackdrop}
-                    handleComponent={null}
-                    handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
-                    backgroundStyle={{ backgroundColor: "#0c0c0cff" }}
-                >
+        <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={0}
+            snapPoints={snapPoints}
+            enableDynamicSizing={false}
+            enableOverDrag={false}
+            backdropComponent={renderBackdrop}
+            handleComponent={null}
+            handleIndicatorStyle={{ backgroundColor: 'lightgrey', width: "10%" }}
+            backgroundStyle={{ backgroundColor: "#0c0c0cff" }}
+        >
 
-                <FixturesPanel
-                    matchInfo={matchesArray[currentIndex]}
-                    id={currentID}
-                    bottomSheetRef={bottomSheetModalRef} />   
-                </BottomSheetModal>
+            <FixturesPanel
+                matchInfo={matchesArray[currentIndex]}
+                id={currentID}
+                bottomSheetRef={bottomSheetModalRef}
+                currentTimezone={currentTimezone} />
+        </BottomSheetModal>
     </View>
 }
 
