@@ -170,6 +170,18 @@
                 {
                     "name": "Josh van der Flier",
                     "image": "https://media-cdn.cortextech.io/f25067bd-69aa-412b-91c9-a967f0131655.png?format=webp&width=1920"
+                },
+                {
+                    "name": "Joshua Kenny",
+                    "image": "https://www.unitedrugby.com/wp-content/uploads/player-headshots/leinster/LEI_Joshua_Kenny_Hero2_Torso-copy-1.webp"
+                },
+                {
+                    "name": "Cormac Foley",
+                    "image": "https://d2tqzbbf1n6xva.cloudfront.net/leinster2023/images/player/headShot/Cormac%20Foley_5_11zon.jpg"
+                },
+                {
+                    "name": "Alex Usanov",
+                    "image": "https://d2tqzbbf1n6xva.cloudfront.net/leinster2023/images/player/headShot/Alex%20Usanov_25_11zon.jpg"
                 }
             ]
         },
@@ -274,38 +286,31 @@
                 },
                 {
                     "name": "Jean Kleyn",
-                    "image": "https://media-cdn.cortextech.io/1205e16b-9b2e-4fd6-9c1d-9c3eb0da15c9.png?format=webp&width=1920",
-                    "position": "Lock"
+                    "image": "https://media-cdn.cortextech.io/1205e16b-9b2e-4fd6-9c1d-9c3eb0da15c9.png?format=webp&width=1920"
                 },
                 {
                     "name": "Jeremy Loughman",
-                    "image": "https://media-cdn.cortextech.io/1494ff9f-7efc-4a27-b997-b4766d6f5c0d.png?format=webp&width=1920",
-                    "position": "Prop"
+                    "image": "https://media-cdn.cortextech.io/1494ff9f-7efc-4a27-b997-b4766d6f5c0d.png?format=webp&width=1920"
                 },
                 {
                     "name": "Shay McCarthy",
-                    "image": "https://media-cdn.cortextech.io/25f90e40-5215-4733-b4c5-23c8f69dd7df.png?format=webp&width=1920",
-                    "position": "Wing"
+                    "image": "https://media-cdn.cortextech.io/25f90e40-5215-4733-b4c5-23c8f69dd7df.png?format=webp&width=1920"
                 },
                 {
                     "name": "Michael Milne",
-                    "image": "https://media-cdn.cortextech.io/f7c5f404-fd13-47fb-9382-c372dc26cc09.png?format=webp&width=1920",
-                    "position": "Prop"
+                    "image": "https://media-cdn.cortextech.io/f7c5f404-fd13-47fb-9382-c372dc26cc09.png?format=webp&width=1920"
                 },
                 {
                     "name": "Alex Nankivell",
-                    "image": "https://media-cdn.cortextech.io/91e9e68a-1e63-48fb-bb16-5e8dce025491.png?format=webp&width=1920",
-                    "position": "Centre"
+                    "image": "https://media-cdn.cortextech.io/91e9e68a-1e63-48fb-bb16-5e8dce025491.png?format=webp&width=1920"
                 },
                 {
                     "name": "Calvin Nash",
-                    "image": "https://media-cdn.cortextech.io/3315fc5d-e7f9-411a-92d0-6080ca9374c2.png?format=webp&width=1920",
-                    "position": "Wing"
+                    "image": "https://media-cdn.cortextech.io/3315fc5d-e7f9-411a-92d0-6080ca9374c2.png?format=webp&width=1920"
                 },
                 {
                     "name": "Sean O'Brien",
-                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920",
-                    "position": "Prop"
+                    "image": "https://media-cdn.incrowdsports.com/2d9af3bc-c679-4007-a058-dc6b348f15e7.png?format=webp&width=1920"
                 },
                 {
                     "name": "Evan O'Connell",
