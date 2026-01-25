@@ -19,6 +19,7 @@ Rugby Radar is a mobile app I created which provides real-time information on fi
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
 - [Figma](https://www.figma.com/)
+- [Supabase](https://supabase.com/)
   
 ---
 
