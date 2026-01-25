@@ -93,7 +93,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
         const playerWeight = handleNullWeightOutput(playerInfo.data.weight);
 
         const playerCountry = handleNullOutput(playerInfo.data.country);
-        const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+        const playerImageSrc = await getPlayerImageSrc(leagueName, teamName, playerName)
 
         return {
             playerName: playerName,
@@ -125,7 +125,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
 
                 if(player.knownName !== null)
                 {
-                    playerImageSrc = getPlayerImageSrc(leagueName, teamName, player.knownName)
+                    playerImageSrc = await getPlayerImageSrc(leagueName, teamName, player.knownName)
                 }
 
                 const playerPosition = teamPlayersInfo.data[index].position;
@@ -165,7 +165,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
         const playerWeight = handleNullWeightOutput(playerInfo.weight);
         const playerCountry = handleNullOutput(playerInfo.country);
 
-        const playerImageSrc = getPlayerImageSrc(leagueName, teamName, playerName)
+        const playerImageSrc = await getPlayerImageSrc(leagueName, teamName, playerName)
 
         let playerImage = playerImageSrc;
 
