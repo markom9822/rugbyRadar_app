@@ -1,0 +1,58 @@
+export default {
+  expo: {
+    name: "Rugby Radar",
+    slug: "rugbyApp",
+    version: "1.4.0",
+    orientation: "portrait",
+    icon: "./assets/images/rugbyIcon.png",
+    scheme: "rugbyapp",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    ios: {
+      supportsTablet: true
+    },
+    android: {
+      adaptiveIcon: {
+        backgroundColor: "#000000",
+        foregroundImage: "./assets/images/rugbyAdaptive-icon.png",
+        backgroundImage: "./assets/images/android-icon-background.png",
+        monochromeImage: "./assets/images/android-icon-monochrome.png"
+      },
+      edgeToEdgeEnabled: true,
+      predictiveBackGestureEnabled: false,
+      package: "com.mark98.rugbyApp"
+    },
+    web: {
+      output: "static",
+      favicon: "./assets/images/favicon-rugby.png"
+    },
+    plugins: [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          image: "./assets/images/rugbySplash.png",
+          imageWidth: 200,
+          resizeMode: "contain",
+          backgroundColor: "#ffffff",
+          dark: {
+            backgroundColor: "#000000"
+          }
+        }
+      ],
+      "expo-localization",
+      "expo-sqlite"
+    ],
+    experiments: {
+      typedRoutes: true,
+      reactCompiler: true
+    },
+    extra: {
+      eas: {
+        projectId: "a3eba83f-297a-42cb-a199-67b14518f573"
+      },
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY,
+    }
+  }
+}
