@@ -11,6 +11,7 @@ import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { getPlayerInfo } from "../utils/playerInfoGetter";
 import { DefaultPlayerImg } from "../utils/playerImagesGetter";
+import { TeamLineupPitch } from "./TeamLineupPitch";
 
 export type LineUpInfo = {
     teamPlayer: string,
@@ -315,25 +316,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
                         <LinearGradient colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']} start={{ x: gradientStartFraction, y: 0.5 }} end={{ x: gradientEndFraction, y: 0.5 }} >
 
-                            <FlatList data={allLineupsArray}
-                                scrollEnabled={false}
-                                renderItem={({ item, index }) =>
-                                    <LineupPlayerPanel
-                                        key={index}
-                                        selectedTeam={selectedTeam}
-                                        selectedTeamDisplayName={selectedTeam === "home" ? homeTeamName : awayTeamName}
-                                        hometeamPlayer={item.hometeamPlayer}
-                                        hometeamPlayerID={item.hometeamPlayerID}
-                                        hometeamPlayerNum={item.hometeamPlayerNum}
-                                        isHomePlayerCaptain={item.isHomePlayerCaptain}
-                                        awayteamPlayer={item.awayteamPlayer}
-                                        awayteamPlayerID={item.awayteamPlayerID}
-                                        awayteamPlayerNum={item.awayteamPlayerNum}
-                                        isAwayPlayerCaptain={item.isAwayPlayerCaptain}
-                                        teamColour={(selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour}
-                                        OnPlayerModalShown={handlePlayerModalShown}
-                                    />}
-                            />
+                            <TeamLineupPitch allLineupsArray={allLineupsArray} selectedTeam={selectedTeam} 
+                            leagueName={leagueName} selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}/>
                         </LinearGradient>
                     </BottomSheetScrollView>
 

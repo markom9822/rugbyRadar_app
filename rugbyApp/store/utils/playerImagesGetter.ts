@@ -6,6 +6,20 @@ export const DefaultPlayerImg = require('@/store/PlayerImages/default_player.png
 export const getPlayerImageSrc = async (leagueName: string, teamName: string, playerName: string): Promise<string> => {
   let correctTeamName = teamName.replace(" Rugby", "");
 
+  // if international then get from bucket
+  if(leagueName === 'sixNations')
+  {
+    const teamSlug = correctTeamName.toLowerCase();
+    
+    const playerFileName = playerName
+    .replace(/\s+/g, '') 
+    + '.png';
+
+    console.log("teams/team-" + teamSlug + "/" + playerFileName)
+    const uri = await getPlayerImageSignedImageUrl("teams/team-" + teamSlug + "/" + playerFileName);
+    return uri;
+  }
+
   if (leagueName === 'championsCup' || leagueName === 'challengeCup') {
     correctTeamName = getChampsCupShortNameFromFullName(teamName);
     
@@ -54,3 +68,14 @@ export const getPlayerImageSrc = async (leagueName: string, teamName: string, pl
 
   return data?.Image || '';
 }
+
+
+export const getPlayerImageSignedImageUrl = async (path: string) => {
+  const { data, error } = await supabase
+    .storage
+    .from('player-images')
+    .createSignedUrl(path, 60 * 60); // 1 hour
+
+  if (error) throw error;
+  return data.signedUrl;
+};

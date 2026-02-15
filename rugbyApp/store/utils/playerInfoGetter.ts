@@ -14,6 +14,15 @@ type PlayerInfo = {
     playerImageSrc: string
 };
 
+export const getSafePlayerImageSrc = async (leagueName: string, teamName: string, playerNameOrKnownName: string): Promise<string> => {
+    try {
+        return await getPlayerImageSrc(leagueName, teamName, playerNameOrKnownName);
+    } catch (error) {
+        console.warn(`Failed to get player image for ${playerNameOrKnownName}:`, error);
+        return '';
+    }
+};
+
 export const getPlayerInfo = async (playerName: string, playerID: string, teamName: string, leagueID: string, leagueName: string, id: string): Promise<PlayerInfo> => {
 
     if (playerName === "-") {
@@ -93,7 +102,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
         const playerWeight = handleNullWeightOutput(playerInfo.data.weight);
 
         const playerCountry = handleNullOutput(playerInfo.data.country);
-        const playerImageSrc = await getPlayerImageSrc(leagueName, teamName, playerName)
+        const playerImageSrc = await getSafePlayerImageSrc(leagueName, teamName, playerName)
 
         return {
             playerName: playerName,
@@ -125,7 +134,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
 
                 if(player.knownName !== null)
                 {
-                    playerImageSrc = await getPlayerImageSrc(leagueName, teamName, player.knownName)
+                    playerImageSrc = await getSafePlayerImageSrc(leagueName, teamName, player.knownName)
                 }
 
                 const playerPosition = teamPlayersInfo.data[index].position;
@@ -156,6 +165,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
         const apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/player/' + playerID + '?language=en'
         const playerInfo = await fetch(apiString,).then((res) => res.json())
 
+        console.info(leagueName)
         console.info(playerInfo)
 
         const playerDOB = new Date(playerInfo.dob.millis);
@@ -165,7 +175,7 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
         const playerWeight = handleNullWeightOutput(playerInfo.weight);
         const playerCountry = handleNullOutput(playerInfo.country);
 
-        const playerImageSrc = await getPlayerImageSrc(leagueName, teamName, playerName)
+        const playerImageSrc = await getSafePlayerImageSrc(leagueName, teamName, playerName)
 
         let playerImage = playerImageSrc;
 
