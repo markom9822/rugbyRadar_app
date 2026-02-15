@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "Rugby Radar",
     slug: "rugbyApp",
-    version: "1.4.0",
+    version: "1.4.1",
     orientation: "portrait",
     icon: "./assets/images/rugbyIcon.png",
     scheme: "rugbyapp",
@@ -13,10 +13,10 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        backgroundColor: "#000000",
+        backgroundColor: "#ffffff",
         foregroundImage: "./assets/images/rugbyAdaptive-icon.png",
         backgroundImage: "./assets/images/android-icon-background.png",
-        monochromeImage: "./assets/images/android-icon-monochrome.png"
+        monochromeImage: "./assets/images/rugbyMonochrome.png"
       },
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
