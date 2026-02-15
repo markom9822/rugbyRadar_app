@@ -11,7 +11,8 @@ export type TeamLineupPitchProps = {
     allLineupsArray: AllLineUpsInfo[],
     selectedTeam: string
     leagueName: string,
-    selectedTeamName: string
+    selectedTeamName: string,
+    selectedTeamColour: string,
 }
 
 export type LineupPlayerInfo = {
@@ -63,7 +64,7 @@ type PlayerPosition = {
     index: number; // array index
 }
 
-export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, selectedTeamName }: TeamLineupPitchProps) => {
+export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, selectedTeamName, selectedTeamColour }: TeamLineupPitchProps) => {
     // State to hold all player data
     const [allPlayersData, setAllPlayersData] = useState<any[]>([]);
 
@@ -127,19 +128,20 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                     opacity: 0.6
                 }}
             >
-                <View style={{marginTop: 40}}>
+                <View style={{ marginTop: 40 }}>
                     <GridView
-                    data={allPlayersData.slice(0, 3)} // Props (1-3)
-                    col={3}
-                    renderItem={(item: any) => (
-                        <TeamLineupPitchPlayer
-                            playerInfo={item.playerInfo}
-                            playerPosition={item.position}
-                        />
-                    )}
-                />
+                        data={allPlayersData.slice(0, 3)} // Props (1-3)
+                        col={3}
+                        renderItem={(item: any) => (
+                            <TeamLineupPitchPlayer
+                                playerInfo={item.playerInfo}
+                                playerPosition={item.position}
+                                teamColour={selectedTeamColour}
+                            />
+                        )}
+                    />
                 </View>
-                
+
                 <GridView
                     data={allPlayersData.slice(3, 5)} // Locks (4-5)
                     col={2}
@@ -147,6 +149,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                         <TeamLineupPitchPlayer
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
+                            teamColour={selectedTeamColour}
                         />
                     )}
                 />
@@ -161,6 +164,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                         <TeamLineupPitchPlayer
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
+                            teamColour={selectedTeamColour}
                         />
                     )}
                 />
@@ -171,6 +175,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                         <TeamLineupPitchPlayer
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
+                            teamColour={selectedTeamColour}
                         />
                     )}
                 />
@@ -181,6 +186,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                         <TeamLineupPitchPlayer
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
+                            teamColour={selectedTeamColour}
                         />
                     )}
                 />
@@ -195,6 +201,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                         <TeamLineupPitchPlayer
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
+                            teamColour={selectedTeamColour}
                         />
                     )}
                 />
@@ -211,6 +218,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                         <TeamLineupPitchPlayer
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
+                            teamColour={selectedTeamColour}
                             isBenchPlayer={true}
                         />
                     )}
@@ -224,15 +232,17 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
 export type TeamLineupPitchPlayerProps = {
     playerInfo: LineupPlayerInfo | undefined
     playerPosition: string
+    teamColour: string
     isBenchPlayer?: boolean
 }
 
-export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, isBenchPlayer = false }: TeamLineupPitchPlayerProps) => {
+export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, teamColour, isBenchPlayer = false }: TeamLineupPitchPlayerProps) => {
 
     const getPlayerLastName = (fullName: string | undefined): string => {
-    if (!fullName || fullName === '-') return '';
-    
-    return fullName.trim().split(' ').pop() || '';};
+        if (!fullName || fullName === '-') return '';
+
+        return fullName.trim().split(' ').pop() || '';
+    };
 
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 6 }}>
@@ -241,10 +251,13 @@ export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, isBenchPlaye
                     source={playerInfo?.playerImgSrc !== "" ? { uri: playerInfo?.playerImgSrc } : DefaultPlayerImg} />
             </View>
             <View>
-                <Text style={{backgroundColor: 'grey', borderWidth: 1, paddingHorizontal: 2, borderColor: 'lightgrey',
-                     color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10 }}>
-                    {getPlayerLastName(playerInfo?.playerName)}
-                </Text>
+                <View style={{flexDirection: 'row', width: '100%', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'transparent', borderRadius: 2, borderWidth: 1, borderColor: 'lightgrey'}}>
+                    <Text style={{color: 'white', fontFamily: fontFamilies.title , paddingHorizontal: 4, backgroundColor: teamColour, fontSize: isBenchPlayer ? 8 : 10}}>{playerInfo?.playerNumber}</Text>
+                    <Text style={{color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10, paddingHorizontal: 3}}>
+                        {getPlayerLastName(playerInfo?.playerName)}
+                    </Text>
+                </View>
+
                 {!isBenchPlayer && (
                     <Text style={{ color: 'white', textAlign: 'center', fontFamily: fontFamilies.light, fontSize: fontSize.xs }}>
                         {playerPosition}

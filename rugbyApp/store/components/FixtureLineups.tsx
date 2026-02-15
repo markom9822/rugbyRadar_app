@@ -325,6 +325,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                                 selectedTeam={selectedTeam}
                                 leagueName={leagueName}
                                 selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}
+                                selectedTeamColour={selectedTeamGradientColour}
                             />
                         </LinearGradient>
                     </BottomSheetScrollView>
