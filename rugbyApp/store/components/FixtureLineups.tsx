@@ -3,7 +3,7 @@ import { lineupPanelStyles } from "@/styles";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
@@ -314,27 +314,35 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
                     <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1 }}>
 
-                        <LinearGradient colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']} start={{ x: gradientStartFraction, y: 0.5 }} end={{ x: gradientEndFraction, y: 0.5 }} >
-
-                            <TeamLineupPitch allLineupsArray={allLineupsArray} selectedTeam={selectedTeam} 
-                            leagueName={leagueName} selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}/>
+                        <LinearGradient
+                            colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']}
+                            start={{ x: 0.5, y: 0.6 }}
+                            end={{ x: 0.5, y: 1 }}
+                            style={{ flex: 1 }}
+                        >
+                            <TeamLineupPitch
+                                allLineupsArray={allLineupsArray}
+                                selectedTeam={selectedTeam}
+                                leagueName={leagueName}
+                                selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}
+                            />
                         </LinearGradient>
                     </BottomSheetScrollView>
 
                     <Modal transparent visible={playerModalShown}>
                         <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center' }}>
-                            <View style={{ backgroundColor: colors.background, borderRadius: 5, borderColor: hexToRGB(modalTeamColour, '0.5'), borderWidth: 1}}>
+                            <View style={{ backgroundColor: colors.background, borderRadius: 5, borderColor: hexToRGB(modalTeamColour, '0.5'), borderWidth: 1 }}>
                                 <View style={{ padding: 15, backgroundColor: hexToRGB(modalTeamColour, '0.15') }}>
 
-                                    <TouchableOpacity style={{position: 'absolute', top: 15, right: 15, zIndex: 1}} onPress={() => setPlayerModalShown(false)}>
+                                    <TouchableOpacity style={{ position: 'absolute', top: 15, right: 15, zIndex: 1 }} onPress={() => setPlayerModalShown(false)}>
                                         <AntDesign name="close" size={18} color="white" />
                                     </TouchableOpacity>
 
                                     <View style={{ alignItems: 'center' }}>
                                         <View style={{ padding: 4, margin: 4, marginTop: 25 }}>
-                                            <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }}  
-                                            source={modalPlayerImageSrc !== "" ? { uri: modalPlayerImageSrc } : DefaultPlayerImg} />
-                                            
+                                            <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }}
+                                                source={modalPlayerImageSrc !== "" ? { uri: modalPlayerImageSrc } : DefaultPlayerImg} />
+
                                             <View style={{
                                                 position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
                                                 top: 190, bottom: 0, left: 18, right: 18, backgroundColor: colors.background

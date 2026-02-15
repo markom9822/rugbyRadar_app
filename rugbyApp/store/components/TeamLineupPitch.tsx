@@ -91,7 +91,7 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
         { num: "20", position: "Sub 5", index: 20 },
         { num: "21", position: "Sub 6", index: 21 },
         { num: "22", position: "Sub 7", index: 22 },
-        { num: "23", position: "Sub 8", index: 23},
+        { num: "23", position: "Sub 8", index: 23 },
     ];
 
     // Fetch all player data on mount
@@ -119,88 +119,102 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
 
     return (
         <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
-            <GridView
-                data={allPlayersData.slice(0, 3)} // Props (1-3)
-                col={3}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                    />
-                )}
-            />
-            <GridView
-                data={allPlayersData.slice(3, 5)} // Locks (4-5)
-                col={2}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                    />
-                )}
-            />
-            <GridView
-                data={[
-                    allPlayersData[5],
-                    allPlayersData[7],
-                    allPlayersData[6]
-                ].filter(Boolean)}
-                col={3}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                    />
-                )}
-            />
-            <GridView
-                data={allPlayersData.slice(8, 10)}
-                col={2}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                    />
-                )}
-            />
-            <GridView
-                data={allPlayersData.slice(11, 13)}
-                col={2}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                    />
-                )}
-            />
-            <GridView
-                data={[
-                    allPlayersData[10],
-                    allPlayersData[14],
-                    allPlayersData[13]
-                ].filter(Boolean)}
-                col={3}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                    />
-                )}
-            />
-            <View>
-                <Text style={{color: 'lightgrey', fontFamily: fontFamilies.title, fontSize: fontSize.xs, textAlign: 'center', 
-                    paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: 'lightgrey', opacity: 0.5}}>Substitutes</Text>
+            <ImageBackground
+                source={require('../../store/Icons/rugbyPitch.png')}
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+                resizeMode="contain" imageStyle={{
+                    borderRadius: 12,
+                    opacity: 0.6
+                }}
+            >
+                <View style={{marginTop: 40}}>
+                    <GridView
+                    data={allPlayersData.slice(0, 3)} // Props (1-3)
+                    col={3}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                        />
+                    )}
+                />
+                </View>
+                
                 <GridView
-                data={allPlayersData.slice(15, 24)}
-                col={4}
-                renderItem={(item: any) => (
-                    <TeamLineupPitchPlayer
-                        playerInfo={item.playerInfo}
-                        playerPosition={item.position}
-                        isBenchPlayer={true}
-                    />
-                )}
-            />
+                    data={allPlayersData.slice(3, 5)} // Locks (4-5)
+                    col={2}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                        />
+                    )}
+                />
+                <GridView
+                    data={[
+                        allPlayersData[5],
+                        allPlayersData[7],
+                        allPlayersData[6]
+                    ].filter(Boolean)}
+                    col={3}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                        />
+                    )}
+                />
+                <GridView
+                    data={allPlayersData.slice(8, 10)}
+                    col={2}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                        />
+                    )}
+                />
+                <GridView
+                    data={allPlayersData.slice(11, 13)}
+                    col={2}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                        />
+                    )}
+                />
+                <GridView
+                    data={[
+                        allPlayersData[10],
+                        allPlayersData[14],
+                        allPlayersData[13]
+                    ].filter(Boolean)}
+                    col={3}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                        />
+                    )}
+                />
+            </ImageBackground>
+            <View>
+                <Text style={{
+                    color: 'lightgrey', fontFamily: fontFamilies.title, fontSize: fontSize.xs, textAlign: 'center',
+                    paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: 'lightgrey', opacity: 0.5
+                }}>Substitutes</Text>
+                <GridView
+                    data={allPlayersData.slice(15, 24)}
+                    col={4}
+                    renderItem={(item: any) => (
+                        <TeamLineupPitchPlayer
+                            playerInfo={item.playerInfo}
+                            playerPosition={item.position}
+                            isBenchPlayer={true}
+                        />
+                    )}
+                />
             </View>
 
         </View>
@@ -214,6 +228,12 @@ export type TeamLineupPitchPlayerProps = {
 }
 
 export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, isBenchPlayer = false }: TeamLineupPitchPlayerProps) => {
+
+    const getPlayerLastName = (fullName: string | undefined): string => {
+    if (!fullName || fullName === '-') return '';
+    
+    return fullName.trim().split(' ').pop() || '';};
+
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 6 }}>
             <View>
@@ -221,8 +241,9 @@ export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, isBenchPlaye
                     source={playerInfo?.playerImgSrc !== "" ? { uri: playerInfo?.playerImgSrc } : DefaultPlayerImg} />
             </View>
             <View>
-                <Text style={{ color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10 }}>
-                    {playerInfo?.playerName}
+                <Text style={{backgroundColor: 'grey', borderWidth: 1, paddingHorizontal: 2, borderColor: 'lightgrey',
+                     color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10 }}>
+                    {getPlayerLastName(playerInfo?.playerName)}
                 </Text>
                 {!isBenchPlayer && (
                     <Text style={{ color: 'white', textAlign: 'center', fontFamily: fontFamilies.light, fontSize: fontSize.xs }}>
