@@ -1,11 +1,13 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens"
 import { LinearGradient } from "expo-linear-gradient"
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native"
+import { ActivityIndicator, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { AllLineUpsInfo } from "./FixtureLineups"
 import { GridView } from "./GridView"
 import { DefaultPlayerImg } from "../utils/playerImagesGetter"
 import { getSafePlayerImageSrc } from "../utils/playerInfoGetter"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { hexToRGB } from "../utils/helpers"
+import { legacy_makeMutableUI } from "react-native-reanimated/lib/typescript/mutables"
 
 export type TeamLineupPitchProps = {
     allLineupsArray: AllLineUpsInfo[],
@@ -13,6 +15,7 @@ export type TeamLineupPitchProps = {
     leagueName: string,
     selectedTeamName: string,
     selectedTeamColour: string,
+    OnPlayerModalShown: (playerName: string, playerID: string, teamName: string, teamColour: string) => void
 }
 
 export type LineupPlayerInfo = {
@@ -64,9 +67,10 @@ type PlayerPosition = {
     index: number; // array index
 }
 
-export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, selectedTeamName, selectedTeamColour }: TeamLineupPitchProps) => {
+export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, selectedTeamName, selectedTeamColour, OnPlayerModalShown }: TeamLineupPitchProps) => {
     // State to hold all player data
     const [allPlayersData, setAllPlayersData] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Define positions once
     const positions: PlayerPosition[] = [
@@ -95,28 +99,61 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
         { num: "23", position: "Sub 8", index: 23 },
     ];
 
-    // Fetch all player data on mount
     useEffect(() => {
         const fetchPlayers = async () => {
-            const playersData = await Promise.all(
-                positions.map(async (pos) => {
-                    if (allLineupsArray[pos.index]) {
-                        const playerInfo = await getLineupPlayerInfo(
-                            allLineupsArray[pos.index],
-                            selectedTeam,
-                            leagueName,
-                            selectedTeamName
-                        );
-                        return { ...pos, playerInfo };
-                    }
-                    return { ...pos, playerInfo: null };
-                })
-            );
-            setAllPlayersData(playersData);
+            setIsLoading(true); // Show loading overlay
+            try {
+                const playersData = await Promise.all(
+                    positions.map(async (pos) => {
+                        if (allLineupsArray[pos.index]) {
+                            const playerInfo = await getLineupPlayerInfo(
+                                allLineupsArray[pos.index],
+                                selectedTeam,
+                                leagueName,
+                                selectedTeamName
+                            );
+                            return { ...pos, playerInfo };
+                        }
+                        return { ...pos, playerInfo: null };
+                    })
+                );
+                setAllPlayersData(playersData);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchPlayers();
     }, [allLineupsArray, selectedTeam, leagueName, selectedTeamName]);
+
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, width: "100%", }}>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            </View>
+        );
+    }
+
+    if (allLineupsArray.length === 0) {
+        return (
+            <View style={{ flex: 1, width: "100%", }}>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginVertical: 50
+                }}>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light }}>Lineup has not been announced yet</Text>
+                </View>
+            </View>
+        );
+    }
 
     return (
         <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
@@ -137,6 +174,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                                 playerInfo={item.playerInfo}
                                 playerPosition={item.position}
                                 teamColour={selectedTeamColour}
+                                selectedTeam={selectedTeam}
+                                selectedTeamDisplayName={selectedTeamName}
+                                leagueName={leagueName}
+                                OnPlayerModalShown={OnPlayerModalShown}
                             />
                         )}
                     />
@@ -150,6 +191,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
                             teamColour={selectedTeamColour}
+                            selectedTeam={selectedTeam}
+                            selectedTeamDisplayName={selectedTeamName}
+                            leagueName={leagueName}
+                            OnPlayerModalShown={OnPlayerModalShown}
                         />
                     )}
                 />
@@ -165,6 +210,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
                             teamColour={selectedTeamColour}
+                            selectedTeam={selectedTeam}
+                            selectedTeamDisplayName={selectedTeamName}
+                            leagueName={leagueName}
+                            OnPlayerModalShown={OnPlayerModalShown}
                         />
                     )}
                 />
@@ -176,6 +225,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
                             teamColour={selectedTeamColour}
+                            selectedTeam={selectedTeam}
+                            selectedTeamDisplayName={selectedTeamName}
+                            leagueName={leagueName}
+                            OnPlayerModalShown={OnPlayerModalShown}
                         />
                     )}
                 />
@@ -187,6 +240,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
                             teamColour={selectedTeamColour}
+                            selectedTeam={selectedTeam}
+                            selectedTeamDisplayName={selectedTeamName}
+                            leagueName={leagueName}
+                            OnPlayerModalShown={OnPlayerModalShown}
                         />
                     )}
                 />
@@ -202,6 +259,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
                             teamColour={selectedTeamColour}
+                            selectedTeam={selectedTeam}
+                            selectedTeamDisplayName={selectedTeamName}
+                            leagueName={leagueName}
+                            OnPlayerModalShown={OnPlayerModalShown}
                         />
                     )}
                 />
@@ -219,6 +280,10 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
                             playerInfo={item.playerInfo}
                             playerPosition={item.position}
                             teamColour={selectedTeamColour}
+                            selectedTeam={selectedTeam}
+                            selectedTeamDisplayName={selectedTeamName}
+                            leagueName={leagueName}
+                            OnPlayerModalShown={OnPlayerModalShown}
                             isBenchPlayer={true}
                         />
                     )}
@@ -233,10 +298,14 @@ export type TeamLineupPitchPlayerProps = {
     playerInfo: LineupPlayerInfo | undefined
     playerPosition: string
     teamColour: string
+    selectedTeam: string
+    selectedTeamDisplayName: string
+    leagueName: string
+    OnPlayerModalShown: (playerName: string, playerID: string, teamName: string, teamColour: string) => void
     isBenchPlayer?: boolean
 }
 
-export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, teamColour, isBenchPlayer = false }: TeamLineupPitchPlayerProps) => {
+export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, teamColour, selectedTeam, selectedTeamDisplayName, leagueName, OnPlayerModalShown, isBenchPlayer = false }: TeamLineupPitchPlayerProps) => {
 
     const getPlayerLastName = (fullName: string | undefined): string => {
         if (!fullName || fullName === '-') return '';
@@ -244,16 +313,26 @@ export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, teamColour, 
         return fullName.trim().split(' ').pop() || '';
     };
 
+    const teamColourFaded = hexToRGB(teamColour, '0.3')
+
+    const handlePresentModalPress = useCallback(async () => {
+
+        if (playerInfo === undefined || playerInfo === null) return;
+        console.info("pressed")
+
+        await OnPlayerModalShown(playerInfo?.playerName, playerInfo?.playerID, selectedTeamDisplayName, teamColour)
+
+    }, [playerInfo, OnPlayerModalShown, selectedTeamDisplayName, teamColour, selectedTeam]);
+
     return (
-        <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 6 }}>
-            <View>
-                <Image style={{ width: 50, height: 50, opacity: 1, resizeMode: 'contain' }}
-                    source={playerInfo?.playerImgSrc !== "" ? { uri: playerInfo?.playerImgSrc } : DefaultPlayerImg} />
+        <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 6 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <PlayerImage playerInfo={playerInfo} leagueName={leagueName}/>
             </View>
-            <View>
-                <View style={{flexDirection: 'row', width: '100%', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'transparent', borderRadius: 2, borderWidth: 1, borderColor: 'lightgrey'}}>
-                    <Text style={{color: 'white', fontFamily: fontFamilies.title , paddingHorizontal: 4, backgroundColor: teamColour, fontSize: isBenchPlayer ? 8 : 10}}>{playerInfo?.playerNumber}</Text>
-                    <Text style={{color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10, paddingHorizontal: 3}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'transparent', borderRadius: 2, borderWidth: 1, borderColor: 'lightgrey' }}>
+                    <Text style={{ color: 'white', fontFamily: fontFamilies.title, paddingHorizontal: 4, backgroundColor: teamColourFaded, fontSize: isBenchPlayer ? 8 : 10 }}>{playerInfo?.playerNumber}</Text>
+                    <Text style={{ color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10, paddingHorizontal: 3 }}>
                         {getPlayerLastName(playerInfo?.playerName)}
                     </Text>
                 </View>
@@ -264,9 +343,66 @@ export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, teamColour, 
                     </Text>
                 )}
             </View>
+        </TouchableOpacity>
+    )
+}
+
+export type PlayerImageProps = {
+    playerInfo: LineupPlayerInfo | undefined
+    leagueName: string
+}
+
+export const PlayerImage = ({ playerInfo, leagueName }: PlayerImageProps) => {
+
+    if(playerInfo?.playerImgSrc === "")
+    {
+        return(
+            <Image
+                style={{
+                    width: 50,
+                    height: 50,      
+                    resizeMode: 'contain',
+                }}
+                source={DefaultPlayerImg}
+            />
+        )
+    }
+
+    if(leagueName === "sixNations")
+    {
+        return(
+            <Image
+                style={{
+                    width: 50,
+                    height: 50,      
+                    resizeMode: 'contain',
+                }}
+                source={playerInfo?.playerImgSrc !== "" ? { uri: playerInfo?.playerImgSrc } : DefaultPlayerImg}
+            />
+        )
+    }
+
+    return (
+        <View style={{
+            width: 50,
+            height: 50,
+            overflow: 'hidden',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Image
+                style={{
+                    width: 100,      
+                    height: 100,
+                    resizeMode: 'contain',
+                    top: 25      
+                }}
+                source={playerInfo?.playerImgSrc !== "" ? { uri: playerInfo?.playerImgSrc } : DefaultPlayerImg}
+            />
         </View>
     )
 }
+
 
 export const teamEventsPanelStyles = StyleSheet.create({
     container: {

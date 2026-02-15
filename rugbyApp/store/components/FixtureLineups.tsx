@@ -272,6 +272,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
             const selectedTeamGradientColour = hexToRGB((selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour, '0.3')
 
+            const selectedTeamFullColour = (selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour;
             const gradientStartFraction = (selectedTeam === "home") ? 0 : 1;
             const gradientEndFraction = (selectedTeam === "home") ? 0.8 : 0.2;
 
@@ -288,7 +289,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                                 backgroundColor: panelColour, justifyContent: 'center'
                             }]}>
 
-                            <LinearGradient colors={[(selectedTeam === "home") ? homeTeamGradientColour : 'transparent', 'transparent']} start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }} style={{ width: "100%", justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 5 }}>
+                            <LinearGradient colors={[(selectedTeam === "home") ? homeTeamGradientColour : 'transparent', 'transparent']} 
+                            start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }} style={{ width: "100%", justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 5 }}>
 
                                 <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo}
                                     style={[lineupPanelStyles.teamLogo, { opacity: (selectedTeam === "home") ? 1 : 0.3 }]} />
@@ -325,7 +327,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                                 selectedTeam={selectedTeam}
                                 leagueName={leagueName}
                                 selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}
-                                selectedTeamColour={selectedTeamGradientColour}
+                                selectedTeamColour={selectedTeamFullColour}
+                                OnPlayerModalShown={handlePlayerModalShown}
                             />
                         </LinearGradient>
                     </BottomSheetScrollView>
@@ -341,19 +344,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
                                     <View style={{ alignItems: 'center' }}>
                                         <View style={{ padding: 4, margin: 4, marginTop: 25 }}>
-                                            <Image style={{ width: 210, height: 210, opacity: 1, resizeMode: 'contain' }}
+                                            <Image style={{ width: 100, height: 100, opacity: 1, resizeMode: 'contain' }}
                                                 source={modalPlayerImageSrc !== "" ? { uri: modalPlayerImageSrc } : DefaultPlayerImg} />
-
-                                            <View style={{
-                                                position: 'absolute', borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
-                                                top: 190, bottom: 0, left: 18, right: 18, backgroundColor: colors.background
-                                            }}>
-                                                <Text style={{
-                                                    flex: 1,
-                                                    textAlign: 'center', color: colors.text, borderBottomLeftRadius: 7, borderBottomRightRadius: 7,
-                                                    fontFamily: fontFamilies.title, fontSize: 14, backgroundColor: hexToRGB(modalTeamColour, '0.5')
-                                                }}>{getLastName(modalPlayerName).toUpperCase()}</Text>
-                                            </View>
                                         </View>
                                     </View>
 
@@ -408,17 +400,20 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
     }, [])
 
     const activityIndicatorHeader = () => {
-
-        if (isLoading) {
-            return (
-                <View style={{ marginVertical: 20 }}>
-                    <ActivityIndicator size='large' color='lightgrey' />
-                </View>
-            )
-        }
-
-        return null
+    if (isLoading) {
+        return (
+            <View style={{ 
+                flex: 1, 
+                width: "100%", 
+                justifyContent: 'center', 
+                alignItems: 'center' 
+            }}>
+                <ActivityIndicator size='large' color='lightgrey' />
+            </View>
+        );
     }
+    return null;
+};
 
     const [modalPlayerName, setModalPlayerName] = useState<string>('');
     const [modalPlayerPosition, setModalPlayerPosition] = useState<string>('');
