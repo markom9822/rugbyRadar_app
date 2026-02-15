@@ -6,7 +6,7 @@ import { GridView } from "./GridView"
 import { DefaultPlayerImg } from "../utils/playerImagesGetter"
 import { getSafePlayerImageSrc } from "../utils/playerInfoGetter"
 import { useCallback, useEffect, useState } from "react"
-import { hexToRGB } from "../utils/helpers"
+import { hexToRGB, IsLeagueInternational } from "../utils/helpers"
 import { legacy_makeMutableUI } from "react-native-reanimated/lib/typescript/mutables"
 
 export type TeamLineupPitchProps = {
@@ -368,7 +368,7 @@ export const PlayerImage = ({ playerInfo, leagueName }: PlayerImageProps) => {
         )
     }
 
-    if(leagueName === "sixNations")
+    if(IsLeagueInternational(leagueName))
     {
         return(
             <Image

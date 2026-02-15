@@ -9,51 +9,91 @@ import { ChallengeCupTrophyIcon, ChampsCupTrophyIcon, PremiershipTrophyIcon, RWC
 import { URCRugbyTeams } from "../URCRugbyTeamsDatabase";
 
 export const leagueCodes = [
-    { value: 'urc', code: "270557",
-         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, trophyIcon: URCTrophyIcon},
-    { value: 'prem', code: "267979",
-         displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, trophyIcon: PremiershipTrophyIcon},
-    { value: 'top14', code: "270559",
-         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo, trophyIcon: Top14TrophyIcon},
-    { value: 'superRugby', code: "242041",
-         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo, trophyIcon: null},
-    { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
-         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo, trophyIcon: null},
-    { value: 'rugbyWorldCup', code: "164205",
-         displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: RWCTrophyIcon},
-    { value: 'championsCup', code: "271937",
-         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, trophyIcon: ChampsCupTrophyIcon},
-    { value: 'challengeCup', code: "272073",
-         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, trophyIcon: ChallengeCupTrophyIcon},
-    { value: 'sixNations', code: "180659",
-         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo, trophyIcon: null},
-    { value: 'inter', code: "289234",
-         displayName: "Men's Internationals", leagueLogo: null, leagueAltLogo: null, trophyIcon: null},
-    { value: 'menSevens', code: "282",
-         displayName: '', leagueLogo: null, leagueAltLogo: null, trophyIcon: null},
-    { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
-        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsAltLogo, trophyIcon: null},
-    { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
-        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsAltLogo, trophyIcon: null},
-    { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
-        displayName: 'World Rugby U20 Championship', leagueLogo: U20WorldChampsLogo, leagueAltLogo: U20WorldChampsAltLogo, trophyIcon: null},
+    {
+        value: 'urc', code: "270557",
+        displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, trophyIcon: URCTrophyIcon
+    },
+    {
+        value: 'prem', code: "267979",
+        displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, trophyIcon: PremiershipTrophyIcon
+    },
+    {
+        value: 'top14', code: "270559",
+        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo, trophyIcon: Top14TrophyIcon
+    },
+    {
+        value: 'superRugby', code: "242041",
+        displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo, trophyIcon: null
+    },
+    {
+        value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
+        displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo, trophyIcon: null
+    },
+    {
+        value: 'rugbyWorldCup', code: "164205",
+        displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: RWCTrophyIcon
+    },
+    {
+        value: 'championsCup', code: "271937",
+        displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, trophyIcon: ChampsCupTrophyIcon
+    },
+    {
+        value: 'challengeCup', code: "272073",
+        displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, trophyIcon: ChallengeCupTrophyIcon
+    },
+    {
+        value: 'sixNations', code: "180659",
+        displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo, trophyIcon: null
+    },
+    {
+        value: 'inter', code: "289234",
+        displayName: "Men's Internationals", leagueLogo: null, leagueAltLogo: null, trophyIcon: null
+    },
+    {
+        value: 'menSevens', code: "282",
+        displayName: '', leagueLogo: null, leagueAltLogo: null, trophyIcon: null
+    },
+    {
+        value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
+        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsAltLogo, trophyIcon: null
+    },
+    {
+        value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
+        displayName: 'U20 Six Nations', leagueLogo: U20SixNationsLogo, leagueAltLogo: U20SixNationsAltLogo, trophyIcon: null
+    },
+    {
+        value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
+        displayName: 'World Rugby U20 Championship', leagueLogo: U20WorldChampsLogo, leagueAltLogo: U20WorldChampsAltLogo, trophyIcon: null
+    },
 
-    { value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
-        displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo, trophyIcon: null},
+    {
+        value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
+        displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo, trophyIcon: null
+    },
 
-    { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
-        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo, trophyIcon: null},
+    {
+        value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
+        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo, trophyIcon: null
+    },
 ];
 
 export const rugbyVizleagueCodes = [
-    { value: 'urc', code: "1068",
-         displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, playoffCutoffIndex: 8},
-    { value: 'prem', code: "1011",
-         displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4},
-    { value: 'championsCup', code: "1008",
-         displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 4},
-    { value: 'challengeCup', code: "1026",
-         displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, playoffCutoffIndex: 4},
+    {
+        value: 'urc', code: "1068",
+        displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, playoffCutoffIndex: 8
+    },
+    {
+        value: 'prem', code: "1011",
+        displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4
+    },
+    {
+        value: 'championsCup', code: "1008",
+        displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 4
+    },
+    {
+        value: 'challengeCup', code: "1026",
+        displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, playoffCutoffIndex: 4
+    },
 ];
 
 export const getRugbyVizLeagueCode = (name: string) => {
@@ -77,8 +117,7 @@ export const getRugbyVizPlayoffCutoffFromLeagueName = (leagueName: string) => {
 export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
 
     const result = rugbyVizleagueCodes.find((element) => element.code === code)
-    if(result === undefined)
-    {
+    if (result === undefined) {
         return ''
     }
     return result.displayName.toString()
@@ -87,8 +126,7 @@ export const getRugbyVizLeagueDisplayNameFromCode = (code: string) => {
 export const getRugbyVizLeagueNameFromCode = (code: string) => {
 
     const result = rugbyVizleagueCodes.find((element) => element.code === code)
-    if(result === undefined)
-    {
+    if (result === undefined) {
         return ''
     }
     return result.value.toString()
@@ -103,25 +141,41 @@ export const isLeagueInRugbyViz = (displayName: string) => {
 //--------------------------------------------------------------------------------------------------
 
 export const worldRugbyAPILeagueCodes = [
-    { value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
-        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo},
-    { value: 'sixNations', code: "2171",
-        displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
-    { value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
-        displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo},
-    { value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
-        displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo},
-    { value: 'rugbyWorldCup', code: "1893",
-        displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
-    { value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
-        displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo},
+    {
+        value: 'autumnNations', code: "c805a102-6cbe-4eed-a158-f5878cf1f162",
+        displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo
+    },
+    {
+        value: 'sixNations', code: "2171",
+        displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo
+    },
+    {
+        value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
+        displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo
+    },
+    {
+        value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
+        displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo
+    },
+    {
+        value: 'rugbyWorldCup', code: "1893",
+        displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo
+    },
+    {
+        value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
+        displayName: 'World Rugby U20 Championship', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo
+    },
 
-    { value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
-        displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo},
+    {
+        value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
+        displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo
+    },
 
-    { value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
-        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo},
-    
+    {
+        value: 'BILTour', code: "2c9549f5-0e9a-4bcb-9d05-074ef161b7be",
+        displayName: 'Tour', leagueLogo: BALionsAltLogo, leagueAltLogo: BALionsAltLogo
+    },
+
 ];
 
 export const isLeagueInWorldRugbyAPIFromLeagueName = (name: string) => {
@@ -145,8 +199,7 @@ export const getWorldRugbyAPILeagueCode = (name: string) => {
 export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 
     const result = worldRugbyAPILeagueCodes.find((element) => element.code === code)
-    if(result === undefined)
-    {
+    if (result === undefined) {
         return ''
     }
     return result.displayName.toString()
@@ -156,10 +209,14 @@ export const getWorldRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 
 
 export const planetRugbyAPILeagueCodes = [
-    { value: 'top14', code: "1310036262",
-        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
-    { value: 'superRugby', code: "1310032187",
-         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
+    {
+        value: 'top14', code: "1310036262",
+        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo
+    },
+    {
+        value: 'superRugby', code: "1310032187",
+        displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo
+    },
 ];
 
 export const isLeagueInPlanetRugbyAPIFromLeagueName = (name: string) => {
@@ -183,8 +240,7 @@ export const getPlanetRugbyAPILeagueCode = (name: string) => {
 export const getPlanetRugbyAPILeagueDisplayNameFromCode = (code: string) => {
 
     const result = planetRugbyAPILeagueCodes.find((element) => element.code === code)
-    if(result === undefined)
-    {
+    if (result === undefined) {
         return ''
     }
     return result.displayName.toString()
@@ -223,8 +279,7 @@ export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeT
             const homeCheck = homeTeam1 === homeTeamName || homeTeam2 === homeTeamName;
             const awayCheck = awayTeam1 === awayTeamName || awayTeam2 === awayTeamName;
 
-            if(homeCheck && awayCheck)
-            {
+            if (homeCheck && awayCheck) {
                 return thisMatch.id;
             }
         }
@@ -236,10 +291,14 @@ export const getPlanetRugbyMatchIDFromDetails = async (selectedDate: Date, homeT
 
 
 export const ESPNleagueCodes = [
-    { value: 'top14', code: "270559",
-        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo},
-    { value: 'superRugby', code: "242041",
-         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo},
+    {
+        value: 'top14', code: "270559",
+        displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo
+    },
+    {
+        value: 'superRugby', code: "242041",
+        displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo
+    },
 ];
 
 export const getESPNLeagueCode = (name: string) => {
@@ -249,7 +308,7 @@ export const getESPNLeagueCode = (name: string) => {
 }
 
 export const getESPNLeagueDisplayNameFromValue = (leagueValue: string) => {
-    
+
     const result = ESPNleagueCodes.find((element) => element.value === leagueValue)
     return result?.displayName.toString()
 }
@@ -270,68 +329,66 @@ export const getLeagueCodeFromDisplayName = (displayName: string) => {
 }
 
 export const getLeagueName = (leagueCode: string) => {
-    
+
     const result = leagueCodes.find((element) => element.code === leagueCode)
-    if(result !== undefined)
-    {
+    if (result !== undefined) {
         return result.value.toString()
     }
-    else
-    {
+    else {
         return ''
     }
-    
+
 }
 
 export const getLeagueNameFromDisplayName = (displayName: string) => {
-    
+
     const result = leagueCodes.find((element) => element.displayName === displayName)
     return result?.value.toString()
 }
 
 export const getLeagueDisplayNameFromCode = (leagueCode: string) => {
-    
+
     const result = leagueCodes.find((element) => element.code === leagueCode)
     return result?.displayName.toString()
 }
 
 export const getLeagueDisplayNameFromValue = (leagueValue: string) => {
-    
+
     const result = leagueCodes.find((element) => element.value === leagueValue)
     return result?.displayName.toString()
 }
 
 export const getLeagueLogoFromValue = (leagueValue: string) => {
-    
+
     const result = leagueCodes.find((element) => element.value === leagueValue)
     return result?.leagueAltLogo.toString()
 }
 
 export const getLeagueTrophyIconFromValue = (leagueValue: string) => {
-    
+
     const result = leagueCodes.find((element) => element.value === leagueValue)
     return result?.trophyIcon
 }
 
-export const getLeagueInfoFromDisplayName  = (displayName: string) => {
-    
+export const getLeagueInfoFromDisplayName = (displayName: string) => {
+
     const result = leagueCodes.find((element) => element.displayName === displayName)
     return result
 }
 
 export const getAnyTeamInfoFromName = (name: string) => {
 
-    const defaultTeam =  {
-      type: 'Champions Cup',
-      displayName: 'Default',
-      abbreviation: 'DEF',
-      logo: DefaultLogo,
-      altLogo: DefaultLogo,
-      colour: '#00000',
-      id: '0',
-      defaultLeague: '',
-      foundedYear: '',
-      seasonType: '',
+    const defaultTeam = {
+        type: 'Champions Cup',
+        displayName: 'Default',
+        abbreviation: 'DEF',
+        logo: DefaultLogo,
+        altLogo: DefaultLogo,
+        colour: '#00000',
+        id: '0',
+        defaultLeague: '',
+        foundedYear: '',
+        seasonType: '',
     }
 
     const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams, ...MiscRugbyTeams];
@@ -340,40 +397,36 @@ export const getAnyTeamInfoFromName = (name: string) => {
     const searchName = name.replace(" Rugby", "")
 
     const match = allTeamsArray.find((item) => item.displayName === searchName)
-    if(match !== undefined)
-    {
+    if (match !== undefined) {
         return match
     }
-    else
-    {
+    else {
         return defaultTeam
     }
 }
 
 export const getAnyTeamInfoFromID = (id: string) => {
 
-    const defaultTeam =  {
-      type: 'Champions Cup',
-      displayName: 'Default',
-      abbreviation: 'DEF',
-      logo: DefaultLogo,
-      altLogo: DefaultLogo,
-      colour: '#00845c',
-      id: '0',
-      defaultLeague: '',
-      foundedYear: '',
-      seasonType: '',
+    const defaultTeam = {
+        type: 'Champions Cup',
+        displayName: 'Default',
+        abbreviation: 'DEF',
+        logo: DefaultLogo,
+        altLogo: DefaultLogo,
+        colour: '#00845c',
+        id: '0',
+        defaultLeague: '',
+        foundedYear: '',
+        seasonType: '',
     }
 
     const allTeamsArray = [...URCRugbyTeams, ...PremRugbyTeams, ...Top14RugbyTeams, ...SuperRugbyTeams, ...InternationalRugbyTeams];
-  
+
     const match = allTeamsArray.find((item) => item.id === id)
-    if(match !== undefined)
-    {
+    if (match !== undefined) {
         return match
     }
-    else
-    {
+    else {
         return defaultTeam
     }
 }
@@ -391,7 +444,7 @@ export const getESPNMatchInfoFromDetails = async (selectedDate: Date, homeTeamNa
 
     const startDate = formatDate(selectedDate);
 
-    const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates='+startDate+'&lang=en&region=gb&tz=Europe/London';
+    const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + startDate + '&lang=en&region=gb&tz=Europe/London';
     const matchInfo = await fetch(apiString,).then((res) => res.json())
 
     for (let index = 0; index < matchInfo.scores.length; index++) {
@@ -406,9 +459,8 @@ export const getESPNMatchInfoFromDetails = async (selectedDate: Date, homeTeamNa
             const homeCheck = homeTeam === homeTeamName;
             const awayCheck = awayTeam === awayTeamName;
 
-            if(homeCheck && awayCheck)
-            {
-                return{
+            if (homeCheck && awayCheck) {
+                return {
                     matchID: thisMatch.id,
                     leagueID: thisMatch.leagueId
                 }
@@ -425,8 +477,7 @@ export const getClosestWorldCupYear = (year: number) => {
     const yearDifference = year - 1987;
     const remainder = yearDifference % 4;
 
-    if(remainder === 0)
-    {
+    if (remainder === 0) {
         return year;
     }
 
@@ -454,7 +505,21 @@ export type StandingInfo = {
     isPlayoffCutoff: boolean,
 }
 
-export const generateSeasonList = () =>{
+export const IsLeagueInternational = (leagueName: string) => {
+    const internationalLeagueValues = [
+        'rugbyChamp', 'rugbyWorldCup',
+        'sixNations', 'inter', 'autumnNations',
+        'u20SixNations', 'u20Championship', 'pacificNationsCup', 'BILTour'
+    ];
+
+    const isRugbyLeague = (leagueValue: string): boolean => {
+        return internationalLeagueValues.includes(leagueValue);
+    };
+
+    return isRugbyLeague(leagueName)
+}
+
+export const generateSeasonList = () => {
 
     const currentYear = new Date().getFullYear().valueOf();
     const startYear = "2021"
@@ -463,8 +528,8 @@ export const generateSeasonList = () =>{
 
     for (let index = 0; index < Number(currentYear) - Number(startYear) + 1; index++) {
 
-        const year = Number(currentYear) - (index-1);
-        const lastYear  = year - 1;
+        const year = Number(currentYear) - (index - 1);
+        const lastYear = year - 1;
 
         let newItem = {
             label: lastYear.toString() + "/" + year.toString().substring(year.toString().length - 2),
@@ -493,8 +558,7 @@ export function dateCustomFormatting(date: Date): string {
 
 export const hexToRGB = (hexValue: string | undefined, alpha: string) => {
 
-    if(hexValue === undefined)
-    {
+    if (hexValue === undefined) {
         return '';
     }
 
@@ -513,6 +577,6 @@ export function getLastName(fullName: string): string {
 
     const lastNameArray: string[] = fullName.split(' ').slice(1);
     const filteredArray = lastNameArray.filter(item => item !== "");
-   
+
     return filteredArray.join(" ")
 }
