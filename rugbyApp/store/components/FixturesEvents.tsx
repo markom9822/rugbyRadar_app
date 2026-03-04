@@ -82,26 +82,51 @@ export const FixtureEvents = ({ id, isShown }: FixtureEventsProps) => {
         }
 
         // use planet rugby API
-        if (id.indexOf("_PlanetRugbyAPI") !== -1) {
-            const separatedArray = id.toString().split("_");
-            const planetRugbyAPIEventID = separatedArray[0];
-            const planetRugbyAPILeagueName = separatedArray[1]
+        if (id.indexOf("_ESPNRugbyAPI") !== -1) {
+            // const separatedArray = id.toString().split("_");
+            // const espnRugbyAPIEventID = separatedArray[0];
+            // const espnRugbyAPILeagueName = separatedArray[1]
 
-            const apiString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/' + planetRugbyAPIEventID;
+            // const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+
+            // const matchStats = await fetch(apiString,).then((res) => res.json())
+            // const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
+            // const [homeTeamID, awayTeamID] = matchStats.data.matchDetails.team_ids.split(';');
+
+            // setMainTeamName(homeTeam)
+            // setOpponentTeamName(awayTeam)
+
+            // const timelineApiString = 'https://rugbylivecenter.yormedia.com/api/match-detail/' + planetRugbyAPIEventID;
+            // const timelineStats = await fetch(timelineApiString,).then((res) => res.json())
+            // const keyEvents = getKeyEventsPlanetRugbyAPI(timelineStats, homeTeam, awayTeam, homeTeamID, awayTeamID)
+            // setKeyEventsArray(keyEvents)
+
+            // setLeagueName(planetRugbyAPILeagueName)
+
+            // setIsLoading(false)
+            // return;
+        }
+
+        // handle differently - separate API
+        if (leagueID.indexOf("_RugbyViz") !== -1) {
+
+            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
+            console.info(apiString)
 
             const matchStats = await fetch(apiString,).then((res) => res.json())
-            const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
-            const [homeTeamID, awayTeamID] = matchStats.data.matchDetails.team_ids.split(';');
+            const homeTeam = matchStats.data.homeTeam.name;
+            const awayTeam = matchStats.data.awayTeam.name;
+
+            console.info(homeTeam + awayTeam)
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)
 
-            const timelineApiString = 'https://rugbylivecenter.yormedia.com/api/match-detail/' + planetRugbyAPIEventID;
-            const timelineStats = await fetch(timelineApiString,).then((res) => res.json())
-            const keyEvents = getKeyEventsPlanetRugbyAPI(timelineStats, homeTeam, awayTeam, homeTeamID, awayTeamID)
-            setKeyEventsArray(keyEvents)
+            const keyEvents = getKeyEventsRugbyViz(matchStats)
+            console.info(keyEvents)
 
-            setLeagueName(planetRugbyAPILeagueName)
+            setKeyEventsArray(keyEvents)
+            setLeagueName(leagueID.replace("_RugbyViz", ""))
 
             setIsLoading(false)
             return;

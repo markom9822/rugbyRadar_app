@@ -1,7 +1,7 @@
 import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { HeadToHeadEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
-import { getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
-import { getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
+import { getHeadToHeadStats, getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
+import { getMatchInfo, getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
 import { getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
@@ -120,6 +120,29 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverviewProps) => {
             setRefereeName(refName === null ? "-" : refName)
 
             setLeagueName(planetRugbyAPILeagueName)
+            setIsLoading(false)
+            return;
+        }
+
+        if (id.indexOf("_ESPNRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const espnRugbyAPIEventID = separatedArray[0];
+            const espnRugbyAPILeagueName = separatedArray[1]
+
+            console.info(espnRugbyAPIEventID)
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            console.info(apiString)
+
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const matchInfo = getMatchInfo(matchDetails)
+            setMatchInfoArray(matchInfo)
+
+            const matchH2HStats = await fetch(apiString,).then((res) => res.json())
+            const headToHeadStats = getHeadToHeadStats(matchH2HStats)
+
+            setHeadToHeadStatsArray(headToHeadStats)
+
+            setLeagueName(espnRugbyAPILeagueName)
             setIsLoading(false)
             return;
         }

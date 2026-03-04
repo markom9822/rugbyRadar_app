@@ -97,6 +97,29 @@ export const FixtureStats = ({ id, isShown }: FixtureStatsProps) => {
             setIsLoading(false)
             return;
         }
+
+        if (id.indexOf("_ESPNRugbyAPI") !== -1) {
+            // const separatedArray = id.toString().split("_");
+            // const espnRugbyAPIEventID = separatedArray[0];
+            // const espnRugbyAPILeagueName = separatedArray[1]
+
+            // const apiString = 'https://rugbylivecenter.yormedia.com/api/match-h2h/' + planetRugbyAPIEventID;
+
+            // const matchStats = await fetch(apiString,).then((res) => res.json())
+            // const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
+
+            // setMainTeamName(homeTeam)
+            // setOpponentTeamName(awayTeam)
+
+            // const fullMatchStats = getFullMatchStatsPlanetRugbyAPI(matchStats)
+
+            // setMatchStatsArray(fullMatchStats)
+
+            // setLeagueName(planetRugbyAPILeagueName)
+
+            // setIsLoading(false)
+            // return;
+        }
     }
 
     useEffect(() => {

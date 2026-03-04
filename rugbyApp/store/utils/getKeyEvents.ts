@@ -14,6 +14,7 @@ export const getKeyEventIcon = (eventType: string) => {
      } 
 }
 
+
 export const getKeyEvents = (matchStats: any) => {
 
     let keyEventsArray = [];

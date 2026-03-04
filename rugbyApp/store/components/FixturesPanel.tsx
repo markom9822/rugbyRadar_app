@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import { useEffect, useState } from "react"
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { getMatchInfoWorldRugbyAPI } from "../utils/getMatchInfo"
-import { getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "../utils/getTeamFormStats"
+import { getTeamFormStats, getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "../utils/getTeamFormStats"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
 import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "../utils/helpers"
 import { FixtureLineups } from "./FixtureLineups"
@@ -121,6 +121,23 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef, currentTimezone }
 
             const mainTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, true)
             const opponentTeamFormStats = getTeamFormStatsPlanetRugbyAPI(matchH2HStats, false)
+
+            setMainTeamFormStatsArray(mainTeamFormStats)
+            setOpponentTeamFormStatsArray(opponentTeamFormStats)
+
+            return;
+        }
+
+        if (id.indexOf("_ESPNRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const espnRugbyAPIEventID = separatedArray[0];
+
+            const apiH2HString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+
+            const matchH2HStats = await fetch(apiH2HString,).then((res) => res.json())
+
+            const mainTeamFormStats = getTeamFormStats(matchH2HStats, 0)
+            const opponentTeamFormStats = getTeamFormStats(matchH2HStats, 1)
 
             setMainTeamFormStatsArray(mainTeamFormStats)
             setOpponentTeamFormStatsArray(opponentTeamFormStats)

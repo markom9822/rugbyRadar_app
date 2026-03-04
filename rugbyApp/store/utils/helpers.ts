@@ -313,6 +313,12 @@ export const getESPNLeagueDisplayNameFromValue = (leagueValue: string) => {
     return result?.displayName.toString()
 }
 
+export const isLeagueInESPNRugbyAPI = (displayName: string) => {
+
+    const result = ESPNleagueCodes.find((element) => element.displayName === displayName)
+    return result !== undefined
+}
+
 //-----------------------------------------------------------------------------------------------------
 
 

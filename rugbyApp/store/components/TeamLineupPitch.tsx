@@ -140,21 +140,6 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
         );
     }
 
-    if (allLineupsArray.length === 0) {
-        return (
-            <View style={{ flex: 1, width: "100%", }}>
-                <View style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginVertical: 50
-                }}>
-                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light }}>Lineup has not been announced yet</Text>
-                </View>
-            </View>
-        );
-    }
-
     return (
         <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
             <ImageBackground
