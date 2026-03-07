@@ -4,9 +4,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { DropGoalIcon, RedCardIcon, RefereeWhistleIcon, RugbyPostsIcon, RugbyTryIcon, YellowCardIcon } from "../Icons/Icons";
-import { getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "../utils/getKeyEvents";
+import { getKeyEvents, getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "../utils/getKeyEvents";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { hexToRGB } from "../utils/helpers";
+import { getESPNLeagueCode, hexToRGB } from "../utils/helpers";
 
 type FixtureEventsProps = {
     id: string,
@@ -83,53 +83,28 @@ export const FixtureEvents = ({ id, isShown }: FixtureEventsProps) => {
 
         // use planet rugby API
         if (id.indexOf("_ESPNRugbyAPI") !== -1) {
-            // const separatedArray = id.toString().split("_");
-            // const espnRugbyAPIEventID = separatedArray[0];
-            // const espnRugbyAPILeagueName = separatedArray[1]
-
-            // const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
-
-            // const matchStats = await fetch(apiString,).then((res) => res.json())
-            // const [homeTeam, awayTeam] = matchStats.data.matchDetails.teams.split(';');
-            // const [homeTeamID, awayTeamID] = matchStats.data.matchDetails.team_ids.split(';');
-
-            // setMainTeamName(homeTeam)
-            // setOpponentTeamName(awayTeam)
-
-            // const timelineApiString = 'https://rugbylivecenter.yormedia.com/api/match-detail/' + planetRugbyAPIEventID;
-            // const timelineStats = await fetch(timelineApiString,).then((res) => res.json())
-            // const keyEvents = getKeyEventsPlanetRugbyAPI(timelineStats, homeTeam, awayTeam, homeTeamID, awayTeamID)
-            // setKeyEventsArray(keyEvents)
-
-            // setLeagueName(planetRugbyAPILeagueName)
-
-            // setIsLoading(false)
-            // return;
-        }
-
-        // handle differently - separate API
-        if (leagueID.indexOf("_RugbyViz") !== -1) {
-
-            const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/matches/' + eventID + '?provider=rugbyviz';
-            console.info(apiString)
-
-            const matchStats = await fetch(apiString,).then((res) => res.json())
-            const homeTeam = matchStats.data.homeTeam.name;
-            const awayTeam = matchStats.data.awayTeam.name;
-
-            console.info(homeTeam + awayTeam)
+            const separatedArray = id.toString().split("_");
+            const espnRugbyAPIEventID = separatedArray[0];
+            const espnRugbyAPILeagueName = separatedArray[1]
+            const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
+            
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const homeTeam = matchDetails.boxscore.teams[0].team.displayName;
+            const awayTeam = matchDetails.boxscore.teams[1].team.displayName;
 
             setMainTeamName(homeTeam)
             setOpponentTeamName(awayTeam)
 
-            const keyEvents = getKeyEventsRugbyViz(matchStats)
+            const keyEvents = getKeyEvents(matchDetails)
             console.info(keyEvents)
 
             setKeyEventsArray(keyEvents)
-            setLeagueName(leagueID.replace("_RugbyViz", ""))
+            setLeagueName(espnRugbyAPILeagueName)
 
             setIsLoading(false)
             return;
+             
         }
     }
 

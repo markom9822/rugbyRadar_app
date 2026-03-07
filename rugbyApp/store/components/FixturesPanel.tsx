@@ -8,7 +8,7 @@ import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from
 import { getMatchInfoWorldRugbyAPI } from "../utils/getMatchInfo"
 import { getTeamFormStats, getTeamFormStatsPlanetRugbyAPI, getTeamFormStatsRugbyViz } from "../utils/getTeamFormStats"
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo"
-import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "../utils/helpers"
+import { getESPNLeagueCode, getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "../utils/helpers"
 import { FixtureLineups } from "./FixtureLineups"
 import { FixtureOverview } from "./FixtureOverview"
 import { FixtureStats } from "./FixtureStats"
@@ -131,8 +131,11 @@ export const FixturesPanel = ({ matchInfo, id, bottomSheetRef, currentTimezone }
         if (id.indexOf("_ESPNRugbyAPI") !== -1) {
             const separatedArray = id.toString().split("_");
             const espnRugbyAPIEventID = separatedArray[0];
+            const espnRugbyAPILeagueName = separatedArray[1]
+            const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
+        
 
-            const apiH2HString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            const apiH2HString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
 
             const matchH2HStats = await fetch(apiH2HString,).then((res) => res.json())
 

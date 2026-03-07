@@ -2,7 +2,7 @@ import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { HeadToHeadEventsPanel, TeamEventStatsInfo } from "@/store/components/TeamEventsPanel";
 import { getHeadToHeadStats, getHeadToHeadStatsPlanetRugbyAPI, getHeadToHeadStatsRugbyViz } from "@/store/utils/getHeadToHeadStats";
 import { getMatchInfo, getMatchInfoPlanetRugbyAPI, getMatchInfoRugbyViz, getMatchInfoWorldRugbyAPI, MatchInfo } from "@/store/utils/getMatchInfo";
-import { getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
+import { getESPNLeagueCode, getPlanetRugbyMatchIDFromDetails, hexToRGB } from "@/store/utils/helpers";
 import { Feather, Fontisto, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
@@ -128,9 +128,10 @@ export const FixtureOverview = ({ id, isShown }: FixtureOverviewProps) => {
             const separatedArray = id.toString().split("_");
             const espnRugbyAPIEventID = separatedArray[0];
             const espnRugbyAPILeagueName = separatedArray[1]
+            const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
 
             console.info(espnRugbyAPIEventID)
-            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
             console.info(apiString)
 
             const matchDetails = await fetch(apiString,).then((res) => res.json())

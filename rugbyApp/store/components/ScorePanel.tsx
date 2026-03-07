@@ -147,6 +147,8 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
         linkID = matchID;
     }
 
+    console.info(`Link ID: ${linkID}`)
+
     let homeAbbreviation = homeTeamInfo.abbreviation;
     let awayAbbreviation = awayTeamInfo.abbreviation;
 

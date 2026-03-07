@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
+import { getESPNLeagueCode, getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
 import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -240,8 +240,9 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
             const separatedArray = id.toString().split("_");
             const espnRugbyAPIEventID = separatedArray[0];
             const espnRugbyAPILeagueName = separatedArray[1]
+            const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
 
-            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/270559/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
             console.info(apiString)
 
             const matchDetails = await fetch(apiString,).then((res) => res.json())
@@ -252,8 +253,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
             setAwayTeamName(awayTeam)
             setLeagueName(espnRugbyAPILeagueName)
 
-            const homeLineup = getLineup(matchDetails, 1, null)
-            const awayLineup = getLineup(matchDetails, 0, null)
+            const homeLineup = getLineup(matchDetails, 0, null)
+            const awayLineup = getLineup(matchDetails, 1, null)
 
             console.info('Home Team Lineup')
             console.info(homeLineup)

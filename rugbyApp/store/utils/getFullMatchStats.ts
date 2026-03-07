@@ -7,6 +7,7 @@ export const getFullMatchStats = (matchStats: any) => {
     if (matchStats.boxscore.teams[0].statistics.length === 0 || matchStats.boxscore.teams[1].statistics.length === 0) {
         const blankArray = [
             {
+                statsAvailable: false,
                 homeTeamName: homeTeamName,
                 awayTeamName: awayTeamName,
                 homeTeamPossession: '0',
@@ -101,6 +102,7 @@ export const getFullMatchStats = (matchStats: any) => {
 
     const newArray = [
         {
+            statsAvailable: true,
             homeTeamName: homeTeamName,
             awayTeamName: awayTeamName,
             homeTeamPossession: homeTeamPossession,
