@@ -9,6 +9,9 @@ export const rugbyVizTop14Names = [
   { databaseName: 'Bayonnais', rugbyVizName: 'Bayonne',},
   { databaseName: 'Lyon', rugbyVizName: 'Lyon O.U.',},
   { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
+  { databaseName: 'Clermont Auvergne', rugbyVizName: 'Clermont',},
+  { databaseName: 'Montpellier Herault', rugbyVizName: 'Montpellier',},
+  { databaseName: 'US Montauban', rugbyVizName: 'Montauban',},
 ];
 
 export const getTop14ShortNameFromFullName = (name: string) => {
@@ -124,7 +127,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Clermont',
+    displayName: 'Clermont Auvergne',
     abbreviation: 'CLER',
     logo: ClermontLogo,
     altLogo: ClermontAltLogo,
@@ -160,7 +163,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Montpellier',
+    displayName: 'Montpellier Herault',
     abbreviation: 'MONTP',
     logo: MontpellierLogo,
     altLogo: MontpellierAltLogo,
@@ -268,7 +271,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Montauban',
+    displayName: 'US Montauban',
     abbreviation: 'USM',
     logo: MontaubanLogo,
     altLogo: MontaubanAltLogo,
