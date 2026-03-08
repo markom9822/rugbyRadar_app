@@ -14,6 +14,12 @@ export const rugbyVizTop14Names = [
   { databaseName: 'US Montauban', rugbyVizName: 'Montauban',},
 ];
 
+
+export const ESPNTop14Names = [
+  { databaseName: 'Section Paloise', ESPNName: 'Pau',},
+ 
+];
+
 export const getTop14ShortNameFromFullName = (name: string) => {
 
   let searchName = '';
@@ -36,6 +42,31 @@ export const getTop14ShortNameFromFullName = (name: string) => {
   
   return ''
 }
+
+
+export const getTop14DatabaseShortNameFromESPNName = (name: string) => {
+
+  let searchName = '';
+  const top14NameResult = ESPNTop14Names.find((element) => element.ESPNName === name)
+  if(top14NameResult !== undefined)
+  {
+      searchName = top14NameResult.databaseName;
+  }
+  else
+  {
+      searchName = name;
+  }
+
+  const match = Top14RugbyTeams.find((item) => searchName.indexOf(item.displayName) !== -1)
+
+  if(match !== undefined)
+  {
+    return match.displayName;
+  }
+  
+  return ''
+}
+
 
 
 export const getTop14TeamInfoFromName = (name: string) => {

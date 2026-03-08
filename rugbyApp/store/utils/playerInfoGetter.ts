@@ -159,6 +159,23 @@ export const getPlayerInfo = async (playerName: string, playerID: string, teamNa
             }
         }
     }
+    else if (leagueID.indexOf("_ESPNRugbyAPI") !== -1) {
+        //const apiString = 'https://rugby-union-feeds.incrowdsports.com/v1/players/' + playerID + '?provider=rugbyviz'
+        //const playerInfo = await fetch(apiString,).then((res) => res.json())
+
+        const playerImageSrc = await getSafePlayerImageSrc(leagueName, teamName, playerName)
+
+        return {
+            playerName: playerName,
+            playerPosition: '-',
+            playerAge: '-',
+            playerDOB: '-',
+            playerHeight: '-',
+            playerWeight: '-',
+            playerCountry: '-',
+            playerImageSrc: playerImageSrc
+        }
+    }
     else if (id.indexOf("_WorldRugbyAPI") !== -1) {
         // get player image using id
         console.info(playerID)
