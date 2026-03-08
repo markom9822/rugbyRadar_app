@@ -140,21 +140,6 @@ export const TeamLineupPitch = ({ allLineupsArray, selectedTeam, leagueName, sel
         );
     }
 
-    if (allLineupsArray.length === 0) {
-        return (
-            <View style={{ flex: 1, width: "100%", }}>
-                <View style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginVertical: 50
-                }}>
-                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light }}>Lineup has not been announced yet</Text>
-                </View>
-            </View>
-        );
-    }
-
     return (
         <View style={[teamEventsPanelStyles.container, { width: "100%" }]}>
             <ImageBackground
@@ -325,14 +310,15 @@ export const TeamLineupPitchPlayer = ({ playerInfo, playerPosition, teamColour, 
     }, [playerInfo, OnPlayerModalShown, selectedTeamDisplayName, teamColour, selectedTeam]);
 
     return (
-        <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 6 }}>
+        <TouchableOpacity onPress={handlePresentModalPress} activeOpacity={0.6} style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 6, width: '100%' }}>
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <PlayerImage playerInfo={playerInfo} leagueName={leagueName}/>
             </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'transparent', borderRadius: 2, borderWidth: 1, borderColor: 'lightgrey' }}>
-                    <Text style={{ color: 'white', fontFamily: fontFamilies.title, paddingHorizontal: 4, backgroundColor: teamColourFaded, fontSize: isBenchPlayer ? 8 : 10 }}>{playerInfo?.playerNumber}</Text>
-                    <Text style={{ color: 'white', textAlign: 'center', fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10, paddingHorizontal: 3 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'transparent', borderRadius: 2, borderWidth: 1, borderColor: 'lightgrey' }}>
+                    <Text style={{ color: 'white', fontFamily: fontFamilies.title, paddingHorizontal: 4, backgroundColor: teamColourFaded, fontSize: isBenchPlayer ? 7 : 10 }}>{playerInfo?.playerNumber}</Text>
+                    <Text adjustsFontSizeToFit numberOfLines={1} minimumFontScale={0.8} style={{ color: 'white', textAlign: 'center', 
+                        fontFamily: fontFamilies.title, fontSize: isBenchPlayer ? 8 : 10, paddingHorizontal: 3 }}>
                         {getPlayerLastName(playerInfo?.playerName)}
                     </Text>
                 </View>

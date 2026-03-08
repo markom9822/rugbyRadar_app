@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
+import { getESPNLeagueCode, getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
 import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -55,51 +55,50 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
     const unique = <T extends { [key: string]: unknown }>(arr: T[], key: string): T[] => [...new Map(arr.map((item: T) => [item[key], item])).values()];
 
     const combineLineupArrays = (homeSortedArray: LineUpInfo[], awaySortedArray: LineUpInfo[]) => {
+        const homeCount = homeSortedArray.length;
+        const awayCount = awaySortedArray.length;
+        const playerCount = Math.min(homeCount, awayCount); // Only pair up to what's available
 
-        const playerCount = Math.floor((homeSortedArray.length + awaySortedArray.length) / 2)
+        let combinedArray: any[] = [];
 
-        // TODO: Fix issue with player numbers not being correct (Planet Rugby API)
-        if (playerCount !== 23) return [];
-
-        let combinedArray = [];
-
+        // Pair starting players up to available count
         for (let index = 0; index < playerCount; index++) {
-
             let newCombinedInfo = {
-                hometeamPlayer: homeSortedArray[index].teamPlayer,
-                hometeamPlayerID: homeSortedArray[index].teamPlayerID,
-                hometeamPlayerNum: homeSortedArray[index].teamPlayerNum,
-                isHomePlayerCaptain: homeSortedArray[index].isPlayerCaptain,
+                hometeamPlayer: homeSortedArray[index]?.teamPlayer || '',
+                hometeamPlayerID: homeSortedArray[index]?.teamPlayerID || '',
+                hometeamPlayerNum: homeSortedArray[index]?.teamPlayerNum || '',
+                isHomePlayerCaptain: homeSortedArray[index]?.isPlayerCaptain || false,
 
-                awayteamPlayer: awaySortedArray[index].teamPlayer,
-                awayteamPlayerID: awaySortedArray[index].teamPlayerID,
-                awayteamPlayerNum: awaySortedArray[index].teamPlayerNum,
-                isAwayPlayerCaptain: awaySortedArray[index].isPlayerCaptain,
+                awayteamPlayer: awaySortedArray[index]?.teamPlayer || '',
+                awayteamPlayerID: awaySortedArray[index]?.teamPlayerID || '',
+                awayteamPlayerNum: awaySortedArray[index]?.teamPlayerNum || '',
+                isAwayPlayerCaptain: awaySortedArray[index]?.isPlayerCaptain || false,
             };
 
-            combinedArray.push(newCombinedInfo)
+            combinedArray.push(newCombinedInfo);
         }
 
-        // add subs header
-        const subsHeadingInfo = {
-            hometeamPlayer: 'Substitutes',
-            hometeamPlayerID: '',
-            hometeamPlayerNum: '',
-            isHomePlayerCaptain: false,
+        // Only add subs header if we have at least some starters (to avoid empty lists)
+        if (playerCount > 0) {
+            const subsHeadingInfo = {
+                hometeamPlayer: 'Substitutes',
+                hometeamPlayerID: '',
+                hometeamPlayerNum: '',
+                isHomePlayerCaptain: false,
 
-            awayteamPlayer: 'Substitutes',
-            awayteamPlayerID: '',
-            awayteamPlayerNum: '',
-            isAwayPlayerCaptain: false,
-        };
+                awayteamPlayer: 'Substitutes',
+                awayteamPlayerID: '',
+                awayteamPlayerNum: '',
+                isAwayPlayerCaptain: false,
+            };
 
-        // adding subs heading
-        combinedArray.splice(15, 0, subsHeadingInfo)
+            // Insert subs header after 15th position or at end if fewer players
+            const insertPos = Math.min(15, playerCount);
+            combinedArray.splice(insertPos, 0, subsHeadingInfo);
+        }
 
-        return (
-            combinedArray
-        )
-    }
+        return combinedArray;
+    };
 
     const handlePressFetchData = async () => {
         console.info("Pressed Fetch Data")
@@ -230,6 +229,53 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
             const awaySortedArray = awayUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
 
             const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
+            console.info(`Combined array: ${awaySortedArray.length}`)
+            setAllLineupsArray(combinedArray)
+            setIsLoading(false)
+            return;
+        }
+
+
+        if (id.indexOf("_ESPNRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const espnRugbyAPIEventID = separatedArray[0];
+            const espnRugbyAPILeagueName = separatedArray[1]
+            const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
+
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            console.info(apiString)
+
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const homeTeam = matchDetails.boxscore.teams[0].team.displayName;
+            const awayTeam = matchDetails.boxscore.teams[1].team.displayName;
+
+            setHomeTeamName(homeTeam)
+            setAwayTeamName(awayTeam)
+            setLeagueName(espnRugbyAPILeagueName)
+
+            const homeLineup = getLineup(matchDetails, 0, null)
+            const awayLineup = getLineup(matchDetails, 1, null)
+
+            console.info('Home Team Lineup')
+            console.info(homeLineup)
+            console.info(homeLineup)
+
+            console.info('Away Team Lineup')
+            console.info(awayLineup)
+            console.info(awayLineup.length)
+
+            // need to remove duplicates
+            const homeUniqueArray = unique(homeLineup, 'teamPlayerNum')
+            // sort in jersey number order
+            const homeSortedArray = homeUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
+
+            // need to remove duplicates
+            const awayUniqueArray = unique(awayLineup, 'teamPlayerNum')
+            // sort in jersey number order
+            const awaySortedArray = awayUniqueArray.sort((a, b) => a.teamPlayerNum - b.teamPlayerNum);
+
+            const combinedArray = combineLineupArrays(homeSortedArray, awaySortedArray)
+            console.info(`Combined array: ${awaySortedArray.length}`)
             setAllLineupsArray(combinedArray)
             setIsLoading(false)
             return;
@@ -289,8 +335,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                                 backgroundColor: panelColour, justifyContent: 'center'
                             }]}>
 
-                            <LinearGradient colors={[(selectedTeam === "home") ? homeTeamGradientColour : 'transparent', 'transparent']} 
-                            start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }} style={{ width: "100%", justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 5 }}>
+                            <LinearGradient colors={[(selectedTeam === "home") ? homeTeamGradientColour : 'transparent', 'transparent']}
+                                start={{ x: 0.5, y: 1 }} end={{ x: 0.5, y: 0 }} style={{ width: "100%", justifyContent: 'center', alignItems: 'center', padding: 5, borderRadius: 5 }}>
 
                                 <Image source={(selectedTeam === "home") ? homeTeamInfo.logo : homeTeamInfo.altLogo}
                                     style={[lineupPanelStyles.teamLogo, { opacity: (selectedTeam === "home") ? 1 : 0.3 }]} />
@@ -400,20 +446,20 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
     }, [])
 
     const activityIndicatorHeader = () => {
-    if (isLoading) {
-        return (
-            <View style={{ 
-                flex: 1, 
-                width: "100%", 
-                justifyContent: 'center', 
-                alignItems: 'center' 
-            }}>
-                <ActivityIndicator size='large' color='lightgrey' />
-            </View>
-        );
-    }
-    return null;
-};
+        if (isLoading) {
+            return (
+                <View style={{
+                    flex: 1,
+                    width: "100%",
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    <ActivityIndicator size='large' color='lightgrey' />
+                </View>
+            );
+        }
+        return null;
+    };
 
     const [modalPlayerName, setModalPlayerName] = useState<string>('');
     const [modalPlayerPosition, setModalPlayerPosition] = useState<string>('');

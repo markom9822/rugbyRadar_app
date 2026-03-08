@@ -213,7 +213,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Lions',
+    displayName: 'Fidelity SecureDrive Lions',
     abbreviation: 'LION',
     logo: LionsLogo,
     altLogo: LionsAltLogo,

@@ -9,6 +9,15 @@ export const rugbyVizTop14Names = [
   { databaseName: 'Bayonnais', rugbyVizName: 'Bayonne',},
   { databaseName: 'Lyon', rugbyVizName: 'Lyon O.U.',},
   { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
+  { databaseName: 'Clermont Auvergne', rugbyVizName: 'Clermont',},
+  { databaseName: 'Montpellier Herault', rugbyVizName: 'Montpellier',},
+  { databaseName: 'US Montauban', rugbyVizName: 'Montauban',},
+];
+
+
+export const ESPNTop14Names = [
+  { databaseName: 'Section Paloise', ESPNName: 'Pau',},
+ 
 ];
 
 export const getTop14ShortNameFromFullName = (name: string) => {
@@ -33,6 +42,31 @@ export const getTop14ShortNameFromFullName = (name: string) => {
   
   return ''
 }
+
+
+export const getTop14DatabaseShortNameFromESPNName = (name: string) => {
+
+  let searchName = '';
+  const top14NameResult = ESPNTop14Names.find((element) => element.ESPNName === name)
+  if(top14NameResult !== undefined)
+  {
+      searchName = top14NameResult.databaseName;
+  }
+  else
+  {
+      searchName = name;
+  }
+
+  const match = Top14RugbyTeams.find((item) => searchName.indexOf(item.displayName) !== -1)
+
+  if(match !== undefined)
+  {
+    return match.displayName;
+  }
+  
+  return ''
+}
+
 
 
 export const getTop14TeamInfoFromName = (name: string) => {
@@ -124,7 +158,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Clermont',
+    displayName: 'Clermont Auvergne',
     abbreviation: 'CLER',
     logo: ClermontLogo,
     altLogo: ClermontAltLogo,
@@ -160,7 +194,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Montpellier',
+    displayName: 'Montpellier Herault',
     abbreviation: 'MONTP',
     logo: MontpellierLogo,
     altLogo: MontpellierAltLogo,
@@ -268,7 +302,7 @@ export const Top14RugbyTeams = [
   },
   {
     type: 'Top14 Club',
-    displayName: 'Montauban',
+    displayName: 'US Montauban',
     abbreviation: 'USM',
     logo: MontaubanLogo,
     altLogo: MontaubanAltLogo,

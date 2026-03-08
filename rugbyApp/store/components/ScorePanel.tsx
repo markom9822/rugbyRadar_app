@@ -3,7 +3,7 @@ import { fixtureStyles } from "@/styles";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
+import { getLeagueInfoFromDisplayName, getLeagueNameFromDisplayName, hexToRGB, isLeagueInESPNRugbyAPI, isLeagueInPlanetRugbyAPI, isLeagueInRugbyViz, isLeagueInWorldRugbyAPI } from "../utils/helpers";
 
 type ScorePanelProps = {
     leagueDisplayName: string
@@ -140,12 +140,14 @@ export const ScorePanel = ({ leagueDisplayName, homeTeam, awayTeam, homeScore, a
     else if (isLeagueInWorldRugbyAPI(leagueDisplayName)) {
         linkID = matchID + "_" + leagueName + "_WorldRugbyAPI"
     }
-    else if (isLeagueInPlanetRugbyAPI(leagueDisplayName)) {
-        linkID = matchID + "_" + leagueName + "_PlanetRugbyAPI"
+    else if (isLeagueInESPNRugbyAPI(leagueDisplayName)) {
+        linkID = matchID + "_" + leagueName + "_ESPNRugbyAPI"
     }
     else {
         linkID = matchID;
     }
+
+    console.info(`Link ID: ${linkID}`)
 
     let homeAbbreviation = homeTeamInfo.abbreviation;
     let awayAbbreviation = awayTeamInfo.abbreviation;

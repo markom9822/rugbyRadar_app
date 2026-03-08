@@ -1,5 +1,5 @@
 import { MatchInfo } from "@/app/(tabs)"
-import { fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "./fixturesGetter"
+import { fetchESPNAPIData, fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "./fixturesGetter"
 
 const leagueSearchData = [
         { name: 'urc', offSeasonMonths: [7, 8] },
@@ -71,6 +71,15 @@ export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: st
         }
     }
 
+    const handleGetESPNRugbyFixtures = async (thisLeagueName: string, thisDate: Date, tempArray: MatchInfo[]) => {
+
+        const espnRugbyFixtures: MatchInfo[] = await fetchESPNAPIData(thisLeagueName, thisDate);
+
+        if (espnRugbyFixtures !== undefined && espnRugbyFixtures.length > 0) {
+            tempArray.push(...espnRugbyFixtures)
+        }
+    }
+
     for (let i = 0; i < datesArray.length; i++) {
 
         let dateHeaderMatchInfo = {
@@ -114,10 +123,10 @@ export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: st
                     break;
                 case "top14":
                 case "superRugby":
-                    await handleGetPlanetRugbyFixtures(thisLeagueName, datesArray[i], tempArray)
+                case "sixNations":
+                    await handleGetESPNRugbyFixtures(thisLeagueName, datesArray[i], tempArray)
                     break;
                 case "autumnNations":
-                case "sixNations":
                 case "rugbyChamp":
                 case "u20SixNations":
                 case "rugbyWorldCup":

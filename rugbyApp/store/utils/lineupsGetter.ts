@@ -30,7 +30,17 @@ export const getLineup = (matchDetails: any, rosterIndex: number, worldRugbyAPID
         const playerName = matchDetails.rosters[rosterIndex].roster[index].athlete.displayName;
         const playerNumber = matchDetails.rosters[rosterIndex].roster[index].jersey.replace(/\s/g, "");
 
-        const playerID = getMatchingPlayerIDWorldRugbyAPI(playerName, rosterIndex === 0, worldRugbyAPIDetails)
+        let playerID;
+
+        if(worldRugbyAPIDetails === null)
+        {
+            playerID = ''
+
+        }
+        else
+        {
+            playerID = getMatchingPlayerIDWorldRugbyAPI(playerName, rosterIndex === 0, worldRugbyAPIDetails)
+        }
 
         //const playerPosition = matchDetails.rosters[rosterIndex].roster[index].position.displayName;
         const isPlayerCaptain = matchDetails.rosters[rosterIndex].roster[index].captain;

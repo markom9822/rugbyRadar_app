@@ -146,10 +146,6 @@ export const worldRugbyAPILeagueCodes = [
         displayName: 'Autumn Nations Series', leagueLogo: AutumnNationsLogo, leagueAltLogo: AutumnNationsLogo
     },
     {
-        value: 'sixNations', code: "2171",
-        displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo
-    },
-    {
         value: 'u20SixNations', code: "dbb6df44-d64a-4726-a1b8-839c0cc1ff41",
         displayName: 'U20 Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo
     },
@@ -299,6 +295,10 @@ export const ESPNleagueCodes = [
         value: 'superRugby', code: "242041",
         displayName: 'Super Rugby Pacific', leagueLogo: SuperRugbyLogo, leagueAltLogo: SuperRugbyAltLogo
     },
+    {
+        value: 'sixNations', code: "180659",
+        displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo
+    }
 ];
 
 export const getESPNLeagueCode = (name: string) => {
@@ -311,6 +311,12 @@ export const getESPNLeagueDisplayNameFromValue = (leagueValue: string) => {
 
     const result = ESPNleagueCodes.find((element) => element.value === leagueValue)
     return result?.displayName.toString()
+}
+
+export const isLeagueInESPNRugbyAPI = (displayName: string) => {
+
+    const result = ESPNleagueCodes.find((element) => element.displayName === displayName)
+    return result !== undefined
 }
 
 //-----------------------------------------------------------------------------------------------------

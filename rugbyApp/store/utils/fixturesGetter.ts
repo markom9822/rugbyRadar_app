@@ -1,3 +1,4 @@
+import { escape } from "querystring";
 import { getESPNLeagueCode, getESPNLeagueDisplayNameFromValue, getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode } from "./helpers";
 
 export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: string | undefined) => {
@@ -24,10 +25,11 @@ export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: str
 
         const detailsLength = Number(todaysMatches.events[index].competitions[0].details.length);
         let eventTime = '0';
-        if(detailsLength > 0)
-        {
+        if (detailsLength > 0) {
             eventTime = todaysMatches.events[index].competitions[0].details[detailsLength - 1].clock.displayValue;
         }
+
+        const compName = leagueDisplayName === undefined ? "" : leagueDisplayName;
 
         let newMatchInfo = {
             homeTeam: homeTeamName,
@@ -37,7 +39,7 @@ export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: str
             matchDate: matchDate,
             matchTitle: '',
             matchVenue: matchVenue,
-            matchLeague: leagueDisplayName,
+            matchLeague: compName,
             matchID: matchID,
             eventState: eventState,
             stateDetail: 'FT',
@@ -62,20 +64,18 @@ export const fetchESPNAPIData = async (thisLeagueName: string, selectedDate: Dat
     const formattedDateNumber = selectedDate.getFullYear() * 1e4 + (selectedDate.getMonth() + 1) * 100 + selectedDate.getDate();
     const formattedDateString = formattedDateNumber.toString();
 
-
     // use separate API for club leagues
-    if(ESPNLeagueCode !== undefined)
-    {
-        const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ {ESPNLeagueCode} +'/scoreboard?region=us&lang=en&contentorigin=espn&dates=' + {formattedDateString}
+    if (ESPNLeagueCode !== undefined) {
+        const apiStringAll = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + ESPNLeagueCode + '/scoreboard?region=us&lang=en&contentorigin=espn&dates=' + formattedDateString;
         console.info(apiStringAll)
-        const todayAllMatches = await fetch( apiStringAll, {
+        const todayAllMatches = await fetch(apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
             }
         }
         ).then((res) => res.json())
 
-        const allFixturesArray = getFixturesForESPNAPI(todayAllMatches, getESPNLeagueDisplayNameFromValue(thisLeagueName) )
+        const allFixturesArray = getFixturesForESPNAPI(todayAllMatches, getESPNLeagueDisplayNameFromValue(thisLeagueName))
         return allFixturesArray;
     }
 
@@ -90,11 +90,10 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
     let leagueArray = []
 
     for (let index = 0; index < gamesCount; index++) {
-        
+
         const matchDate = new Date(seasonAllMatches.data[index].date);
 
-        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
-        {
+        if (new Date(matchDate).setHours(0, 0, 0, 0) === selectedDate.setHours(0, 0, 0, 0)) {
             const homeTeamName = seasonAllMatches.data[index].homeTeam.name;
             const awayTeamName = seasonAllMatches.data[index].awayTeam.name;
             const homeTeamScore = seasonAllMatches.data[index].homeTeam.score;
@@ -110,24 +109,19 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
 
             let eventState;
             const matchStatus = seasonAllMatches.data[index].status;
-            if(matchStatus === "result")
-            {
+            if (matchStatus === "result") {
                 eventState = "post"
             }
-            else if(matchStatus === "fixture")
-            {
+            else if (matchStatus === "fixture") {
                 eventState = "pre"
             }
-            else if(matchStatus === "first half" && homeTeamHalfScore != null && awayTeamHalfScore != null)
-            {
+            else if (matchStatus === "first half" && homeTeamHalfScore != null && awayTeamHalfScore != null) {
                 eventState = "halfTime"
             }
-            else if (matchStatus === "postponed")
-            {
+            else if (matchStatus === "postponed") {
                 eventState = "postponed"
             }
-            else
-            {
+            else {
                 eventState = "ongoing"
             }
 
@@ -149,7 +143,7 @@ export const getFixturesForAllRugViz = (seasonAllMatches: any, selectedDate: Dat
 
             leagueArray.push(newMatchInfo)
         }
-        
+
     }
 
     console.info(leagueArray)
@@ -175,13 +169,13 @@ export const fetchRugbyVizData = async (thisLeagueName: string, selectedDate: Da
 
     console.info(getCurrentRugbySeason(selectedDate))
     const seasonYear = getCurrentRugbySeason(selectedDate)
+    console.info(`Date ${selectedDate}`)
 
     // use separate API for club leagues
-    if(rugbyVizLeagueCode !== undefined)
-    {
-        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId='+rugbyVizLeagueCode+'&images=true&season='+seasonYear+'01'
+    if (rugbyVizLeagueCode !== undefined) {
+        const apiStringAll = 'https://rugby-union-feeds.incrowdsports.com/v1/matches?provider=rugbyviz&compId=' + rugbyVizLeagueCode + '&images=true&season=' + seasonYear + '01'
         console.info(apiStringAll)
-        const seasonsAllMatches = await fetch( apiStringAll, {
+        const seasonsAllMatches = await fetch(apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
             }
@@ -190,7 +184,7 @@ export const fetchRugbyVizData = async (thisLeagueName: string, selectedDate: Da
 
         console.info(getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode))
 
-        const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate, getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode) )
+        const allFixturesArray = getFixturesForAllRugViz(seasonsAllMatches, selectedDate, getRugbyVizLeagueDisplayNameFromCode(rugbyVizLeagueCode))
         return allFixturesArray;
     }
 
@@ -217,10 +211,9 @@ export const fetchWorldRugbyAPIData = async (thisLeagueName: string, selectedDat
 
     const worldRugbyAPILeagueCode = getWorldRugbyAPILeagueCode(thisLeagueName);
     // use separate API for some matches
-    if(worldRugbyAPILeagueCode !== undefined)
-    {
-        const apiStringAll = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match?states=U,UP,L,CC,C&pageSize=100&sort=asc&startDate='+startDate+'&endDate='+endDate
-        const seasonsAllMatches = await fetch( apiStringAll, {
+    if (worldRugbyAPILeagueCode !== undefined) {
+        const apiStringAll = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match?states=U,UP,L,CC,C&pageSize=100&sort=asc&startDate=' + startDate + '&endDate=' + endDate
+        const seasonsAllMatches = await fetch(apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
             }
@@ -228,7 +221,7 @@ export const fetchWorldRugbyAPIData = async (thisLeagueName: string, selectedDat
         ).then((res) => res.json())
 
 
-        const allFixturesArray = getFixturesForAllWorldRugbyAPI(seasonsAllMatches, selectedDate, getWorldRugbyAPILeagueDisplayNameFromCode(worldRugbyAPILeagueCode) )
+        const allFixturesArray = getFixturesForAllWorldRugbyAPI(seasonsAllMatches, selectedDate, getWorldRugbyAPILeagueDisplayNameFromCode(worldRugbyAPILeagueCode))
         return allFixturesArray;
     }
 
@@ -245,43 +238,38 @@ export const getFixturesForAllWorldRugbyAPI = (seasonAllMatches: any, selectedDa
     console.info(leagueDisplayName)
 
     for (let index = 0; index < gamesCount; index++) {
-        
+
         // need to get date
         const matchDate = new Date(seasonAllMatches.content[index].time.millis);
         const matchYear = matchDate.getFullYear()
 
         const matchCompetition = seasonAllMatches.content[index].competition.replace(` ${matchYear}`, "");
 
-        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0) && matchCompetition === leagueDisplayName)
-        {
+        if (new Date(matchDate).setHours(0, 0, 0, 0) === selectedDate.setHours(0, 0, 0, 0) && matchCompetition === leagueDisplayName) {
             const homeTeamName = seasonAllMatches.content[index].teams[0].name;
             const awayTeamName = seasonAllMatches.content[index].teams[1].name;
             const homeTeamScore = seasonAllMatches.content[index].scores[0];
             const awayTeamScore = seasonAllMatches.content[index].scores[1];
-            const matchVenue =  seasonAllMatches.content[index].venue !== null ? seasonAllMatches.content[index].venue.name : "-";
+            const matchVenue = seasonAllMatches.content[index].venue !== null ? seasonAllMatches.content[index].venue.name : "-";
             const matchID = seasonAllMatches.content[index].matchId;
             const compName = (seasonAllMatches.content[index].competition).replace(" " + matchYear, "");
 
             // time in seconds need to convert to mins
             const eventTimeSeconds = Number(seasonAllMatches.content[index].clock.secs);
-            const eventTime = Math.floor(eventTimeSeconds/60);
+            const eventTime = Math.floor(eventTimeSeconds / 60);
 
             let eventState;
             const matchStatus = seasonAllMatches.content[index].status;
-            if(matchStatus === "C" || matchStatus === "LFT")
-            {
+            if (matchStatus === "C" || matchStatus === "LFT") {
                 eventState = "post"
             }
-            else if(matchStatus === "U")
-            {
+            else if (matchStatus === "U") {
                 eventState = "pre"
             }
-            else if (matchStatus === "LHT")
-            {
+            else if (matchStatus === "LHT") {
                 eventState = "halfTime"
             }
-            else
-            {
+            else {
                 eventState = "ongoing"
             }
 
@@ -322,13 +310,14 @@ export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDa
     }
 
     const startDate = formatDate(selectedDate);
+    console.info(`Date ${startDate}`)
 
     const planetRugbyAPILeagueCode = getPlanetRugbyAPILeagueCode(thisLeagueName);
     // use separate API for some matches
-    if(planetRugbyAPILeagueCode !== undefined)
-    {
-        const apiStringAll = 'https://rugbylivecenter.yormedia.com/api/matches/all/'+startDate+'/1'
-        const seasonsAllMatches = await fetch( apiStringAll, {
+    if (planetRugbyAPILeagueCode !== undefined) {
+        const apiStringAll = 'https://rugbylivecenter.yormedia.com/api/matches/all/' + startDate + '/1'
+        console.info(apiStringAll)
+        const seasonsAllMatches = await fetch(apiStringAll, {
             headers: {
                 'Cache-control': 'no-cache'
             }
@@ -337,7 +326,7 @@ export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDa
 
         console.info(getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode))
 
-        const allFixturesArray = await getFixturesForAllPlanetRugbyAPI(seasonsAllMatches, selectedDate, getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode) )
+        const allFixturesArray = await getFixturesForAllPlanetRugbyAPI(seasonsAllMatches, selectedDate, getPlanetRugbyAPILeagueDisplayNameFromCode(planetRugbyAPILeagueCode))
         return allFixturesArray;
     }
     return []
@@ -345,101 +334,67 @@ export const fetchPlanetRugbyAPIData = async (thisLeagueName: string, selectedDa
 
 export const getFixturesForAllPlanetRugbyAPI = async (seasonAllMatches: any, selectedDate: Date, leagueDisplayName: string) => {
 
-    let matchIDs = []
+    let leagueArray = []
 
     for (let compIndex = 0; compIndex < seasonAllMatches.data.length; compIndex++) {
 
-        if(seasonAllMatches.data[compIndex].ContestGroupName.replace(" Playoff", "") === leagueDisplayName)
-        {
+        if (seasonAllMatches.data[compIndex].ContestGroupName.replace(" Playoff", "") === leagueDisplayName) {
             const matchesArray = seasonAllMatches.data[compIndex].matches;
 
-            for (let matchIndex = 0; matchIndex < matchesArray.length; matchIndex++) 
-            {
-                matchIDs.push(matchesArray[matchIndex].id)
+            for (let matchIndex = 0; matchIndex < matchesArray.length; matchIndex++) {
+                const matchInfo = matchesArray[matchIndex];
+                const matchDate = new Date(matchInfo.datetime);
+                const [homePart, awayPart] = matchInfo.teams.split(";");
+                const homeTeamName = homePart.split(":")[0];
+                const awayTeamName = awayPart.split(":")[0];
+                const matchID = matchInfo.id;
+
+                const eventTime = matchInfo.minutes;
+
+                let eventState;
+                let homeScore;
+                let awayScore;
+                const matchStatus = matchInfo.status;
+
+                if (matchStatus === "Finished") {
+                    homeScore = matchInfo.ft.split('-')[0];
+                    awayScore = matchInfo.ft.split('-')[1];
+
+                    eventState = "post"
+                }
+                else if (matchStatus === "KO") {
+                    eventState = "pre"
+                }
+                else if (eventTime === "HT") {
+                    homeScore = matchInfo.ht.split('-')[0];
+                    awayScore = matchInfo.ht.split('-')[1];
+                    eventState = "halfTime"
+                }
+                else {
+                    homeScore = matchInfo.cfs.split('-')[0];
+                    awayScore = matchInfo.cfs.split('-')[1];
+                    eventState = "ongoing"
+                }
+
+                let newMatchInfo = {
+                    homeTeam: homeTeamName,
+                    awayTeam: awayTeamName,
+                    homeScore: homeScore,
+                    awayScore: awayScore,
+                    matchDate: matchDate,
+                    matchTitle: '',
+                    matchVenue: '',
+                    matchLeague: leagueDisplayName,
+                    matchID: matchID,
+                    eventState: eventState,
+                    stateDetail: 'FT',
+                    eventTime: eventTime.toString(),
+                    isDateHeader: false,
+                };
+
+                leagueArray.push(newMatchInfo)
             }
-        } 
-    }
-    console.info(matchIDs)
-
-    let leagueArray = []
-
-    for (let index = 0; index < matchIDs.length; index++) {
-
-        // fetch match info
-        const apiString = 'https://rugbylivecenter.yormedia.com/api/match-overview/'+ matchIDs[index];
-        console.info(apiString)
-        const matchInfo = await fetch(apiString,).then((res) => res.json())
-        console.info(matchInfo)
-        
-        // need to get date
-        //const simpleFormat = (dateStr: string): string => {
-        //    return `${dateStr.replace(' ', 'T')}.000Z`;
-        //}
-
-        //const formattedDate = simpleFormat(matchInfo.data.match.datetime);
-        //console.info(formattedDate)
-
-        const matchDate = new Date(matchInfo.data.match.datetime);
-        const currentYear = new Date().getFullYear()
-
-        if(new Date(matchDate).setHours(0,0,0,0) === selectedDate.setHours(0,0,0,0))
-        {
-            const [homeTeamName, awayTeamName] = matchInfo.data.matchDetails.teams.split(';');
-            
-            const matchVenue = matchInfo.data.match.venue_name;
-            const matchID = matchInfo.data.match.id;
-            const compName = matchInfo.data.match.contest_group_name.replace(" Playoff", "");
-            
-            const eventTime = matchInfo.data.matchDetails.minutes;
-            
-            let eventState;
-            let homeScore;
-            let awayScore;
-            const matchStatus = matchInfo.data.matchDetails.status;
-            
-            if(matchStatus === "Finished")
-            {
-                homeScore = matchInfo.data.matchDetails.ft.split('-')[0];
-                awayScore = matchInfo.data.matchDetails.ft.split('-')[1];
-
-                eventState = "post"
-            }
-            else if(matchStatus === "KO")
-            {
-                eventState = "pre"
-            }
-            else if(eventTime === "HT")
-            {
-                homeScore = matchInfo.data.matchDetails.ht.split('-')[0];
-                awayScore = matchInfo.data.matchDetails.ht.split('-')[1];
-                eventState = "halfTime"
-            }
-            else
-            {
-                homeScore = matchInfo.data.matchDetails.cfs.split('-')[0];
-                awayScore = matchInfo.data.matchDetails.cfs.split('-')[1];
-                eventState = "ongoing"
-            }
-
-            let newMatchInfo = {
-                homeTeam: homeTeamName,
-                awayTeam: awayTeamName,
-                homeScore: homeScore,
-                awayScore: awayScore,
-                matchDate: matchDate,
-                matchTitle: '',
-                matchVenue: matchVenue,
-                matchLeague: compName,
-                matchID: matchID,
-                eventState: eventState,
-                stateDetail: 'FT',
-                eventTime: eventTime.toString(),
-                isDateHeader: false,
-            };
-
-            leagueArray.push(newMatchInfo)
         }
-        
     }
 
     console.info(leagueArray)

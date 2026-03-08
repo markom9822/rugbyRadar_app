@@ -113,8 +113,6 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
 
         const planetRugbyStandingsLeagueCodes = [
             { leagueName: 'top14', leagueCodes: ['x7jq191p'], playoffCutoffIndex: 6 },
-            { leagueName: 'sixNations', leagueCodes: ['krjd4j3q'], playoffCutoffIndex: -1 },
-            { leagueName: 'rugbyChamp', leagueCodes: ['1310034091'], playoffCutoffIndex: -1 },
             { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2 },
             { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2 },
         ];
@@ -135,7 +133,8 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             setStandingsArray(newArray)
         }
         else if (leagueName === "u20SixNations") {
-            apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=d7d54b61-12b7-4c98-8fda-84f43efa0b9b';
+            const u20EventID = '7b84036d-7617-485f-9e7e-e5987733fc1d';
+            apiString = 'https://api.wr-rims-prod.pulselive.com/rugby/v3/match/?states=U,UP,L,CC,C&pageSize=100&sort=asc&events=' + u20EventID;
             const u20SixNationsMatches = await fetch(apiString,).then((res) => res.json())
 
             const manualWRStandings = await getAllStandingsDataWorldRugbyAPI(u20SixNationsMatches, leagueName);

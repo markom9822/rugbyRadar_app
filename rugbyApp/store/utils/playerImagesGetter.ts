@@ -1,5 +1,6 @@
 import { getChampsCupShortNameFromFullName } from '../ChampionsCupRugbyTeamsDatabase'
 import { supabase } from '../../supabaseUtils/supabase';
+import { getTop14DatabaseShortNameFromESPNName } from '../Top14RugbyTeamsDatabase';
 
 export const DefaultPlayerImg = require('@/store/PlayerImages/default_player.png')
 
@@ -12,7 +13,8 @@ export const getPlayerImageSrc = async (leagueName: string, teamName: string, pl
     const teamSlug = correctTeamName.toLowerCase();
     
     const playerFileName = playerName
-    .replace(/\s+/g, '') 
+    .replace(/'/g, '')           
+    .replace(/\s+/g, '')         
     + '.png';
 
     console.log("teams/team-" + teamSlug + "/" + playerFileName)
@@ -53,6 +55,13 @@ export const getPlayerImageSrc = async (leagueName: string, teamName: string, pl
   else if (leagueName === 'prem') leagueTableName = 'prem-club-playerimages';
   else if (leagueName === 'top14') leagueTableName = 'top14-club-playerimages';
   else if (leagueName === 'superRugby') leagueTableName = 'superrugby-club-playerimages';
+
+  if(leagueName === 'top14')
+  {
+    correctTeamName = getTop14DatabaseShortNameFromESPNName(correctTeamName);
+  }
+
+  console.info(`Correct team name: ${correctTeamName}`)
 
   const { data, error } = await supabase
     .from(leagueTableName)

@@ -2,8 +2,9 @@ import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "../utils/getFullMatchStats";
+import { getFullMatchStats, getFullMatchStatsPlanetRugbyAPI, getFullMatchStatsRugbyViz, getFullMatchStatsWorldRugbyAPI } from "../utils/getFullMatchStats";
 import { StatsInfo, StatsPanel } from "./StatsPanel";
+import { getESPNLeagueCode } from "../utils/helpers";
 
 
 type FixtureStatsProps = {
@@ -93,6 +94,29 @@ export const FixtureStats = ({ id, isShown }: FixtureStatsProps) => {
             setMatchStatsArray(fullMatchStats)
 
             setLeagueName(planetRugbyAPILeagueName)
+
+            setIsLoading(false)
+            return;
+        }
+
+        if (id.indexOf("_ESPNRugbyAPI") !== -1) {
+            const separatedArray = id.toString().split("_");
+            const espnRugbyAPIEventID = separatedArray[0];
+            const espnRugbyAPILeagueName = separatedArray[1]
+            const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
+
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            const matchDetails = await fetch(apiString,).then((res) => res.json())
+            const homeTeam = matchDetails.boxscore.teams[0].team.displayName;
+            const awayTeam = matchDetails.boxscore.teams[1].team.displayName;
+
+            setMainTeamName(homeTeam)
+            setOpponentTeamName(awayTeam)
+
+            const fullMatchStats = getFullMatchStats(matchDetails)
+
+            setMatchStatsArray(fullMatchStats)
+            setLeagueName(espnRugbyAPILeagueName)
 
             setIsLoading(false)
             return;
