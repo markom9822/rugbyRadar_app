@@ -14,8 +14,16 @@ export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: str
         const matchVenue = todaysMatches.events[index].competitions[0].venue.fullName;
         const eventID = todaysMatches.events[index].id;
         const matchID = eventID;
-        const eventState = todaysMatches.events[index].status.type.state;
+        //const eventState = todaysMatches.events[index].status.type.state;
         const stateDetail = todaysMatches.events[index].status.type.shortDetail;
+        const matchState = todaysMatches.events[index].status.type.state;
+
+        let eventState = ''
+        eventState = matchState;
+        if (todaysMatches.events[index].status.type.description === 'Halftime' && matchState === 'in')
+        {
+            eventState = "halfTime"
+        }
 
         const homeTeamName = todaysMatches.events[index].competitions[0].competitors[0].team.name;
         const homeTeamScore = todaysMatches.events[index].competitions[0].competitors[0].score;
@@ -24,10 +32,7 @@ export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: str
         const matchDate = new Date(todaysMatches.events[index].date)
 
         const detailsLength = Number(todaysMatches.events[index].competitions[0].details.length);
-        let eventTime = '0';
-        if (detailsLength > 0) {
-            eventTime = todaysMatches.events[index].competitions[0].details[detailsLength - 1].clock.displayValue;
-        }
+        const eventTime = todaysMatches.events[index].status.displayClock.replace(/'$/g, "");;
 
         const compName = leagueDisplayName === undefined ? "" : leagueDisplayName;
 
