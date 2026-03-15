@@ -16,6 +16,7 @@ const leagueSearchData = [
         { name: 'u20Championship', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12] },
         { name: 'pacificNationsCup', offSeasonMonths: [1, 2, 3, 4, 5, 6, 7, 10, 11, 12] },
         { name: 'BILTour', offSeasonMonths: [1, 2, 3, 4, 5, 9, 10, 11, 12] },
+        { name: 'nationsChamp', offSeasonMonths: [1, 2, 3, 4, 5, 8, 9, 10, 12] },
 ];
 
 export function get7Days(previous: boolean): Date[] {
@@ -33,12 +34,9 @@ export function get7Days(previous: boolean): Date[] {
 
 export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: string) => {
 
-    //const formattedDate = dateCustomFormatting(selectedDate)
-    //const currentLeagueCode = getLeagueCode(targetLeagueName)
-
     const leagueNameArray = targetLeagueName === "all" ?
         ['urc', 'prem', 'championsCup', 'challengeCup', 'top14', 'superRugby',
-            'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'pacificNationsCup', 'BILTour'] : [targetLeagueName]
+            'autumnNations', 'sixNations', 'rugbyChamp', 'u20SixNations', 'rugbyWorldCup', 'u20Championship', 'pacificNationsCup', 'BILTour', 'nationsChamp'] : [targetLeagueName]
 
     console.info(leagueNameArray)
 
@@ -133,6 +131,7 @@ export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: st
                 case "u20Championship":
                 case "pacificNationsCup":
                 case "BILTour":
+                case "nationsChamp":
                     await handleGetWorldRugbyFixtures(thisLeagueName, datesArray[i], tempArray)
                     break;
             }

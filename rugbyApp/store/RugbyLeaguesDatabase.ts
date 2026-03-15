@@ -1,5 +1,5 @@
 import { BALionsAltLogo, BALionsLogo } from "./InternationalTeamLogos/InternationalTeams";
-import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, PacificNationsCupAltLogo, PacificNationsCupLogo, PremiershipAltLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "./LeagueLogos/LeagueLogos";
+import { AutumnNationsAltLogo, AutumnNationsLogo, ChallengeCupAltLogo, ChallengeCupLogo, ChampionsCupAltLogo, NationsChampAltLogo, NationsChampLogo, PacificNationsCupAltLogo, PacificNationsCupLogo, PremiershipAltLogo, RugbyChampAltLogo, RugbyChampLogo, SixNationsAltLogo, SixNationsLogo, SuperRugbyAltLogo, SuperRugbyLogo, Top14AltLogo, Top14Logo, U20SixNationsAltLogo, U20SixNationsLogo, U20WorldChampsAltLogo, U20WorldChampsLogo, URCAltLogo, URCLogo, WorldCupAltLogo, WorldCupLogo } from "./LeagueLogos/LeagueLogos";
 
 export const getRugbyLeagueInfoFromValue = (name: string) => {
 
@@ -167,6 +167,17 @@ export const RugbyLeagues = [
 ];
 
 export const RugbySeries = [
+    {
+      value: 'nationsChamp',
+      displayName: "Nations Championship",
+      abbreviation: "Nations Cup",
+      logo: NationsChampLogo,
+      altLogo: NationsChampAltLogo,
+      colour: '#eeff03',
+      id: '46294cf5-dee3-4234-957a-dbe1f08049f2',
+      foundedYear: '-',
+      seasonType: 'north',
+    },
     {
       value: 'autumnNations',
       displayName: 'Autumn Nations Series',

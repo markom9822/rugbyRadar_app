@@ -16,7 +16,8 @@ export const getHomeAwayTeamInfo = (league: string | undefined, homeTeam: string
         homeInfo = getURCTeamInfoFromName(homeTeam)
         awayInfo = getURCTeamInfoFromName(awayTeam)
     }
-    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" || league === "autumnNations" || league === "rugbyWorldCup" || league === "pacificNationsCup")
+    else if(league === "inter" || league === "rugbyChamp" || league === "sixNations" 
+        || league === "autumnNations" || league === "rugbyWorldCup" || league === "pacificNationsCup" || league === "nationsChamp")
     {
         homeInfo = getInternationalTeamInfoFromName(homeTeam)
         awayInfo = getInternationalTeamInfoFromName(awayTeam)
