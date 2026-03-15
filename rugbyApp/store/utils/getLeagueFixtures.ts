@@ -122,12 +122,12 @@ export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: st
                 case "top14":
                 case "superRugby":
                 case "sixNations":
+                case "rugbyWorldCup":
                     await handleGetESPNRugbyFixtures(thisLeagueName, datesArray[i], tempArray)
                     break;
                 case "autumnNations":
                 case "rugbyChamp":
                 case "u20SixNations":
-                case "rugbyWorldCup":
                 case "u20Championship":
                 case "pacificNationsCup":
                 case "BILTour":

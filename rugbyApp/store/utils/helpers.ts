@@ -65,7 +65,6 @@ export const leagueCodes = [
         value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
         displayName: 'World Rugby U20 Championship', leagueLogo: U20WorldChampsLogo, leagueAltLogo: U20WorldChampsAltLogo, trophyIcon: null
     },
-
     {
         value: 'pacificNationsCup', code: "735a21a5-9069-4fad-810e-81806f9c47a4",
         displayName: 'Pacific Nations Cup', leagueLogo: PacificNationsCupLogo, leagueAltLogo: PacificNationsCupAltLogo, trophyIcon: null
@@ -155,10 +154,6 @@ export const worldRugbyAPILeagueCodes = [
     {
         value: 'rugbyChamp', code: "a8ed1f3e-a2f3-4400-9f3a-9fc002356b3c",
         displayName: 'The Rugby Championship', leagueLogo: RugbyChampLogo, leagueAltLogo: RugbyChampAltLogo
-    },
-    {
-        value: 'rugbyWorldCup', code: "1893",
-        displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo
     },
     {
         value: 'u20Championship', code: "560edcbf-fd99-4a11-b7b5-0a5e017d61f2",
@@ -302,7 +297,11 @@ export const ESPNleagueCodes = [
     {
         value: 'sixNations', code: "180659",
         displayName: 'Six Nations', leagueLogo: SixNationsLogo, leagueAltLogo: SixNationsAltLogo
-    }
+    },
+    {
+        value: 'rugbyWorldCup', code: "164205",
+        displayName: 'Rugby World Cup', leagueLogo: WorldCupLogo, leagueAltLogo: WorldCupAltLogo, trophyIcon: RWCTrophyIcon
+    },
 ];
 
 export const getESPNLeagueCode = (name: string) => {
