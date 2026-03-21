@@ -1,4 +1,3 @@
-import { escape } from "querystring";
 import { getESPNLeagueCode, getESPNLeagueDisplayNameFromValue, getPlanetRugbyAPILeagueCode, getPlanetRugbyAPILeagueDisplayNameFromCode, getRugbyVizLeagueCode, getRugbyVizLeagueDisplayNameFromCode, getWorldRugbyAPILeagueCode, getWorldRugbyAPILeagueDisplayNameFromCode } from "./helpers";
 
 export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: string | undefined) => {
@@ -10,12 +9,9 @@ export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: str
     for (let index = 0; index < todaysEvents.length; index++) {
         console.info(todaysMatches.events[index].name)
 
-        const matchTitle = todaysMatches.events[index].name;
         const matchVenue = todaysMatches.events[index].competitions[0].venue.fullName;
         const eventID = todaysMatches.events[index].id;
         const matchID = eventID;
-        //const eventState = todaysMatches.events[index].status.type.state;
-        const stateDetail = todaysMatches.events[index].status.type.shortDetail;
         const matchState = todaysMatches.events[index].status.type.state;
 
         let eventState = ''
@@ -31,7 +27,6 @@ export const getFixturesForESPNAPI = (todaysMatches: any, leagueDisplayName: str
         const awayTeamScore = todaysMatches.events[index].competitions[0].competitors[1].score;
         const matchDate = new Date(todaysMatches.events[index].date)
 
-        const detailsLength = Number(todaysMatches.events[index].competitions[0].details.length);
         const eventTime = todaysMatches.events[index].status.displayClock.replace(/'$/g, "");;
 
         const compName = leagueDisplayName === undefined ? "" : leagueDisplayName;
