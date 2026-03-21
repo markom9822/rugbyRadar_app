@@ -86,22 +86,6 @@ const FixturesScreen = () => {
         setDatePickerOpen(!datePickerOpen)
     }
 
-    const handleOnChangeLeague = async (leagueValue: string) => {
-        setLeagueName(leagueValue)
-
-        const todayMatchesArray = await handlePressFetchData([new Date()], leagueValue, currentTab === "Today")
-        console.info('Setting today match array')
-        setTodayMatchesArray(todayMatchesArray)
-
-        const previousMatchesArray = await handlePressFetchData(get7Days(true), leagueValue, currentTab === "Previous")
-        console.info('Setting previous match array')
-        setPreviousMatchesArray(previousMatchesArray)
-
-        const upcomingMatchesArray = await handlePressFetchData(get7Days(false), leagueValue, currentTab === "Upcoming")
-        console.info('Setting upcoming match array')
-        setUpcomingMatchesArray(upcomingMatchesArray)
-    }
-
     const notFoundHeader = (eventsArray: MatchInfo[]) => {
 
         if (eventsArray === undefined || eventsArray.length === 0 && !isLoading) {

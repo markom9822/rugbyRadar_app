@@ -1,6 +1,7 @@
 import { getChampsCupShortNameFromFullName } from '../ChampionsCupRugbyTeamsDatabase'
 import { supabase } from '../../supabaseUtils/supabase';
 import { getTop14DatabaseShortNameFromESPNName } from '../Top14RugbyTeamsDatabase';
+import { IsLeagueInternational } from './helpers';
 
 export const DefaultPlayerImg = require('@/store/PlayerImages/default_player.png')
 
@@ -8,7 +9,7 @@ export const getPlayerImageSrc = async (leagueName: string, teamName: string, pl
   let correctTeamName = teamName.replace(" Rugby", "");
 
   // if international then get from bucket
-  if(leagueName === 'sixNations')
+  if(IsLeagueInternational(leagueName))
   {
     const teamSlug = correctTeamName.toLowerCase();
     

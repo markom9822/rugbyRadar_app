@@ -13,7 +13,7 @@ import { Top14RugbyTeams } from "@/store/Top14RugbyTeamsDatabase"
 import { URCRugbyTeams } from "@/store/URCRugbyTeamsDatabase"
 import { hexToRGB } from "@/store/utils/helpers"
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { Image, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { getDefaultTimezone, getDeviceLocalTimezone, isTimeSyncEnabled } from "./settings"
 

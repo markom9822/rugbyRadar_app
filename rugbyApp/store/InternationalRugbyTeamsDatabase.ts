@@ -1,4 +1,4 @@
-import { ArgentinaAltLogo, ArgentinaLogo, AustraliaAltLogo, AustraliaLogo, BALionsAltLogo, BALionsLogo, CanadaAltLogo, CanadaLogo, ChileAltLogo, ChileLogo, DefaultLogo, EnglandAltLogo, EnglandLogo, FijiAltLogo, FijiLogo, FranceAltLogo, FranceLogo, GeorgiaAltLogo, GeorgiaLogo, IrelandAltLogo, IrelandLogo, ItalyAltLogo, ItalyLogo, JapanAltLogo, JapanLogo, NamibiaAltLogo, NamibiaLogo, NewZealandAltLogo, NewZealandLogo, PortugalAltLogo, PortugalLogo, RomaniaAltLogo, RomaniaLogo, SamoaAltLogo, SamoaLogo, ScotlandAltLogo, ScotlandLogo, SouthAfricaAltLogo, SouthAfricaLogo, SpainAltLogo, SpainLogo, TongaAltLogo, TongaLogo, UruguayAltLogo, UruguayLogo, USAAltLogo, USALogo, WalesAltLogo, WalesLogo } from "./InternationalTeamLogos/InternationalTeams";
+import { ArgentinaAltLogo, ArgentinaLogo, AustraliaAltLogo, AustraliaLogo, BALionsAltLogo, BALionsLogo, CanadaAltLogo, CanadaLogo, ChileAltLogo, ChileLogo, DefaultLogo, EnglandAltLogo, EnglandLogo, FijiAltLogo, FijiLogo, FranceAltLogo, FranceLogo, GeorgiaAltLogo, GeorgiaLogo, HongKongAltLogo, HongKongLogo, IrelandAltLogo, IrelandLogo, ItalyAltLogo, ItalyLogo, JapanAltLogo, JapanLogo, NamibiaAltLogo, NamibiaLogo, NewZealandAltLogo, NewZealandLogo, PortugalAltLogo, PortugalLogo, RomaniaAltLogo, RomaniaLogo, SamoaAltLogo, SamoaLogo, ScotlandAltLogo, ScotlandLogo, SouthAfricaAltLogo, SouthAfricaLogo, SpainAltLogo, SpainLogo, TongaAltLogo, TongaLogo, UruguayAltLogo, UruguayLogo, USAAltLogo, USALogo, WalesAltLogo, WalesLogo, ZimbabweAltLogo, ZimbabweLogo } from "./InternationalTeamLogos/InternationalTeams";
 import { SuperRugbyTeams } from "./SuperRugbyPacificRugbyTeamsDatabase";
 import { URCRugbyTeams } from "./URCRugbyTeamsDatabase";
 
@@ -331,6 +331,30 @@ export const InternationalRugbyTeams = [
     id: '29',
     defaultLeague: 'Rugby World Cup',
     foundedYear: '1948',
+    seasonType: 'south',
+  },
+  {
+    type: 'International',
+    displayName: 'Hong Kong',
+    abbreviation: 'HK',
+    logo: HongKongLogo,
+    altLogo: HongKongAltLogo,
+    colour: '#041e53',
+    id: '289268',
+    defaultLeague: 'Rugby World Cup',
+    foundedYear: '1952',
+    seasonType: 'south',
+  },
+  {
+    type: 'International',
+    displayName: 'Zimbabwe',
+    abbreviation: 'ZIM',
+    logo: ZimbabweLogo,
+    altLogo: ZimbabweAltLogo,
+    colour: '#1d3821',
+    id: '289356',
+    defaultLeague: 'Rugby World Cup',
+    foundedYear: '1895',
     seasonType: 'south',
   },
   {
