@@ -3,11 +3,10 @@ import { lineupPanelStyles } from "@/styles";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
-import { getESPNLeagueCode, getESPNMatchInfoFromDetails, getLastName, hexToRGB } from "../utils/helpers";
+import { getESPNLeagueCode, getESPNMatchInfoFromDetails, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
-import { LineupPlayerPanel } from "./LineupPlayerPanel";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { getPlayerInfo } from "../utils/playerInfoGetter";
 import { DefaultPlayerImg } from "../utils/playerImagesGetter";
@@ -319,8 +318,6 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
             const selectedTeamGradientColour = hexToRGB((selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour, '0.3')
 
             const selectedTeamFullColour = (selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour;
-            const gradientStartFraction = (selectedTeam === "home") ? 0 : 1;
-            const gradientEndFraction = (selectedTeam === "home") ? 0.8 : 0.2;
 
             const panelColour = hexToRGB("#4d4b4b", '0.5')
             const homeTeamGradientColour = hexToRGB(homeTeamInfo.colour, '0.6')
