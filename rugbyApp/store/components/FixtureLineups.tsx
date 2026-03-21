@@ -2,15 +2,18 @@ import { colors, fontFamilies, fontSize } from "@/constants/tokens";
 import { lineupPanelStyles } from "@/styles";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getESPNLeagueCode, getESPNMatchInfoFromDetails, hexToRGB } from "../utils/helpers";
 import { getLineup, getLineupPlanetRugbyAPI, getLineupRugbyViz, getLineupWorldRugbyAPI } from "../utils/lineupsGetter";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
 import { getPlayerInfo } from "../utils/playerInfoGetter";
 import { DefaultPlayerImg } from "../utils/playerImagesGetter";
 import { TeamLineupPitch } from "./TeamLineupPitch";
+import { captureRef } from "react-native-view-shot";
+import * as Sharing from 'expo-sharing';
 
 export type LineUpInfo = {
     teamPlayer: string,
@@ -37,6 +40,8 @@ type FixtureLineupsProps = {
 }
 
 export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
+
+    const pitchRef = useRef<View | null>(null);
 
     const [homeTeamName, setHomeTeamName] = useState<string>('');
     const [awayTeamName, setAwayTeamName] = useState<string>('');
@@ -97,6 +102,28 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
         }
 
         return combinedArray;
+    };
+
+    const handleSharePitch = async () => {
+        if (!pitchRef.current) return;
+
+        try {
+            const uri = await captureRef(pitchRef, {
+                format: 'png',
+                quality: 1,
+                result: 'tmpfile',  // Good for sharing
+            });
+            // Prepend 'file://' for iOS/Android compatibility
+            const shareUri = `file://${uri}`;
+
+            await Sharing.shareAsync(shareUri, {
+                mimeType: 'image/png',  // Optional, helps apps recognize it
+                dialogTitle: 'Share Team Lineup Pitch',
+                UTI: 'public.image',    // iOS-specific, optional
+            });
+        } catch (e) {
+            console.warn('Failed to capture/share pitch', e);
+        }
     };
 
     const handlePressFetchData = async () => {
@@ -241,7 +268,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
             const espnRugbyAPILeagueName = separatedArray[1]
             const espnLeagueCode = getESPNLeagueCode(espnRugbyAPILeagueName);
 
-            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/'+ espnLeagueCode +'/summary?contentorigin=espn&event='+ espnRugbyAPIEventID +'&lang=en&region=gb';
+            const apiString = 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/' + espnLeagueCode + '/summary?contentorigin=espn&event=' + espnRugbyAPIEventID + '&lang=en&region=gb';
             console.info(apiString)
 
             const matchDetails = await fetch(apiString,).then((res) => res.json())
@@ -315,7 +342,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                 awayFontSize = fontSize.sm
             }
 
-            const selectedTeamGradientColour = hexToRGB((selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour, '0.3')
+            const selectedTeamGradientColour = hexToRGB((selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour, '0.35')
 
             const selectedTeamFullColour = (selectedTeam === "home") ? homeTeamInfo.colour : awayTeamInfo.colour;
 
@@ -357,24 +384,43 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                         </TouchableOpacity>
                     </View>
 
-                    <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1 }}>
+                    <View style={{ position: 'relative' }}>  {/* ← Positioning wrapper */}
+                        <BottomSheetScrollView style={{ borderTopColor: 'grey', borderTopWidth: 1 }}>
+                            <View ref={pitchRef} collapsable={false}>
+                                <LinearGradient
+                                    colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']}
+                                    start={{ x: 0.5, y: 0.6 }}
+                                    end={{ x: 0.5, y: 1 }}
+                                    style={{ flex: 1 }}
+                                >
+                                    <TeamLineupPitch
+                                        allLineupsArray={allLineupsArray}
+                                        selectedTeam={selectedTeam}
+                                        leagueName={leagueName}
+                                        selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}
+                                        selectedTeamColour={selectedTeamFullColour}
+                                        OnPlayerModalShown={handlePlayerModalShown}
+                                    />
+                                </LinearGradient>
+                            </View>
+                        </BottomSheetScrollView>
 
-                        <LinearGradient
-                            colors={[selectedTeamGradientColour, 'rgba(25, 26, 27, 0.5)']}
-                            start={{ x: 0.5, y: 0.6 }}
-                            end={{ x: 0.5, y: 1 }}
-                            style={{ flex: 1 }}
+                        <TouchableOpacity
+                            onPress={handleSharePitch}
+                            style={{
+                                position: 'absolute',
+                                top: 10,
+                                right: 10,
+                                zIndex: 10,
+                                paddingHorizontal: 4,
+                                paddingVertical: 4,
+                                backgroundColor: 'rgba(0, 0, 0, 0.28)',
+                                borderRadius: 6,
+                            }}
                         >
-                            <TeamLineupPitch
-                                allLineupsArray={allLineupsArray}
-                                selectedTeam={selectedTeam}
-                                leagueName={leagueName}
-                                selectedTeamName={selectedTeam === "home" ? homeTeamName : awayTeamName}
-                                selectedTeamColour={selectedTeamFullColour}
-                                OnPlayerModalShown={handlePlayerModalShown}
-                            />
-                        </LinearGradient>
-                    </BottomSheetScrollView>
+                            <Entypo name="share" size={20} color='rgba(187, 187, 187, 0.61)' />                            
+                        </TouchableOpacity>
+                    </View>
 
                     <Modal transparent visible={playerModalShown}>
                         <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center' }}>
