@@ -20,7 +20,7 @@ export const SearchLeagueInfoPanel = ({ leagueInfo, bottomSheetRef, currentTimez
 
     const seasonManualData = ['2026', '2025', '2024', '2023', '2022'];
     const seasonSingleData = ['2026'];
-    const seasonSingleWorldCupData = ['2023'];
+    const seasonSingleWorldCupData = ['2023', '2019', '2015', '2011', '2007', '2003'];
 
     const leagueData = [
         { label: 'URC', value: 'urc', logo: URCAltLogo, seasonData: seasonManualData, hasKnockouts: true, knockoutsYears: ['2026', '2025', '2024', '2023', '2022'] },
