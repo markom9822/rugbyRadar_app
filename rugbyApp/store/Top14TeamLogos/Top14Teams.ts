@@ -8,7 +8,7 @@ export const BriveLogo = require('@/store/Top14TeamLogos/CA_Brive_Rugby_Logo.png
 export const BriveAltLogo = require('@/store/Top14TeamLogos/Brive_Rugby_Logo_White.png')
 
 export const CastresLogo = require('@/store/Top14TeamLogos/Castres_olympique_logo.png')
-export const CastresAltLogo = require('@/store/Top14TeamLogos/Castres_Olympique_Logo_White.png')
+export const CastresAltLogo = require('@/store/Top14TeamLogos/Castres_olympique_logo_white.png')
 
 export const MontpellierLogo = require('@/store/Top14TeamLogos/Montpellier_Rugby_Logo.png')
 export const MontpellierAltLogo = require('@/store/Top14TeamLogos/Montpellier_Rugby_Logo_White.png')

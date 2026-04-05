@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "Rugby Radar",
     slug: "rugbyApp",
-    version: "1.4.4",
+    version: "1.4.5",
     orientation: "portrait",
     icon: "./assets/images/rugbyIcon.png",
     scheme: "rugbyapp",

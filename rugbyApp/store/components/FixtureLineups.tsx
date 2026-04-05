@@ -314,10 +314,8 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
 
     const lineupsRender = (homeTeamInfo: any, awayTeamInfo: any) => {
 
-        if (homeTeamInfo === undefined || awayTeamInfo === undefined) {
-            return (
-                <></>
-            )
+        if (!homeTeamInfo || !awayTeamInfo) {
+            return null;
         }
         else {
 
@@ -418,7 +416,7 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
                                 borderRadius: 6,
                             }}
                         >
-                            <Entypo name="share" size={20} color='rgba(187, 187, 187, 0.61)' />                            
+                            <Entypo name="share" size={20} color='rgba(187, 187, 187, 0.61)' />
                         </TouchableOpacity>
                     </View>
 
@@ -489,19 +487,13 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
     }, [])
 
     const activityIndicatorHeader = () => {
-        if (isLoading) {
-            return (
-                <View style={{
-                    flex: 1,
-                    width: "100%",
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <ActivityIndicator size='large' color='lightgrey' />
-                </View>
-            );
-        }
-        return null;
+        if (!isLoading) return null; // Use an early return with null
+
+        return (
+            <View style={{ flex: 1, width: "100%", justifyContent: 'center', alignItems: 'center', paddingVertical: 20 }}>
+                <ActivityIndicator size="large" color="lightgrey" />
+            </View>
+        );
     };
 
     const [modalPlayerName, setModalPlayerName] = useState<string>('');
@@ -541,12 +533,14 @@ export const FixtureLineups = ({ id, isShown }: FixtureLineupsProps) => {
         setModalPlayerCountry(playerInfoResult.playerCountry)
     }
 
-    return (<View>
-        {isShown &&
-            <View>
-                {activityIndicatorHeader()}
-                {lineupsRender(homeTeamInfo, awayTeamInfo)}
-            </View>}
-    </View>
-    )
+    return (
+        <View style={{ flex: 1 }}>
+            {isShown ? (
+                <View style={{ flex: 1 }}>
+                    {activityIndicatorHeader()}
+                    {lineupsRender(homeTeamInfo, awayTeamInfo)}
+                </View>
+            ) : null}
+        </View>
+    );
 }
