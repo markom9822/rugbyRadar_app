@@ -9,13 +9,18 @@ export const rugbyVizChampsCupNames = [
   { databaseName: 'Toulon', rugbyVizName: 'RC Toulon',},
   { databaseName: 'Bordeaux Begles', rugbyVizName: 'Bordeaux-Begles',},
   { databaseName: 'Bayonnais', rugbyVizName: 'Bayonne',},
-  { databaseName: 'Montpellier', rugbyVizName: 'Montpellier Hérault',},
+  { databaseName: 'Montpellier Herault', rugbyVizName: 'Montpellier Hérault',},
+  { databaseName: 'Montpellier Herault', rugbyVizName: 'Montpellier',},
   { databaseName: 'Stade Toulousain', rugbyVizName: 'Toulouse',},
   { databaseName: 'Clermont', rugbyVizName: 'Clermont Auvergne',},
   { databaseName: 'Stade Francais', rugbyVizName: 'Stade Francais Paris',},
   { databaseName: 'USA Perpignan', rugbyVizName: 'Perpignan',},
   { databaseName: 'Section Paloise', rugbyVizName: 'Pau',},
   { databaseName: 'Lyon', rugbyVizName: 'Lyon O.U.',},
+  { databaseName: 'US Montauban', rugbyVizName: 'Montauban',},
+  { databaseName: 'Fidelity SecureDrive Lions', rugbyVizName: 'Lions',},
+
+
 ];
 
 export const getChampsCupShortNameFromFullName = (name: string) => {
@@ -23,7 +28,7 @@ export const getChampsCupShortNameFromFullName = (name: string) => {
 
   let searchName = '';
 
-  const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName === name)
+  const champsCupNameResult = rugbyVizChampsCupNames.find((element) => element.rugbyVizName === name.replace(" Rugby", ""))
   if(champsCupNameResult !== undefined)
   {
       searchName = champsCupNameResult.databaseName;

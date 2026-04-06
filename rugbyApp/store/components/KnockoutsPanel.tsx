@@ -90,7 +90,12 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
         }
         else if (knockoutRoundName === "quaterFinals") {
 
-            const QFFixtures = getQFKnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
+            const R16Fixtures = getR16KnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
+            const QFFixturesRaw = getQFKnockoutFixtures(knockoutFixturesArray, R16Fixtures,targetStandingsArray,leagueName);
+
+            const QFFixtures: MatchInfo[] = Array.isArray(QFFixturesRaw) && QFFixturesRaw.length >= 1
+                ? QFFixturesRaw.slice(0, 4).concat(Array(4).fill(null)).slice(0, 4)  // Pad/truncate to 4
+                : Array(4).fill({ homeTeam: "TBC", awayTeam: "TBC", matchTitle: "QF" } as MatchInfo);
 
             return (
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
@@ -105,7 +110,9 @@ export const KnockoutsPanel = ({ standingsArray, secondaryStandingsArray, knocko
         }
         else if (knockoutRoundName === "semiFinals") {
 
-            const SFFixtures = getSFKnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
+            const R16Fixtures = getR16KnockoutFixtures(knockoutFixturesArray, targetStandingsArray, leagueName)
+            const QFFixtures = getQFKnockoutFixtures(knockoutFixturesArray, R16Fixtures, targetStandingsArray,leagueName);
+            const SFFixtures = getSFKnockoutFixtures(knockoutFixturesArray, QFFixtures, targetStandingsArray, leagueName)
 
             return (
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
@@ -284,6 +291,22 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
 
             )
         }
+        // event halftime
+        else if (eventState === "halfTime") {
+            return (
+                <View style={{ flexDirection: 'column' }}>
+                    <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 13 }}>{homeTeamScore}</Text>
+
+                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 12 }}>HT</Text>
+
+                        <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 13 }}>{awayTeamScore}</Text>
+                    </View>
+                    <Text style={{ color: 'lightgrey', fontFamily: fontFamilies.light, fontSize: 10, textAlign: 'center', paddingVertical: 3 }}>{matchVenue}</Text>
+                </View>
+
+            )
+        }
         // event ongoing
         else {
             return (
@@ -291,7 +314,7 @@ export const KnockoutsFixture = ({ leagueName, fixtureInfo }: KnockoutsFixturePr
                     <View style={{ paddingHorizontal: 4, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: colors.text, fontFamily: homeFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{homeTeamScore}</Text>
 
-                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 14 }}></Text>
+                        <Text style={{ width: "30%", textAlign: 'center', color: colors.text, fontFamily: fontFamilies.bold, fontSize: 10 }}>{fixtureInfo.eventTime}{"'"}</Text>
 
                         <Text style={{ color: colors.text, fontFamily: awayFontFamily, paddingHorizontal: 5, width: "35%", textAlign: 'center', fontSize: 16 }}>{awayTeamScore}</Text>
                     </View>

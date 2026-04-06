@@ -8,16 +8,18 @@ interface GridViewProps<T> {
 }
 
 export const GridView = <T extends any>(props: GridViewProps<T>) => {
+    const { data, renderItem, col = 2 } = props;
 
-    const { data, renderItem, col = 2 } = props
+    // Guard against null/undefined data which might cause map to fail or return 0
+    if (!data || !Array.isArray(data)) return null;
 
-    return <View style={styles.container}>
-        {data.map((item, index) => {
-            return <View key={index} style={{ width: `${100 / col}%` }}>
+    return (
+        <View style={styles.container}>{data.map((item, index) => (
+            <View key={index} style={{ width: `${100 / col}%` }}>
                 {renderItem(item, index)}
             </View>
-        })}
-    </View>
+        ))}</View>
+    );
 }
 
 const styles = StyleSheet.create({

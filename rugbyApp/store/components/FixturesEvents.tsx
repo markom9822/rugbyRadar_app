@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { DropGoalIcon, RedCardIcon, RefereeWhistleIcon, RugbyPostsIcon, RugbyTryIcon, YellowCardIcon } from "../Icons/Icons";
-import { getKeyEvents, getKeyEventsPlanetRugbyAPI, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "../utils/getKeyEvents";
+import { getKeyEvents, getKeyEventsRugbyViz, getKeyEventsWorldRugbyAPI } from "../utils/getKeyEvents";
 import { getHomeAwayTeamInfo } from "../utils/getTeamInfo";
 import { getESPNLeagueCode, hexToRGB } from "../utils/helpers";
 

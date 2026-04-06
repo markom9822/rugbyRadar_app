@@ -114,13 +114,13 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
         const planetRugbyStandingsLeagueCodes = [
             { leagueName: 'top14', leagueCodes: ['x7jq191p'], playoffCutoffIndex: 6 },
             { leagueName: 'u20Championship', leagueCodes: ["1310035680", "1310035681", "1310035682"], playoffCutoffIndex: 2 },
-            { leagueName: 'rugbyWorldCup', leagueCodes: ['1310029544', '1310029546', '1310029547', '1310029548'], playoffCutoffIndex: 2 },
         ];
 
         const ESPNRugbyStandingsLeagueCodes = [
             { leagueName: 'sixNations', leagueCode: '180659', playoffCutoffIndex: -1 },
             { leagueName: 'superRugby', leagueCode: '242041', playoffCutoffIndex: 8 },
             { leagueName: 'rugbyChamp', leagueCode: '244293', playoffCutoffIndex: -1 },
+            { leagueName: 'rugbyWorldCup', leagueCode: '164205', playoffCutoffIndex: 2 },
         ];
 
         if (leagueName === "worldRankings") {
@@ -171,13 +171,17 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
         // ESPN rugby API
         else if (ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName) !== undefined) {
             const ESPNRugbyAPILeagueCode = ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName)?.leagueCode;
+            const ESPNRugbyAPIPlayoffIndex = ESPNRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName)?.playoffCutoffIndex;
+
+
+            console.info("Using ESPN API for Standings")
 
             const seasonNumber = Number(targetSeasonName);
             apiString = 'https://site.web.api.espn.com/apis/v2/sports/rugby/' + ESPNRugbyAPILeagueCode + '/standings?lang=en&region=gb&season=' + seasonNumber + '&seasontype=1&sort=rank:asc&type=0';
             console.info(apiString)
 
             const seasonStandingsESPN = await fetch(apiString,).then((res) => res.json())
-            const newArray = getAllStandingsData(seasonStandingsESPN)
+            const newArray = getAllStandingsData(seasonStandingsESPN, ESPNRugbyAPIPlayoffIndex)
             setStandingsArray(newArray)
         }
         // use planet rugby API for standings
@@ -186,6 +190,8 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
             const planetRugbyAPIPlayoffCutoffIndex = planetRugbyStandingsLeagueCodes.find((element) => element.leagueName === leagueName)?.playoffCutoffIndex;
 
             if (planetRugbyAPILeagueCodes === undefined) return;
+
+            console.info(`Using Plant Rugby API for Standings - Playoff Index - ${planetRugbyAPIPlayoffCutoffIndex}`)
 
             if (planetRugbyAPILeagueCodes.length > 1) {
                 let pooledArray: StandingInfo[] = [];
