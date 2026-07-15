@@ -11,7 +11,8 @@ export const getPlayerImageSrc = async (leagueName: string, teamName: string, pl
   // if international then get from bucket
   if(IsLeagueInternational(leagueName))
   {
-    const teamSlug = correctTeamName.toLowerCase();
+    const teamSlug = correctTeamName.toLowerCase().replaceAll(" ", "");
+
     
     const playerFileName = playerName
     .replace(/'/g, '')           
