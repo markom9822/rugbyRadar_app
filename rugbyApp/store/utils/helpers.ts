@@ -80,22 +80,7 @@ export const leagueCodes = [
 ];
 
 export const rugbyVizleagueCodes = [
-    {
-        value: 'urc', code: "1068",
-        displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo, playoffCutoffIndex: 8
-    },
-    {
-        value: 'prem', code: "1011",
-        displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo, playoffCutoffIndex: 4
-    },
-    {
-        value: 'championsCup', code: "1008",
-        displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo, playoffCutoffIndex: 4
-    },
-    {
-        value: 'challengeCup', code: "1026",
-        displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo, playoffCutoffIndex: 4
-    },
+   
 ];
 
 export const getRugbyVizLeagueCode = (name: string) => {
@@ -289,6 +274,22 @@ export const ESPNleagueCodes = [
     {
         value: 'top14', code: "270559",
         displayName: 'Top 14', leagueLogo: Top14Logo, leagueAltLogo: Top14AltLogo
+    },
+    {
+        value: 'urc', code: "270557",
+        displayName: 'United Rugby Championship', leagueLogo: URCLogo, leagueAltLogo: URCAltLogo
+    },
+    {
+        value: 'prem', code: "267979",
+        displayName: 'Gallagher PREM', leagueLogo: PremiershipLogo, leagueAltLogo: PremiershipAltLogo,
+    },
+    {
+        value: 'championsCup', code: "271937",
+        displayName: 'Investec Champions Cup', leagueLogo: ChampionsCupLogo, leagueAltLogo: ChampionsCupAltLogo,
+    },
+    {
+        value: 'challengeCup', code: "272073",
+        displayName: 'European Challenge Cup', leagueLogo: ChallengeCupLogo, leagueAltLogo: ChallengeCupAltLogo,
     },
     {
         value: 'superRugby', code: "242041",

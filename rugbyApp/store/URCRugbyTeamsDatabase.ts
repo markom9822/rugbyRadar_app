@@ -117,7 +117,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Cardiff',
+    displayName: 'Cardiff Blues',
     abbreviation: 'CDB',
     logo: CardiffLogo,
     altLogo: CardiffAltLogo,
@@ -153,7 +153,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Dragons RFC',
+    displayName: 'Dragons',
     abbreviation: 'DRA',
     logo: DragonsLogo,
     altLogo: DragonsAltLogo,
@@ -165,7 +165,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Benetton',
+    displayName: 'Benetton Treviso',
     abbreviation: 'TRE',
     logo: BenettonLogo,
     altLogo: BenettonAltLogo,
@@ -177,7 +177,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Zebre Parma',
+    displayName: 'Zebre',
     abbreviation: 'ZEB',
     logo: ZebreLogo,
     altLogo: ZebreAltLogo,
@@ -189,7 +189,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'DHL Stormers',
+    displayName: 'Stormers',
     abbreviation: 'STORM',
     logo: StormersLogo,
     altLogo: StormersAltLogo,
@@ -201,7 +201,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Vodacom Bulls',
+    displayName: 'Bulls',
     abbreviation: 'BULL',
     logo: BullsLogo,
     altLogo: BullsAltLogo,
@@ -213,7 +213,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Fidelity SecureDrive Lions',
+    displayName: 'Lions',
     abbreviation: 'LION',
     logo: LionsLogo,
     altLogo: LionsAltLogo,
@@ -225,7 +225,7 @@ export const URCRugbyTeams = [
   },
   {
     type: 'URC Club',
-    displayName: 'Hollywoodbets Sharks',
+    displayName: 'Sharks',
     abbreviation: 'SHARK',
     logo: SharksLogo,
     altLogo: SharksAltLogo,

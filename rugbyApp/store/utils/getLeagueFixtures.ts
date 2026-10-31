@@ -1,5 +1,5 @@
-import { MatchInfo } from "@/app/(tabs)"
-import { fetchESPNAPIData, fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "./fixturesGetter"
+import { MatchInfo } from "@/app/(tabs)";
+import { fetchESPNAPIData, fetchPlanetRugbyAPIData, fetchRugbyVizData, fetchWorldRugbyAPIData } from "./fixturesGetter";
 
 const leagueSearchData = [
         { name: 'urc', offSeasonMonths: [7, 8] },
@@ -117,8 +117,6 @@ export const getLeagueFixtures = async (datesArray: Date[], targetLeagueName: st
                 case "prem":
                 case "championsCup":
                 case "challengeCup":
-                    await handleGetRugbyVizFixtures(thisLeagueName, datesArray[i], tempArray)
-                    break;
                 case "top14":
                 case "superRugby":
                 case "sixNations":
