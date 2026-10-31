@@ -1,15 +1,15 @@
 import { MatchInfo } from "@/app/(tabs)/index"
 import { fontFamilies, fontSize } from "@/constants/tokens"
 import Entypo from '@expo/vector-icons/Entypo'
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { getRugbyVizLeagueCode, getRugbyVizPlayoffCutoffFromLeagueName, hexToRGB } from "../utils/helpers"
 import { fetchRugbyVizKnockoutFixtures } from "../utils/knockoutFixturesGetter"
+import { getSeasonYearOptions } from "../utils/seasonYears"
 import { getAllStandingsData, getAllStandingsDataPlanetRugby, getAllStandingsDataRugbyViz, getAllStandingsDataWorldRugbyAPI, getLeagueStandingsDataPlanetRugby } from "../utils/standingsGetter"
 import { KnockoutsPanel } from "./KnockoutsPanel"
 import { StandingPanel } from "./StandingPanel"
-
 
 export type StandingInfo = {
     isHeader: boolean
@@ -117,6 +117,8 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
         ];
 
         const ESPNRugbyStandingsLeagueCodes = [
+            { leagueName: 'urc', leagueCode: '270557', playoffCutoffIndex: 8 },
+            { leagueName: 'prem', leagueCode: '267979', playoffCutoffIndex: 4 },
             { leagueName: 'sixNations', leagueCode: '180659', playoffCutoffIndex: -1 },
             { leagueName: 'superRugby', leagueCode: '242041', playoffCutoffIndex: 8 },
             { leagueName: 'rugbyChamp', leagueCode: '244293', playoffCutoffIndex: -1 },
@@ -211,7 +213,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                 return;
             }
 
-            apiString = 'https://sdms.planetsport.com/api/rugby/union/standing/single-competition/'+ seasonYear+'/'+ planetRugbyAPILeagueCodes[0] + '/overall';
+            apiString = 'https://sdms.planetsport.com/api/rugby/union/standing/single-competition/' + targetSeasonName + '/' + planetRugbyAPILeagueCodes[0] + '/overall';
 
             const seasonStandingsPlanetRugby = await fetch(apiString,).then((res) => res.json())
             const newArray = getLeagueStandingsDataPlanetRugby(seasonStandingsPlanetRugby, false, true, planetRugbyAPIPlayoffCutoffIndex)
@@ -226,17 +228,27 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
     }
 
 
-    useEffect(() => {
-        async function fetchMyAPI() {
-            await handlePressFetchData(seasonYear)
+    const seasonOptions = useMemo(() => {
+        const generated = getSeasonYearOptions(leagueName)
+        return generated.length > 0 ? generated : leagueSeasonData  // fall back to the old prop
+    }, [leagueName, leagueSeasonData])
 
-            const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, seasonYear)
+    useEffect(() => {
+        const latestYear = seasonOptions[0] ?? seasonYear
+
+        if (latestYear !== seasonYear) {
+            OnChangeSeasonYear(latestYear)
+        }
+
+        async function fetchMyAPI() {
+            await handlePressFetchData(latestYear)
+
+            const knockoutFixtures = await fetchRugbyVizKnockoutFixtures(leagueName, latestYear)
             setKnockoutsArray(knockoutFixtures)
             setKnockoutRoundName(getDefaultRoundButton(knockoutFixtures))
         }
         fetchMyAPI()
     }, [])
-
 
     const handleNewRoundChosen = (roundName: string) => {
         setKnockoutRoundName(roundName)
@@ -278,7 +290,7 @@ export const LeagueStandingsPanel = ({ leagueName, seasonYear, leagueSeasonData,
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'flex-end', width: "50%", paddingHorizontal: 5 }}>
-                    <SeasonYearPicker currentSeasonYear={seasonYear} seasonYearOptions={leagueSeasonData} OnPressSeasonYear={handlePressedSeasonYear} />
+                    <SeasonYearPicker currentSeasonYear={seasonYear} seasonYearOptions={seasonOptions} OnPressSeasonYear={handlePressedSeasonYear} />
                 </View>
 
             </View>
